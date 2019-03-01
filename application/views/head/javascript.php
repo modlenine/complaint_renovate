@@ -56,6 +56,14 @@ if(check_pms_view != 1){
     $('.result_pms').hide();
 }
 
+if($('.check_user').text()!== $('#history_cpusername').val()){
+    $('#edit').hide();
+}
+
+
+
+
+
 
 
 /***********************INVESTIGATE PAGE********************************/  

@@ -184,11 +184,14 @@ and open the template in the editor.
                     <input hidden="" type="text" name="his_action" id="his_action" value="Click Edit Button" />
 
                 </div>
-                </form>
-                
-                <div class="btn_start_inves result_pms"><a href="<?php echo base_url(); ?>complaint/inves_starting/<?php echo $view_cp['cp_no']; ?>"><button name="btn_v_cp" id="btn_v_cp" onclick="javascript:return confirm('คุณต้องการเริ่มการสืบสวนใช่หรือไม่');" class="btn btn-primary">Start Investigation</button></a></div>
             </div>
-            <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+              </form>
+            <div class="btn_start_inves result_pms"><a href="<?php echo base_url(); ?>complaint/inves_starting/<?php echo $view_cp['cp_no']; ?>"><button name="btn_v_cp" id="btn_v_cp" onclick="javascript:return confirm('คุณต้องการเริ่มการสืบสวนใช่หรือไม่');" class="btn btn-primary">Start Investigation</button></a></div>
+            
+            <footer>
+              <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> 
+            </footer>
+
             
                 
 </div><!-- Main content page -->
