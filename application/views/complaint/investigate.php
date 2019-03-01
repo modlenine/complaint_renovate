@@ -62,7 +62,7 @@ and open the template in the editor.
                         </div>
                         <div class="col-md-3">
                             <label><b>Status :</b></label>
-                            <label><b style="color:blue;"><?php echo $view_cp['cp_status']; ?></b></label>
+                            <label class="check_status"><b style="color:blue;"><?php echo $view_cp['cp_status']; ?></b></label>
                         </div>
                     </div>
                 </div>
@@ -151,10 +151,20 @@ and open the template in the editor.
             </div>
             
             
-<!--********************************************************INVESTIGATION SECTION******************************************************************************-->                             
- <form name="invesform" method="post" action="<?php echo base_url(); ?>complaint/add_detail_inves/<?php echo $view_cp['cp_no']; ?>" enctype="multipart/form-data">               
+<!--********************************************************INVESTIGATION SECTION******************************************************************************-->                             <script type="text/javascript">
+function popup(url,name,windowWidth,windowHeight){    
+	myleft=(screen.width)?(screen.width-windowWidth)/2:100;	
+	mytop=(screen.height)?(screen.height-windowHeight)/2:100;	
+	properties = "width="+windowWidth+",height="+windowHeight;
+	properties +=",scrollbars=yes, top="+mytop+",left="+myleft;   
+	window.open(url,name,properties);
+}
+</script>
+                
 <div class="panel panel-warning">
-      <div class="panel-heading">Investigation</div>
+    <div class="panel-heading">Investigation &nbsp;<a href="javascript:popup('<?php echo base_url("complaint/edit_investigate/"); ?><?php echo $view_cp['cp_no']; ?>','',800,800)"><button class="btn btn-success btn_edit">Edit</button></a></div>
+      
+      <form name="invesform" method="post" action="<?php echo base_url(); ?>complaint/add_detail_inves/<?php echo $view_cp['cp_no']; ?>" enctype="multipart/form-data">
       <div class="panel-body">
           <?php if ($view_cp['cp_detail_inves'] == "") { ?>
             <div class="form-row">
@@ -232,8 +242,9 @@ and open the template in the editor.
           
           
       </div>
+          </form>
 </div>              
-</form>
+
 
 <!--***************************************INVESTIGATION SECTION*******************************************-->
 

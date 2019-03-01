@@ -114,6 +114,14 @@ class Complaint extends CI_Controller{
     }
     
     
+    public function edit_investigate($cp_no){
+        
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("complaint_edit/edit_inves");
+    }
+    
+    
     public function add_detail_inves($cp_no){
         $this->login_model->call_login();
         

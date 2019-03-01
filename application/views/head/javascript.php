@@ -81,6 +81,10 @@ if($('#cp_detail_inves').val() != ""){
     $('#cp_detail_inves_cost').prop("readonly",true);
 }
 
+if($('.check_status').text()!== "Investigation Complete"){/*********Check Edit button**********/
+    $('.btn_edit').hide();
+}
+
 
 
     /*************Summary section*************/
@@ -174,8 +178,8 @@ $('input#cp_conclu_cost').keyup(function(event) {/*****Comma function*******/
 
         
         
-/*********************EDIT PAGE************************/
-
+/*********************EDIT PAGE AND DATA************************/
+/**********INVESTIGATE SECTION***********/
 
 
 
