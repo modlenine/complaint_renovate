@@ -52,10 +52,10 @@
             return $result->result_array();
         }
         
-//        public function get_dept_respons($dept_code){
-//            $result = $this->db->query("SELECT * FROM complaint_department_main WHERE cp_dept_main_code NOT IN ('$dept_code')");
-//            return $result->result_array();
-//        }
+        public function get_dept_respons($dept_code){
+            $result = $this->db->query("SELECT * FROM complaint_department_main WHERE cp_dept_main_code NOT IN ('$dept_code')");
+            return $result->result_array();
+        }
         
         public function get_pri_topic(){
             $result = $this->db->query("SELECT * FROM complaint_priority GROUP BY cp_pri_group ASC");

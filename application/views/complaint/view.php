@@ -179,8 +179,9 @@ and open the template in the editor.
                     <input hidden="" type="text" name="check_dept_view" id="check_dept_view" value="<?php echo $ckd_result;?>" />
                     
                     <!-- user zone -->
-                    <input type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
-                    <input type="text" name="his_date_modify" id="his_date_modify" value="<?php echo date("Y/m/d H:i:s"); ?>" />
+                    <input hidden="" type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
+                    <input hidden="" type="text" name="his_date_modify" id="his_date_modify" value="<?php echo date("Y/m/d H:i:s"); ?>" />
+                    <input hidden="" type="text" name="his_action" id="his_action" value="Click Edit Button" />
 
                 </div>
                 </form>

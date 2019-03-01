@@ -84,7 +84,7 @@ class Complaint extends CI_Controller{
     
     
     public function savedata_edit($cp_no){
-        $this->history_model->save_history();
+        $this->history_model->saveedit_history();
         
         $this->complaint_model->savedata_edit($cp_no);
         header("refresh:1; url=http://192.190.10.27/complaint/");

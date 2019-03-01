@@ -19,6 +19,13 @@ and open the template in the editor.
                 
                 <form name="frmMain" action="<?php echo base_url('complaint/savedata_edit/'); ?><?php echo $view_cp['cp_no']; ?>" method="post" enctype="multipart/form-data">
                     <input hidden="" type="text" name="getuser_check" id="getuser_check" value="<?php echo $getuser['username']; ?>" /><!--Get user for check-->
+                    
+                    <input hidden="" type="text" name="history_cpno" id="history_cpno" value="<?php echo $view_cp['cp_no']; ?>" /><!-- For history table-->
+                    <input hidden="" type="text" name="history_cpusername" id="history_cpusername" value="<?php echo $view_cp['cp_user_name']; ?>" /><!-- For history table-->
+                    <input hidden="" type="text" name="history_cpuserempid" id="history_cpuserempid" value="<?php echo $view_cp['cp_user_empid']; ?>" /><!-- For history table-->
+                    <input hidden="" type="text" name="history_cpuserdept" id="history_cpuserdept" value="<?php echo $view_cp['cp_user_dept']; ?>" /><!-- For history table-->
+                    <input hidden="" type="text" name="history_cpstatus" id="history_cpstatus" value="<?php echo $view_cp['cp_status']; ?>" /><!-- For history table-->
+                    
                 <div class="panel panel-primary">
                     <div class="panel-heading">Topic</div>
                     <div class="panel-body">
@@ -32,6 +39,7 @@ and open the template in the editor.
                                 <label><b>Date</b></label>
                                 <input type="text" name="cp_date_show" id="cp_date_show" class="form-control form-control-sm form-width" value="<?php echo date('d/m/Y'); ?>" readonly=""/>
                                 <input type="text" name="cp_date_edit" id="cp_date_edit" value="<?php echo date('Y-m-d'); ?>" hidden=""/>
+                                <input type="text" name="cp_date_get" id="cp_date_get" value="<?php echo $view_cp['cp_date']; ?>" />
                             </div>
 
                             <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->                                   
@@ -56,7 +64,7 @@ and open the template in the editor.
 
                             <div class="col-md-3 pri">
                                 <label><b>Catagory</b></label>
-                                <input type="hidden" name="cp_topic_hide_edit" id="cp_topic_hide_edit" class="form-control form-control-sm"/><!-- Topicname -->
+                                <input type="hidden" name="cp_topic_hide_edit" id="cp_topic_hide_edit" class="form-control form-control-sm" value="<?php echo $view_cp['cp_topic']; ?>"/><!-- Topicname -->
                                 <input type="text" name="cp_topic_cat_edit" id="cp_topic_cat_edit" class="form-control" readonly="" value="<?php echo $view_cp['cp_topic_cat']; ?>"/><!-- Topic catagory -->
 
                             </div>
@@ -226,8 +234,6 @@ and open the template in the editor.
                             </div>
                             <?php endforeach; ?>
 
-                                           
-                            
                         </div>
                             
 
@@ -237,6 +243,14 @@ and open the template in the editor.
                 <div><input class="btn btn-primary" type="submit" name="add_btn_edit" id="add_btn_edit" value="Update" onclick="javascript:return confirm('คุณต้องการบันทึกข้อมูล ใช่หรือไม่');"/>&nbsp;<input class="btn btn-warning" type="reset" name="reset_btn_edit" id="reset_btn_edit" value="Reset"/></div><hr>
                 <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
                 
+                
+                <input type="text" name=""
+                <div>
+
+                    <input type="text" name="his_action" id="his_action" value="Edit Complete" />
+                    <input type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
+                    <input type="text" name="his_date_modify" id="his_date_modify" value="<?php echo date("Y/m/d H:i:s"); ?>" />
+                </div>
                 
                 
             </form>
