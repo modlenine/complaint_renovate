@@ -34,6 +34,7 @@ and open the template in the editor.
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdn.rawgit.com/mladenplavsic/bootstrap-navbar-sidebar/3bd282bd/docs/docs.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
         
 
   <style>
@@ -149,6 +150,15 @@ and open the template in the editor.
     color:red;
     font-weight:600;
 }
+
+.editlayout{
+    margin: -10px 20px 20px 20px;
+}
+.form_inves{
+    display:none;
+}
+
+
 
 
 /********************NAV************************/

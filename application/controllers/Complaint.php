@@ -115,10 +115,22 @@ class Complaint extends CI_Controller{
     
     
     public function edit_investigate($cp_no){
+        $this->login_model->call_login();
+        
+        $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
+        $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
+        $data['getuser'] = $this->login_model->getuser();
         
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
-        $this->load->view("complaint_edit/edit_inves");
+        $this->load->view("complaint_edit/edit_inves",$data);
+    }
+    
+    public function save_edit_investigate($cp_no){
+        $this->history_model->saveedit_inves_history();
+        $this->complaint_model->save_edit_inves($cp_no);
+        redirect('/complaint/investigate/'.$cp_no);
+//        header("refresh:1; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
     }
     
     

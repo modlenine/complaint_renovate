@@ -64,8 +64,47 @@ class History_model extends CI_Model{
     }
     
     
-    public function getdept_main(){
+    
+    public function save_inves_history($cp_no){
+        $data = array(
+            "his_cpno" => $this->input->post("cp_detail_inves_cpno"),
+            "his_detail_inves" => $this->input->post("cp_detail_inves_his"),
+            "his_detail_invesfile" => $this->input->post("cp_detail_inves_filehis"),
+            "his_detail_invessignature" => $this->input->post("cp_detail_inves_signaturehis"),
+            "his_detail_invesdept" => $this->input->post("cp_detail_inves_depthis"),
+            "his_detail_invesdate" => $this->input->post("cp_detail_inves_datehis"),
+            "his_action" => $this->input->post("his_action"),
+            "his_user_modify" => $this->input->post("his_user_modify"),
+            "his_date_modify" => $this->input->post("his_date_modify")
+            
+        );
         
+        $this->db->insert("complaint_history_main",$data);
+        
+    }
+    
+    public function saveedit_inves_history(){
+        if($this->input->post("cp_detail_inves_file_edit")== ""){
+            $file_name_date = $this->input->post("inves_showfile");
+        }else{
+            $file_name_date = $this->input->post("cp_detail_inves_file_edit");
+        }
+        
+        
+        $data = array(
+            "his_cpno" => $this->input->post("his_cpno"),
+            "his_detail_inves" => $this->input->post("cp_detail_inves_edit"),
+            "his_detail_invesfile" => $file_name_date,
+            "his_detail_invessignature" => $this->input->post("cp_detail_inves_signature"),
+            "his_detail_invesdept" => $this->input->post("cp_detail_inves_dept"),
+            "his_detail_invesdate" => $this->input->post("cp_detail_inves_date"),
+            "his_action" => $this->input->post("cp_detail_inves_action"),
+            "his_user_modify" => $this->input->post("cp_detail_inves_usermodify"),
+            "his_date_modify" => $this->input->post("cp_detail_inves_datemodify")
+            
+        );
+        
+        $this->db->insert("complaint_history_main",$data);
     }
     
     

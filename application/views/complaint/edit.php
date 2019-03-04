@@ -39,7 +39,7 @@ and open the template in the editor.
                                 <label><b>Date</b></label>
                                 <input type="text" name="cp_date_show" id="cp_date_show" class="form-control form-control-sm form-width" value="<?php echo date('d/m/Y'); ?>" readonly=""/>
                                 <input type="text" name="cp_date_edit" id="cp_date_edit" value="<?php echo date('Y-m-d'); ?>" hidden=""/>
-                                <input type="text" name="cp_date_get" id="cp_date_get" value="<?php echo $view_cp['cp_date']; ?>" />
+                                <input hidden="" type="text" name="cp_date_get" id="cp_date_get" value="<?php echo $view_cp['cp_date']; ?>" />
                             </div>
 
                             <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->                                   

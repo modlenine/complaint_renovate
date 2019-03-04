@@ -425,6 +425,44 @@
         }
         
         
+        public function save_edit_inves($cp_no){
+            
+            if($this->input->post("cp_detail_inves_file_edit")== ""){
+                $file_name_date = $this->input->post("inves_showfile");
+            }else{
+                
+                //อัพโหลดไฟล์แบบหลายไฟล์ลง Folderโดย+วันที่+เวลาต่อท้ายไฟล์
+                $date = date("d-m-Y-H-i-s");//ดึงวันที่และเวลามาก่อน
+
+		$file_name = $_FILES['cp_detail_inves_file_edit']['name'];
+                $file_name_cut = str_replace(" ", "", $file_name);
+                $file_name_date = str_replace(".","-".$date.".", $file_name_cut);
+                
+		$file_size =$_FILES['cp_detail_inves_file_edit']['size'];
+		$file_tmp =$_FILES['cp_detail_inves_file_edit']['tmp_name'];
+		$file_type=$_FILES['cp_detail_inves_file_edit']['type'];  
+		move_uploaded_file($file_tmp,"asset/investigate/detail_inves/".$file_name_date);
+                
+                print_r($file_name);
+                
+
+	echo "<br>"."Copy/Upload Complete"."<br>";
+            }
+            
+            $data = array(
+                "cp_detail_inves" => $this->input->post("cp_detail_inves_edit"),
+                "cp_detail_inves_file" => $file_name_date,
+                "cp_modify_by" => $this->input->post("cp_detail_inves_signature"),
+                "cp_modify_datetime" => $this->input->post("cp_detail_inves_datemodify"),
+                "cp_modify_action" => "Modify Success"
+            );
+            
+            $this->db->where("cp_no",$cp_no);
+            $this->db->update("complaint_main",$data);
+            
+        }
+        
+        
 /**************UPDATE ZONE******************/
         
   

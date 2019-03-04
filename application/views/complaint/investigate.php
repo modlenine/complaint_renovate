@@ -8,6 +8,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Investigate</title>
+
     </head>
     <body>
         <?php $this->load->view("head/nav"); ?>
@@ -151,21 +152,16 @@ and open the template in the editor.
             </div>
             
             
-<!--********************************************************INVESTIGATION SECTION******************************************************************************-->                             <script type="text/javascript">
-function popup(url,name,windowWidth,windowHeight){    
-	myleft=(screen.width)?(screen.width-windowWidth)/2:100;	
-	mytop=(screen.height)?(screen.height-windowHeight)/2:100;	
-	properties = "width="+windowWidth+",height="+windowHeight;
-	properties +=",scrollbars=yes, top="+mytop+",left="+myleft;   
-	window.open(url,name,properties);
-}
-</script>
+<!--********************************************************INVESTIGATION SECTION******************************************************************************-->                            
                 
 <div class="panel panel-warning">
-    <div class="panel-heading">Investigation &nbsp;<a href="javascript:popup('<?php echo base_url("complaint/edit_investigate/"); ?><?php echo $view_cp['cp_no']; ?>','',800,800)"><button class="btn btn-success btn_edit">Edit</button></a></div>
+    <div class="panel-heading">Investigation &nbsp;</div>
+   
       
-      <form name="invesform" method="post" action="<?php echo base_url(); ?>complaint/add_detail_inves/<?php echo $view_cp['cp_no']; ?>" enctype="multipart/form-data">
+      
       <div class="panel-body">
+          
+          <form name="invesform" method="post" action="<?php echo base_url(); ?>complaint/add_detail_inves/<?php echo $view_cp['cp_no']; ?>" enctype="multipart/form-data">
           <?php if ($view_cp['cp_detail_inves'] == "") { ?>
             <div class="form-row">
                 <div class="col-md-8">
@@ -203,7 +199,7 @@ function popup(url,name,windowWidth,windowHeight){
 
                 <div class="form-row">
                     <div class="col-md-6 pri">
-                        <p><label><b>Attached file : </b><a href="<?php echo base_url(); ?>asset/<?php echo $view_cp['cp_detail_inves_file']; ?>" target="_blank"><?php echo $view_cp['cp_detail_inves_file']; ?></a></label></p>
+                        <p><label><b>Attached file : </b><a href="<?php echo base_url(); ?>asset/investigate/detail_inves/<?php echo $view_cp['cp_detail_inves_file']; ?>" target="_blank"><?php echo $view_cp['cp_detail_inves_file']; ?></a></label></p>
                     </div>
                 </div>
 
@@ -213,9 +209,9 @@ function popup(url,name,windowWidth,windowHeight){
                     <div class="col-md-3"><label><b>Date : </b><?php $date = date_create($view_cp['cp_detail_inves_date']);
                             echo date_format($date, "d/m/Y"); ?></label></div>
 
-                    <input type="text" name="cp_detail_inves_signature" id="cp_detail_inves_signature" hidden="" value="<?php echo $getuser['username']; ?>"/>
-                    <input type="text" name="cp_detail_inves_dept" id="cp_detail_inves_dept" hidden="" value="<?php echo $getuser['Dept']; ?>"/>
-                    <input type="text" name="cp_detail_inves_date" id="cp_detail_inves_date" hidden="" value="<?php echo date("Y-m-d"); ?>"/>
+                    <input type="text" name="cp_detail_inves_signature" id="cp_detail_inves_signature" hidden="" value="<?php echo $view_cp['cp_detail_inves_signature']; ?>"/>
+                    <input type="text" name="cp_detail_inves_dept" id="cp_detail_inves_dept" hidden="" value="<?php echo $view_cp['cp_detail_inves_dept']; ?>"/>
+                    <input type="text" name="cp_detail_inves_date" id="cp_detail_inves_date" hidden="" value="<?php echo $view_cp['cp_detail_inves_date']; ?>"/>
                 </div>
 
                             <?php } ?>
@@ -238,12 +234,57 @@ function popup(url,name,windowWidth,windowHeight){
           }
           ?>
           <input hidden="" type="text" name="check_dept_inves" id="check_dept_inves" value="<?php echo $ckd_result;?>" />
-          <div class="col-md-3 result_pms_inves"><input type="submit" name="" id="" value="Submit" class="btn btn-primary btn-block" onclick="javascript:return confirm('ก่อนที่ท่านจะทำการยืนยันการบันทึกข้อมูลนั้น ท่านได้ทำการสอบสวนเหตุกาณ์ที่เกิดขึ้น ร่วมกับ หน่วยงานที่เกี่ยวข้อง มาเป็นอย่างดีแล้ว ใช่หรือไม่ หากใช่ กรุณาทำการกดยืนยันการบันทึกข้อมูล เพื่อเข้าสู่ขั้นตอนต่อไป');"/></div>
-          
-          
-      </div>
+            <div class="col-md-3 result_pms_inves"><input type="submit" name="" id="" value="Submit" class="btn btn-primary btn-block" onclick="javascript:return confirm('ก่อนที่ท่านจะทำการยืนยันการบันทึกข้อมูลนั้น ท่านได้ทำการสอบสวนเหตุกาณ์ที่เกิดขึ้น ร่วมกับ หน่วยงานที่เกี่ยวข้อง มาเป็นอย่างดีแล้ว ใช่หรือไม่ หากใช่ กรุณาทำการกดยืนยันการบันทึกข้อมูล เพื่อเข้าสู่ขั้นตอนต่อไป');"/></div>             
           </form>
+          
+          
+          
+          <div class="form-row">
+          <form name="history_invesform" method="post" action="<?php echo base_url(); ?>history/save_inves_history/<?php echo $view_cp['cp_no']; ?>" enctype="multipart/form-data">
+                <div class="form-row">
+                <div class="col-md-8">
+                    <input hidden="" type="text" name="cp_detail_inves_cpno" id="cp_detail_inves_cpno" value="<?php echo $view_cp['cp_no']; ?>" />
+                    <label hidden=""><b>Detail of investigate</b></label>
+                    <textarea hidden="" name="cp_detail_inves_his" id="cp_detail_inves_his" rows="3"><?php echo $view_cp['cp_detail_inves']; ?></textarea>
+                    </div>
+                </div>
+ 
+                <div class="form-row">
+                    <div class="col-md-6 pri">
+                        <input hidden="" type="text" name="cp_detail_inves_filehis" id="cp_detail_inves_filehis" value="<?php echo $view_cp['cp_detail_inves_file']; ?>" />
+                    </div>
+                </div>
+
+                <div class="col-md-12 pri">
+                    <input hidden="" type="text" name="cp_detail_inves_signaturehis" id="cp_detail_inves_signature"  value="<?php echo $view_cp['cp_detail_inves_signature']; ?>"/>
+                    <input hidden="" type="text" name="cp_detail_inves_depthis" id="cp_detail_inves_dept"  value="<?php echo $view_cp['cp_detail_inves_dept']; ?>"/>
+                    <input hidden="" type="text" name="cp_detail_inves_datehis" id="cp_detail_inves_date"  value="<?php echo $view_cp['cp_detail_inves_date']; ?>"/>
+                    
+                    <input hidden="" type="text" name="his_action" id="his_action" value="Start Edit Investigate" />
+                    <input hidden="" type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
+                    <input hidden="" type="text" name="his_date_modify" id="his_date_modify" value="<?php echo date("Y/m/d H:i:s"); ?>" />
+                    
+                </div>
+              <div class="col-md-12"><input class="btn btn-info" type="submit" name="btn_save_history" id="btn_save_history" value="Edit" /></div>
+            </form>
+      </div>
+      </div>
+          
+    
+    
+    
+    
+    
+        
+        
+        
+        
+    
+    
 </div>              
+
+
+
 
 
 <!--***************************************INVESTIGATION SECTION*******************************************-->
@@ -253,11 +294,12 @@ function popup(url,name,windowWidth,windowHeight){
 
 
 <!--***********************************SUMMARY OF INVESTIGATION***************************************-->
-<form name="invesform" method="post" action="<?php echo base_url(); ?>complaint/add_sum_inves/<?php echo $view_cp['cp_no']; ?>" enctype="multipart/form-data"> 
+
 <div class="panel panel-warning">
       <div class="panel-heading">Summary of Investigation</div>
       <div class="panel-body">
       
+      <form name="invesform" method="post" action="<?php echo base_url(); ?>complaint/add_sum_inves/<?php echo $view_cp['cp_no']; ?>" enctype="multipart/form-data"> 
        <?php if ($view_cp['cp_sum_inves'] == "") { ?>
             <div class="form-row">
                 <div class="col-md-8">
@@ -308,7 +350,7 @@ function popup(url,name,windowWidth,windowHeight){
 
                 <div class="form-row">
                     <div class="col-md-6 pri">
-                        <p><label><b>Attached file : </b><a href="<?php echo base_url(); ?>asset/<?php echo $view_cp['cp_sum_inves_file']; ?>" target="_blank"><?php echo $view_cp['cp_sum_inves_file']; ?></a></label></p>
+                        <p><label><b>Attached file : </b><a href="<?php echo base_url(); ?>asset/investigate/sum_inves/<?php echo $view_cp['cp_sum_inves_file']; ?>" target="_blank"><?php echo $view_cp['cp_sum_inves_file']; ?></a></label></p>
                     </div>
                 </div>
           
@@ -366,11 +408,17 @@ function popup(url,name,windowWidth,windowHeight){
           
           <div class="col-md-3 result_pms_sum_inves"><input type="submit" name="btn_sum" id="btn_sum" value="Submit" class="btn btn-primary btn-block" onclick="javascript:return confirm('ยืนยันการบันทึกข้อมูล');"/></div>
           
+          </form>
+          
+          
+          
+          
+          
       </div>
       
       
 </div>
-</form>
+
 
 
 
@@ -488,6 +536,10 @@ function popup(url,name,windowWidth,windowHeight){
 <!--***********************************CONCLUSION OF COMPLAINT***************************************-->
             
         <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+     
+        
+
+        
         </div><!-- Main content page -->
 
     </body>

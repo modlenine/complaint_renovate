@@ -1,0 +1,53 @@
+ <header>
+    <style>
+        .btnPopup{
+            height:40px;
+            width:80px;
+            margin:5px auto;
+            background-color: #999999;
+        }
+
+        .popupCookie{
+            background-color: #ffffff;
+            position: fixed;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    width: 50%;
+            padding:20px;
+	    z-index:600;
+            text-align: center;
+            box-shadow: 0px 0px 20px 3px #888888;
+        }
+
+        @media (max-width: 480px) {
+            .popupCookie{
+                background-color: #ffffff;
+                width:100%;
+                height:auto;
+                position: fixed;
+                bottom:0;
+            }
+        }
+        @media (max-width: 768px) {
+            .popupCookie{
+                background-color: #ffffff;
+                width:100%;
+                height:auto;
+                position: fixed;
+                bottom:0;
+            }
+        }
+        
+
+    </style>
+</header>
+<div class="popupCookie" id="popupCookie">
+        <span><img src="{{media url="wysiwyg/Image_Page/popup_main_new.jpg"}}" alt="" /></span><br>
+        <a href="#"><button id="btnOk" class="btnPopup" onclick="hidePop()">OK</button></div></a>
+<script>
+function hidePop(){
+	document.getElementById("popupCookie").style.display="none";
+
+}
+	</script>

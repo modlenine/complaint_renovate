@@ -56,7 +56,7 @@ if(check_pms_view != 1){
     $('.result_pms').hide();
 }
 
-if($('.check_user').text()!== $('#history_cpusername').val()){
+if($('#check_user').val()!== $('#history_cpusername').val()){
     $('#edit').hide();
 }
 
@@ -82,7 +82,11 @@ if($('#cp_detail_inves').val() != ""){
 }
 
 if($('.check_status').text()!== "Investigation Complete"){/*********Check Edit button**********/
-    $('.btn_edit').hide();
+    $('#btn_save_history').hide();
+}
+
+if($('#check_user').val()!== $('#cp_detail_inves_signature').val()){
+    $('#btn_save_history').hide();
 }
 
 

@@ -22,8 +22,9 @@ and open the template in the editor.
       </div>
       <div id="navbar" class="navbar-collapse collapse">
           <div>
-              <p><span style="padding-left: 10px;" class="check_user">Hi <?php echo $getuser['username']; ?></span></p>
+              <p><span style="padding-left: 10px;">Hi <?php echo $getuser['username']; ?></span></p>
               <p><span style="padding-left: 10px;" class="check_dept">Dept. <?php echo $getuser['Dept']; ?></span></p>
+              <input hidden="" type="text" name="check_user" id="check_user" value="<?php echo $getuser['username']; ?>" /><!--Check User-->
               <a href="<?php echo base_url('complaint/logout'); ?>" onclick="javascript:return confirm('คุณต้องการออกจากระบบหรือไม่');"><i class="fas fa-sign-out-alt fa-2x logout_btn"></i></a>
           </div>
           
