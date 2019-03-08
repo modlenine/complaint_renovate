@@ -54,6 +54,7 @@ class History_model extends CI_Model{
             "his_cpdetail" => $this->input->post("cp_detail_edit"),
             "his_file" => $this->input->post("showfile"),
             "his_action" => $this->input->post("his_action"),
+            "his_memo" => $this->input->post("cp_modify_reason"),
             "his_user_modify" => $this->input->post("getuser_check"),
             "his_date_modify" => $this->input->post("his_date_modify")
         );
@@ -100,7 +101,8 @@ class History_model extends CI_Model{
             "his_detail_invesdate" => $this->input->post("cp_detail_inves_date"),
             "his_action" => $this->input->post("cp_detail_inves_action"),
             "his_user_modify" => $this->input->post("cp_detail_inves_usermodify"),
-            "his_date_modify" => $this->input->post("cp_detail_inves_datemodify")
+            "his_date_modify" => $this->input->post("cp_detail_inves_datemodify"),
+            "his_memo" => $this->input->post("his_memo")
             
         );
         
@@ -108,9 +110,64 @@ class History_model extends CI_Model{
     }
     
     
+    public function savenc_sec3($cp_no){
+        $data = array(
+            "his_cpno" => $this->input->post("his_cpno"),
+            "his_nc_sec31" => $this->input->post("his_nc_sec31"),
+            "his_nc_sec32" => $this->input->post("his_nc_sec32"),
+            "his_nc_sec32date" => $this->input->post("his_nc_sec32date"),
+            "his_nc_sec32time" => $this->input->post("his_nc_sec32time"),
+            "his_nc_sec33" => $this->input->post("his_nc_sec33"),
+            "his_nc_sec33date" => $this->input->post("his_nc_sec33date"),
+            "his_nc_sec33time" => $this->input->post("his_nc_sec33time"),
+            "his_nc_sec3owner" => $this->input->post("his_nc_sec3owner"),
+            "his_nc_sec3empid" => $this->input->post("his_nc_sec3empid"),
+            "his_nc_sec3dept" => $this->input->post("his_nc_sec3dept"),
+            "his_nc_sec3date" => $this->input->post("his_nc_sec3date"),
+            "his_action" => $this->input->post("his_action"),
+            "his_user_modify" => $this->input->post("his_user_modify"),
+            "his_date_modify" => $this->input->post("his_date_modify")
+        );
+        
+        $this->db->insert("complaint_history_main",$data);
+        
+    }
     
     
-}
+    public function save_editnc_sec3(){
+        $data = array(
+            "his_cpno" => $this->input->post("his_cpno"),
+            "his_nc_sec31" => $this->input->post("nc_sec31edit"),
+            "his_nc_sec32" => $this->input->post("nc_sec32edit"),
+            "his_nc_sec32date" => $this->input->post("nc_sec32dateedit"),
+            "his_nc_sec32time" => $this->input->post("nc_sec32timeedit"),
+            "his_nc_sec33" => $this->input->post("nc_sec33edit"),
+            "his_nc_sec33date" => $this->input->post("nc_sec33dateedit"),
+            "his_nc_sec33time" => $this->input->post("nc_sec33timeedit"),
+            "his_nc_sec3owner" => $this->input->post("his_nc_sec3owner"),
+            "his_nc_sec3empid" => $this->input->post("his_nc_sec3empid"),
+            "his_nc_sec3dept" => $this->input->post("his_nc_sec3dept"),
+            "his_nc_sec3date" => $this->input->post("his_nc_sec3date"),
+            "his_action" => $this->input->post("his_action"),
+            "his_user_modify" => $this->input->post("his_user_modify"),
+            "his_date_modify" => $this->input->post("his_date_modify"),
+            "his_memo" => $this->input->post("nc_sec3edit_memo")
+        );
+        
+        $this->db->insert("complaint_history_main",$data);
+    }
+ 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}/******************MAIN***FUNCTION*******************************/
 
 
 

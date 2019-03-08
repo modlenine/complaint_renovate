@@ -408,7 +408,7 @@
                 "cp_status" => "New Complaint",
                 "cp_modify_by" => $this->input->post("getuser_check"),
                 "cp_modify_datetime" => date("Y/m/d H:i:s"),
-                "cp_modify_action" => "Modify Success"
+                "cp_modify_reason" => $this->input->post("cp_modify_reason")
             );
             
             $this->db->where("cp_no",$cp_no);
@@ -454,7 +454,7 @@
                 "cp_detail_inves_file" => $file_name_date,
                 "cp_modify_by" => $this->input->post("cp_detail_inves_signature"),
                 "cp_modify_datetime" => $this->input->post("cp_detail_inves_datemodify"),
-                "cp_modify_action" => "Modify Success"
+                "cp_modify_reason" => $this->input->post("his_memo")
             );
             
             $this->db->where("cp_no",$cp_no);

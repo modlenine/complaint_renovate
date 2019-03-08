@@ -19,6 +19,14 @@ class History extends CI_Controller{
 //        header("refresh:0; url=http://192.190.10.27/complaint/complaint/edit_investigate/$cp_no");
     }
     
+    public function savenc_sec3_history($cp_no){
+        $this->history_model->savenc_sec3($cp_no);
+        redirect('/nc/nc_sec3edit/'.$cp_no);
+    }
+    
+    
+    
+    
     
     
 }

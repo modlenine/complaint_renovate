@@ -25,6 +25,7 @@ and open the template in the editor.
               <p><span style="padding-left: 10px;">Hi <?php echo $getuser['username']; ?></span></p>
               <p><span style="padding-left: 10px;" class="check_dept">Dept. <?php echo $getuser['Dept']; ?></span></p>
               <input hidden="" type="text" name="check_user" id="check_user" value="<?php echo $getuser['username']; ?>" /><!--Check User-->
+              <input hidden="" type="text" name="check_dept" id="check_dept" value="<?php echo $getuser['Dept']; ?>" />
               <a href="<?php echo base_url('complaint/logout'); ?>" onclick="javascript:return confirm('คุณต้องการออกจากระบบหรือไม่');"><i class="fas fa-sign-out-alt fa-2x logout_btn"></i></a>
           </div>
           
@@ -44,7 +45,7 @@ and open the template in the editor.
           <li class="dropdown" style="border-top:0.5px solid #54acf3;">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-book-open"></i>&nbsp;NC <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#"><i class="far fa-eye"></i>&nbsp;View&nbsp;<span class="label label-success">New&nbsp;<span class="badge bg_new">7</span></span></a></li>
+                <li><a href="<?php echo base_url("nc"); ?>"><i class="far fa-eye"></i>&nbsp;View&nbsp;<span class="label label-success">New&nbsp;<span class="badge bg_new">7</span></span></a></li>
               <li><a href="#"><i class="fas fa-plus-circle"></i>&nbsp;Add</a></li>
             </ul>
           </li>

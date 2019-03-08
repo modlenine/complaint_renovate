@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
         <?php $this->load->view("head/nav"); ?>
         
-        <div class="container">
+        <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             
                 <h1 class="h1_add">Complaint Form ( Edit ): <?php echo $view_cp['cp_no']; ?></h1><hr>
                 <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
@@ -236,20 +236,33 @@ and open the template in the editor.
 
                         </div>
                             
-
-                        
                     </div>
                 </div>
+                
+                
+                
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Memo.</div>
+                    <div class="panel-body">
+                        <div class="col-md-8">
+                            <label class="sec4label">Reason for revision.</label>
+                            <textarea class="form-control" name="cp_modify_reason" id="cp_modify_reason"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
                 <div><input class="btn btn-primary" type="submit" name="add_btn_edit" id="add_btn_edit" value="Update" onclick="javascript:return confirm('คุณต้องการบันทึกข้อมูล ใช่หรือไม่');"/>&nbsp;<input class="btn btn-warning" type="reset" name="reset_btn_edit" id="reset_btn_edit" value="Reset"/></div><hr>
                 <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
                 
                 
-                <input type="text" name=""
+
                 <div>
 
-                    <input type="text" name="his_action" id="his_action" value="Edit Complete" />
-                    <input type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
-                    <input type="text" name="his_date_modify" id="his_date_modify" value="<?php echo date("Y/m/d H:i:s"); ?>" />
+                    <input hidden="" type="text" name="his_action" id="his_action" value="Edit Complete" />
+                    <input hidden="" type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
+                    <input hidden="" type="text" name="his_date_modify" id="his_date_modify" value="<?php echo date("Y/m/d H:i:s"); ?>" />
                 </div>
                 
                 

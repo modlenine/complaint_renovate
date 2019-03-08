@@ -13,7 +13,7 @@ and open the template in the editor.
     <body>
         <?php $this->load->view("head/nav"); ?>
         
-        <div class="container">
+        <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <h1 class="h1_view">Investigate Complaint : <?php echo $view_cp['cp_no']; ?></h1>
             <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
 
@@ -176,11 +176,17 @@ and open the template in the editor.
                         <p><input name="cp_detail_inves_file" id="cp_detail_inves_file" type="file" class="form-control form-control-sm" value=""/></p>
                     </div>
                 </div>
-
+                
+              <div class="form-inline col-md-8">
+                  <label><b>Signature : </b><?php echo $getuser['username']; ?></label>
+                  <label><b>Department : </b><?php echo $getuser['Dept']; ?></label>
+                  <label><b>Date : </b><?php echo date("d/m/Y"); ?></label>
+              </div>
+              
                 <div class="col-md-12 pri">
-                    <div class="col-md-3"><label><b>Signature : </b><?php echo $getuser['username']; ?></label></div>
+<!--                    <div class="col-md-3"><label><b>Signature : </b><?php echo $getuser['username']; ?></label></div>
                     <div class="col-md-3"><label><b>Department : </b><?php echo $getuser['Dept']; ?></label></div>
-                    <div class="col-md-3"><label><b>Date : </b><?php echo date("d/m/Y"); ?></label></div>
+                    <div class="col-md-3"><label><b>Date : </b><?php echo date("d/m/Y"); ?></label></div>-->
 
                     <input type="text" name="cp_detail_inves_signature" id="cp_detail_inves_signature" hidden="" value="<?php echo $getuser['username']; ?>"/>
                     <input type="text" name="cp_detail_inves_dept" id="cp_detail_inves_dept" hidden="" value="<?php echo $getuser['Dept']; ?>"/>
@@ -202,12 +208,20 @@ and open the template in the editor.
                         <p><label><b>Attached file : </b><a href="<?php echo base_url(); ?>asset/investigate/detail_inves/<?php echo $view_cp['cp_detail_inves_file']; ?>" target="_blank"><?php echo $view_cp['cp_detail_inves_file']; ?></a></label></p>
                     </div>
                 </div>
-
+              
+              <div class="form-inline col-md-8">
+                  <label><b>Signature : </b><?php echo $view_cp['cp_detail_inves_signature']; ?></label>
+                  <label><b>Department : </b><?php echo $view_cp['cp_detail_inves_dept']; ?></label>
+                  <label><b>Date : </b><?php $date = date_create($view_cp['cp_detail_inves_date']);
+                            echo date_format($date, "d/m/Y"); ?></label>
+              </div>
+              
+              
                 <div class="col-md-12 pri">
-                    <div class="col-md-3"><label><b>Signature : </b><?php echo $view_cp['cp_detail_inves_signature']; ?></label></div>
+<!--                    <div class="col-md-3"><label><b>Signature : </b><?php echo $view_cp['cp_detail_inves_signature']; ?></label></div>
                     <div class="col-md-3"><label><b>Department : </b><?php echo $view_cp['cp_detail_inves_dept']; ?></label></div>
                     <div class="col-md-3"><label><b>Date : </b><?php $date = date_create($view_cp['cp_detail_inves_date']);
-                            echo date_format($date, "d/m/Y"); ?></label></div>
+                            echo date_format($date, "d/m/Y"); ?></label></div>-->
 
                     <input type="text" name="cp_detail_inves_signature" id="cp_detail_inves_signature" hidden="" value="<?php echo $view_cp['cp_detail_inves_signature']; ?>"/>
                     <input type="text" name="cp_detail_inves_dept" id="cp_detail_inves_dept" hidden="" value="<?php echo $view_cp['cp_detail_inves_dept']; ?>"/>
@@ -264,8 +278,10 @@ and open the template in the editor.
                     <input hidden="" type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
                     <input hidden="" type="text" name="his_date_modify" id="his_date_modify" value="<?php echo date("Y/m/d H:i:s"); ?>" />
                     
+                    <input class="btn btn-info" type="submit" name="btn_save_history" id="btn_save_history" value="Edit" />
                 </div>
-              <div class="col-md-12"><input class="btn btn-info" type="submit" name="btn_save_history" id="btn_save_history" value="Edit" /></div>
+              
+              
             </form>
       </div>
       </div>
@@ -316,22 +332,28 @@ and open the template in the editor.
                 </div>
           
                 <div class="form-row">
-                    <div class="col-md-8 pri">
-                        <div class="col-md-4 form-group">
+                    <div class="col-md-10 pri">
+                        <div class="col-md-5 form-group">
                             <label><b>ไม่เป็นข้อบกพร่องของบริษัท :</b></label>
                             <input type="radio" id="cp_sum" name="cp_sum" value="no" />
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <label><b>เป็นข้อบกพร่องของบริษัท :</b></label>
                             <input type="radio" id="cp_sum" name="cp_sum" value="yes"/>
                         </div>
                     </div>
                 </div>
-
+                
+          <div class="form-inline col-md-8">
+              <label><b>Signature : </b><?php echo $getuser['username']; ?></label>
+              <label><b>Department : </b><?php echo $getuser['Dept']; ?></label>
+              <label><b>Date : </b><?php echo date("d/m/Y"); ?></label>
+          </div>
+          
                 <div class="col-md-12 pri">
-                    <div class="col-md-3"><label><b>Signature : </b><?php echo $getuser['username']; ?></label></div>
+<!--                    <div class="col-md-3"><label><b>Signature : </b><?php echo $getuser['username']; ?></label></div>
                     <div class="col-md-3"><label><b>Department : </b><?php echo $getuser['Dept']; ?></label></div>
-                    <div class="col-md-3"><label><b>Date : </b><?php echo date("d/m/Y"); ?></label></div>
+                    <div class="col-md-3"><label><b>Date : </b><?php echo date("d/m/Y"); ?></label></div>-->
 
                     <input type="text" name="cp_sum_inves_signature" id="cp_sum_inves_signature" hidden="" value="<?php echo $getuser['username']; ?>"/>
                     <input type="text" name="cp_sum_inves_dept" id="cp_sum_inves_dept" hidden="" value="<?php echo $getuser['Dept']; ?>"/>
@@ -357,25 +379,30 @@ and open the template in the editor.
           
           <input type="text" name="radio_check" id="radio_check" value="<?php echo $view_cp['cp_sum']; ?>" hidden=""/>
                 <div class="form-row">
-                    <div class="col-md-8 pri">
-                    <div class="col-md-4">
+                    <div class="col-md-10 pri">
+                    <div class="col-md-5">
                             <label><b>ไม่เป็นข้อบกพร่องของบริษัท :</b></label>
                             <input type="radio" id="cp_sum_no" name="cp_sum" value="no" />
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <label><b>เป็นข้อบกพร่องของบริษัท :</b></label>
                             <input type="radio" id="cp_sum_yes" name="cp_sum" value="yes"/>
                         </div>
                     </div>
                 </div>
           
-          
+          <div class="form-inline col-md-8">
+              <label><b>Signature : </b><?php echo $view_cp['cp_sum_inves_signature']; ?></label>
+              <label><b>Department : </b><?php echo $view_cp['cp_sum_inves_dept']; ?></label>
+              <label><b>Date : </b><?php $date = date_create($view_cp['cp_sum_inves_date']);
+                            echo date_format($date, "d/m/Y"); ?></label>
+          </div>
 
                 <div class="col-md-12 pri">
-                    <div class="col-md-3"><label><b>Signature : </b><?php echo $view_cp['cp_sum_inves_signature']; ?></label></div>
+<!--                    <div class="col-md-3"><label><b>Signature : </b><?php echo $view_cp['cp_sum_inves_signature']; ?></label></div>
                     <div class="col-md-3"><label><b>Department : </b><?php echo $view_cp['cp_sum_inves_dept']; ?></label></div>
                     <div class="col-md-3"><label><b>Date : </b><?php $date = date_create($view_cp['cp_sum_inves_date']);
-                            echo date_format($date, "d/m/Y"); ?></label></div>
+                            echo date_format($date, "d/m/Y"); ?></label></div>-->
 
                 </div>
 

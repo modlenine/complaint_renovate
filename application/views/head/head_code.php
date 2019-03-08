@@ -33,7 +33,9 @@ and open the template in the editor.
   <link rel="stylesheet" href="https://cdn.rawgit.com/mladenplavsic/bootstrap-navbar-sidebar/3bd282bd/docs/docs.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdn.rawgit.com/mladenplavsic/bootstrap-navbar-sidebar/3bd282bd/docs/docs.js"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+  
+  
   
         
 
@@ -187,6 +189,52 @@ and open the template in the editor.
      color:#E6E6FA;
     }
 }
+
+
+
+
+
+
+
+
+/*************************START**NC***>>>>>>>>>>>************************/
+
+
+/**********MAIN***********/
+.head_text{
+    text-align: center;
+}
+
+.ncmain_s1_label{
+    font-weight: 600;
+}
+
+.sec4label{
+    color:red;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       
       
   </style>        

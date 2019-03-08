@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
         <?php $this->load->view("head/nav"); ?>
         
-        <div class="container">
+        <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <h1 class="head_list_cp">List of Complaint</h1>
             <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div><hr>
             <table id="view_cp" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">

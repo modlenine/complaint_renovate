@@ -190,11 +190,101 @@ $('input#cp_conclu_cost').keyup(function(event) {/*****Comma function*******/
 
 
 
+/*****************************NC***************************************/
+/************SEC3 Control***************/
+if($('#nc_sec31').val()!==""){
+    $('#nc_sec31').prop("readonly",true);
+    $('#nc_sec32').prop("readonly",true);
+    $('#nc_sec32date').prop("readonly",true);
+    $('#nc_sec32time').prop("readonly",true);
+    $('#nc_sec33').prop("readonly",true);
+    $('#nc_sec33date').prop("readonly",true);
+    $('#nc_sec33time').prop("readonly",true);
+    $('#sec3save').hide();
+}else{
+    $('#btn_sec3edit').hide();
+}
+
+if($('#check_permit').val()==0){
+    $('#nc_sec31').prop("readonly",true);
+    $('#nc_sec32').prop("readonly",true);
+    $('#nc_sec32date').prop("readonly",true);
+    $('#nc_sec32time').prop("readonly",true);
+    $('#nc_sec33').prop("readonly",true);
+    $('#nc_sec33date').prop("readonly",true);
+    $('#nc_sec33time').prop("readonly",true);
+    $('#sec3save').hide();
+    $('#btn_sec3edit').hide();
+}
+    
+
+
+/************SEC3 Control***************/
+
+
+
+if($('#check_dept').val()!== "QMR"){/****************SEC4***CHECK**DEPT****************/
+    $('#nc_sec4f1').prop("readonly",true);
+    $('#nc_sec4f1_file').prop("readonly",true);
+    $('#nc_sec4f1_date').prop("readonly",true);
+    $('#nc_sec4f1_time').prop("readonly",true);
+    $('#btn_sec4f1').hide();
+    
+    $('#nc_sec4f2').prop("readonly",true);
+    $('#nc_sec4f2_file').prop("readonly",true);
+    $('#nc_sec4f2_date').prop("readonly",true);
+    $('#nc_sec4f2_time').prop("readonly",true);
+    $('#btn_sec4f2').hide();
+    
+    $('#nc_sec4f3').prop("readonly",true);
+    $('#nc_sec4f3_file').prop("readonly",true);
+    $('#btn_sec4f3').hide();
+    
+    $('#nc_sec5').prop("readonly",true);
+    $('#nc_sec5file').prop("readonly",true);
+    $('#nc_sec5cost').prop("readonly",true);
+    $('#btn_sec5').hide();
+}
+
+
+/*******************CHECK SEC4*******************************/
+if($('#nc_sec4f1').val()==""){
+    $('#nc_sec4f2').prop("readonly",true);
+    $('#nc_sec4f2_file').prop("readonly",true);
+    $('#nc_sec4f2_date').prop("readonly",true);
+    $('#nc_sec4f2_time').prop("readonly",true);
+    $('#btn_sec4f2').hide();
+    
+    $('#nc_sec4f3').prop("readonly",true);
+    $('#nc_sec4f3_file').prop("readonly",true);
+    $('#btn_sec4f3').hide();
+}
+
+if($('#nc_sec4f2').val()==""){
+    $('#nc_sec4f3').prop("readonly",true);
+    $('#nc_sec4f3_file').prop("readonly",true);
+    $('#btn_sec4f3').hide();
+}
+
+if($('#nc_sec31').val()==""){
+    $('#nc_sec4f1').prop("readonly",true);
+    $('#nc_sec4f1_file').prop("readonly",true);
+    $('#nc_sec4f1_date').prop("readonly",true);
+    $('#nc_sec4f1_time').prop("readonly",true);
+    $('#btn_sec4f1').hide();
+}
+/*******************CHECK SEC4*******************************/
 
 
 
 
-
+/*******************CHECK**SEC5******************************/
+if($('#nc_sec4f3').val()==""){
+    $('#nc_sec5').prop("readonly",true);
+    $('#nc_sec5file').prop("readonly",true);
+    $('#nc_sec5cost').prop("readonly",true);
+    $('#btn_sec5').hide();
+}
 
 
 

@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
         <?php $this->load->view("head/nav"); ?>
 
-        <div class="container">
+        <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <form name="frmMain" action="<?php echo base_url('history/add_history/'); ?><?php echo $view_cp['cp_no']; ?>" method="post" enctype="multipart/form-data">
             <h1 class="h1_view">View Complaint : <?php echo $view_cp['cp_no']; ?></h1>
             <div class="btn_back">
