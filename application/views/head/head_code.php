@@ -76,6 +76,14 @@ and open the template in the editor.
           background-color: #2196f3;
           
       }
+      .panel-danger>.panel-heading{
+          background-color: #CC0000;
+          color:white;
+          
+      }
+      .panel-danger{
+          border-color:#CC0000;
+      }
       .panel-warning>.panel-heading{
           background-color:#FFD700;
           
@@ -213,6 +221,7 @@ and open the template in the editor.
     color:red;
     font-size: 12px;
 }
+
 
 
 

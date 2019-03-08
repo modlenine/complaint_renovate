@@ -103,8 +103,8 @@ and open the template in the editor.
                         <textarea class="form-control" rows="5" name="nc_sec32" id="nc_sec32"><?php echo $getdatamain->nc_sec32; ?></textarea>
                         <label style="margin-top: 5px;">กำหนดเสร็จ</label>
                         <div class="form-inline">
-                            <input type="date" name="nc_sec32date" id="nc_sec32date" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
-                            <input type="time" name="nc_sec32time" id="nc_sec32time" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec32time; ?>"/>
+                            <input type="date" name="nc_sec32date" id="nc_sec32date" class="form-control" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
+                            <input type="time" name="nc_sec32time" id="nc_sec32time" class="form-control" value="<?php echo $getdatamain->nc_sec32time; ?>"/>
                         </div>
                     </div>
                     
@@ -114,8 +114,8 @@ and open the template in the editor.
                         <textarea class="form-control" rows="5" name="nc_sec33" id="nc_sec33"><?php echo $getdatamain->nc_sec33; ?></textarea>
                         <label style="margin-top: 5px;">กำหนดเสร็จ</label>
                         <div class="form-inline">
-                            <input type="date" name="nc_sec33date" id="nc_sec33date" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
-                            <input type="time" name="nc_sec33time" id="nc_sec33time" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec33time; ?>"/>
+                            <input type="date" name="nc_sec33date" id="nc_sec33date" class="form-control" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
+                            <input type="time" name="nc_sec33time" id="nc_sec33time" class="form-control" value="<?php echo $getdatamain->nc_sec33time; ?>"/>
                         </div>
                         <input type="submit" name="sec3save" id="sec3save" class="btn btn-primary" style="margin-top: 10px;"/>
                         
@@ -188,54 +188,83 @@ and open the template in the editor.
                 <div class="panel-body">
                     
                     <div class="form-group col-md-10">
+                        <form name="sec4f1" method="post" action="<?php echo base_url("nc/save_sec4f1/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
                         <label>ผลการติดตามครั้งที่ 1</label>
-                        <textarea class="form-control" rows="5" name="nc_sec4f1" id="nc_sec4f1"></textarea>
+                        <textarea class="form-control" rows="5" name="nc_sec4f1" id="nc_sec4f1"><?php echo $getdatamain->nc_sec4f1; ?></textarea>
                         <label style="margin-top: 5px;">เอกสารประกอบ</label>
-                        <input type="file" class="form-control" name="nc_sec4f1_file" id="nc_sec4f1_file"/>
+                        <input type="file" class="form-control" name="nc_sec4f1_file" id="nc_sec4f1_file" value="<?php echo $getdatamain->nc_sec4f1_file; ?>"/>
+                        <label id="get_nc_sec4f1_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec4/f1/"); ?><?php echo $getdatamain->nc_sec4f1_file; ?>" target="_blank"><?php echo $getdatamain->nc_sec4f1_file; ?></a></label>
                         <div class="form-inline" style="margin-top: 5px;">
-                            <input type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status" value="1"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status" value=0/>&nbsp;<label>ไม่ปิดสรุป</label>
+                            <input type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label>
                         </div>
+                        
+                        <input hidden="" type="text" name="nc_sec4f1_radiocheck" id="nc_sec4f1_radiocheck" value="<?php echo $getdatamain->nc_sec4f1_status; ?>" /><!-- radio check -->
+                        
                         <label>การติดตามผลครั้งที่ 2</label>
                         <div class="form-inline">
-                            <input type="date" class="form-control" name="nc_sec4f1_date" id="nc_sec4f1_date"/>
-                            <input type="time" class="form-control" name="nc_sec4f1_time" id="nc_sec4f1_time"/>
+                            <input type="date" class="form-control" name="nc_sec4f1_date" id="nc_sec4f1_date" value="<?php echo $getdatamain->nc_sec4f1_date; ?>"/>
+                            <input type="time" class="form-control" name="nc_sec4f1_time" id="nc_sec4f1_time" value="<?php echo $getdatamain->nc_sec4f1_time; ?>"/>
                             <input type="submit" class="btn btn-primary" name="btn_sec4f1" id="btn_sec4f1"/>
                         </div>
                         <label class="sec4label">สำหรับ qmr เท่านั้น</label>
                         <hr>
+                        <input hidden="" type="text" name="nc_status_sec4f1" id="nc_status_sec4f1" value="Followup_1st" /><!-- Status -->
+                        </form>
                     </div>
                     
                     <div class="form-group col-md-10">
+                        <form name="sec4f2" method="post" action="<?php echo base_url("nc/save_sec4f2/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
                         <label>ผลการติดตามครั้งที่ 2</label>
-                        <textarea class="form-control" rows="5" name="nc_sec4f2" id="nc_sec4f2"></textarea>
+                        <textarea class="form-control" rows="5" name="nc_sec4f2" id="nc_sec4f2"><?php echo $getdatamain->nc_sec4f2; ?></textarea>
                         <label style="margin-top: 5px;">เอกสารประกอบ</label>
-                        <input type="file" class="form-control" name="nc_sec4f2_file" id="nc_sec4f2_file"/>
+                        <input type="file" class="form-control" name="nc_sec4f2_file" id="nc_sec4f2_file" value="<?php echo $getdatamain->nc_sec4f2_file; ?>"/>
+                        <label id="get_nc_sec4f2_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec4/f2/"); ?><?php echo $getdatamain->nc_sec4f2_file; ?>" target="_blank"><?php echo $getdatamain->nc_sec4f2_file; ?></a></label>
                         <div class="form-inline" style="margin-top: 5px;">
-                            <input type="radio" name="nc_sec4f2_status" value="1"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="nc_sec4f2_status" value="0"/>&nbsp;<label>ไม่ปิดสรุป</label>
+                            <input type="radio" name="nc_sec4f2_status" id="nc_sec4f2_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="nc_sec4f2_status" id="nc_sec4f2_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label>
                         </div>
+                        
+                        <input hidden="" type="text" name="nc_sec4f2_radiocheck" id="nc_sec4f2_radiocheck" value="<?php echo $getdatamain->nc_sec4f2_status; ?>" /><!-- radio check -->
+                        
                         <label>การติดตามผลครั้งที่ 3</label>
                         <div class="form-inline">
-                            <input type="date" class="form-control" name="nc_sec4f2_date" id="nc_sec4f2_date"/>
-                            <input type="time" class="form-control" name="nc_sec4f2_time" id="nc_sec4f2_time"/>
+                            <input type="date" class="form-control" name="nc_sec4f2_date" id="nc_sec4f2_date" value="<?php echo $getdatamain->nc_sec4f2_date; ?>"/>
+                            <input type="time" class="form-control" name="nc_sec4f2_time" id="nc_sec4f2_time" value="<?php echo $getdatamain->nc_sec4f2_time; ?>"/>
                             <input type="submit" class="btn btn-primary" name="btn_sec4f2" id="btn_sec4f2"/>
                         </div>
                         <label class="sec4label">สำหรับ qmr เท่านั้น</label>
                         <hr>
+                        <input hidden="" type="text" name="nc_status_sec4f2" id="nc_status_sec4f2" value="Followup_2nd" /><!-- Status -->
+                        </form>
                     </div>
-                    
+                           
                     <div class="form-group col-md-10">
+                        <form name="sec4f3" method="post" action="<?php echo base_url("nc/save_sec4f3/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
                         <label>ผลการติดตามครั้งที่ 3</label>
-                        <textarea class="form-control" rows="5" name="nc_sec4f3" id="nc_sec4f3"></textarea>
+                        <textarea class="form-control" rows="5" name="nc_sec4f3" id="nc_sec4f3"><?php echo $getdatamain->nc_sec4f3; ?></textarea>
                         <label style="margin-top: 5px;">เอกสารประกอบ</label>
-                        <input type="file" class="form-control" name="nc_sec4f3_file" id="nc_sec4f3_file"/>
+                        <input type="file" class="form-control" name="nc_sec4f3_file" id="nc_sec4f3_file" value="<?php echo $getdatamain->nc_sec4f2_file; ?>"/>
+                        <label id="get_nc_sec4f3_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec4/f3/"); ?><?php echo $getdatamain->nc_sec4f3_file; ?>" target="_blank"><?php echo $getdatamain->nc_sec4f3_file; ?></a></label>
                         <div class="form-inline" style="margin-top: 5px;">
-                            <input type="radio" name="nc_sec4f3_status"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="nc_sec4f3_status"/>&nbsp;<label>ไม่ปิดสรุป</label><br>
+                            <input type="radio" name="nc_sec4f3_status" id="nc_sec4f3_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="nc_sec4f3_status" id="nc_sec4f3_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label><br>
+                            
+            <input hidden="" type="text" name="nc_sec4f3_radiocheck" id="nc_sec4f3_radiocheck" value="<?php echo $getdatamain->nc_sec4f3_status; ?>" /><!-- radio check -->
+                            
                             <label class="sec4label">สำหรับ qmr เท่านั้น</label>
                         </div>
                         <input type="submit" class="btn btn-primary" name="btn_sec4f3" id="btn_sec4f3"/>
+                        
+                        <input hidden="" type="text" name="getdeptcode" id="getdeptcode" value="<?php echo $getuser['DeptCode']; ?>"/>
+                        </form>
+                        <input type="text" name="checkstatus_failed" id="checkstatus_failed" value="<?php echo $getdatamain->nc_status; ?>" />
+                        
+                        <form name="sec4f3" method="post" action="<?php echo base_url("nc/create_cpfailed/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
+                            <button class="btn btn-danger">Create New Complaint</button>
+                            <input hidden="" type="text" name="getdeptcode" id="getdeptcode" value="<?php echo $getuser['DeptCode']; ?>"/>
+                        </form>
+
                     </div>
                     
                     
@@ -245,29 +274,53 @@ and open the template in the editor.
 
 
             
-<!-- *********************************SECTION5****AREA**************************************-->           
+<!-- *********************************SECTION5****AREA**************************************--> 
+<?php  
+    if($getdatamain->nc_sec4f3_status == "no"){
+        $ncfailed = "( Failed )";
+        $baseurl = "nc/save_sec5failed/";
+    }else{$ncfailed= "";$baseurl = "nc/save_sec5/";}
+    
+    if($getdatamain->nc_status == "Conclusion of NC Failed!"){
+        $show = $getdatamain->nc_sec5failed;
+        $showfile = $getdatamain->nc_sec5filefailed;
+        $showcost = $getdatamain->nc_sec5costfailed;
+    }else{
+        $show = $getdatamain->nc_sec5;
+        $showfile = $getdatamain->nc_sec5file;
+        $showcost = $getdatamain->nc_sec5cost;
+    }
+?>
             <div class="panel panel-primary"><!--SECTION 5-->
-                <div class="panel-heading">5. Conclusion Of NC</div>
+                <div class="panel-heading">5. Conclusion Of NC <?php echo $ncfailed; ?></div>
                 <div class="panel-body">
+                    <form name="sec4f2" method="post" action="<?php echo base_url($baseurl); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
                     <div class="form-group col-md-10">
                         <label>Conclusion Of NC</label>
-                        <textarea class="form-control" rows="5" name="nc_sec5" id="nc_sec5"></textarea>
+                        <textarea class="form-control" rows="5" name="nc_sec5" id="nc_sec5"><?php echo $show; ?></textarea>
                         <label style="margin-top: 5px;">เอกสารประกอบ</label>
-                        <input type="file" class="form-control" name="nc_sec5file" id="nc_sec5file"/>
+                        <input type="file" class="form-control" name="nc_sec5file" id="nc_sec5file" value="<?php echo $showfile; ?>"/>
+                        <label id="get_nc_sec5_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec5/"); ?><?php echo $showfile; ?>" target="_blank"><?php echo $showfile; ?></a></label><br>
                         <label style="margin-top: 5px;">ค่าใช้จ่ายที่เกิดขึ้น โดยประมาณ</label>
                         <div class="form-inline">
-                            <input type="number" class="form-control" name="nc_sec5cost" id="nc_sec5cost"/>&nbsp;<label>บาท</label>
+                            <input type="number" class="form-control" name="nc_sec5cost" id="nc_sec5cost" value="<?php echo $showcost; ?>"/>&nbsp;<label>บาท</label>
                         </div>
                         <label class="sec4label">สำหรับ qmr เท่านั้น</label>
                     </div>
+                    <div class="col-md-10">
+                        <input type="submit" class="btn btn-primary" name="btn_sec5" id="btn_sec5"/>
+                    </div>
+                        <input hidden="" type="text" name="nc_status_sec5" id="nc_status_sec5" value="Conclusion of NC" /><!-- Status -->
+                        <input hidden="" type="text" name="getdeptcode" id="getdeptcode" value="<?php echo $getuser['DeptCode']; ?>"/>
+                    </form>
                     
                     
                 </div>
-                <div class="panel-footer">
-                    <input type="submit" class="btn btn-primary" name="btn_sec5" id="btn_sec5"/>
-                </div>
+
             </div>
 <!-- *********************************SECTION5****AREA**************************************--> 
+
+
             
             
             

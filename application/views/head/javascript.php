@@ -120,11 +120,11 @@ if($('#check_user').val()!== $('#cp_detail_inves_signature').val()){
         $('#cp_sum_inves_file').prop("readonly",true);
    }
    
-   if($('#radio_check').val() == "yes"){
+   if($('#radio_check').val() == "yes"){/******Check radio button********/
        $('input[name="cp_sum"]').val("yes").prop("checked",true);
        $('.conclusion').hide();
    }
-   if($('#radio_check').val() == "no"){
+   if($('#radio_check').val() == "no"){/******Check radio button********/
        $('#cp_sum_no').val("no").prop("checked",true);
    }
    
@@ -274,7 +274,69 @@ if($('#nc_sec31').val()==""){
     $('#btn_sec4f1').hide();
 }
 /*******************CHECK SEC4*******************************/
+/**************F1*********************/
+if($('#nc_sec4f1').val()!==""){/***********Check sec4f1 for use readonly*************/
+    $('#nc_sec4f1_file').hide();
+    $('#nc_sec4f1').prop("readonly",true);
+    $('#nc_sec4f1_date').prop("readonly",true);
+    $('#nc_sec4f1_time').prop("readonly",true);
+    $('#btn_sec4f1').hide();
+    
+}else{
+    $('#get_nc_sec4f1_file').hide();
+}
 
+if($('#nc_sec4f1_radiocheck').val() == "yes"){/******Check radio button***********/
+    $('#nc_sec4f1_status_yes').prop("checked",true);
+}
+if($('#nc_sec4f1_radiocheck').val() == "no"){/******Check radio button***********/
+    $('#nc_sec4f1_status_no').prop("checked",true);
+}
+/**************F1*********************/
+
+
+
+
+/**************F2*********************/
+if($('#nc_sec4f2').val()!==""){/***********Check sec4f2 for use readonly*************/
+    $('#nc_sec4f2_file').hide();
+    $('#nc_sec4f2').prop("readonly",true);
+    $('#nc_sec4f2_date').prop("readonly",true);
+    $('#nc_sec4f2_time').prop("readonly",true);
+    $('#btn_sec4f2').hide();
+    
+}else{
+    $('#get_nc_sec4f2_file').hide();
+}
+
+if($('#nc_sec4f2_radiocheck').val() == "yes"){/******Check radio button***********/
+    $('#nc_sec4f2_status_yes').prop("checked",true);
+}
+if($('#nc_sec4f2_radiocheck').val() == "no"){/******Check radio button***********/
+    $('#nc_sec4f2_status_no').prop("checked",true);
+}
+/**************F2*********************/
+
+
+
+
+/**************F3*********************/
+if($('#nc_sec4f3').val()!==""){/***********Check sec4f3 for use readonly*************/
+    $('#nc_sec4f3_file').hide();
+    $('#nc_sec4f3').prop("readonly",true);
+    $('#btn_sec4f3').hide();
+    
+}else{
+    $('#get_nc_sec4f3_file').hide();
+}
+
+if($('#nc_sec4f3_radiocheck').val() == "yes"){/******Check radio button***********/
+    $('#nc_sec4f3_status_yes').prop("checked",true);
+}
+if($('#nc_sec4f3_radiocheck').val() == "no"){/******Check radio button***********/
+    $('#nc_sec4f3_status_no').prop("checked",true);
+}
+/**************F3*********************/
 
 
 
@@ -284,6 +346,14 @@ if($('#nc_sec4f3').val()==""){
     $('#nc_sec5file').prop("readonly",true);
     $('#nc_sec5cost').prop("readonly",true);
     $('#btn_sec5').hide();
+}
+
+if($('#nc_sec5').val()!==""){/***********Check sec5 for use readonly*************/
+    $('#nc_sec5file').hide();
+    $('#nc_sec5').prop("readonly",true);
+    $('#btn_sec5').hide();
+    $('#nc_sec5cost').prop("readonly",true);
+    
 }
 
 

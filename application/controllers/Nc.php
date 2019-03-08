@@ -62,6 +62,31 @@ class Nc extends CI_Controller {
     }
     
     
+    public function save_sec4f1($cp_no){
+        $this->nc_model->save_sec4f1($cp_no);
+    }
+    
+    public function save_sec4f2($cp_no){
+        $this->nc_model->save_sec4f2($cp_no);
+    }
+    
+    public function save_sec4f3($cp_no){
+        $this->nc_model->save_sec4f3($cp_no);
+    }
+    
+    public function save_sec5($cp_no){
+        $this->nc_model->save_sec5($cp_no);
+    }
+    
+    public function save_sec5failed($cp_no){
+        $this->nc_model->save_sec5failed($cp_no);
+    }
+    
+    public function create_cpfailed($cp_no){
+        $this->nc_model->create_cpfailed($cp_no);
+    }
+    
+    
     
     
     

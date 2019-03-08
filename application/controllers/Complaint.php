@@ -5,6 +5,7 @@ class Complaint extends CI_Controller{
         $this->load->model("complaint_model");
         $this->load->model("login_model");
         $this->load->model("history_model");
+        $this->load->model("nc_model");
     }
     
     public function index(){/***************List Page***************/
@@ -159,6 +160,24 @@ class Complaint extends CI_Controller{
         $this->complaint_model->save_newcomplaint();
         
         header("refresh:0; url=http://192.190.10.27/complaint");
+    }
+    
+    public function add_failed($cp_no,$dept_code){
+        $this->login_model->call_login();
+        
+        $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
+        $data['get_toppic'] = $this->complaint_model->get_toppic();
+        $data['get_dept_respons'] = $this->complaint_model->get_dept_respons($dept_code);
+        $data['getuser'] = $this->login_model->getuser();
+        $data['get_pri_use'] = $this->complaint_model->get_pri_view($cp_no);
+        $data['get_pri_topic'] = $this->complaint_model->get_pri_topic();
+        $data['getdatamain'] = $this->nc_model->getdata_main($cp_no);
+        $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
+        $data['getdept_checkbox'] = $this->complaint_model->getdept_checkbox($cp_no);
+        
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("complaint/add_failed",$data);
     }
     
     
