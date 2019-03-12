@@ -17,11 +17,11 @@ class Nc_model extends CI_Model{
         $data = array(
             "nc_sec31" => $this->input->post("nc_sec31"),
             "nc_sec32" => $this->input->post("nc_sec32"),
-            "nc_sec32date" => $this->input->post("nc_sec3date"),
-            "nc_sec32time" => $this->input->post("nc_sec32time"),
+            "nc_sec32date" => $this->input->post("datetime32"),
+//            "nc_sec32time" => $this->input->post("nc_sec32time"),
             "nc_sec33" => $this->input->post("nc_sec33"),
-            "nc_sec33date" => $this->input->post("nc_sec33date"),
-            "nc_sec33time" => $this->input->post("nc_sec33time"),
+            "nc_sec33date" => $this->input->post("datetime33"),
+//            "nc_sec33time" => $this->input->post("nc_sec33time"),
             "nc_sec3owner" => $this->input->post("nc_sec3owner"),
             "nc_sec3empid" => $this->input->post("nc_sec3empid"),
             "nc_sec3dept" => $this->input->post("nc_sec3dept"),
@@ -39,15 +39,17 @@ class Nc_model extends CI_Model{
     
     
     public function savenc_sec3edit($cp_no){
+//        $date = date_create($this->input->post("datetime1_edit"));
+//        $dateformat = date_format($date, "Y-m-d H:i:s");
         
         $data = array(
             "nc_sec31" => $this->input->post("nc_sec31edit"),
             "nc_sec32" => $this->input->post("nc_sec32edit"),
-            "nc_sec32date" => $this->input->post("nc_sec32dateedit"),
-            "nc_sec32time" => $this->input->post("nc_sec32timeedit"),
+            "nc_sec32date" => $this->input->post("datetime1_edit"),
+//            "nc_sec32time" => $this->input->post("nc_sec32timeedit"),
             "nc_sec33" => $this->input->post("nc_sec33edit"),
-            "nc_sec33date" => $this->input->post("nc_sec33dateedit"),
-            "nc_sec33time" => $this->input->post("nc_sec33timeedit"),
+            "nc_sec33date" => $this->input->post("datetime2_edit"),
+//            "nc_sec33time" => $this->input->post("nc_sec33timeedit"),
             "nc_sec3edit_memo" => $this->input->post("nc_sec3edit_memo"),
             "nc_modify_by" => $this->input->post("nc_modify_by"),
             "nc_modify_date" => $this->input->post("nc_modify_date")
@@ -280,7 +282,7 @@ class Nc_model extends CI_Model{
             echo 'alert("Update data Success")';
             echo '</script>';
             
-            header("refresh:0; url=http://192.190.10.27/complaint/complaint/add_failed/$cp_no/$dept_code");
+            header("refresh:0; url=http://192.190.10.27/complaint/nc/main/$cp_no");
         }
     }
     

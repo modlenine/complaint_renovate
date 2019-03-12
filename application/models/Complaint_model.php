@@ -98,9 +98,15 @@
     }
     
     
-    public function update_dept_related(){
-        
-    }
+public function get_newcp(){
+    $get_newcp = $this->db->query("SELECT cp_status FROM complaint_main WHERE cp_status='New Complaint' ");
+    return $get_newcp->num_rows();
+}
+
+public function get_newnc(){
+    $get_newnc = $this->db->query("SELECT nc_status FROM complaint_main WHERE nc_status='Transfrom Complaint' ");
+    return $get_newnc->num_rows();
+}
     
 
         
@@ -185,6 +191,89 @@
             
         }/*******Insert data to complaint_main table********/
     }/***end save_newcomplaint***/
+    
+    
+    
+    public function saveData_failed(){
+        $get_cp_no = $this->getCPno();/********Get new cp_no**********/
+            
+        $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
+        $file_name = $_FILES['file_add']['name'];
+        $file_name_cut = str_replace(" ", "", $file_name);
+        $file_name_date = str_replace(".", "-" . $date . ".", $file_name_cut);
+        $file_size = $_FILES['file_add']['size'];
+        $file_tmp = $_FILES['file_add']['tmp_name'];
+        $file_type = $_FILES['file_add']['type'];
+        move_uploaded_file($file_tmp, "asset/add/" . $file_name_date);
+
+        print_r($file_name);
+        echo "<br>" . "Copy/Upload Complete" . "<br>";
+        
+        
+        
+        $get_input_priority = $this->input->post("cp_pri_name_get");/*******Code Insert select array********/
+        foreach ($get_input_priority as $gp){/*******Check array input select*********/
+            $save_pri = array(
+                "cp_pri_use_id" => $gp,
+                "cp_pri_use_cpno" => $get_cp_no
+            );
+            $this->db->insert("complaint_priority_use",$save_pri); 
+        }/*******Code Insert select array********/
+        
+        
+        
+        
+        $get_input_dept = $this->input->post("dept_edit");/****Code Insert radio array******/
+        foreach ($get_input_dept as $gd){/******Check array input radio**********/
+            $save_dept = array(
+            "cp_dept_cp_no" => $get_cp_no,
+            "cp_dept_code" => $gd
+        );
+        $this->db->insert("complaint_department",$save_dept);
+            
+        }/****Code Insert radio array******/
+        
+        
+        
+        
+
+        $data = array(/*******Insert data to complaint_main table********/
+                "cp_no" => $get_cp_no,
+                "cp_date" => $this->input->post("cp_date"),
+                "cp_topic" => $this->input->post("cp_topic_f"),
+                "cp_topic_cat" => $this->input->post("cp_topic_cat"),
+//                "cp_priority" => $this->input->post(""),
+                "cp_user_name" => $this->input->post("cp_user_name"),
+                "cp_user_empid" => $this->input->post("cp_user_empid"),
+                "cp_user_dept" => $this->input->post("cp_user_dept"),
+                "cp_cus_name" => $this->input->post("cp_cus_name"),
+                "cp_cus_ref" => $this->input->post("cp_cus_ref"),
+                "cp_invoice_no" => $this->input->post("cp_invoice_no"),
+                "cp_pro_code" => $this->input->post("cp_pro_code"),
+                "cp_pro_lotno" => $this->input->post("cp_pro_lotno"),
+                "cp_pro_qty" => $this->input->post("cp_pro_qty"),
+                "cp_detail" => $this->input->post("cp_detail"),
+                "cp_file" => $file_name_date,
+                "cp_status" => "New Complaint",
+                "cp_no_old" => $this->input->post("cp_noold")
+            );
+        
+        
+        
+        if($this->db->insert("complaint_main",$data)){
+            echo '<script language="javascript">';
+            echo 'alert("Save Data Success")';
+            echo '</script>';
+        }else{
+            echo '<script language="javascript">';
+            echo 'alert("Save Data Failed !!!!")';
+            echo '</script>';
+            
+        }/*******Insert data to complaint_main table********/
+        
+        
+    }
+    
     
     
 
@@ -463,6 +552,18 @@
         }
         
         
+        
+        public function update_ncstatus($cp_no){
+            $data = array(
+                "nc_status" => "Followup_3rd (Failed!)"
+            );
+            
+            $this->db->where("cp_no",$cp_no);
+            $this->db->update("complaint_main",$data);
+            
+        }
+        
+        
 /**************UPDATE ZONE******************/
         
   
@@ -525,6 +626,8 @@
         $result = $this->db->query("SELECT cp_status FROM complaint_main WHERE cp_no='$cp_no' ");
         $get_status = $result->row();
         if($get_status->cp_status == "New Complaint"){
+            redirect('/complaint/view/'.$cp_no);
+        }else if($get_status->cp_status == "New Complaint(2)"){
             redirect('/complaint/view/'.$cp_no);
         }
     }

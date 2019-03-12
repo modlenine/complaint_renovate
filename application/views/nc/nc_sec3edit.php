@@ -8,6 +8,16 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>ใบรายงานปัญหา / ข้อบกพร่อง NC</title>
+        
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+        
+        
     </head>
     <body>
         <?php
@@ -41,9 +51,17 @@ and open the template in the editor.
                         <textarea class="form-control" rows="5" name="nc_sec32edit" id="nc_sec32edit"><?php echo $getdatamain->nc_sec32; ?></textarea>
                         <label style="margin-top: 5px;">กำหนดเสร็จ</label>
                         <div class="form-inline">
-                            <input type="date" name="nc_sec32dateedit" id="nc_sec32dateedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
-                            <input type="time" name="nc_sec32timeedit" id="nc_sec32timeedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec32time; ?>"/>
+<!--                            <input type="date" name="nc_sec32dateedit" id="nc_sec32dateedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
+                            <input type="time" name="nc_sec32timeedit" id="nc_sec32timeedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec32time; ?>"/>-->
                         </div>
+                        
+                        <div class='input-group date' id='datetimepicker32'>
+                            <input type='datetime' class="form-control" name="datetime1_edit" id="datetime1_edit" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div><!-- Input type datetime -->
+                        
                     </div>
                     
                     
@@ -55,6 +73,14 @@ and open the template in the editor.
                             <input type="date" name="nc_sec33dateedit" id="nc_sec33dateedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
                             <input type="time" name="nc_sec33timeedit" id="nc_sec33timeedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec33time; ?>"/>
                         </div>
+                        
+                        <div class='input-group date' id='datetimepicker33'>
+                            <input type='datetime' class="form-control" name="datetime2_edit" id="datetime2_edit" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div><!-- Input type datetime -->
+                        
                         <label style="margin-top:5px;">เหตุผลในการแก้ไขครั้งนี้</label>
                         <input type="text" name="nc_sec3edit_memo" id="nc_sec3edit_memo" value="" class="form-control" required=""/>
                         <input hidden="" type="text" name="nc_modify_by" id="nc_modify_by" value="<?php echo $getuser['username']; ?>" />

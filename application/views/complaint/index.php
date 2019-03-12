@@ -31,7 +31,7 @@ and open the template in the editor.
 <?php foreach ($list_cp as $l_cp): ?>
                     <tr>
                         <?php  
-                            if($l_cp['cp_status']=="New Complaint"){
+                            if($l_cp['cp_status']=="New Complaint" || $l_cp['cp_status']=="New Complaint(2)"){
                                 $url_page = "complaint/view/";
                             }else{
                                 $url_page = "complaint/investigate/";

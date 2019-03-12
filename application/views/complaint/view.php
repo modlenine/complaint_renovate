@@ -15,13 +15,15 @@ and open the template in the editor.
         <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <form name="frmMain" action="<?php echo base_url('history/add_history/'); ?><?php echo $view_cp['cp_no']; ?>" method="post" enctype="multipart/form-data">
             <h1 class="h1_view">View Complaint : <?php echo $view_cp['cp_no']; ?></h1>
+            <input hidden="" type="text" name="get_oldcp" id="get_oldcp" value="<?php echo $view_cp['cp_no_old']; ?>"/><!--Check cp_no old-->
+            <h3 class="h1_view" id="view_oldcp"><span style="color: red;">Old Complaint No : <?php echo $view_cp['cp_no_old']; ?></span></h3>
             <div class="btn_back">
                 <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>&nbsp;
                 <input type="submit" name="edit" id="edit" class="btn btn-warning btn-sm btn_back" onclick="javascript:return confirm('ท่านยืนยันที่จะเข้าไปแก้ไขข้อมูล ใช่ หรือ ไม่');" value="Edit"/>
             </div>
             
             <div class="panel panel-primary">
-                <div class="panel-heading">Basic Information</div>
+                <div class="panel-heading">Basic Information <span>: Old Complaint No : <?php echo $view_cp['cp_no_old']; ?></span></div>
                 <div class="panel-body">
                     
                     <div class="form-row">

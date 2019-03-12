@@ -60,6 +60,10 @@ if($('#check_user').val()!== $('#history_cpusername').val()){
     $('#edit').hide();
 }
 
+if($('#get_oldcp').val() == ""){
+    $('#view_oldcp').hide();
+}
+
 
 
 
@@ -118,6 +122,10 @@ if($('#check_user').val()!== $('#cp_detail_inves_signature').val()){
        
        $('#cp_sum_inves').prop("readonly",true);
         $('#cp_sum_inves_file').prop("readonly",true);
+        
+        $('#btn_cre_new').hide();
+        $('#label_cre_new').hide();
+       
    }
    
    if($('#radio_check').val() == "yes"){/******Check radio button********/
@@ -215,8 +223,23 @@ if($('#check_permit').val()==0){
     $('#nc_sec33time').prop("readonly",true);
     $('#sec3save').hide();
     $('#btn_sec3edit').hide();
+    $('#datetime32').prop("readonly",true);
+    $('#datetime33').prop("readonly",true);
 }
     
+if($('#nc_sec31').val()!==""){
+    $('.showdate32').hide();
+    $('#datetime32show').prop("readonly",true);
+    $('.showdate33').hide();
+    $('#datetime33show').prop("readonly",true);
+}
+
+if($('#nc_sec31').val()==""){
+    $('#datetime32show').hide();
+    $('#datetime33show').hide();
+    $('#dateshow32').hide();
+    $('#dateshow33').hide();
+}
 
 
 /************SEC3 Control***************/
@@ -336,6 +359,22 @@ if($('#nc_sec4f3_radiocheck').val() == "yes"){/******Check radio button*********
 if($('#nc_sec4f3_radiocheck').val() == "no"){/******Check radio button***********/
     $('#nc_sec4f3_status_no').prop("checked",true);
 }
+
+
+if($('#checkstatus_failed').val()=="NC Failed"){
+    $('#nc_sec5').prop("readonly",true);
+    $('#nc_sec5file').prop("readonly",true);
+    $('#nc_sec5cost').prop("readonly",true);
+    $('#btn_sec5').hide();
+
+}
+
+if($('#checkstatus_failed').val()!=="NC Failed"){
+    $('#btn_cre_new').hide();
+    $('#label_cre_new').hide();
+}
+
+
 /**************F3*********************/
 
 
@@ -355,6 +394,106 @@ if($('#nc_sec5').val()!==""){/***********Check sec5 for use readonly************
     $('#nc_sec5cost').prop("readonly",true);
     
 }
+
+
+// Set the date we're counting down to
+//var countDownDate = new Date("2019-03-12 09:37:25").getTime();
+var countDownDate = new Date($('#datetime32').val()).getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("dateshow32").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+    
+  // If the count down is over, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("dateshow32").innerHTML = "EXPIRED";
+  }
+  if($('#nc_sec4f1_radiocheck').val()=="yes"){
+      clearInterval(x);
+      document.getElementById("dateshow32").innerHTML = "DONE";
+  }
+  
+  
+}, 1000);
+
+
+// Set the date we're counting down to
+//var countDownDate = new Date("2019-03-12 09:37:25").getTime();
+var countDownDate2 = new Date($('#datetime33').val()).getTime();
+
+// Update the count down every 1 second
+var x2 = setInterval(function() {
+
+  // Get todays date and time
+  var now2 = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance2 = countDownDate2 - now2;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days2 = Math.floor(distance2 / (1000 * 60 * 60 * 24));
+  var hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("dateshow33").innerHTML = days2 + "d " + hours2 + "h "
+  + minutes2 + "m " + seconds2 + "s ";
+    
+  // If the count down is over, write some text
+  if (distance2 < 0) {
+    clearInterval(x2);
+    document.getElementById("dateshow33").innerHTML = "EXPIRED";
+  }
+  
+  if($('#nc_sec4f1_radiocheck').val()=="yes"){
+      clearInterval(x2);
+      document.getElementById("dateshow33").innerHTML = "DONE";
+  }
+  
+  
+}, 1000);
+
+
+$(function() {
+  $('#datetimepicker32').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm'
+  });
+  
+  $('#datetimepicker33').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm'
+  });
+  
+});
+
+
+
+
+
+
+
+
+/*********************DASHBOARD**************************/
+
+/*********************DASHBOARD**************************/
+
+
 
 
 

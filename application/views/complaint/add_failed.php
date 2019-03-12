@@ -17,7 +17,7 @@ and open the template in the editor.
                 <h1 class="h1_add">Complaint Form</h1><hr>
                 <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
                 
-                <form name="frmMain" action="<?php echo base_url('complaint/saveData'); ?>" method="post" enctype="multipart/form-data">
+                <form name="frmMain" action="<?php echo base_url('complaint/saveData_failed/'); ?><?php echo $view_cp['cp_no']; ?>" method="post" enctype="multipart/form-data">
                 <div class="panel panel-danger">
                     <div class="panel-heading">Topic</div>
                     <div class="panel-body">
@@ -25,7 +25,7 @@ and open the template in the editor.
                         <div class="form-row">
                             <div class="col-md-2">
                                 <label><b>Old ID</b></label>
-                                <input type="text" name="cp_status" id="cp_status" value="<?php echo $view_cp['cp_no']; ?>" class="form-control"/>
+                                <input type="text" name="cp_noold" id="cp_noold" value="<?php echo $view_cp['cp_no']; ?>" class="form-control"/>
                             </div>
                             <div class="col-md-2 pri">
                                 <label><b>ID</b></label>

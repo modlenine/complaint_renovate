@@ -36,7 +36,6 @@ and open the template in the editor.
   
   
   
-  
         
 
   <style>
@@ -220,6 +219,9 @@ and open the template in the editor.
 .sec4label{
     color:red;
     font-size: 12px;
+}
+.showdate3text{
+    color:red;
 }
 
 

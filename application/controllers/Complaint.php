@@ -180,6 +180,13 @@ class Complaint extends CI_Controller{
         $this->load->view("complaint/add_failed",$data);
     }
     
+    public function saveData_failed($cp_no){
+        $this->complaint_model->update_ncstatus($cp_no);
+        $this->complaint_model->saveData_failed();
+        
+        redirect('/nc/main/'.$cp_no);
+    }
+    
     
     
 }//***End of controller****//

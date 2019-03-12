@@ -4,6 +4,9 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php
+    $this->load->model("complaint_model");
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -33,19 +36,21 @@ and open the template in the editor.
 <!--          <li><a href="#"><i class="far fa-eye"></i>&nbsp;View Complaint&nbsp;<h6><span class="label label-success">New&nbsp;<span class="badge bg_new">3</span></span></h6></a></li>
           <li><a href="#"><i class="fas fa-plus-circle"></i>&nbsp;New Complaint</a></li>
           <li><a href="#"><i class="far fa-eye"></i>&nbsp;View NC</a></li>-->
+            
+            <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="#"><i class="fas fa-tachometer-alt"></i>&nbsp;Dash Board</a></li>
           
           <li class="dropdown" style="border-top:0.5px solid #54acf3;">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-book-open"></i>&nbsp;Complaint <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-book-open"></i>&nbsp;Complaint <span class="caret"></span>&nbsp;&nbsp;<span class="label label-success">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newcp(); ?></span></span></a>
             <ul class="dropdown-menu">
-                <li><a href="<?php echo base_url(); ?>complaint"><i class="far fa-eye"></i>&nbsp;View&nbsp;<span class="label label-success">New&nbsp;<span class="badge bg_new">7</span></span></a></li>
+                <li><a href="<?php echo base_url(); ?>complaint"><i class="far fa-eye"></i>&nbsp;View&nbsp;<span class="label label-success">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newcp(); ?></span></span></a></li>
               <li><a href="<?php echo base_url(); ?>complaint/add/<?php echo $getuser['DeptCode']; ?>"><i class="fas fa-plus-circle"></i>&nbsp;Add</a></li>
             </ul>
           </li>
           
           <li class="dropdown" style="border-top:0.5px solid #54acf3;">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-book-open"></i>&nbsp;NC <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-book-open"></i>&nbsp;NC <span class="caret"></span>&nbsp;&nbsp;<span class="label label-success">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newnc(); ?></span></span></a>
             <ul class="dropdown-menu">
-                <li><a href="<?php echo base_url("nc"); ?>"><i class="far fa-eye"></i>&nbsp;View&nbsp;<span class="label label-success">New&nbsp;<span class="badge bg_new">7</span></span></a></li>
+                <li><a href="<?php echo base_url("nc"); ?>"><i class="far fa-eye"></i>&nbsp;View&nbsp;<span class="label label-success">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newnc(); ?></span></span></a></li>
               <li><a href="#"><i class="fas fa-plus-circle"></i>&nbsp;Add</a></li>
             </ul>
           </li>

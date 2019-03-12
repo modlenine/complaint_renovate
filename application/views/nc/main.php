@@ -8,6 +8,15 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>ใบรายงานปัญหา / ข้อบกพร่อง NC</title>
+        
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+        
     </head>
     <body>
         <?php
@@ -70,7 +79,7 @@ and open the template in the editor.
                         $ckd_result = 1;
                     }
                     ?>
-                    
+                    <input hidden="" type="text" name="check_qmr" id="check_qmr" value="<?php echo $getuser['Dept']; ?>" /><!--Check qmr-->
                     <input hidden="" type="text" name="check_permit" id="check_permit" value="<?php echo $ckd_result; ?>"/><!-- Check permission -->
                 </div>
                 <div class="panel-footer">
@@ -103,9 +112,27 @@ and open the template in the editor.
                         <textarea class="form-control" rows="5" name="nc_sec32" id="nc_sec32"><?php echo $getdatamain->nc_sec32; ?></textarea>
                         <label style="margin-top: 5px;">กำหนดเสร็จ</label>
                         <div class="form-inline">
-                            <input type="date" name="nc_sec32date" id="nc_sec32date" class="form-control" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
-                            <input type="time" name="nc_sec32time" id="nc_sec32time" class="form-control" value="<?php echo $getdatamain->nc_sec32time; ?>"/>
+                            
+<!--                            <input type="date" name="nc_sec32date" id="nc_sec32date" class="form-control" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
+                            <input type="time" name="nc_sec32time" id="nc_sec32time" class="form-control" value="<?php echo $getdatamain->nc_sec32time; ?>"/>-->
+                          <?php 
+                            $date1 = date_create($getdatamain->nc_sec32date);
+                            $result_date = date_format($date1, "d/m/Y H:i:s");
+                            
+                            $date_2 = date_create($getdatamain->nc_sec33date);
+                            $result_date2 = date_format($date_2, "d/m/Y H:i:s");
+                          ?>  
+                            <input class="form-control" type="text" name="datetime32show" id="datetime32show" value="<?php echo $result_date; ?>"/><!--test countdown-->
+                            <span id="dateshow32" class="showdate3text"></span><!-- Show Countdown time -->
                         </div>
+                        
+                        <div class='input-group date showdate32' id='datetimepicker32'>
+                            <input type='datetime' class="form-control" name="datetime32" id="datetime32" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div><!-- Input type datetime -->
+                        
                     </div>
                     
                     
@@ -114,9 +141,21 @@ and open the template in the editor.
                         <textarea class="form-control" rows="5" name="nc_sec33" id="nc_sec33"><?php echo $getdatamain->nc_sec33; ?></textarea>
                         <label style="margin-top: 5px;">กำหนดเสร็จ</label>
                         <div class="form-inline">
-                            <input type="date" name="nc_sec33date" id="nc_sec33date" class="form-control" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
-                            <input type="time" name="nc_sec33time" id="nc_sec33time" class="form-control" value="<?php echo $getdatamain->nc_sec33time; ?>"/>
+<!--                            <input type="date" name="nc_sec33date" id="nc_sec33date" class="form-control" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
+                            <input type="time" name="nc_sec33time" id="nc_sec33time" class="form-control" value="<?php echo $getdatamain->nc_sec33time; ?>"/>-->
+                            
+                            <input class="form-control" type="text" name="datetime33show" id="datetime33show" value="<?php echo $result_date2; ?>"/><!--test countdown-->
+                            <span id="dateshow33" class="showdate3text"></span><!-- Show Countdown time -->
+                            
                         </div>
+                        
+                        <div class='input-group date showdate33' id='datetimepicker33'>
+                            <input type='datetime' class="form-control" name="datetime33" id="datetime33" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div><!-- Input type datetime -->
+                        
                         <input type="submit" name="sec3save" id="sec3save" class="btn btn-primary" style="margin-top: 10px;"/>
                         
                     </div>
@@ -258,11 +297,12 @@ and open the template in the editor.
                         
                         <input hidden="" type="text" name="getdeptcode" id="getdeptcode" value="<?php echo $getuser['DeptCode']; ?>"/>
                         </form>
-                        <input type="text" name="checkstatus_failed" id="checkstatus_failed" value="<?php echo $getdatamain->nc_status; ?>" />
+                        <input hidden="" type="text" name="checkstatus_failed" id="checkstatus_failed" value="<?php echo $getdatamain->nc_status; ?>" />
                         
                         <form name="sec4f3" method="post" action="<?php echo base_url("nc/create_cpfailed/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
-                            <button class="btn btn-danger">Create New Complaint</button>
-                            <input hidden="" type="text" name="getdeptcode" id="getdeptcode" value="<?php echo $getuser['DeptCode']; ?>"/>
+                            <button class="btn btn-danger" name="btn_cre_new" id="btn_cre_new">Create New Complaint</button>
+                            <input hidden="" type="text" name="getdeptcode" id="getdeptcode" value="<?php echo $getuser['DeptCode']; ?>"/><br>
+                            <label class="sec4label" id="label_cre_new">กรุณากดปุ่มนี้เพื่อทำการออก Complaint ใหม่เนื่องจากไม่สามารถปิดสรุปได้</label>
                         </form>
 
                     </div>
