@@ -184,6 +184,7 @@ and open the template in the editor.
                             </div>
                             <div class="col-md-6 pri">
                                 <p><input name="file_add" id="file_add" type="file" class="form-control form-control-sm"/></p>
+                                <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                             </div>
 
                         </div>

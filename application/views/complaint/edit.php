@@ -195,6 +195,7 @@ and open the template in the editor.
                                 <p><label><?php echo $view_cp['cp_file']; ?></label></p>
                                 <input hidden="" type="text" name="showfile" id="showfile" value="<?php echo $view_cp['cp_file']; ?>"/>
                                 <p><input name="file_add_edit" id="file_add_edit" type="file" class="form-control form-control-sm"/></p>
+                                <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                             </div>
 
                         </div>

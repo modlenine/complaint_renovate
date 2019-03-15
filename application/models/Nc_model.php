@@ -91,13 +91,19 @@ class Nc_model extends CI_Model{
 
 	echo "<br>"."Copy/Upload Complete"."<br>";
         
+        if($this->input->post("nc_sec4f1_status") == "yes"){
+            $nc_status_4f1 = "Followup_1st NC Close";
+        }else{
+            $nc_status_4f1 = "Followup_1st";
+        }
+        
         $data = array(
             "nc_sec4f1" => $this->input->post("nc_sec4f1"),
             "nc_sec4f1_file" => $file_name_date,
             "nc_sec4f1_status" => $this->input->post("nc_sec4f1_status"),
             "nc_sec4f1_date" => $this->input->post("nc_sec4f1_date"),
             "nc_sec4f1_time" => $this->input->post("nc_sec4f1_time"),
-            "nc_status" => $this->input->post("nc_status_sec4f1")
+            "nc_status" => $nc_status_4f1
         );
         
         $this->db->where("cp_no",$cp_no);
@@ -134,13 +140,19 @@ class Nc_model extends CI_Model{
 
 	echo "<br>"."Copy/Upload Complete"."<br>";
         
+        if($this->input->post("nc_sec4f2_status") == "yes"){
+            $nc_status_4f2 = "Followup_2nd NC Close";
+        }else{
+            $nc_status_4f2 = "Followup_2nd";
+        }
+        
         $data = array(
             "nc_sec4f2" => $this->input->post("nc_sec4f2"),
             "nc_sec4f2_file" => $file_name_date,
             "nc_sec4f2_status" => $this->input->post("nc_sec4f2_status"),
             "nc_sec4f2_date" => $this->input->post("nc_sec4f2_date"),
             "nc_sec4f2_time" => $this->input->post("nc_sec4f2_time"),
-            "nc_status" => $this->input->post("nc_status_sec4f2")
+            "nc_status" => $nc_status_4f2
         );
         
         $this->db->where("cp_no",$cp_no);
@@ -165,7 +177,7 @@ class Nc_model extends CI_Model{
             if($this->input->post("nc_sec4f3_status")=="no"){
                 $linkurl = "complaint/add_failed/$cp_no/$dept_code";
                 $nc_sec4f3_status = "NC Failed";
-            }else{ $linkurl="nc/main/$cp_no";$nc_sec4f3_status="Followup_3rd";}
+            }else{ $linkurl="nc/main/$cp_no";$nc_sec4f3_status="Followup_3rd NC Close";}
             
                     //อัพโหลดไฟล์แบบหลายไฟล์ลง Folderโดย+วันที่+เวลาต่อท้ายไฟล์
         $date = date("d-m-Y-H-i-s");//ดึงวันที่และเวลามาก่อน

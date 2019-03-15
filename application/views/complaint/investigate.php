@@ -174,6 +174,7 @@ and open the template in the editor.
                 <div class="form-row">
                     <div class="col-md-6 pri">
                         <p><input name="cp_detail_inves_file" id="cp_detail_inves_file" type="file" class="form-control form-control-sm" value=""/></p>
+                        <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                     </div>
                 </div>
                 
@@ -328,6 +329,7 @@ and open the template in the editor.
                 <div class="form-row">
                     <div class="col-md-6 pri">
                         <p><input name="cp_sum_inves_file" id="cp_sum_inves_file" type="file" class="form-control form-control-sm" value=""/></p>
+                        <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                     </div>
                 </div>
           
@@ -484,6 +486,7 @@ and open the template in the editor.
                 <div class="form-row">
                     <div class="col-md-6 pri">
                         <p><input name="cp_conclu_file" id="cp_conclu_file" type="file" class="form-control form-control-sm" value=""/></p>
+                        <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                     </div>
                 </div>
           

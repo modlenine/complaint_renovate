@@ -36,12 +36,16 @@ and open the template in the editor.
                             }else{
                                 $url_page = "complaint/investigate/";
                             }
+                            
+                            if($l_cp['cp_status']=="New Complaint"){
+                                $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
+                            }else{$newgif="";}
                         ?>
-                        <td style="text-align: center;"><a href="<?php echo base_url().$url_page; ?><?php echo $l_cp['cp_no']; ?>"><?php echo $l_cp['cp_no']; ?></a></td>
+                        <td style="text-align: center;"><a href="<?php echo base_url().$url_page; ?><?php echo $l_cp['cp_no']; ?>"><?php echo $l_cp['cp_no']; ?></a><?php echo $newgif; ?></td>
                         <td style="text-align: center;">
                             <?php
                             $date = date_create($l_cp['cp_date']);
-                            echo date_format($date, "d-m-Y");
+                            echo date_format($date, "d/m/Y");
                             
                             ?>
                         </td>

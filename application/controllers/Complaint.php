@@ -187,6 +187,12 @@ class Complaint extends CI_Controller{
         redirect('/nc/main/'.$cp_no);
     }
     
+    public function test(){
+       echo $this->complaint_model->getcpno_test();
+        
+        $this->load->view("test");
+    }
+    
     
     
 }//***End of controller****//

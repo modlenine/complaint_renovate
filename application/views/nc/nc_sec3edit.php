@@ -70,8 +70,8 @@ and open the template in the editor.
                         <textarea class="form-control" rows="5" name="nc_sec33edit" id="nc_sec33edit"><?php echo $getdatamain->nc_sec33; ?></textarea>
                         <label style="margin-top: 5px;">กำหนดเสร็จ</label>
                         <div class="form-inline">
-                            <input type="date" name="nc_sec33dateedit" id="nc_sec33dateedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
-                            <input type="time" name="nc_sec33timeedit" id="nc_sec33timeedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec33time; ?>"/>
+<!--                            <input type="date" name="nc_sec33dateedit" id="nc_sec33dateedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
+                            <input type="time" name="nc_sec33timeedit" id="nc_sec33timeedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec33time; ?>"/>-->
                         </div>
                         
                         <div class='input-group date' id='datetimepicker33'>

@@ -79,7 +79,7 @@ and open the template in the editor.
                         $ckd_result = 1;
                     }
                     ?>
-                    <input hidden="" type="text" name="check_qmr" id="check_qmr" value="<?php echo $getuser['Dept']; ?>" /><!--Check qmr-->
+                    <input type="text" name="check_qmr" id="check_qmr" value="<?php echo $getuser['Dept']; ?>" /><!--Check qmr-->
                     <input hidden="" type="text" name="check_permit" id="check_permit" value="<?php echo $ckd_result; ?>"/><!-- Check permission -->
                 </div>
                 <div class="panel-footer">
@@ -232,7 +232,10 @@ and open the template in the editor.
                         <textarea class="form-control" rows="5" name="nc_sec4f1" id="nc_sec4f1"><?php echo $getdatamain->nc_sec4f1; ?></textarea>
                         <label style="margin-top: 5px;">เอกสารประกอบ</label>
                         <input type="file" class="form-control" name="nc_sec4f1_file" id="nc_sec4f1_file" value="<?php echo $getdatamain->nc_sec4f1_file; ?>"/>
+                        
                         <label id="get_nc_sec4f1_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec4/f1/"); ?><?php echo $getdatamain->nc_sec4f1_file; ?>" target="_blank"><?php echo $getdatamain->nc_sec4f1_file; ?></a></label>
+                        <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
+                        
                         <div class="form-inline" style="margin-top: 5px;">
                             <input type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label>
@@ -240,15 +243,35 @@ and open the template in the editor.
                         
                         <input hidden="" type="text" name="nc_sec4f1_radiocheck" id="nc_sec4f1_radiocheck" value="<?php echo $getdatamain->nc_sec4f1_status; ?>" /><!-- radio check -->
                         
-                        <label>การติดตามผลครั้งที่ 2</label>
+                        <?php  
+                        $date41 = date_create($getdatamain->nc_sec4f1_date);
+                        $result_date41 = date_format($date41, "d/m/Y H:i:s");
+                        
+                        $date42 = date_create($getdatamain->nc_sec4f2_date);
+                        $result_date42 = date_format($date42, "d/m/Y H:i:s");
+                        
+                        ?>
+                        <label id="label4f1">การติดตามผลครั้งที่ 2</label>
                         <div class="form-inline">
-                            <input type="date" class="form-control" name="nc_sec4f1_date" id="nc_sec4f1_date" value="<?php echo $getdatamain->nc_sec4f1_date; ?>"/>
-                            <input type="time" class="form-control" name="nc_sec4f1_time" id="nc_sec4f1_time" value="<?php echo $getdatamain->nc_sec4f1_time; ?>"/>
+                            <input type="text" class="form-control" name="datetime41show" id="datetime41show" value="<?php echo $result_date41; ?>"/>
+                            <span id="dateshow41" class="showdate3text"></span><!-- Show Countdown time -->
+                            
+                        <div class='input-group date showdate41' id='datetimepicker41'>
+                            <input type='datetime' class="form-control" name="datetime41" id="datetime41" value="<?php echo $getdatamain->nc_sec4f1_date; ?>"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div><!-- Input type datetime -->
+                        
                             <input type="submit" class="btn btn-primary" name="btn_sec4f1" id="btn_sec4f1"/>
                         </div>
+                        
+                        
+                        
+                        
+                        
                         <label class="sec4label">สำหรับ qmr เท่านั้น</label>
                         <hr>
-                        <input hidden="" type="text" name="nc_status_sec4f1" id="nc_status_sec4f1" value="Followup_1st" /><!-- Status -->
                         </form>
                     </div>
                     
@@ -259,6 +282,7 @@ and open the template in the editor.
                         <label style="margin-top: 5px;">เอกสารประกอบ</label>
                         <input type="file" class="form-control" name="nc_sec4f2_file" id="nc_sec4f2_file" value="<?php echo $getdatamain->nc_sec4f2_file; ?>"/>
                         <label id="get_nc_sec4f2_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec4/f2/"); ?><?php echo $getdatamain->nc_sec4f2_file; ?>" target="_blank"><?php echo $getdatamain->nc_sec4f2_file; ?></a></label>
+                        <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                         <div class="form-inline" style="margin-top: 5px;">
                             <input type="radio" name="nc_sec4f2_status" id="nc_sec4f2_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="radio" name="nc_sec4f2_status" id="nc_sec4f2_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label>
@@ -266,18 +290,29 @@ and open the template in the editor.
                         
                         <input hidden="" type="text" name="nc_sec4f2_radiocheck" id="nc_sec4f2_radiocheck" value="<?php echo $getdatamain->nc_sec4f2_status; ?>" /><!-- radio check -->
                         
-                        <label>การติดตามผลครั้งที่ 3</label>
+                        <label id="label4f2">การติดตามผลครั้งที่ 3</label>
                         <div class="form-inline">
-                            <input type="date" class="form-control" name="nc_sec4f2_date" id="nc_sec4f2_date" value="<?php echo $getdatamain->nc_sec4f2_date; ?>"/>
-                            <input type="time" class="form-control" name="nc_sec4f2_time" id="nc_sec4f2_time" value="<?php echo $getdatamain->nc_sec4f2_time; ?>"/>
+                            <input type="text" class="form-control" name="datetime42show" id="datetime42show" value="<?php echo $result_date42; ?>"/>
+                            <span id="dateshow42" class="showdate3text"></span><!-- Show Countdown time -->
+                            
+                            <div class='input-group date showdate42' id='datetimepicker42'>
+                            <input type="datetime" class="form-control" name="datetime42" id="datetime42" value="<?php echo $getdatamain->nc_sec4f2_date; ?>"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div><!-- Input type datetime -->
+                            
                             <input type="submit" class="btn btn-primary" name="btn_sec4f2" id="btn_sec4f2"/>
                         </div>
+
+                        
                         <label class="sec4label">สำหรับ qmr เท่านั้น</label>
                         <hr>
                         <input hidden="" type="text" name="nc_status_sec4f2" id="nc_status_sec4f2" value="Followup_2nd" /><!-- Status -->
                         </form>
                     </div>
                            
+                    
                     <div class="form-group col-md-10">
                         <form name="sec4f3" method="post" action="<?php echo base_url("nc/save_sec4f3/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
                         <label>ผลการติดตามครั้งที่ 3</label>
@@ -285,6 +320,8 @@ and open the template in the editor.
                         <label style="margin-top: 5px;">เอกสารประกอบ</label>
                         <input type="file" class="form-control" name="nc_sec4f3_file" id="nc_sec4f3_file" value="<?php echo $getdatamain->nc_sec4f2_file; ?>"/>
                         <label id="get_nc_sec4f3_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec4/f3/"); ?><?php echo $getdatamain->nc_sec4f3_file; ?>" target="_blank"><?php echo $getdatamain->nc_sec4f3_file; ?></a></label>
+                        
+                        <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                         <div class="form-inline" style="margin-top: 5px;">
                             <input type="radio" name="nc_sec4f3_status" id="nc_sec4f3_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="radio" name="nc_sec4f3_status" id="nc_sec4f3_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label><br>
@@ -340,6 +377,7 @@ and open the template in the editor.
                         <textarea class="form-control" rows="5" name="nc_sec5" id="nc_sec5"><?php echo $show; ?></textarea>
                         <label style="margin-top: 5px;">เอกสารประกอบ</label>
                         <input type="file" class="form-control" name="nc_sec5file" id="nc_sec5file" value="<?php echo $showfile; ?>"/>
+                        <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                         <label id="get_nc_sec5_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec5/"); ?><?php echo $showfile; ?>" target="_blank"><?php echo $showfile; ?></a></label><br>
                         <label style="margin-top: 5px;">ค่าใช้จ่ายที่เกิดขึ้น โดยประมาณ</label>
                         <div class="form-inline">

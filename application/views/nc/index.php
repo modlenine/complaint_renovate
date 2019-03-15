@@ -42,12 +42,17 @@ and open the template in the editor.
                 <tbody>
 <?php foreach ($list_nc->result_array() as $l_nc): ?>
                     <tr>
+                        <?php  
+                            if($l_nc['nc_status']=="Transfrom Complaint"){
+                                $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
+                            }else{$newgif="";}
+                        ?>
                         
-                        <td style="text-align: center;"><a href="<?php echo base_url("nc/main/");?><?php echo $l_nc['cp_no']; ?>"><?php echo $l_nc['cp_no']; ?></a></td>
+                        <td style="text-align: center;"><a href="<?php echo base_url("nc/main/");?><?php echo $l_nc['cp_no']; ?>"><?php echo $l_nc['cp_no']; ?></a><?php echo $newgif; ?></td>
                         <td style="text-align: center;">
                             <?php
                             $date = date_create($l_nc['cp_date']);
-                            echo date_format($date, "d-m-Y");
+                            echo date_format($date, "d/m/Y");
                             
                             ?>
                         </td>

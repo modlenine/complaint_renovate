@@ -82,7 +82,7 @@
             $cut_yold = substr($cal, 2,2);//ตัดปี 2 ตัวท้าย
             $cut_cp = substr($cal, 2); // 18100
             $cut_cp ++;
-            $set_y = str_replace($cut_yold, "CP".$cut_year_cur, $cut_cp); //ทำการ Get Year ของปัจจุบันลงไป
+            $set_y = str_replace($cut_cp, "CP".$cut_cp, $cut_cp); //ทำการ Get Year ของปัจจุบันลงไป
                        
             $cp_no = $set_y;
             
@@ -630,6 +630,31 @@ public function get_newnc(){
         }else if($get_status->cp_status == "New Complaint(2)"){
             redirect('/complaint/view/'.$cp_no);
         }
+    }
+    
+    
+    
+    public function getcpno_test() { //สร้าง Auto complaint number
+        $query = $this->db->query("select cptest_cp_no from complaint_test"); //ไปนับแถวของ cp_no ก่อน
+        $numrow = $query->num_rows(); //ไปนับแถวของ cp_no ก่อน
+        $year_cur = date("Y"); //กำหนด ปีปัจจุบันใส่ตัวแปร year_cur
+        $cut_year_cur = substr($year_cur, 2, 2); // ตัดจากเดิม 2018 เหลือ 18
+
+        if ($numrow == 0) { //นับแถวของข้อมูล ถ้าเท่ากับ 0
+            $cp_no = "CP" . $cut_year_cur . "001"; // กำหนดค่าลงไปเลย
+        } else { // ถ้าไม่เป็นตามเงื่อนไขบน
+            $query2 = $this->db->query("select cptest_cp_no from complaint_test order by SUBSTR(cptest_cp_no,5) desc LIMIT 1"); //ไป query เอา cp_no มาโดยตัดเอาแค่ 3 ตัวหลังตัวล่าสุดมา 1 ตัว
+
+            foreach ($query2->result_array() as $rs) { //ไปวิ่งเช็คข้อมูล
+                $cal = $rs['cptest_cp_no']; //ตรงนี้เราจะได้ค่า CP18100
+            }
+            $cut_yold = substr($cal, 2,2);//ตัดปี 2 ตัวท้าย
+            $cut_cp = substr($cal, 2); // 18100
+            $cut_cp ++;
+            $set_y = str_replace($cut_cp, "CP".$cut_cp, $cut_cp); //ทำการ Get Year ของปัจจุบันลงไป
+            
+        }
+        return $set_y; // ส่งค่ากลับไป
     }
     
     
