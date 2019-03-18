@@ -31,13 +31,13 @@ and open the template in the editor.
 <?php foreach ($list_cp as $l_cp): ?>
                     <tr>
                         <?php  
-                            if($l_cp['cp_status']=="New Complaint" || $l_cp['cp_status']=="New Complaint(2)"){
+                            if($l_cp['cp_status_code']=="cp01"){
                                 $url_page = "complaint/view/";
                             }else{
                                 $url_page = "complaint/investigate/";
                             }
                             
-                            if($l_cp['cp_status']=="New Complaint"){
+                            if($l_cp['cp_status_code']=="cp01"){
                                 $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
@@ -52,7 +52,7 @@ and open the template in the editor.
                         <td style="text-align: center;"><?php echo $l_cp['cp_user_name']; ?></td>
                         <td style="text-align: center;"><?php echo $l_cp['cp_topic']; ?></td>
                         <td style="text-align: center;"><?php echo $l_cp['cp_cus_name']; ?></td>
-                        <td style="text-align: center;"><?php echo $l_cp['cp_status']; ?></td>
+                        <td style="text-align: center;"><?php echo $l_cp['cp_status_name']; ?></td>
                         <td style="text-align: center;"><?php echo $l_cp['cp_priority']; ?></td>
                     </tr>
 <?php endforeach; ?>

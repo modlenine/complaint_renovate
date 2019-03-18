@@ -79,7 +79,7 @@ and open the template in the editor.
                         $ckd_result = 1;
                     }
                     ?>
-                    <input type="text" name="check_qmr" id="check_qmr" value="<?php echo $getuser['Dept']; ?>" /><!--Check qmr-->
+                    <input hidden="" type="text" name="check_qmr" id="check_qmr" value="<?php echo $getuser['Dept']; ?>" /><!--Check qmr-->
                     <input hidden="" type="text" name="check_permit" id="check_permit" value="<?php echo $ckd_result; ?>"/><!-- Check permission -->
                 </div>
                 <div class="panel-footer">
@@ -308,7 +308,7 @@ and open the template in the editor.
                         
                         <label class="sec4label">สำหรับ qmr เท่านั้น</label>
                         <hr>
-                        <input hidden="" type="text" name="nc_status_sec4f2" id="nc_status_sec4f2" value="Followup_2nd" /><!-- Status -->
+                        <input hidden="" type="text" name="nc_status_sec4f2" id="nc_status_sec4f2" value="nc04" /><!-- Status -->
                         </form>
                     </div>
                            
@@ -334,7 +334,7 @@ and open the template in the editor.
                         
                         <input hidden="" type="text" name="getdeptcode" id="getdeptcode" value="<?php echo $getuser['DeptCode']; ?>"/>
                         </form>
-                        <input hidden="" type="text" name="checkstatus_failed" id="checkstatus_failed" value="<?php echo $getdatamain->nc_status; ?>" />
+                        <input hidden="" type="text" name="checkstatus_failed" id="checkstatus_failed" value="<?php echo $getdatamain->nc_status_code; ?>" />
                         
                         <form name="sec4f3" method="post" action="<?php echo base_url("nc/create_cpfailed/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
                             <button class="btn btn-danger" name="btn_cre_new" id="btn_cre_new">Create New Complaint</button>
@@ -358,7 +358,7 @@ and open the template in the editor.
         $baseurl = "nc/save_sec5failed/";
     }else{$ncfailed= "";$baseurl = "nc/save_sec5/";}
     
-    if($getdatamain->nc_status == "Conclusion of NC Failed!"){
+    if($getdatamain->nc_status_code == "nc10"){
         $show = $getdatamain->nc_sec5failed;
         $showfile = $getdatamain->nc_sec5filefailed;
         $showcost = $getdatamain->nc_sec5costfailed;
@@ -388,7 +388,7 @@ and open the template in the editor.
                     <div class="col-md-10">
                         <input type="submit" class="btn btn-primary" name="btn_sec5" id="btn_sec5"/>
                     </div>
-                        <input hidden="" type="text" name="nc_status_sec5" id="nc_status_sec5" value="Conclusion of NC" /><!-- Status -->
+                        <input hidden="" type="text" name="nc_status_sec5" id="nc_status_sec5" value="nc11" /><!-- Status -->
                         <input hidden="" type="text" name="getdeptcode" id="getdeptcode" value="<?php echo $getuser['DeptCode']; ?>"/>
                     </form>
                     
@@ -397,9 +397,211 @@ and open the template in the editor.
 
             </div>
 <!-- *********************************SECTION5****AREA**************************************--> 
+<script>
+    $(document).ready(function () {
+        
+    
+    /****************************COUNTDOWN***SEC32******************************************/
+// Set the date we're counting down to
+//var countDownDate = new Date("2019-03-12 09:37:25").getTime();
+var countDownDate = new Date($('#datetime32').val()).getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("dateshow32").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+    
+  // If the count down is over, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("dateshow32").innerHTML = "เกินระยะเวลาที่กำหนด";
+  }
+  if($('#nc_sec4f1_radiocheck').val()=="yes"){
+      clearInterval(x);
+      document.getElementById("dateshow32").innerHTML = "ดำเนินการเรียบร้อยแล้ว";
+  }
+  if($('#nc_sec4f2_radiocheck').val()=="yes"){
+      clearInterval(x);
+      document.getElementById("dateshow32").innerHTML = "ดำเนินการเรียบร้อยแล้ว";
+  }
+  if($('#nc_sec4f3_radiocheck').val()=="yes"){
+      clearInterval(x);
+      document.getElementById("dateshow32").innerHTML = "ดำเนินการเรียบร้อยแล้ว";
+  }
+  
+  
+}, 1000);
 
 
-            
+
+/*********************COUNTDOWN****SEC33********************************************************/
+// Set the date we're counting down to
+//var countDownDate = new Date("2019-03-12 09:37:25").getTime();
+var countDownDate2 = new Date($('#datetime33').val()).getTime();
+
+// Update the count down every 1 second
+var x2 = setInterval(function() {
+
+  // Get todays date and time
+  var now2 = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance2 = countDownDate2 - now2;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days2 = Math.floor(distance2 / (1000 * 60 * 60 * 24));
+  var hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("dateshow33").innerHTML = days2 + "d " + hours2 + "h "
+  + minutes2 + "m " + seconds2 + "s ";
+    
+  // If the count down is over, write some text
+  if (distance2 < 0) {
+    clearInterval(x2);
+    document.getElementById("dateshow33").innerHTML = "เกินระยะเวลาที่กำหนด";
+  }
+  
+  if($('#nc_sec4f1_radiocheck').val()=="yes"){
+      clearInterval(x2);
+      document.getElementById("dateshow33").innerHTML = "ดำเนินการเรียบร้อยแล้ว";
+  }
+  if($('#nc_sec4f2_radiocheck').val()=="yes"){
+      clearInterval(x2);
+      document.getElementById("dateshow33").innerHTML = "ดำเนินการเรียบร้อยแล้ว";
+  }
+  if($('#nc_sec4f3_radiocheck').val()=="yes"){
+      clearInterval(x2);
+      document.getElementById("dateshow33").innerHTML = "ดำเนินการเรียบร้อยแล้ว";
+  }
+  
+  
+}, 1000);
+
+
+
+
+
+/*********************COUNTDOWN****SEC41********************************************************/
+// Set the date we're counting down to
+//var countDownDate = new Date("2019-03-12 09:37:25").getTime();
+var countDownDate41 = new Date($('#datetime41').val()).getTime();
+
+// Update the count down every 1 second
+var x41 = setInterval(function() {
+
+  // Get todays date and time
+  var now41 = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance41 = countDownDate41 - now41;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days41 = Math.floor(distance41 / (1000 * 60 * 60 * 24));
+  var hours41 = Math.floor((distance41 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes41 = Math.floor((distance41 % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds41 = Math.floor((distance41 % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("dateshow41").innerHTML = days41 + "d " + hours41 + "h "
+  + minutes41 + "m " + seconds41 + "s ";
+    
+  // If the count down is over, write some text
+  if (distance41 < 0) {
+    clearInterval(x41);
+    document.getElementById("dateshow41").innerHTML = "เกินระยะเวลาที่กำหนด";
+  }
+  if($('#nc_sec4f2_radiocheck').val()=="yes"){
+      clearInterval(x41);
+      document.getElementById("dateshow41").innerHTML = "เสร็จสิ้นการติดตามครั้งที่2";
+  }else{
+      clearInterval(x41);
+      document.getElementById("dateshow41").innerHTML = "เสร็จสิ้นการติดตามครั้งที่2";
+  }
+  
+  
+}, 1000);
+
+
+
+/*********************COUNTDOWN****SEC42********************************************************/
+// Set the date we're counting down to
+//var countDownDate = new Date("2019-03-12 09:37:25").getTime();
+var countDownDate42 = new Date($('#datetime42').val()).getTime();
+
+// Update the count down every 1 second
+var x42 = setInterval(function() {
+
+  // Get todays date and time
+  var now42 = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance42 = countDownDate42 - now42;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days42 = Math.floor(distance42 / (1000 * 60 * 60 * 24));
+  var hours42 = Math.floor((distance42 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes42 = Math.floor((distance42 % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds42 = Math.floor((distance42 % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("dateshow42").innerHTML = days42 + "d " + hours42 + "h "
+  + minutes42 + "m " + seconds42 + "s ";
+    
+  // If the count down is over, write some text
+  if (distance42 < 0) {
+    clearInterval(x42);
+    document.getElementById("dateshow42").innerHTML = "เกินระยะเวลาที่กำหนด";
+  }
+  if($('#nc_sec4f3_radiocheck').val()!==""){
+      clearInterval(x42);
+      document.getElementById("dateshow42").innerHTML = "เสร็จสิ้นการติดตามครั้งที่3";
+  }
+  
+  
+  
+}, 1000);
+
+/*****************FUNCTION**COUNTDOWN******************************/
+$(function() {
+  $('#datetimepicker32').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm'
+  });
+  
+  $('#datetimepicker33').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm'
+  });
+  
+  $('#datetimepicker41').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm'
+  });
+  
+  $('#datetimepicker42').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm'
+  });
+  
+});
+
+
+});
+</script>
             
             
          <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>   

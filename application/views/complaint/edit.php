@@ -24,7 +24,7 @@ and open the template in the editor.
                     <input hidden="" type="text" name="history_cpusername" id="history_cpusername" value="<?php echo $view_cp['cp_user_name']; ?>" /><!-- For history table-->
                     <input hidden="" type="text" name="history_cpuserempid" id="history_cpuserempid" value="<?php echo $view_cp['cp_user_empid']; ?>" /><!-- For history table-->
                     <input hidden="" type="text" name="history_cpuserdept" id="history_cpuserdept" value="<?php echo $view_cp['cp_user_dept']; ?>" /><!-- For history table-->
-                    <input hidden="" type="text" name="history_cpstatus" id="history_cpstatus" value="<?php echo $view_cp['cp_status']; ?>" /><!-- For history table-->
+                    <input hidden="" type="text" name="history_cpstatus" id="history_cpstatus" value="<?php echo $view_cp['cp_status_code']; ?>" /><!-- For history table-->
                     
                 <div class="panel panel-primary">
                     <div class="panel-heading">Topic</div>

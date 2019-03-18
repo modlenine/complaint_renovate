@@ -75,8 +75,8 @@ and open the template in the editor.
                         </div>
                         <div class="col-md-3">
                             <label><b>Status :</b></label>
-                            <label><b style="color:blue;"><?php echo $view_cp['cp_status']; ?></b></label>
-                            <input hidden="" type="text" name="history_cpstatus" id="history_cpstatus" value="<?php echo $view_cp['cp_status']; ?>" />
+                            <label><b style="color:blue;"><?php echo $view_cp['cp_status_name']; ?></b></label>
+                            <input hidden="" type="text" name="history_cpstatus" id="history_cpstatus" value="<?php echo $view_cp['cp_status_code']; ?>" />
                         </div>
                     </div>
                 </div>

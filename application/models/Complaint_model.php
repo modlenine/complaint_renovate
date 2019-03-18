@@ -7,12 +7,12 @@
         
         
         public function list_cp(){
-            $result = $this->db->query("SELECT * FROM complaint_main");
+            $result = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code");
             return $result->result_array();
         }
         
         public function view_cp($cp_no){
-            $result = $this->db->query("SELECT * FROM complaint_main WHERE cp_no='$cp_no' ");
+            $result = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_no='$cp_no' ");
             return $result->row_array();
         }
         
@@ -99,12 +99,12 @@
     
     
 public function get_newcp(){
-    $get_newcp = $this->db->query("SELECT cp_status FROM complaint_main WHERE cp_status='New Complaint' ");
+    $get_newcp = $this->db->query("SELECT cp_status_code FROM complaint_main WHERE cp_status_code='cp01' ");
     return $get_newcp->num_rows();
 }
 
 public function get_newnc(){
-    $get_newnc = $this->db->query("SELECT nc_status FROM complaint_main WHERE nc_status='Transfrom Complaint' ");
+    $get_newnc = $this->db->query("SELECT nc_status_code FROM complaint_main WHERE nc_status_code='nc01' ");
     return $get_newnc->num_rows();
 }
     
@@ -177,7 +177,7 @@ public function get_newnc(){
                 "cp_pro_qty" => $this->input->post("cp_pro_qty"),
                 "cp_detail" => $this->input->post("cp_detail"),
                 "cp_file" => $file_name_date,
-                "cp_status" => "New Complaint"
+                "cp_status_code" => "cp01"
             );
             
             if($this->db->insert("complaint_main",$data)){
@@ -254,7 +254,7 @@ public function get_newnc(){
                 "cp_pro_qty" => $this->input->post("cp_pro_qty"),
                 "cp_detail" => $this->input->post("cp_detail"),
                 "cp_file" => $file_name_date,
-                "cp_status" => "New Complaint",
+                "cp_status_code" => "cp01",
                 "cp_no_old" => $this->input->post("cp_noold")
             );
         
@@ -286,7 +286,7 @@ public function get_newnc(){
 
 /**************UPDATE ZONE******************/
         public function change_status_to1($cp_no){/*******Change New Complaint to Complaint Analyzed**********/
-           return $this->db->query("UPDATE complaint_main SET cp_status='Complaint Analyzed' WHERE cp_no='$cp_no' ");
+           return $this->db->query("UPDATE complaint_main SET cp_status_code='cp02' WHERE cp_no='$cp_no' ");
         }
         
         
@@ -313,7 +313,7 @@ public function get_newnc(){
                 "cp_detail_inves_signature" => $this->input->post("cp_detail_inves_signature"),
                 "cp_detail_inves_dept" => $this->input->post("cp_detail_inves_dept"),
                 "cp_detail_inves_date" => $this->input->post("cp_detail_inves_date"),
-                "cp_status" => "Investigation Complete",
+                "cp_status_code" => "cp03",
                 "cp_detail_inves_file" => $file_name_date
             );
             
@@ -344,10 +344,10 @@ public function get_newnc(){
         
         
         if($this->input->post("cp_sum")=="yes"){
-            $update_status = "Transfered to NC";
-            $update_status_nc = "Transfrom Complaint";
+            $update_status = "cp05";
+            $update_status_nc = "nc01";
         }else{ 
-            $update_status = "Normal Complaint"; 
+            $update_status = "cp04"; 
             $update_status_nc = "";
         }
             
@@ -357,8 +357,8 @@ public function get_newnc(){
                 "cp_sum_inves_dept" => $this->input->post("cp_sum_inves_dept"),
                 "cp_sum_inves_date" => $this->input->post("cp_sum_inves_date"),
                 "cp_sum_inves_file" => $file_name_date,
-                "cp_status" => $update_status,
-                "nc_status" => $update_status_nc,
+                "cp_status_code" => $update_status,
+                "nc_status_code" => $update_status_nc,
                 "cp_sum" => $this->input->post("cp_sum")
             );
             
@@ -406,7 +406,8 @@ public function get_newnc(){
              "cp_conclu_date" => $this->input->post("cp_conclu_date"),
              "cp_conclu_file" => $file_name_date,
              "cp_conclu_costdetail" => $this->input->post("cp_conclu_costdetail"),
-             "cp_conclu_cost" => $cut_comma
+             "cp_conclu_cost" => $cut_comma,
+             "cp_status_code" => "cp06"
 
          );
          
@@ -494,7 +495,7 @@ public function get_newnc(){
                 "cp_pro_qty" => $this->input->post("cp_pro_qty_edit"),
                 "cp_detail" => $this->input->post("cp_detail_edit"),
                 "cp_file" => $file_name_date,
-                "cp_status" => "New Complaint",
+                "cp_status_code" => "cp01",
                 "cp_modify_by" => $this->input->post("getuser_check"),
                 "cp_modify_datetime" => date("Y/m/d H:i:s"),
                 "cp_modify_reason" => $this->input->post("cp_modify_reason")
@@ -553,15 +554,15 @@ public function get_newnc(){
         
         
         
-        public function update_ncstatus($cp_no){
-            $data = array(
-                "nc_status" => "Followup_3rd (Failed!)"
-            );
-            
-            $this->db->where("cp_no",$cp_no);
-            $this->db->update("complaint_main",$data);
-            
-        }
+//        public function update_ncstatus($cp_no){
+//            $data = array(
+//                "nc_status_code" => "Followup_3rd (Failed!)"
+//            );
+//            
+//            $this->db->where("cp_no",$cp_no);
+//            $this->db->update("complaint_main",$data);
+//            
+//        }
         
         
 /**************UPDATE ZONE******************/
@@ -615,19 +616,17 @@ public function get_newnc(){
 /*****************CHECK ZONE*********************/
     
     public function check_status_page($cp_no){/*******Check status page********/
-        $result = $this->db->query("SELECT cp_status FROM complaint_main WHERE cp_no='$cp_no' ");
+        $result = $this->db->query("SELECT cp_status_code FROM complaint_main WHERE cp_no='$cp_no' ");
         $get_status = $result->row();
-        if($get_status->cp_status !== "New Complaint"){
+        if($get_status->cp_status_code !== "cp01"){
             redirect('/complaint/investigate/'.$cp_no);
         }
     }
     
     public function check_status_page2($cp_no){/*******Check status page********/
-        $result = $this->db->query("SELECT cp_status FROM complaint_main WHERE cp_no='$cp_no' ");
+        $result = $this->db->query("SELECT cp_status_code FROM complaint_main WHERE cp_no='$cp_no' ");
         $get_status = $result->row();
-        if($get_status->cp_status == "New Complaint"){
-            redirect('/complaint/view/'.$cp_no);
-        }else if($get_status->cp_status == "New Complaint(2)"){
+        if($get_status->cp_status_code == "cp01"){
             redirect('/complaint/view/'.$cp_no);
         }
     }

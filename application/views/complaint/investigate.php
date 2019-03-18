@@ -63,7 +63,7 @@ and open the template in the editor.
                         </div>
                         <div class="col-md-3">
                             <label><b>Status :</b></label>
-                            <label class="check_status"><b style="color:blue;"><?php echo $view_cp['cp_status']; ?></b></label>
+                            <label class="check_status"><b style="color:blue;"><?php echo $view_cp['cp_status_name']; ?></b></label>
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ class Nc_model extends CI_Model{
     }
     
     public function list_nc(){
-        return $this->db->query("SELECT * FROM complaint_main WHERE cp_status='Transfered to NC' " );
+        return $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.nc_status_code, complaint_status.cp_status_id, complaint_status.cp_status_name, complaint_main.cp_cus_name, complaint_main.cp_priority FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.nc_status_code WHERE cp_status_code='cp05' " );
     }
     
     public function getdata_main($cp_no){
@@ -26,7 +26,7 @@ class Nc_model extends CI_Model{
             "nc_sec3empid" => $this->input->post("nc_sec3empid"),
             "nc_sec3dept" => $this->input->post("nc_sec3dept"),
             "nc_sec3date" => $this->input->post("nc_sec3date"),
-            "nc_status" => "Waiting Action"
+            "nc_status_code" => "nc02"
         );
         
         $this->db->where("cp_no",$cp_no);
@@ -92,9 +92,9 @@ class Nc_model extends CI_Model{
 	echo "<br>"."Copy/Upload Complete"."<br>";
         
         if($this->input->post("nc_sec4f1_status") == "yes"){
-            $nc_status_4f1 = "Followup_1st NC Close";
+            $nc_status_4f1 = "nc06";
         }else{
-            $nc_status_4f1 = "Followup_1st";
+            $nc_status_4f1 = "nc03";
         }
         
         $data = array(
@@ -103,7 +103,7 @@ class Nc_model extends CI_Model{
             "nc_sec4f1_status" => $this->input->post("nc_sec4f1_status"),
             "nc_sec4f1_date" => $this->input->post("nc_sec4f1_date"),
             "nc_sec4f1_time" => $this->input->post("nc_sec4f1_time"),
-            "nc_status" => $nc_status_4f1
+            "nc_status_code" => $nc_status_4f1
         );
         
         $this->db->where("cp_no",$cp_no);
@@ -141,9 +141,9 @@ class Nc_model extends CI_Model{
 	echo "<br>"."Copy/Upload Complete"."<br>";
         
         if($this->input->post("nc_sec4f2_status") == "yes"){
-            $nc_status_4f2 = "Followup_2nd NC Close";
+            $nc_status_4f2 = "nc07";
         }else{
-            $nc_status_4f2 = "Followup_2nd";
+            $nc_status_4f2 = "nc04";
         }
         
         $data = array(
@@ -152,7 +152,7 @@ class Nc_model extends CI_Model{
             "nc_sec4f2_status" => $this->input->post("nc_sec4f2_status"),
             "nc_sec4f2_date" => $this->input->post("nc_sec4f2_date"),
             "nc_sec4f2_time" => $this->input->post("nc_sec4f2_time"),
-            "nc_status" => $nc_status_4f2
+            "nc_status_code" => $nc_status_4f2
         );
         
         $this->db->where("cp_no",$cp_no);
@@ -176,8 +176,8 @@ class Nc_model extends CI_Model{
             
             if($this->input->post("nc_sec4f3_status")=="no"){
                 $linkurl = "complaint/add_failed/$cp_no/$dept_code";
-                $nc_sec4f3_status = "NC Failed";
-            }else{ $linkurl="nc/main/$cp_no";$nc_sec4f3_status="Followup_3rd NC Close";}
+                $nc_sec4f3_status = "nc09";
+            }else{ $linkurl="nc/main/$cp_no";$nc_sec4f3_status="nc08";}
             
                     //อัพโหลดไฟล์แบบหลายไฟล์ลง Folderโดย+วันที่+เวลาต่อท้ายไฟล์
         $date = date("d-m-Y-H-i-s");//ดึงวันที่และเวลามาก่อน
@@ -199,7 +199,7 @@ class Nc_model extends CI_Model{
             "nc_sec4f3" => $this->input->post("nc_sec4f3"),
             "nc_sec4f3_file" => $file_name_date,
             "nc_sec4f3_status" => $this->input->post("nc_sec4f3_status"),
-            "nc_status" => $nc_sec4f3_status
+            "nc_status_code" => $nc_sec4f3_status
         );
         
         $this->db->where("cp_no",$cp_no);
@@ -239,7 +239,7 @@ class Nc_model extends CI_Model{
             "nc_sec5" => $this->input->post("nc_sec5"),
             "nc_sec5file" => $file_name_date,
             "nc_sec5cost" => $this->input->post("nc_sec5cost"),
-            "nc_status" => $this->input->post("nc_status_sec5")
+            "nc_status_code" => "nc11"
         );
         
         $this->db->where("cp_no",$cp_no);
@@ -280,7 +280,7 @@ class Nc_model extends CI_Model{
             "nc_sec5failed" => $this->input->post("nc_sec5"),
             "nc_sec5filefailed" => $file_name_date,
             "nc_sec5costfailed" => $this->input->post("nc_sec5cost"),
-            "nc_status" => "Conclusion of NC Failed!"
+            "nc_status_code" => "nc10"
         );
         
         $this->db->where("cp_no",$cp_no);

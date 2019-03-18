@@ -116,10 +116,10 @@ class History_model extends CI_Model{
             "his_nc_sec31" => $this->input->post("his_nc_sec31"),
             "his_nc_sec32" => $this->input->post("his_nc_sec32"),
             "his_nc_sec32date" => $this->input->post("his_nc_sec32date"),
-            "his_nc_sec32time" => $this->input->post("his_nc_sec32time"),
+            
             "his_nc_sec33" => $this->input->post("his_nc_sec33"),
             "his_nc_sec33date" => $this->input->post("his_nc_sec33date"),
-            "his_nc_sec33time" => $this->input->post("his_nc_sec33time"),
+            
             "his_nc_sec3owner" => $this->input->post("his_nc_sec3owner"),
             "his_nc_sec3empid" => $this->input->post("his_nc_sec3empid"),
             "his_nc_sec3dept" => $this->input->post("his_nc_sec3dept"),
@@ -139,11 +139,11 @@ class History_model extends CI_Model{
             "his_cpno" => $this->input->post("his_cpno"),
             "his_nc_sec31" => $this->input->post("nc_sec31edit"),
             "his_nc_sec32" => $this->input->post("nc_sec32edit"),
-            "his_nc_sec32date" => $this->input->post("nc_sec32dateedit"),
-            "his_nc_sec32time" => $this->input->post("nc_sec32timeedit"),
+            "his_nc_sec32date" => $this->input->post("datetime1_edit"),
+            
             "his_nc_sec33" => $this->input->post("nc_sec33edit"),
-            "his_nc_sec33date" => $this->input->post("nc_sec33dateedit"),
-            "his_nc_sec33time" => $this->input->post("nc_sec33timeedit"),
+            "his_nc_sec33date" => $this->input->post("datetime2_edit"),
+            
             "his_nc_sec3owner" => $this->input->post("his_nc_sec3owner"),
             "his_nc_sec3empid" => $this->input->post("his_nc_sec3empid"),
             "his_nc_sec3dept" => $this->input->post("his_nc_sec3dept"),

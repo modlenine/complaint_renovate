@@ -38,7 +38,7 @@ $this->load->view("head/javascript");
           <li><a href="#"><i class="fas fa-plus-circle"></i>&nbsp;New Complaint</a></li>
           <li><a href="#"><i class="far fa-eye"></i>&nbsp;View NC</a></li>-->
             
-            <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="#"><i class="fas fa-tachometer-alt"></i>&nbsp;Dash Board</a></li>
+            <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url("dashboard"); ?>"><i class="fas fa-tachometer-alt"></i>&nbsp;Dash Board</a></li>
           
           <li class="dropdown" style="border-top:0.5px solid #54acf3;">
               

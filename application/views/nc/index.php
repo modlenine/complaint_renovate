@@ -43,7 +43,7 @@ and open the template in the editor.
 <?php foreach ($list_nc->result_array() as $l_nc): ?>
                     <tr>
                         <?php  
-                            if($l_nc['nc_status']=="Transfrom Complaint"){
+                            if($l_nc['nc_status_code']=="nc01"){
                                 $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
@@ -59,7 +59,7 @@ and open the template in the editor.
                         <td style="text-align: center;"><?php echo $l_nc['cp_user_name']; ?></td>
                         <td style="text-align: center;"><?php echo $l_nc['cp_topic']; ?></td>
                         <td style="text-align: center;"><?php echo $l_nc['cp_cus_name']; ?></td>
-                        <td style="text-align: center;"><?php echo $l_nc['nc_status']; ?></td>
+                        <td style="text-align: center;"><?php echo $l_nc['cp_status_name']; ?></td>
                         <td style="text-align: center;"><?php echo $l_nc['cp_priority']; ?></td>
                     </tr>
 <?php endforeach; ?>
