@@ -125,7 +125,7 @@ and open the template in the editor.
 
                         <div class="col-md-3" id="h_qty">
                             <label><b>Quantity :</b></label>
-                            <label><?php echo $view_cp['cp_pro_qty']; ?></label>
+                            <label id="cp_pro_qty_show2"><?php echo $view_cp['cp_pro_qty']; ?></label>
                         </div>
                     </div>
 
@@ -136,7 +136,7 @@ and open the template in the editor.
                         </div>
                         <div class="col-md-12">
                             <label><b>Attached file :</b></label>   
-                            <label><a href="http://192.190.10.27/complaint_new/asset/<?php echo $view_cp['cp_file']; ?>" target="_blank"><?php echo $view_cp['cp_file']; ?></a></label><br>
+                            <label><a href="http://192.190.10.27/complaint/asset/add/<?php echo $view_cp['cp_file']; ?>" target="_blank"><?php echo $view_cp['cp_file']; ?></a></label><br>
 
                         </div>
                         <div class="col-md-12">

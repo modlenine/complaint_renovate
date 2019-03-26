@@ -2,6 +2,8 @@
 class Nc_model extends CI_Model{
     public function __construct() {
         parent::__construct();
+        $this->load->model("login_model");
+        require("PHPMailer_5.2.0/class.phpmailer.php");
     }
     
     public function list_nc(){
@@ -30,11 +32,61 @@ class Nc_model extends CI_Model{
         );
         
         $this->db->where("cp_no",$cp_no);
-        if(!$this->db->update("complaint_main",$data)){
-            echo "บันทึกข้อมูลไม่สำเร็จ";
-        }else{
-            echo "บันทึกข้อมูลสำเร็จ";
+        $this->db->update("complaint_main",$data);
+        
+        
+        
+ //****************************Email***Zone*********************************************//       
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+            
+    $get_owner_email = $this->get_owner_email($cp_no);      
+                        
+    $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
+        $mail->Host = "mail.saleecolour.com";  // specify main and backup server
+//        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 587; // พอร์ท
+//        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;     // turn on SMTP authentication
+        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        //websystem@saleecolour.com
+//        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Ae8686#"; // SMTP password
+        //Ae8686#
+//        $mail->Password = "ShctBkk1";
+
+        $mail->From = "websystem@saleecolour.com";
+        $mail->FromName = "Salee Colour WEB System";
+        foreach ($getEmail->result_array() as $fetch) {
+            $mail->AddAddress($fetch['email']);   
         }
+        
+        $mail->AddCC($get_owner_email->cp_user_email);
+// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        $mail->IsHTML(true);                                  // set email format to HTML
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        
+        if(!$mail->send()){
+            echo '<script language="javascript">';
+            echo 'alert("Save Data Failed")';
+            echo '</script>';
+        }else{
+            echo '<script language="javascript">';
+            echo 'alert("Save Data Success")';
+            echo '</script>';
+        }
+        
+
+ //************************Email***Zone***********************************//  
+        
+        
+        
     }
     
     
@@ -101,8 +153,9 @@ class Nc_model extends CI_Model{
             "nc_sec4f1" => $this->input->post("nc_sec4f1"),
             "nc_sec4f1_file" => $file_name_date,
             "nc_sec4f1_status" => $this->input->post("nc_sec4f1_status"),
-            "nc_sec4f1_date" => $this->input->post("nc_sec4f1_date"),
-            "nc_sec4f1_time" => $this->input->post("nc_sec4f1_time"),
+            "nc_sec4f1_date" => $this->input->post("datetime41"),
+//            "nc_sec4f1_time" => $this->input->post("nc_sec4f1_time"),
+            "nc_sec4f1_signature" => $this->input->post("nc_sec4f1_signature"),
             "nc_status_code" => $nc_status_4f1
         );
         
@@ -150,8 +203,9 @@ class Nc_model extends CI_Model{
             "nc_sec4f2" => $this->input->post("nc_sec4f2"),
             "nc_sec4f2_file" => $file_name_date,
             "nc_sec4f2_status" => $this->input->post("nc_sec4f2_status"),
-            "nc_sec4f2_date" => $this->input->post("nc_sec4f2_date"),
-            "nc_sec4f2_time" => $this->input->post("nc_sec4f2_time"),
+            "nc_sec4f2_date" => $this->input->post("datetime42"),
+//            "nc_sec4f2_time" => $this->input->post("nc_sec4f2_time"),
+            "nc_sec4f2_signature" => $this->input->post("nc_sec4f2_signature"),
             "nc_status_code" => $nc_status_4f2
         );
         
@@ -199,6 +253,7 @@ class Nc_model extends CI_Model{
             "nc_sec4f3" => $this->input->post("nc_sec4f3"),
             "nc_sec4f3_file" => $file_name_date,
             "nc_sec4f3_status" => $this->input->post("nc_sec4f3_status"),
+            "nc_sec4f3_signature" => $this->input->post("nc_sec4f3_signature"),
             "nc_status_code" => $nc_sec4f3_status
         );
         
@@ -235,10 +290,13 @@ class Nc_model extends CI_Model{
 
 	echo "<br>"."Copy/Upload Complete"."<br>";
         
+        $sec5_convert = $this->input->post("nc_sec5cost");
+        $sec5_cut_comma = str_replace(",", "", $sec5_convert);
+        
         $data = array(
             "nc_sec5" => $this->input->post("nc_sec5"),
             "nc_sec5file" => $file_name_date,
-            "nc_sec5cost" => $this->input->post("nc_sec5cost"),
+            "nc_sec5cost" => $sec5_cut_comma,
             "nc_status_code" => "nc11"
         );
         

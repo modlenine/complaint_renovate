@@ -3,7 +3,62 @@
         public function __construct() {
             parent::__construct();
             $this->load->model("login_model");
+            require("PHPMailer_5.2.0/class.phpmailer.php");
         }
+        
+ 
+       public function smtpmail($email , $subject, $body) { //Email Function
+        $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
+        $mail->Host = "mail.saleecolour.com";  // specify main and backup server
+//        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 587; // พอร์ท
+//        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;     // turn on SMTP authentication
+        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        //websystem@saleecolour.com
+//        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Ae8686#"; // SMTP password
+        //Ae8686#
+//        $mail->Password = "ShctBkk1";
+
+        $mail->From = "websystem@saleecolour.com";
+        $mail->FromName = "Salee Colour WEB System";
+        $mail->AddAddress($email);
+//        $mail->AddCC("chainarong039@gmail.com");
+// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        $mail->IsHTML(true);                                  // set email format to HTML
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        $result = $mail->send();
+        return $result;
+    } 
+        
+        
+    
+    public function active_email(){
+        $get_input_dept = $this->input->post("dept");/****Code Insert radio array******/
+        foreach ($get_input_dept as $gd){/******Check array input radio**********/
+            $save_dept = array(
+            
+           
+            "cp_mail_active" => 1
+        );
+        $this->db->where("deptcode",$gd);
+        $this->db->update("maillist",$save_dept);
+            
+        }/****Code Insert radio array******/
+    }
+    
+    public function deactive_email(){
+        $this->db->query("UPDATE maillist SET cp_mail_active =0 ");
+    }
+ 
         
         
         public function list_cp(){
@@ -107,6 +162,11 @@ public function get_newnc(){
     $get_newnc = $this->db->query("SELECT nc_status_code FROM complaint_main WHERE nc_status_code='nc01' ");
     return $get_newnc->num_rows();
 }
+
+public function get_owner_email($cp_no){
+    $result = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_no='$cp_no' ");
+    return $result->row();
+}
     
 
         
@@ -114,7 +174,10 @@ public function get_newnc(){
 /***************GET ZONE*******************/
         
         
-        
+    
+
+
+
 /**************INSERT ZONE******************/
         public function save_newcomplaint(){/***start save_newcomplaint***/
             
@@ -157,7 +220,8 @@ public function get_newnc(){
         }/****Code Insert radio array******/
         
         
-        
+        $qty_convert = $this->input->post("cp_pro_qty");
+        $qty_cut_comma = str_replace(",", "", $qty_convert);
         
 
         $data = array(/*******Insert data to complaint_main table********/
@@ -169,12 +233,13 @@ public function get_newnc(){
                 "cp_user_name" => $this->input->post("cp_user_name"),
                 "cp_user_empid" => $this->input->post("cp_user_empid"),
                 "cp_user_dept" => $this->input->post("cp_user_dept"),
+                "cp_user_email" => $this->input->post("memberemail"),
                 "cp_cus_name" => $this->input->post("cp_cus_name"),
                 "cp_cus_ref" => $this->input->post("cp_cus_ref"),
                 "cp_invoice_no" => $this->input->post("cp_invoice_no"),
                 "cp_pro_code" => $this->input->post("cp_pro_code"),
                 "cp_pro_lotno" => $this->input->post("cp_pro_lotno"),
-                "cp_pro_qty" => $this->input->post("cp_pro_qty"),
+                "cp_pro_qty" => $qty_cut_comma,
                 "cp_detail" => $this->input->post("cp_detail"),
                 "cp_file" => $file_name_date,
                 "cp_status_code" => "cp01"
@@ -190,6 +255,85 @@ public function get_newnc(){
             echo '</script>';
             
         }/*******Insert data to complaint_main table********/
+        
+        
+        
+        
+        
+//************************************ZONE***SEND****EMAIL*************************************// 
+        $getdata_foremail = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_no='$get_cp_no' ");
+        $getdata_email = $getdata_foremail->row();
+        
+        
+        /*  -------------------------SEND--EMAIL------------------------------------------   */
+        $sqlEmail = "SELECT email FROM maillist WHERE cp_mail_active = 1 "; //1=it , 2=sales , 3=cs
+        $query = $this->db->query($sqlEmail);
+        
+            $subject = "New Complaint";
+            $body = "<h2>New Complaint for Validation.</h2>";
+            $body .= "<strong>Complaint No. : </strong>" . $getdata_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>" . $getdata_email->cp_date . "<br>";
+            $body .= "<strong>Topic : </strong>" . $getdata_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>" . $getdata_email->cp_topic_cat . "<br>";
+            $body .="<strong>Status : </strong>" . $getdata_email->cp_status_name ."<br>";
+
+            $body .= "<strong><h2>Priority</h2></strong>";
+            foreach ($this->get_pri_view($get_cp_no) as $getpv){
+            $body .= "<strong>". $getpv['cp_pri_topic']. ": </strong>" . $getpv['cp_pri_name'] . "<br>";
+            }
+
+            $body .= "<h2>User Information</h2>";
+            $body .= "<strong>Complaint Person :</strong>" . $getdata_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>" . $getdata_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>" . $getdata_email->cp_user_dept ;
+
+            $body .= "<h2>Details of Complaint / Damages</h2>";
+            $body .= "<strong>Complaint Detail : </strong>" . $getdata_email->cp_detail . "<br>";
+            
+            $body .= "<strong>Link Attached File : </strong>" . "<a href=http://192.190.10.27/complaint/asset/add/$getdata_email->cp_file>" .$getdata_email->cp_file. "</a>" . "<br>";
+            
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$get_cp_no.">" . "Go to Page</a>";
+            
+//            $this->smtpmail($email , $subject, $body);
+            
+        $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
+        $mail->Host = "mail.saleecolour.com";  // specify main and backup server
+//        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 587; // พอร์ท
+//        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;     // turn on SMTP authentication
+        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        //websystem@saleecolour.com
+//        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Ae8686#"; // SMTP password
+        //Ae8686#
+//        $mail->Password = "ShctBkk1";
+
+        $mail->From = "websystem@saleecolour.com";
+        $mail->FromName = "Salee Colour WEB System";
+        foreach ($query->result_array() as $fetch) {
+            $mail->AddAddress($fetch['email']);   
+        }
+        
+        $mail->AddCC($getdata_email->cp_user_email);
+// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        $mail->IsHTML(true);                                  // set email format to HTML
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        $mail->send();
+//************************************ZONE***SEND****EMAIL*************************************//      
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }/***end save_newcomplaint***/
     
     
@@ -283,10 +427,71 @@ public function get_newnc(){
 /**************INSERT ZONE******************/
         
         
+    
+    
+    
 
 /**************UPDATE ZONE******************/
         public function change_status_to1($cp_no){/*******Change New Complaint to Complaint Analyzed**********/
-           return $this->db->query("UPDATE complaint_main SET cp_status_code='cp02' WHERE cp_no='$cp_no' ");
+            $this->db->query("UPDATE complaint_main SET cp_status_code='cp02' WHERE cp_no='$cp_no' ");
+            
+            $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+            
+            $get_owner_email = $this->get_owner_email($cp_no);
+            
+            
+        $subject = "Investigate Start !";
+        $body = "<h2>The Complaint is starting an investigation.</h2>";
+        $body .= "<strong>Complaint No. : </strong>" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_date . "<br>";
+        $body .= "<strong>Topic : </strong>" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>" . $get_owner_email->cp_topic_cat . "<br>";
+        $body .="<strong>Status : </strong>" . $get_owner_email->cp_status_name ."<br>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$cp_no.">" . "Go to Page</a>";
+            
+            
+        $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
+        $mail->Host = "mail.saleecolour.com";  // specify main and backup server
+//        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 587; // พอร์ท
+//        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;     // turn on SMTP authentication
+        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        //websystem@saleecolour.com
+//        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Ae8686#"; // SMTP password
+        //Ae8686#
+//        $mail->Password = "ShctBkk1";
+
+        $mail->From = "websystem@saleecolour.com";
+        $mail->FromName = "Salee Colour WEB System";
+        foreach ($getEmail->result_array() as $fetch) {
+            $mail->AddAddress($fetch['email']);   
+        }
+        
+        $mail->AddCC($get_owner_email->cp_user_email);
+// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        $mail->IsHTML(true);                                  // set email format to HTML
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        
+        if(!$mail->send()){
+            echo '<script language="javascript">';
+            echo 'alert("Start Investigate Failed !!")';
+            echo '</script>';
+            exit();
+        }else{
+            echo '<script language="javascript">';
+            echo 'alert("Start Investigate Success")';
+            echo '</script>';  
+        }
+        
+            
+            
         }
         
         
@@ -320,7 +525,78 @@ public function get_newnc(){
             $this->db->where("cp_no",$cp_no);
             $this->db->update("complaint_main",$data);
             
+            
+ //***************************Email***Zone************************************************//           
+        $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+            
+            $get_owner_email = $this->get_owner_email($cp_no);    
+            
+         
+            $subject = "Investigation Complete";
+            $body = "<h2>The Complaint Investigation Complete.</h2>";
+            $body .= "<strong>Complaint No. : </strong>" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_date . "<br>";
+            $body .= "<strong>Topic : </strong>" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .="<strong>Status : </strong>" . $get_owner_email->cp_status_name ."<br>";
+
+            $body .= "<strong><h2>Priority</h2></strong>";
+            foreach ($this->get_pri_view($cp_no) as $getpv){
+            $body .= "<strong>". $getpv['cp_pri_topic']. ": </strong>" . $getpv['cp_pri_name'] . "<br>";
+            }
+
+            $body .= "<h2>User Information</h2>";
+            $body .= "<strong>Complaint Person :</strong>" . $get_owner_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>" . $get_owner_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>" . $get_owner_email->cp_user_dept ;
+
+            $body .= "<h2>Details of Complaint / Damages</h2>";
+            $body .= "<strong>Complaint Detail : </strong>" . $get_owner_email->cp_detail . "<br>";
+            
+            $body .= "<strong>Link Attached File : </strong>" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br>";
+            
+            $body .= "<h2>Investigation</h2>";
+            $body .= "<strong>Detail of Investigate : </strong>" . $get_owner_email->cp_detail_inves ."<br>";
+            $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br>";
+            $body .= "<strong>Signature : </strong>" .$get_owner_email->cp_detail_inves_signature."&nbsp;&nbsp;<strong>Department : </strong>".$get_owner_email->cp_detail_inves_dept."&nbsp;&nbsp;<strong>Date : </strong>".$get_owner_email->cp_detail_inves_date."<br>";
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$cp_no.">" . "Go to Page</a>";
+            
+            
+        $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
+        $mail->Host = "mail.saleecolour.com";  // specify main and backup server
+//        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 587; // พอร์ท
+//        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;     // turn on SMTP authentication
+        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        //websystem@saleecolour.com
+//        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Ae8686#"; // SMTP password
+        //Ae8686#
+//        $mail->Password = "ShctBkk1";
+
+        $mail->From = "websystem@saleecolour.com";
+        $mail->FromName = "Salee Colour WEB System";
+        foreach ($getEmail->result_array() as $fetch) {
+            $mail->AddAddress($fetch['email']);   
         }
+        
+        $mail->AddCC($get_owner_email->cp_user_email);
+// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        $mail->IsHTML(true);                                  // set email format to HTML
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        $mail->send();
+            
+            
+        }
+        
+        
+        
+        
+        
         
         
         public function add_sum_inves($cp_no){/*************SUMMARY OF INVESTIGATION*****************/
@@ -363,8 +639,119 @@ public function get_newnc(){
             );
             
             $this->db->where("cp_no",$cp_no);
+            $this->db->update("complaint_main",$data);
             
-            if($this->db->update("complaint_main",$data)){
+
+            
+ //************************Email***Zone***********************************//
+            
+    $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+            
+    $get_owner_email = $this->get_owner_email($cp_no);
+    
+    
+    if($get_owner_email->cp_sum == "no"){
+        
+        $subject = "Normal Complaint";
+            $body = "<h2>The Complaint is normal complaint.</h2>";
+            $body .= "<strong>Complaint No. : </strong>" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_date . "<br>";
+            $body .= "<strong>Topic : </strong>" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .="<strong>Status : </strong>" . $get_owner_email->cp_status_name ."<br>";
+
+            $body .= "<strong><h2>Priority</h2></strong>";
+            foreach ($this->get_pri_view($cp_no) as $getpv){
+            $body .= "<strong>". $getpv['cp_pri_topic']. ": </strong>" . $getpv['cp_pri_name'] . "<br>";
+            }
+
+            $body .= "<h2>User Information</h2>";
+            $body .= "<strong>Complaint Person :</strong>" . $get_owner_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>" . $get_owner_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>" . $get_owner_email->cp_user_dept ;
+
+            $body .= "<h2>Details of Complaint / Damages</h2>";
+            $body .= "<strong>Complaint Detail : </strong>" . $get_owner_email->cp_detail . "<br>";
+            
+            $body .= "<strong>Link Attached File : </strong>" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br>";
+            
+            $body .= "<h2>Investigation</h2>";
+            $body .= "<strong>Detail of Investigate : </strong>" . $get_owner_email->cp_detail_inves ."<br>";
+            $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br>";
+            $body .= "<strong>Signature : </strong>" .$get_owner_email->cp_detail_inves_signature."&nbsp;&nbsp;<strong>Department : </strong>".$get_owner_email->cp_detail_inves_dept."&nbsp;&nbsp;<strong>Date : </strong>".$get_owner_email->cp_detail_inves_date."<br>";
+            
+            $body .= "<h2>Summary of Investigation</h2>";
+            $body .= "<strong>Detail Summary of Investigation : </strong>".$get_owner_email->cp_sum_inves."<br>";
+            $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+            $body .= "<strong>Signature : </strong>" .$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>Department : </strong>".$get_owner_email->cp_sum_inves_dept."&nbsp;&nbsp;<strong>Date : </strong>".$get_owner_email->cp_sum_inves_date."<br>";
+            
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$cp_no.">" . "Go to Page</a>";
+            
+    }else{
+        
+        $subject = "Transfered to NC";
+            $body = "<h2>The Complaint is Transfered to NC.</h2>";
+            $body .= "<strong>Complaint No. : </strong>" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_date . "<br>";
+            $body .= "<strong>Topic : </strong>" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .="<strong>Status : </strong>" . $get_owner_email->cp_status_name ."<br>";
+
+            $body .= "<strong><h2>Priority</h2></strong>";
+            foreach ($this->get_pri_view($cp_no) as $getpv){
+            $body .= "<strong>". $getpv['cp_pri_topic']. ": </strong>" . $getpv['cp_pri_name'] . "<br>";
+            }
+
+            $body .= "<h2>User Information</h2>";
+            $body .= "<strong>Complaint Person :</strong>" . $get_owner_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>" . $get_owner_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>" . $get_owner_email->cp_user_dept ;
+
+            $body .= "<h2>Details of Complaint / Damages</h2>";
+            $body .= "<strong>Complaint Detail : </strong>" . $get_owner_email->cp_detail . "<br>";
+            
+            $body .= "<strong>Link Attached File : </strong>" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br>";
+            
+            $body .= "<h2>Investigation</h2>";
+            $body .= "<strong>Detail of Investigate : </strong>" . $get_owner_email->cp_detail_inves ."<br>";
+            $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br>";
+            $body .= "<strong>Signature : </strong>" .$get_owner_email->cp_detail_inves_signature."&nbsp;&nbsp;<strong>Department : </strong>".$get_owner_email->cp_detail_inves_dept."&nbsp;&nbsp;<strong>Date : </strong>".$get_owner_email->cp_detail_inves_date."<br>";
+            
+            $body .= "<h2>Summary of Investigation</h2>";
+            $body .= "<strong>Detail Summary of Investigation : </strong>".$get_owner_email->cp_sum_inves."<br>";
+            $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+            $body .= "<strong>Signature : </strong>" .$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>Department : </strong>".$get_owner_email->cp_sum_inves_dept."&nbsp;&nbsp;<strong>Date : </strong>".$get_owner_email->cp_sum_inves_date."<br>";
+            
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$cp_no.">" . "Go to Page</a>";
+        
+    }
+    
+            
+            
+    $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
+        $mail->Host = "mail.saleecolour.com";  // specify main and backup server
+//        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 587; // พอร์ท
+//        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;     // turn on SMTP authentication
+        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        //websystem@saleecolour.com
+//        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Ae8686#"; // SMTP password
+        //Ae8686#
+//        $mail->Password = "ShctBkk1";
+
+        $mail->From = "websystem@saleecolour.com";
+        $mail->FromName = "Salee Colour WEB System";
+        foreach ($getEmail->result_array() as $fetch) {
+            $mail->AddAddress($fetch['email']);   
+        }
+        
+        $mail->AddCC($get_owner_email->cp_user_email);
+// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        $mail->IsHTML(true);                                  // set email format to HTML
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        
+        if(!$mail->send()){
             echo '<script language="javascript">';
             echo 'alert("Save Data Success")';
             echo '</script>';
@@ -372,9 +759,13 @@ public function get_newnc(){
             echo '<script language="javascript">';
             echo 'alert("Save Data Failed !!!!")';
             echo '</script>';
-            
         }
+        
+
+ //************************Email***Zone***********************************//  
         }
+        
+        
         
         
         
@@ -412,17 +803,98 @@ public function get_newnc(){
          );
          
          $this->db->where("cp_no",$cp_no);
-            if($this->db->update("complaint_main",$data)){
+         $this->db->update("complaint_main",$data);
+         
+         
+            
+//************************Email***Zone***********************************//     
+    $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+            
+    $get_owner_email = $this->get_owner_email($cp_no);
+         
+         
+            $subject = "Conclusion of Complaint";
+            $body = "<h2>The Complaint is Conclusion of Complaint.</h2>";
+            $body .= "<strong>Complaint No. : </strong>" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_date . "<br>";
+            $body .= "<strong>Topic : </strong>" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .="<strong>Status : </strong>" . $get_owner_email->cp_status_name ."<br>";
+
+            $body .= "<strong><h2>Priority</h2></strong>";
+            foreach ($this->get_pri_view($cp_no) as $getpv){
+            $body .= "<strong>". $getpv['cp_pri_topic']. ": </strong>" . $getpv['cp_pri_name'] . "<br>";
+            }
+
+            $body .= "<h2>User Information</h2>";
+            $body .= "<strong>Complaint Person :</strong>" . $get_owner_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>" . $get_owner_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>" . $get_owner_email->cp_user_dept ;
+
+            $body .= "<h2>Details of Complaint / Damages</h2>";
+            $body .= "<strong>Complaint Detail : </strong>" . $get_owner_email->cp_detail . "<br>";
+            
+            $body .= "<strong>Link Attached File : </strong>" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br>";
+            
+            $body .= "<h2>Investigation</h2>";
+            $body .= "<strong>Detail of Investigate : </strong>" . $get_owner_email->cp_detail_inves ."<br>";
+            $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br>";
+            $body .= "<strong>Signature : </strong>" .$get_owner_email->cp_detail_inves_signature."&nbsp;&nbsp;<strong>Department : </strong>".$get_owner_email->cp_detail_inves_dept."&nbsp;&nbsp;<strong>Date : </strong>".$get_owner_email->cp_detail_inves_date."<br>";
+            
+            $body .= "<h2>Summary of Investigation</h2>";
+            $body .= "<strong>Detail Summary of Investigation : </strong>".$get_owner_email->cp_sum_inves."<br>";
+            $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+            $body .= "<strong>Signature : </strong>" .$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>Department : </strong>".$get_owner_email->cp_sum_inves_dept."&nbsp;&nbsp;<strong>Date : </strong>".$get_owner_email->cp_sum_inves_date."<br>";
+            
+            $body .= "<h2>Conclusion of Complaint</h2>";
+            $body .= "<strong>Detail Conclusion of Complaint : </strong>".$get_owner_email->cp_conclu_detail."<br>";
+            $body .= "<strong>Detail of Cost : </strong>".$get_owner_email->cp_conclu_costdetail."&nbsp;&nbsp;<strong>Cost : </strong>".$get_owner_email->cp_conclu_cost."<br>";
+            $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/conclusion_inves/$get_owner_email->cp_conclu_file'>".$get_owner_email->cp_conclu_file . "</a><br>";
+            $body .= "<strong>Signature : </strong>" .$get_owner_email->cp_conclu_signature."&nbsp;&nbsp;<strong>Department : </strong>".$get_owner_email->cp_conclu_dept."&nbsp;&nbsp;<strong>Date : </strong>".$get_owner_email->cp_conclu_date."<br>";
+            
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$cp_no.">" . "Go to Page</a>";     
+         
+                
+    $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
+        $mail->Host = "mail.saleecolour.com";  // specify main and backup server
+//        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 587; // พอร์ท
+//        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;     // turn on SMTP authentication
+        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        //websystem@saleecolour.com
+//        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Ae8686#"; // SMTP password
+        //Ae8686#
+//        $mail->Password = "ShctBkk1";
+
+        $mail->From = "websystem@saleecolour.com";
+        $mail->FromName = "Salee Colour WEB System";
+        foreach ($getEmail->result_array() as $fetch) {
+            $mail->AddAddress($fetch['email']);   
+        }
+        
+        $mail->AddCC($get_owner_email->cp_user_email);
+// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        $mail->IsHTML(true);                                  // set email format to HTML
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        
+        if(!$mail->send()){
             echo '<script language="javascript">';
-            echo 'alert("Save Data Success")';
+            echo 'alert("Save Data Failed")';
             echo '</script>';
         }else{
             echo '<script language="javascript">';
-            echo 'alert("Save Data Failed !!!!")';
+            echo 'alert("Save Data Success")';
             echo '</script>';
-            
         }
-            
+        
+
+ //************************Email***Zone***********************************//       
+   
         }
         
         
@@ -478,7 +950,7 @@ public function get_newnc(){
         
         
 
-        $data = array(/*******Insert data to complaint_main table********/
+        $data = array(/*******Update data to complaint_main table********/
 //                "cp_no" => $get_cp_no,
 //                "cp_date" => $this->input->post("cp_date"),
                 "cp_topic" => $this->input->post("cp_topic_hide_edit"),

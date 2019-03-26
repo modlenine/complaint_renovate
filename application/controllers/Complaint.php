@@ -24,8 +24,6 @@ class Complaint extends CI_Controller{
         
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
         
-        
-        $data['get_file'] = $this->complaint_model->get_file($cp_no);
         $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
         $data['getuser'] = $this->login_model->getuser();
         $data['get_pri_use'] = $this->complaint_model->get_pri_view($cp_no);
@@ -37,18 +35,9 @@ class Complaint extends CI_Controller{
     
     
     public function inves_starting($cp_no){/*******Change New Complaint to Complaint Analyzed**********/
-        $change1 = $this->complaint_model->change_status_to1($cp_no);
-        if(!$change1){
-            echo '<script language="javascript">';
-            echo 'alert("Start Investigate Failed !!")';
-            echo '</script>';
-        }else{
-            echo '<script language="javascript">';
-            echo 'alert("Start Investigate Success")';
-            echo '</script>';
-            
-            header("refresh:0; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
-        }
+        $this->complaint_model->change_status_to1($cp_no);
+        
+        header("refresh:0; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
     }
     
     
@@ -102,9 +91,6 @@ class Complaint extends CI_Controller{
         $this->complaint_model->check_status_page2($cp_no);
         
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
-        
-
-        $data['get_file'] = $this->complaint_model->get_file($cp_no);
         $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
         $data['getuser'] = $this->login_model->getuser();
         $data['get_pri_use'] = $this->complaint_model->get_pri_view($cp_no);
@@ -157,7 +143,9 @@ class Complaint extends CI_Controller{
     
     
     public function saveData(){
+        $this->complaint_model->active_email();
         $this->complaint_model->save_newcomplaint();
+        $this->complaint_model->deactive_email();
         
         header("refresh:0; url=http://192.190.10.27/complaint");
     }

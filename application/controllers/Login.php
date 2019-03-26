@@ -7,8 +7,9 @@ class Login extends CI_Controller{
     }
     
     public function index(){
-        $this->load->library('user_agent');
-        $this->session->set_userdata('referrer_url', $this->agent->referrer() );
+
+//        $this->load->library('user_agent');
+//        $this->session->set_userdata('referrer_url', $this->agent->referrer() );
         
         $this->load->view("head/head_code_login");
         $this->load->view("head/javascript");

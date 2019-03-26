@@ -55,7 +55,7 @@ and open the template in the editor.
                             <input type="time" name="nc_sec32timeedit" id="nc_sec32timeedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec32time; ?>"/>-->
                         </div>
                         
-                        <div class='input-group date' id='datetimepicker32'>
+                        <div class='input-group date' id='datetimepicker322'>
                             <input type='datetime' class="form-control" name="datetime1_edit" id="datetime1_edit" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -74,7 +74,7 @@ and open the template in the editor.
                             <input type="time" name="nc_sec33timeedit" id="nc_sec33timeedit" class="form-control" style="width:30%;" value="<?php echo $getdatamain->nc_sec33time; ?>"/>-->
                         </div>
                         
-                        <div class='input-group date' id='datetimepicker33'>
+                        <div class='input-group date' id='datetimepicker333'>
                             <input type='datetime' class="form-control" name="datetime2_edit" id="datetime2_edit" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -109,7 +109,20 @@ and open the template in the editor.
                 
                 
             </div>
-            
+            <script>
+                $(function() {
+  $('#datetimepicker322').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm'
+  });
+  
+  $('#datetimepicker333').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm'
+  });
+  
+  
+});
+
+            </script>
             
             
 

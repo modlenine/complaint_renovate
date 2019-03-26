@@ -40,26 +40,14 @@ $this->load->view("head/javascript");
             
             <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url("dashboard"); ?>"><i class="fas fa-tachometer-alt"></i>&nbsp;Dash Board</a></li>
           
-          <li class="dropdown" style="border-top:0.5px solid #54acf3;">
-              
-              <input hidden="" type="text" name="check_numrow_cp" id="check_numrow_cp" value="<?php echo $this->complaint_model->get_newcp(); ?>"/><!--check cp row-->
-              
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-book-open"></i>&nbsp;Complaint <span class="caret"></span>&nbsp;&nbsp;<span class="label label-success cpnew">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newcp(); ?></span></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="<?php echo base_url(); ?>complaint"><i class="far fa-eye"></i>&nbsp;View&nbsp;<span class="label cpnew"><img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newcp(); ?></span></span></a></li>
-                
-              <li><a href="<?php echo base_url(); ?>complaint/add/<?php echo $getuser['DeptCode']; ?>"><i class="fas fa-plus-circle"></i>&nbsp;Add</a></li>
-            </ul>
-          </li>
+            <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url(); ?>complaint"><i class="fas fa-book-open"></i>&nbsp;Complaint &nbsp;&nbsp;<span class="label label-success cpnew">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newcp(); ?></span></span></a></li>
+            
+            <input hidden="" type="text" name="check_numrow_cp" id="check_numrow_cp" value="<?php echo $this->complaint_model->get_newcp(); ?>"/><!--check cp row-->
           
-          <li class="dropdown" style="border-top:0.5px solid #54acf3;">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-book-open"></i>&nbsp;NC <span class="caret"></span>&nbsp;&nbsp;<span class="label label-success ncnew">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newnc(); ?></span></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="<?php echo base_url("nc"); ?>"><i class="far fa-eye"></i>&nbsp;View&nbsp;<span class="label ncnew"><img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newnc(); ?></span></span></a></li>
-                <input hidden="" type="text" name="check_numrow_nc" id="check_numrow_nc" value="<?php echo $this->complaint_model->get_newnc(); ?>"/><!--check nc row-->
-              
-            </ul>
-          </li>
+          <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url(); ?>nc"><i class="fas fa-book-open"></i>&nbsp;NC &nbsp;&nbsp;<span class="label label-success ncnew">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newnc(); ?></span></span></a></li>
+            <input hidden="" type="text" name="check_numrow_nc" id="check_numrow_nc" value="<?php echo $this->complaint_model->get_newnc(); ?>"/><!--check nc row-->
+            
+          
 
           <li class="dropdown" style="border-top:0.5px solid #54acf3;">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>&nbsp;User Profile <span class="caret"></span></a>
@@ -78,13 +66,12 @@ $this->load->view("head/javascript");
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-tools"></i>&nbsp;Setting <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li class="dropdown-header">Complaint</li>
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
+              <li><a href="<?php echo base_url("setting/topic_setting"); ?>">Topic Setting</a></li>
+              <li><a href="<?php echo base_url("setting/dept_setting"); ?>">Department Setting</a></li>
               <li role="separator" class="divider"></li>
-              <li class="dropdown-header">NC</li>
+<!--              <li class="dropdown-header">NC</li>
               <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
+              <li><a href="#">One more separated link</a></li>-->
             </ul>
           </li>
         </ul>

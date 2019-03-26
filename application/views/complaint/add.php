@@ -134,6 +134,8 @@ and open the template in the editor.
                                 <input type="text" name="cp_user_dept_code" id="cp_user_dept_code" class="form-control form-control-sm form-width" readonly="" placeholder="Department Code" value="<?php echo $getuser['DeptCode']; ?>"/>
                             </div>
                         </div>
+                        <input hidden="" type="text" name="memberemail" id="memberemail" value="<?php echo $getuser['memberemail']; ?>" />
+                        <!--Email check-->
                         
                     </div>
                 </div><!--************* User Information ******************-->
@@ -173,7 +175,7 @@ and open the template in the editor.
 
                             <div class="col-md-4 pri" id="h_qty">
                                 <label><b>Quantity</b></label>
-                                <input type="text" name="cp_pro_qty" id="cp_pro_qty" class="form-control form-control-sm form-width"  placeholder="Quantity"/>
+                                <input type="text" name="cp_pro_qty" id="cp_pro_qty" class="form-control form-control-sm form-width number"  placeholder="Quantity"/>
                             </div>
                         </div>
                         

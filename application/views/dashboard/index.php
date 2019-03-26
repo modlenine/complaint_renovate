@@ -61,7 +61,7 @@ and open the template in the editor.
                     Complaint / NC
                 </a>
                 <?php foreach ($getby_username->result_array() as $gbuser): ?>
-                <a href="#" class="list-group-item"><?php echo $gbuser['cp_user_name']; ?><span class="badge"><?php echo $gbuser['num_user']; ?></span></a>
+                <a href="<?php echo base_url("dashboard/viewby_user/"); ?><?php echo $gbuser['cp_user_name']; ?>" class="list-group-item"><?php echo $gbuser['cp_user_name']; ?><span class="badge"><?php echo $gbuser['num_user']; ?></span></a>
                 <?php endforeach; ?>
 
                     </div>
@@ -74,7 +74,7 @@ and open the template in the editor.
                     Complaint / NC
                 </a>
                 <?php foreach ($getby_dept->result_array() as $gbdept): ?>
-                <a href="#" class="list-group-item"><?php echo $gbdept['cp_user_dept']; ?><span class="badge"><?php echo $gbdept['num_dept']; ?></span></a>
+                <a href="<?php echo base_url("dashboard/viewby_dept/"); ?><?php echo $gbdept['cp_user_dept']; ?>" class="list-group-item"><?php echo $gbdept['cp_user_dept']; ?><span class="badge"><?php echo $gbdept['num_dept']; ?></span></a>
                 <?php endforeach; ?>
 
                     </div>
@@ -87,7 +87,7 @@ and open the template in the editor.
                     Complaint / NC
                 </a>
                 <?php foreach ($getby_topic->result_array() as $gbt): ?>
-                <a href="#" class="list-group-item"><?php echo $gbt['cp_topic']; ?><span class="badge"><?php echo $gbt['num_topic']; ?></span></a>
+                <a href="<?php echo base_url("dashboard/viewby_topic/"); ?><?php echo $gbt['topic_id']; ?>" class="list-group-item"><?php echo $gbt['cp_topic']; ?><span class="badge"><?php echo $gbt['num_topic']; ?></span></a>
                 <?php endforeach; ?>
 
                     </div>
@@ -200,16 +200,12 @@ and open the template in the editor.
     }
   },
   series: [{
-    name: 'Tokyo',
+    name: 'Complaint',
     data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
 
   }, {
-    name: 'New York',
+    name: 'NC',
     data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-  }, {
-    name: 'Berlin',
-    data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
 
   }]
 });

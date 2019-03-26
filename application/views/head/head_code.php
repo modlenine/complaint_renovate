@@ -40,6 +40,9 @@ and open the template in the editor.
 
   <style>
       /******************Main**********************/
+      .dataTables_filter {
+display: none; 
+}
       body{
           min-height:100vh;
       }
