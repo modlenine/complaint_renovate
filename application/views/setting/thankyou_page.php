@@ -26,7 +26,7 @@ and open the template in the editor.
     </head>
     <body>
         <div class="container">
-            <h2 style="text-align: center;">Edit Topic Success</h2><br>
+            <h2 style="text-align: center;">Success</h2><br>
             <button id="btn_close" class="btn btn-warning btn-block">ปิดหน้าต่างนี้</button>
         </div>
         

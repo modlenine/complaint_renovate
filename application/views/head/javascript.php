@@ -93,6 +93,16 @@
         if ($('#check_user').val() !== $('#cp_detail_inves_signature').val()) {
             $('#btn_save_history').hide();
         }
+        
+        if($('#cp_topic_cat').val() == "Safety" || $('#cp_topic_cat').val() == "Environment" || $('#cp_topic_cat').val() == "System"){
+            $('#h_username').hide();
+            $('#h_cusref').hide();
+            $('#h_inv').hide();
+            $('#h_procode').hide();
+            $('#h_lotno').hide();
+            $('#h_qty').hide();
+           
+        }
 
 
 
@@ -772,6 +782,22 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
         /*********************DASHBOARD**************************/
         
 
+
+
+        /*******************************************************/
+//        $('#set_score').keyup(function (){
+//            var total_score = $('#show_score').val();
+//            var pri_score = $('#set_score').val();
+//            var regExp = /^[0-9]*$/;
+//            
+//            if(total_score <= 0){
+//                alert("The score not enough");
+//                location.reload();
+//            }else{
+//                sum = total_score - pri_score ;
+//                $('#show_score').val(sum);
+//            }
+//        });
 
 
 

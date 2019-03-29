@@ -68,6 +68,7 @@ $this->load->view("head/javascript");
               <li class="dropdown-header">Complaint</li>
               <li><a href="<?php echo base_url("setting/topic_setting"); ?>">Topic Setting</a></li>
               <li><a href="<?php echo base_url("setting/dept_setting"); ?>">Department Setting</a></li>
+              <li><a href="<?php echo base_url("setting/priority_setting"); ?>">Priority Setting</a></li>
               <li role="separator" class="divider"></li>
 <!--              <li class="dropdown-header">NC</li>
               <li><a href="#">Separated link</a></li>

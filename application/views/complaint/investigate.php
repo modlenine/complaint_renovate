@@ -166,7 +166,7 @@ and open the template in the editor.
             <div class="form-row">
                 <div class="col-md-8">
                         <label><b>Detail of investigate</b></label>
-                        <textarea name="cp_detail_inves" id="cp_detail_inves" class="form-control pri" rows="3"></textarea>
+                        <textarea name="cp_detail_inves" id="cp_detail_inves" class="form-control pri" rows="3" required=""></textarea>
                     </div>
                 </div>
           
@@ -321,7 +321,7 @@ and open the template in the editor.
             <div class="form-row">
                 <div class="col-md-8">
                         <label><b>Detail Summary of Investigation</b></label>
-                        <textarea name="cp_sum_inves" id="cp_sum_inves" class="form-control pri" rows="3"></textarea>
+                        <textarea name="cp_sum_inves" id="cp_sum_inves" class="form-control pri" rows="3" required=""></textarea>
                     </div>
                 </div>
           

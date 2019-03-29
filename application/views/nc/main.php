@@ -362,11 +362,11 @@ and open the template in the editor.
 
                 </div>
             </div>
-            <!-- *********************************SECTION**4***AREA************************************ -->
+<!-- *********************************SECTION***4******AREA************************************ -->
 
 
 
-            <!-- *********************************SECTION5****AREA**************************************--> 
+<!-- *********************************SECTION5****AREA**************************************--> 
 <?php
 if ($getdatamain->nc_sec4f3_status == "no") {
     $ncfailed = "( Failed )";
@@ -438,22 +438,10 @@ if ($getdatamain->nc_status_code == "nc10") {
                         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                        if($('#datetime41show').val != ""){
-                           // Output the result in an element with id="demo"
-                        document.getElementById("dateshow32").innerHTML = total41_32 + "d " + hours + "h "
+                        
+                        
+                        document.getElementById("dateshow32").innerHTML = days + "d " + hours + "h "
                                 + minutes + "m " + seconds + "s ";
-                        
-                                if($('#datetime42show').val != ""){
-                                    document.getElementById("dateshow32").innerHTML = total42_32 + "d " + hours + "h "
-                                + minutes + "m " + seconds + "s "; 
-                                }
-                        
-                        }else{
-                            document.getElementById("dateshow32").innerHTML = days + "d " + hours + "h "
-                                + minutes + "m " + seconds + "s ";
-                        }
-                        
                         
 
 
@@ -507,22 +495,10 @@ if ($getdatamain->nc_status_code == "nc10") {
                         var minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
                         var seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
                         
-                        if($('#datetime41show').val != ""){   
-                        // Output the result in an element with id="demo"
-                        document.getElementById("dateshow33").innerHTML = total41_33 + "d " + hours2 + "h "
-                                + minutes2 + "m " + seconds2 + "s ";
                         
-                                if($('#datetime42show').val != ""){
-                                    document.getElementById("dateshow33").innerHTML = total42_33 + "d " + hours2 + "h "
-                                + minutes2 + "m " + seconds2 + "s ";
-                                }
-                        }else{
                             // Output the result in an element with id="demo"
                         document.getElementById("dateshow33").innerHTML = days2 + "d " + hours2 + "h "
                                 + minutes2 + "m " + seconds2 + "s ";
-                        }
-                        
-                        
                         
                         
 
@@ -579,15 +555,11 @@ if ($getdatamain->nc_status_code == "nc10") {
                         var minutes41 = Math.floor((distance41 % (1000 * 60 * 60)) / (1000 * 60));
                         var seconds41 = Math.floor((distance41 % (1000 * 60)) / 1000);
 
+
                         // Output the result in an element with id="demo"
                         document.getElementById("dateshow41").innerHTML = days41 + "d " + hours41 + "h "
                                 + minutes41 + "m " + seconds41 + "s ";
                         
-                        day41_32 = days41 - days ;
-                        total41_32 = day41_32 + days;
-                        
-                        day41_33 = days41 - days2;
-                        total41_33 = day41_33 + days2;
 
                         // If the count down is over, write some text
                         if (distance41 < 0) {
@@ -625,15 +597,10 @@ if ($getdatamain->nc_status_code == "nc10") {
                         var minutes42 = Math.floor((distance42 % (1000 * 60 * 60)) / (1000 * 60));
                         var seconds42 = Math.floor((distance42 % (1000 * 60)) / 1000);
 
+
                         // Output the result in an element with id="demo"
                         document.getElementById("dateshow42").innerHTML = days42 + "d " + hours42 + "h "
                                 + minutes42 + "m " + seconds42 + "s ";
-                        
-                        day42_32 = days42 - days;
-                        total42_32 = day42_32 + days;
-                        
-                        day42_33 = days42 - days2;
-                        total42_33 = day42_33 + days2; 
                         
                         
 

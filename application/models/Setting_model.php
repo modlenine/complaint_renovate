@@ -127,6 +127,103 @@ public function dept_edit_setting(){
     
     
 //END DEPARTMENT SETTING +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+//PRIORITY SETTING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+public function priority_setting(){
+    
+}
+
+public function get_pri_cat(){
+    return $this->db->query("SELECT * FROM complaint_priorityN_category");
+}
+
+public function get_pri_catadd(){
+    return $this->db->query("SELECT * FROM complaint_priorityn_category WHERE NOT pricat_score = 0 ");
+}
+
+public function get_pri(){
+    return $this->db->query("SELECT * FROM complaint_priorityN ");
+}
+
+public function save_priority(){
+    $check_score = $this->input->post("show_id");
+    $update_score = $this->input->post("show_scoreN");
+    
+    $update_cat = array(
+        "pricat_score" => $update_score
+    );
+    
+    $this->db->where("pricat_id",$check_score);
+    $this->db->update("complaint_priorityN_category",$update_cat);
+    
+    
+    
+    $data = array(
+        "pri_name" => $this->input->post("priority_name"),
+        "pri_catid" => $this->input->post("show_id"),
+        "pri_score" => $this->input->post("set_score")
+    );
+    
+    $result = $this->db->insert("complaint_priorityN",$data);
+    
+    if ($result) {
+            echo '<script language="javascript">';
+            echo 'alert("Save Data Success")';
+            echo '</script>';
+            redirect('setting/thkpage/');
+        } else {
+            echo '<script language="javascript">';
+            echo 'alert("Save Data Failed !!!!")';
+            echo 'history.back()';
+            echo '</script>';
+            exit();
+        }
+    
+}
+
+
+public function del_priority($pri_id){
+    $query = $this->db->query("SELECT complaint_priorityn.pri_score, complaint_priorityn_category.pricat_score, complaint_priorityn_category.pricat_name, complaint_priorityn_category.pricat_id FROM complaint_priorityn INNER JOIN complaint_priorityn_category ON complaint_priorityn_category.pricat_id = complaint_priorityn.pri_catid WHERE pri_id = $pri_id");
+    $result = $query->row();
+    
+    $score_pri = $result->pri_score;
+    $score_balance = $result->pricat_score;
+    $pricat_id = $result->pricat_id;
+    
+    $sum = $score_pri + $score_balance;
+    
+    $return_score = array(
+        "pricat_score" => $sum
+    );
+    
+    
+    $this->db->where("pricat_id",$pricat_id);
+    $this->db->update("complaint_priorityN_category",$return_score);
+     
+}
+
+
+public function delect_pri($pri_id){
+    return $this->db->delete('complaint_priorityN', array('pri_id' => $pri_id));
+}
+
+
+public function selectby_cat($by_catid){
+    return $this->db->query("SELECT * FROM complaint_priorityn INNER JOIN complaint_priorityn_category ON complaint_priorityn_category.pricat_id = complaint_priorityn.pri_catid WHERE pricat_id = $by_catid ");
+    
+    
+}
+
+
+
+
+
+
+//PRIORITY SETTING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     
     

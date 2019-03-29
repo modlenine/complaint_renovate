@@ -101,6 +101,50 @@ class Setting extends CI_Controller{
         
     }
     
+    public function priority_setting(){
+        $this->login_model->call_login();
+        
+        $data['getuser'] = $this->login_model->getuser();
+        $data['get_pri_cat'] = $this->setting_model->get_pri_cat();
+        $data['get_pri'] = $this->setting_model->get_pri();
+        
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("setting/priority/view",$data);
+    }
+    
+    public function add_priority(){
+        $data['get_pri_catadd'] = $this->setting_model->get_pri_catadd();
+        $data['get_pri'] = $this->setting_model->get_pri();
+        
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("setting/priority/add_priority",$data);
+    }
+    
+    public function save_priority(){
+        $this->setting_model->save_priority();
+    }
+    
+    public function del_priority($pri_id,$pri_catid){
+        $this->setting_model->del_priority($pri_id);
+        $this->setting_model->delect_pri($pri_id);
+        redirect('setting/selectby_cat/'.$pri_catid);
+    }
+    
+    public function selectby_cat($by_catid){
+        
+        $this->login_model->call_login();
+    
+        $data['getuser'] = $this->login_model->getuser();
+        $data['get_pri_cat'] = $this->setting_model->get_pri_cat();
+        $data['get_pri'] = $this->setting_model->selectby_cat($by_catid);
+        
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("setting/priority/view",$data);
+    }
+    
     
     
     
