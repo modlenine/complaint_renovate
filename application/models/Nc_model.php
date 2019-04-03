@@ -76,8 +76,9 @@ class Nc_model extends CI_Model{
             
             
             $body .= "<strong style='font-size:18px;font-weight:600;'>2. สำหรับฝ่ายบริหาร (พิจารณาและกำหนดฝ่ายที่รับผิดชอบ แล้วส่งให้ MR. ดำเนินการ)</strong><br>";
+            $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>";
             foreach ($this->complaint_model->get_dept($cp_no) as $getdept_r){
-            $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>&nbsp;&nbsp;".$getdept_r['Dept'];
+            $body .="&nbsp;&nbsp;".$getdept_r['Dept'];
             }
             $body .= "<br>";
             $body .= "<strong>ลงชื่อฝ่ายบริหาร : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
@@ -254,9 +255,12 @@ class Nc_model extends CI_Model{
             
             
             $body .= "<strong style='font-size:18px;font-weight:600;'>2. สำหรับฝ่ายบริหาร (พิจารณาและกำหนดฝ่ายที่รับผิดชอบ แล้วส่งให้ MR. ดำเนินการ)</strong><br>";
+            
+            $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>";
             foreach ($this->complaint_model->get_dept($cp_no) as $getdept_r){
-            $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>&nbsp;&nbsp;".$getdept_r['Dept'];
+            $body .="&nbsp;&nbsp;".$getdept_r['Dept'];
             }
+            
             $body .= "<br>";
             $body .= "<strong>ลงชื่อฝ่ายบริหาร : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
             
@@ -417,8 +421,9 @@ class Nc_model extends CI_Model{
             
             
             $body .= "<strong style='font-size:18px;font-weight:600;'>2. สำหรับฝ่ายบริหาร (พิจารณาและกำหนดฝ่ายที่รับผิดชอบ แล้วส่งให้ MR. ดำเนินการ)</strong><br>";
+            $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>";
             foreach ($this->complaint_model->get_dept($cp_no) as $getdept_r){
-            $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>&nbsp;&nbsp;".$getdept_r['Dept'];
+            $body .="&nbsp;&nbsp;".$getdept_r['Dept'];
             }
             $body .= "<br>";
             $body .= "<strong>ลงชื่อฝ่ายบริหาร : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
@@ -591,8 +596,9 @@ class Nc_model extends CI_Model{
             
             
             $body .= "<strong style='font-size:18px;font-weight:600;'>2. สำหรับฝ่ายบริหาร (พิจารณาและกำหนดฝ่ายที่รับผิดชอบ แล้วส่งให้ MR. ดำเนินการ)</strong><br>";
+            $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>";
             foreach ($this->complaint_model->get_dept($cp_no) as $getdept_r){
-            $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>&nbsp;&nbsp;".$getdept_r['Dept'];
+            $body .="&nbsp;&nbsp;".$getdept_r['Dept'];
             }
             $body .= "<br>";
             $body .= "<strong>ลงชื่อฝ่ายบริหาร : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
@@ -774,8 +780,9 @@ class Nc_model extends CI_Model{
             
             
             $body .= "<strong style='font-size:18px;font-weight:600;'>2. สำหรับฝ่ายบริหาร (พิจารณาและกำหนดฝ่ายที่รับผิดชอบ แล้วส่งให้ MR. ดำเนินการ)</strong><br>";
+            $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>";
             foreach ($this->complaint_model->get_dept($cp_no) as $getdept_r){
-            $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>&nbsp;&nbsp;".$getdept_r['Dept'];
+            $body .="&nbsp;&nbsp;".$getdept_r['Dept'];
             }
             $body .= "<br>";
             $body .= "<strong>ลงชื่อฝ่ายบริหาร : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";

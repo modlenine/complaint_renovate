@@ -85,23 +85,24 @@ and open the template in the editor.
                     <div class="panel-body">
                         
                         <div class="form-row">
-                            <?php foreach ($get_pri_topic as $gpt): ?>
+                            <?php foreach ($get_pri_use as $gpt): ?>
                             <div class="col-md-3 pri">
 
-                                <label ><b><?php echo $gpt['cp_pri_topic']; ?></b></label>
-                                <input hidden="" type="text" name="cp_pri_topic_edit" id="cp_pri_topic_edit" value="<?php echo $gpt['cp_pri_topic']; ?>" />
+                                <label ><b><?php echo $gpt['pricat_name']; ?></b></label>
+                                <input hidden="" type="text" name="cp_pri_topic_edit" id="cp_pri_topic_edit" value="<?php ?>" />
                                 
                                 <select name="cp_pri_name_get_edit[]" id="cp_pri_name_get_edit" class="form-control form-control-sm" required="" >
-                                    <option value="<?php echo $gpt['cp_pri_id']; ?>"><?php echo $gpt['cp_pri_name']; ?></option>
-                                    <?php 
-                                    $pri_group = $gpt['cp_pri_group'];
-                                    $result = $this->db->query("SELECT * FROM complaint_priority WHERE cp_pri_group=$pri_group ");
+                                    <option value="<?php echo $gpt['cp_pri_use_id']; ?>"><?php echo $gpt['pri_name']; ?></option>
                                     
-                                    foreach ($result->result_array() as $gpn): ?>
-                                     
-                                     <option value="<?php echo $gpn['cp_pri_id']; ?>"><?php echo $gpn['cp_pri_name']; ?> &nbsp;|&nbsp;<?php echo $gpn['cp_pri_id']; ?></option>
-                                     
-                                    <?php endforeach; ?>
+                                     <?php 
+                                     $pricatid = $gpt['pri_catid'];
+                                     $not = $gpt['cp_pri_use_id'];
+                                     $result = $this->db->query("SELECT * FROM complaint_priorityn WHERE pri_catid=$pricatid AND NOT pri_id=$not ");
+                                     foreach ($result->result_array() as $gpdetail) :
+                                     ?>
+                                     <option value="<?php echo $gpdetail['pri_id'] ?>"><?php echo $gpdetail['pri_name'] ?>|<?php echo $gpdetail['pri_score'] ?></option>
+                                     <?php endforeach; ?>
+                                    
                                 </select>
 
                             </div>
@@ -116,6 +117,7 @@ and open the template in the editor.
                         
                     </div>
                 </div><!--************* Priority ******************-->
+               
                 
                 
                 <div class="panel panel-primary"><!--************* User Information ******************-->

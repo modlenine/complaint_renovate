@@ -50,6 +50,7 @@ class Complaint extends CI_Controller{
         $data['get_dept_respons'] = $this->complaint_model->get_dept_respons($dept_code);
         $data['get_pri_topic'] = $this->complaint_model->get_pri_topic();
         
+        
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
         $this->load->view("complaint/add",$data);
@@ -58,14 +59,13 @@ class Complaint extends CI_Controller{
     public function edit($cp_no){/************Edit data Page**************/
         $this->login_model->call_login();
         
-        $data['get_toppic'] = $this->complaint_model->get_toppic();
+        $data['get_pri_use'] = $this->complaint_model->get_pri_view($cp_no);
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
-        
+        $data['get_toppic'] = $this->complaint_model->get_toppic();
         $data['getuser'] = $this->login_model->getuser();
         $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
         $data['getdept_checkbox'] = $this->complaint_model->getdept_checkbox($cp_no);
 
-        $data['get_pri_topic'] = $this->complaint_model->get_pri_topic();
         
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -74,10 +74,12 @@ class Complaint extends CI_Controller{
     
     
     public function savedata_edit($cp_no){
-        $this->history_model->saveedit_history();
         
         $this->complaint_model->savedata_edit($cp_no);
-        header("refresh:1; url=http://192.190.10.27/complaint/");
+        $this->history_model->saveedit_history();
+        
+        
+        header("refresh:2; url=http://192.190.10.27/complaint/");
     }
     
     
@@ -176,7 +178,8 @@ class Complaint extends CI_Controller{
     }
     
     public function test(){
-       echo $this->complaint_model->getcpno_test();
+       echo $this->complaint_model->conpriority(5);
+
         
         $this->load->view("test");
     }

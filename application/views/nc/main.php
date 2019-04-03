@@ -41,7 +41,7 @@ and open the template in the editor.
                     <p><label class="ncmain_s1_label">Detail of Complaint / Damage</label>&nbsp;<label><?php echo $getdatamain->cp_detail; ?></label></p>
                     <p><label class="ncmain_s1_label">Detail of Investigate</label>&nbsp;<label><?php echo $getdatamain->cp_detail_inves; ?></label></p>
                     <p><label class="ncmain_s1_label">Summary of Investigate</label>&nbsp;<label><?php echo $getdatamain->cp_sum_inves; ?></label></p>
-<!--                    <p><label>Complaint ต้นฉบับ</label>&nbsp;<a href="<?php echo base_url("complaint/investigate/"); ?><?php echo $getdatamain->cp_no; ?>"><label><?php echo $getdatamain->cp_no; ?></label></a></p>-->
+                    <p><label class="ncmain_s1_label">Priority Level</label>&nbsp;<label><?php echo $this->complaint_model->conpriority($getdatamain->cp_priority); ?></label></p>
 
 
                 </div>
@@ -455,10 +455,18 @@ if ($getdatamain->nc_status_code == "nc10") {
                             clearInterval(x);
                             document.getElementById("dateshow_text32").innerHTML = "ดำเนินการเรียบร้อยแล้ว";
                             $('#dateshow32').hide();
+                        }else if($('#nc_sec4f1_radiocheck').val() == "no"){
+                            clearInterval(x);
+                            document.getElementById("dateshow_text32").innerHTML = "จบการติดตามครั้งที่1";
+                            $('#dateshow32').hide();
                         }
                         if ($('#nc_sec4f2_radiocheck').val() == "yes") {
                             clearInterval(x);
                             document.getElementById("dateshow_text32").innerHTML = "ดำเนินการเรียบร้อยแล้ว";
+                            $('#dateshow32').hide();
+                        }else if($('#nc_sec4f2_radiocheck').val() == "no"){
+                            clearInterval(x);
+                            document.getElementById("dateshow_text32").innerHTML = "จบการติดตามครั้งที่2";
                             $('#dateshow32').hide();
                         }
                         if ($('#nc_sec4f3_radiocheck').val() == "yes") {
@@ -513,10 +521,18 @@ if ($getdatamain->nc_status_code == "nc10") {
                             clearInterval(x2);
                             document.getElementById("dateshow_text33").innerHTML = "ดำเนินการเรียบร้อยแล้ว";
                             $('#dateshow33').hide();
+                        }else if($('#nc_sec4f1_radiocheck').val() == "no"){
+                            clearInterval(x2);
+                            document.getElementById("dateshow_text33").innerHTML = "จบการติดตามครั้งที่1";
+                            $('#dateshow33').hide();
                         }
                         if ($('#nc_sec4f2_radiocheck').val() == "yes") {
                             clearInterval(x2);
                             document.getElementById("dateshow_text33").innerHTML = "ดำเนินการเรียบร้อยแล้ว";
+                            $('#dateshow33').hide();
+                        }else if($('#nc_sec4f2_radiocheck').val() == "no"){
+                            clearInterval(x2);
+                            document.getElementById("dateshow_text33").innerHTML = "จบการติดตามครั้งที่2";
                             $('#dateshow33').hide();
                         }
                         if ($('#nc_sec4f3_radiocheck').val() == "yes") {
@@ -566,9 +582,12 @@ if ($getdatamain->nc_status_code == "nc10") {
                             clearInterval(x41);
                             document.getElementById("dateshow41").innerHTML = "เกินระยะเวลาที่กำหนด";
                         }
-                        if ($('#nc_sec4f2_radiocheck').val() == "yes" || $('#nc_sec4f3_radiocheck').val() !== "") {
+                        if ($('#nc_sec4f1_radiocheck').val() == "yes" || $('#nc_sec4f3_radiocheck').val() !== "") {
                             clearInterval(x41);
                             document.getElementById("dateshow41").innerHTML = "เสร็จสิ้นการติดตาม";
+                        }else if ($('#nc_sec4f1_radiocheck').val() == "no"){
+                            clearInterval(x41);
+                            document.getElementById("dateshow41").innerHTML = "ดำเนินการติดตามครั้งที่2";
                         }
 
 
@@ -609,9 +628,12 @@ if ($getdatamain->nc_status_code == "nc10") {
                             clearInterval(x42);
                             document.getElementById("dateshow42").innerHTML = "เกินระยะเวลาที่กำหนด";
                         }
-                        if ($('#nc_sec4f3_radiocheck').val() !== "") {
+                        if ($('#nc_sec4f2_radiocheck').val() == "yes" || $('#nc_sec4f3_radiocheck').val() !== "") {
                             clearInterval(x42);
                             document.getElementById("dateshow42").innerHTML = "เสร็จสิ้นการติดตาม";
+                        }else if($('#nc_sec4f2_radiocheck').val() == "no"){
+                            clearInterval(x42);
+                            document.getElementById("dateshow42").innerHTML = "ดำเนินการติดตามครั้งที่3";
                         }
 
 

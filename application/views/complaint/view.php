@@ -86,20 +86,58 @@ and open the template in the editor.
                 <div class="panel-heading">Priority</div>
                 <div class="panel-body">
 
-                    <div class="form-row">
+                    <div class="form-row col-md-12">
                         <?php foreach ($get_pri_use as $gpu): ?>
                         <div class="col-md-3 m_pri">
-                            <label><b><?php echo $gpu['cp_pri_topic']; ?></b></label>
-                            <label><?php echo $gpu['cp_pri_name']; ?></label>
-                            <input hidden="" type="text" name="history_cppritopic" id="history_cppritopic" value="<?php echo $gpu['cp_pri_topic']; ?>" />
-                            <input hidden="" type="text" name="history_cppriname" id="history_cppriname" value="<?php echo $gpu['cp_pri_name']; ?>" />
+                            <label><b><?php echo $gpu['pricat_name']; ?></b></label>
+                            <label><?php echo $gpu['pri_name']; ?></label>
+                           
+                            <input hidden="" type="text" name="history_cppritopic" id="history_cppritopic" value="<?php echo $gpu['pricat_name']; ?>" />
+                            <input hidden="" type="text" name="history_cppriname" id="history_cppriname" value="<?php echo $gpu['pri_name']; ?>" />
                         </div>
-                        <?php endforeach; ?>
-                    </div><br>
-
+                        <?php endforeach;?>
+                    </div>
+                    
+                    
+                    
                 </div>
+                
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <?php // $total = $total / 7 ; ?>
+                            <div class="input-group ">
+                            <span class="input-group-addon">Total Score</span>
+                            <input readonly="" class="form-control" type="text" name="sumscore" id="sumscore" value="<?php echo $view_cp['cp_priority']; ?>"/>
+                            </div>
+                        </div>
+                    
+                    <div class="col-md-6">
+
+                            <div class="input-group ">
+                            <span class="input-group-addon">Priority Level</span>
+                            <?php  
+                                
+                                   $number =  $view_cp['cp_priority'];
+                                   if($number >= 1 && $number <= 1.5){
+                                       $level = "Very Low";
+                                   }else if ($number >= 1.6 && $number <= 2.5){
+                                       $level = "Low";
+                                   }else if ($number >= 2.6 && $number <= 3.5){
+                                       $level = "Normal";
+                                   }else if ($number >= 3.6 && $number <= 4.5){
+                                       $level = "Height";
+                                   }else{
+                                       $level = "Very Height";
+                                   }
+                            ?>
+                            <input readonly="" class="form-control" type="text" name="sumscore" id="sumscore" value="<?php echo $level; ?>"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
-            
             
             <div class="panel panel-primary">
                 <div class="panel-heading">Details of Complaint / Damages</div>

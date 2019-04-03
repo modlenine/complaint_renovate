@@ -79,13 +79,47 @@ and open the template in the editor.
                         <div class="form-row">
                         <?php foreach ($get_pri_use as $gpu): ?>
                         <div class="col-md-3 m_pri">
-                            <label><b><?php echo $gpu['cp_pri_topic']; ?></b></label>
-                            <label><?php echo $gpu['cp_pri_name']; ?></label>
+                            <label><b><?php echo $gpu['pricat_name']; ?></b></label>
+                            <label><?php echo $gpu['pri_name']; ?></label>
                         </div>
                         <?php endforeach; ?>
-                    </div><br>
+                        </div><br>
                     </div><br>
 
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <?php // $total = $total / 7 ; ?>
+                            <div class="input-group ">
+                            <span class="input-group-addon">Total Score</span>
+                            <input readonly="" class="form-control" type="text" name="sumscore" id="sumscore" value="<?php echo $view_cp['cp_priority']; ?>"/>
+                            </div>
+                        </div>
+                    
+                    <div class="col-md-6">
+
+                            <div class="input-group ">
+                            <span class="input-group-addon">Priority Level</span>
+                            <?php  
+                                
+                                   $number =  $view_cp['cp_priority'];
+                                   if($number >= 1 && $number <= 1.5){
+                                       $level = "Very Low";
+                                   }else if ($number >= 1.6 && $number <= 2.5){
+                                       $level = "Low";
+                                   }else if ($number >= 2.6 && $number <= 3.5){
+                                       $level = "Normal";
+                                   }else if ($number >= 3.6 && $number <= 4.5){
+                                       $level = "Height";
+                                   }else{
+                                       $level = "Very Height";
+                                   }
+                            ?>
+                            <input readonly="" class="form-control" type="text" name="sumscore" id="sumscore" value="<?php echo $level; ?>"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -188,7 +222,7 @@ and open the template in the editor.
 <!--                    <div class="col-md-3"><label><b>Signature : </b><?php echo $getuser['username']; ?></label></div>
                     <div class="col-md-3"><label><b>Department : </b><?php echo $getuser['Dept']; ?></label></div>
                     <div class="col-md-3"><label><b>Date : </b><?php echo date("d/m/Y"); ?></label></div>-->
-
+                    
                     <input type="text" name="cp_detail_inves_signature" id="cp_detail_inves_signature" hidden="" value="<?php echo $getuser['username']; ?>"/>
                     <input type="text" name="cp_detail_inves_dept" id="cp_detail_inves_dept" hidden="" value="<?php echo $getuser['Dept']; ?>"/>
                     <input type="text" name="cp_detail_inves_date" id="cp_detail_inves_date" hidden="" value="<?php echo date("Y-m-d"); ?>"/>
@@ -211,7 +245,8 @@ and open the template in the editor.
                 </div>
               
               <div class="form-inline col-md-8">
-                  <label><b>Signature : </b><?php echo $view_cp['cp_detail_inves_signature']; ?></label>
+                  <label class="checkuser"><b>Signature : </b><?php echo $view_cp['cp_detail_inves_signature']; ?></label><!-- Checkuser for edit button-->
+                  <input hidden="" type="text" name="cu" id="cu" value="<?php echo $view_cp['cp_detail_inves_signature']; ?>"/><!-- Checkuser for edit button-->
                   <label><b>Department : </b><?php echo $view_cp['cp_detail_inves_dept']; ?></label>
                   <label><b>Date : </b><?php $date = date_create($view_cp['cp_detail_inves_date']);
                             echo date_format($date, "d/m/Y"); ?></label>

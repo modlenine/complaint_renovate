@@ -11,17 +11,17 @@ and open the template in the editor.
     </head>
     <body>
         <?php $this->load->view("head/nav"); ?>
-        
+
         <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
-            
-                <h1 class="h1_add">Complaint Form</h1><hr>
-                <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
-                
-                <form name="frmMain" action="<?php echo base_url('complaint/saveData'); ?>" method="post" enctype="multipart/form-data">
+
+            <h1 class="h1_add">Complaint Form</h1><hr>
+            <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+
+            <form name="frmMain" action="<?php echo base_url('complaint/saveData'); ?>" method="post" enctype="multipart/form-data">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Topic</div>
                     <div class="panel-body">
-                        
+
                         <div class="form-row">
                             <div class="col-md-2 pri">
                                 <label><b>ID</b></label>
@@ -66,53 +66,54 @@ and open the template in the editor.
                                 <input type="text" name="cp_status" id="cp_status" value="New Complaint" hidden=""/>
                             </div>
                         </div>
-                    
+
                     </div>
                 </div>
-                
+
 
                 <div class="panel panel-primary"><!--************* Priority ******************-->
                     <div class="panel-heading">Priority</div>
                     <div class="panel-body">
-                        
+
+
                         <div class="form-row">
                             <?php foreach ($get_pri_topic as $gpt): ?>
-                            <div class="col-md-3 pri">
+                                <div class="col-md-3 pri">
 
-                                <label ><b><?php echo $gpt['cp_pri_topic']; ?></b></label>
-                                <input hidden="" type="text" name="cp_pri_topic" id="cp_pri_topic" value="<?php echo $gpt['cp_pri_topic']; ?>" />
-                                
-                                <select name="cp_pri_name_get[]" id="cp_pri_name_get" class="form-control form-control-sm" required="" >
-                                     <option>Please Choose Priority</option>
-                                    <?php 
-                                    $pri_group = $gpt['cp_pri_group'];
-                                    $result = $this->db->query("SELECT * FROM complaint_priority WHERE cp_pri_group=$pri_group ");
+                                    <label ><b><?php echo $gpt['pricat_name']; ?></b></label>
+                                    <input hidden="" type="text" name="cp_pri_topic" id="cp_pri_topic" value="<?php echo $gpt['pricat_name']; ?>" />
+
+                                    <select name="cp_pri_name_get[]" id="cp_pri_name_get" class="form-control form-control-sm pri"  required="">
+                                        <option>Please Choose Priority</option>
+                                        <?php
+                                        $pri_group = $gpt['pricat_id'];
+                                        $result = $this->db->query("SELECT * FROM complaint_priorityn WHERE pri_catid=$pri_group ");
+
+                                        foreach ($result->result_array() as $gpn):
+                                            ?>
+
+                                            <option value="<?php echo $gpn['pri_id']; ?>"><?php echo $gpn['pri_name']; ?></option>
+
+    <?php endforeach; ?>
+
+                                    </select>
                                     
-                                    foreach ($result->result_array() as $gpn): ?>
-                                     
-                                     <option value="<?php echo $gpn['cp_pri_id']; ?>"><?php echo $gpn['cp_pri_name']; ?> &nbsp;|&nbsp;<?php echo $gpn['cp_pri_id']; ?></option>
-                                     
-                                    <?php endforeach; ?>
-                                </select>
+                                </div>
+                                
 
-                            </div>
-                            
-
-                            <?php endforeach; ?>
+<?php endforeach; ?>
                             
                         </div>
 
-                        
-                        
-                        
+
                     </div>
                 </div><!--************* Priority ******************-->
-                
-                
+
+
                 <div class="panel panel-primary"><!--************* User Information ******************-->
                     <div class="panel-heading">User Information</div>
                     <div class="panel-body">
-                    
+
                         <div class="form-row">
                             <div class="col-md-3 pri">
                                 <label><b>Complaint Person</b></label>
@@ -136,15 +137,15 @@ and open the template in the editor.
                         </div>
                         <input hidden="" type="text" name="memberemail" id="memberemail" value="<?php echo $getuser['memberemail']; ?>" />
                         <!--Email check-->
-                        
+
                     </div>
                 </div><!--************* User Information ******************-->
-                
-                
+
+
                 <div class="panel panel-primary"><!-- Details of Complaint / Damages -->
                     <div class="panel-heading">Details of Complaint / Damages</div>
                     <div class="panel-body">
-                    
+
                         <div class="form-row">
                             <div class="col-md-3 pri" id="h_username">
                                 <a href="#"><i class="fas fa-plus-circle iconcolor"></i></a>&nbsp;<label><b>Customer Name</b></label>
@@ -161,7 +162,7 @@ and open the template in the editor.
                                 <input type="text" name="cp_invoice_no" id="cp_invoice_no" class="form-control form-control-sm form-width"  placeholder="Invoice Number"/>
                             </div>
                         </div>
-                        
+
                         <div class="form-row">
                             <div class="col-md-4 pri" id="h_procode">
                                 <label><b>Product Code</b></label>
@@ -178,7 +179,7 @@ and open the template in the editor.
                                 <input type="text" name="cp_pro_qty" id="cp_pro_qty" class="form-control form-control-sm form-width number"  placeholder="Quantity"/>
                             </div>
                         </div>
-                        
+
                         <div class="form-row">
                             <div class="col-md-12 form-group pri" style="margin-top: 15px;">
                                 <textarea name="cp_detail" class="form-control form-control-sm" type="textarea" id="message" placeholder="Message" maxlength="2000" rows="7" required=""></textarea>
@@ -190,31 +191,31 @@ and open the template in the editor.
                             </div>
 
                         </div>
-                        
+
                     </div>
                 </div><!-- Details of Complaint / Damages -->
-                
-                
+
+
                 <div class="panel panel-primary"><!--**********Related Department************-->
                     <div class="panel-heading">Related Department</div>
                     <div class="panel-body">
-                    
+
                         <div class="form-row">
-                            <?php foreach ($get_dept_respons as $gdr): ?>
-                            <div class="col-md-4">
-                                <label class="checkbox-inline"><input type="checkbox" name="dept[]" id="dept" value="<?php echo $gdr['cp_dept_main_code']; ?>"/><?php echo $gdr['cp_dept_main_name']; ?></label>
-                            </div>
-                            <?php endforeach; ?>
+<?php foreach ($get_dept_respons as $gdr): ?>
+                                <div class="col-md-4">
+                                    <label class="checkbox-inline"><input type="checkbox" name="dept[]" id="dept" value="<?php echo $gdr['cp_dept_main_code']; ?>"/><?php echo $gdr['cp_dept_main_name']; ?></label>
+                                </div>
+<?php endforeach; ?>
                         </div>
-                            
-                        
+
+
                     </div>
                 </div>
                 <div><input class="btn btn-primary" type="submit" name="add_btn" id="add_btn" value="Submit" onclick="javascript:return confirm('คุณต้องการบันทึกข้อมูล ใช่หรือไม่');"/>&nbsp;<input class="btn btn-warning" type="reset" name="reset_btn" id="reset_btn" value="Reset"/></div><hr>
                 <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
-                
-                
-                
+
+
+
             </form>
         </div>
     </body>

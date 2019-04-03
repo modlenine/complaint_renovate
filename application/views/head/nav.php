@@ -29,7 +29,7 @@ $this->load->view("head/javascript");
               <p><span style="padding-left: 10px;">Hi <?php echo $getuser['username']; ?></span></p>
               <p><span style="padding-left: 10px;" class="check_dept">Dept. <?php echo $getuser['Dept']; ?></span></p>
               <input hidden="" type="text" name="check_user" id="check_user" value="<?php echo $getuser['username']; ?>" /><!--Check User-->
-              <input hidden="" type="text" name="check_dept" id="check_dept" value="<?php echo $getuser['Dept']; ?>" />
+              <input hidden="" type="text" name="check_dept" id="check_dept" value="<?php echo $getuser['Dept']; ?>" /><!-- Check Dept -->
               <a href="<?php echo base_url('complaint/logout'); ?>" onclick="javascript:return confirm('คุณต้องการออกจากระบบหรือไม่');"><i class="fas fa-sign-out-alt fa-2x logout_btn"></i></a>
           </div>
           

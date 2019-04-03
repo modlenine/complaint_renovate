@@ -78,7 +78,24 @@ and open the template in the editor.
                             
                         ?>
                         <td style="font-weight:500;text-align: left;color:<?php echo $color; ?>;"><?php echo $l_cp['cp_status_name']; ?></td>
-                        <td style="text-align: center;"><?php echo $l_cp['cp_priority']; ?></td>
+                        
+                        <?php  
+                                
+                                   $number =  $l_cp['cp_priority'];
+                                   if($number >= 1 && $number <= 1.5){
+                                       $level = "<span style='color:#696969;'>Very Low</span>";
+                                   }else if ($number >= 1.6 && $number <= 2.5){
+                                       $level = "Low";
+                                   }else if ($number >= 2.6 && $number <= 3.5){
+                                       $level = "<span style='color:#87CEEB;'>Normal</span>";
+                                   }else if ($number >= 3.6 && $number <= 4.5){
+                                       $level = "<span style='color:#FF4500;'>Height</span>";
+                                   }else{
+                                       $level = "<span style='color:#FF0000;'>Very Height</span>";
+                                   }
+                            ?>
+                        
+                        <td style="text-align: center;"><?php echo $level; ?></td>
                     </tr>
 <?php endforeach; ?>
                 </tbody>

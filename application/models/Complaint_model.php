@@ -66,6 +66,8 @@ class Complaint_model extends CI_Model {
     }
 
     /*     * *************GET ZONE****************** */
+    
+    
 
     public function get_priority($sql) {/*     * **Get Priority to view page******* */
         $result = $this->db->query($sql);
@@ -104,9 +106,11 @@ class Complaint_model extends CI_Model {
     }
 
     public function get_pri_topic() {
-        $result = $this->db->query("SELECT * FROM complaint_priority GROUP BY cp_pri_group ASC");
+        $result = $this->db->query("SELECT * FROM complaint_priorityn_category GROUP BY pricat_id ASC");
         return $result->result_array();
     }
+    
+
 
     public function getCPno() { //สร้าง Auto complaint number
         $query = $this->db->query("select cp_no from complaint_main"); //ไปนับแถวของ cp_no ก่อน
@@ -133,7 +137,7 @@ class Complaint_model extends CI_Model {
     }
 
     public function get_pri_view($cp_no) {
-        $result = $this->db->query("SELECT complaint_priority.cp_pri_group, complaint_priority.cp_pri_topic, complaint_priority_use.cp_pri_use_id, complaint_priority_use.cp_pri_use_cpno, complaint_priority.cp_pri_name FROM complaint_priority INNER JOIN complaint_priority_use ON complaint_priority_use.cp_pri_use_id = complaint_priority.cp_pri_id WHERE complaint_priority_use.cp_pri_use_cpno='$cp_no' ");
+        $result = $this->db->query("SELECT complaint_priority_use.cp_pri_use_cpno, complaint_priority_use.cp_pri_use_id, complaint_priorityn.pri_name, complaint_priorityn.pri_catid, complaint_priorityn.pri_score, complaint_priorityn_category.pricat_name FROM complaint_priority_use INNER JOIN complaint_priorityn ON complaint_priorityn.pri_id = complaint_priority_use.cp_pri_use_id INNER JOIN complaint_priorityn_category ON complaint_priorityn_category.pricat_id = complaint_priorityn.pri_catid WHERE cp_pri_use_cpno ='$cp_no' ");
         return $result->result_array();
     }
 
@@ -151,6 +155,24 @@ class Complaint_model extends CI_Model {
         $result = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_no='$cp_no' ");
         return $result->row();
     }
+    public function conpriority($priscore){
+        $number =  $priscore;
+                                   if($number >= 1 && $number <= 1.5){
+                                       $level = "<span style='color:#696969;'>Very Low</span>";
+                                   }else if ($number >= 1.6 && $number <= 2.5){
+                                       $level = "Low";
+                                   }else if ($number >= 2.6 && $number <= 3.5){
+                                       $level = "<span style='color:#87CEEB;'>Normal</span>";
+                                   }else if ($number >= 3.6 && $number <= 4.5){
+                                       $level = "<span style='color:#FF4500;'>Height</span>";
+                                   }else{
+                                       $level = "<span style='color:#FF0000;'>Very Height</span>";
+                                   }
+                                   return $level;
+    }
+    
+    
+    
 
     /*     * *************GET ZONE****************** */
 
@@ -222,6 +244,15 @@ class Complaint_model extends CI_Model {
             );
             $this->db->insert("complaint_priority_use", $save_pri);
         }/*         * *****Code Insert select array******* */
+        
+        
+//        Query เพื่อเอาค่าของ Score ออกมาเพื่อเอาไปคำนวนต่อ
+        $sumscore = $this->db->query("SELECT complaint_priority_use.cp_pri_use_cpno, SUM(complaint_priorityn.pri_score) as score FROM complaint_priority_use INNER JOIN complaint_priorityn ON complaint_priorityn.pri_id = complaint_priority_use.cp_pri_use_id INNER JOIN complaint_priorityn_category ON complaint_priorityn_category.pricat_id = complaint_priorityn.pri_catid WHERE cp_pri_use_cpno ='$get_cp_no' ");
+        $result_score = $sumscore->row();
+//        ดึงค่าออกมาเป็น Row
+        
+        $sum_score = (double)$result_score->score / 7 ;
+//        นำค่าที่ได้มา Convert เป็น Double จากนั้นเอามาหาร 7
 
 
 
@@ -245,7 +276,7 @@ class Complaint_model extends CI_Model {
             "cp_date" => $this->input->post("cp_date"),
             "cp_topic" => $this->input->post("cp_topic_hide"),
             "cp_topic_cat" => $this->input->post("cp_topic_cat"),
-//                "cp_priority" => $this->input->post(""),
+            "cp_priority" => number_format($sum_score,1),
             "cp_user_name" => $this->input->post("cp_user_name"),
             "cp_user_empid" => $this->input->post("cp_user_empid"),
             "cp_user_dept" => $this->input->post("cp_user_dept"),
@@ -272,6 +303,20 @@ class Complaint_model extends CI_Model {
         }/*         * *****Insert data to complaint_main table******* */
 
 
+                                
+//                                   $number =  number_format($sum_score,1);
+//                                   if($number >= 1 && $number <= 1.5){
+//                                       $level = "<span style='color:#696969;'>Very Low</span>";
+//                                   }else if ($number >= 1.6 && $number <= 2.5){
+//                                       $level = "Low";
+//                                   }else if ($number >= 2.6 && $number <= 3.5){
+//                                       $level = "<span style='color:#87CEEB;'>Normal</span>";
+//                                   }else if ($number >= 3.6 && $number <= 4.5){
+//                                       $level = "<span style='color:#FF4500;'>Height</span>";
+//                                   }else{
+//                                       $level = "<span style='color:#FF0000;'>Very Height</span>";
+//                                   }
+                            
 
 
 
@@ -297,8 +342,9 @@ class Complaint_model extends CI_Model {
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
             foreach ($this->get_pri_view($get_cp_no) as $getpv) {
-                $body .= "<strong>" . $getpv['cp_pri_topic'] . ": </strong>&nbsp;&nbsp;" . $getpv['cp_pri_name'] . "<br>";
+                $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
             }
+            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority(number_format($sum_score,1))."<br>";
             $body .= "<br>";
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>User Information</strong><br>";
@@ -318,8 +364,9 @@ class Complaint_model extends CI_Model {
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
             foreach ($this->get_pri_view($get_cp_no) as $getpv) {
-                $body .= "<strong>" . $getpv['cp_pri_topic'] . ": </strong>&nbsp;&nbsp;" . $getpv['cp_pri_name'] . "<br>";
+                $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
             }
+            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority(number_format($sum_score,1))."<br>";
             "<br>";
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>User Information</strong><br>";
@@ -366,7 +413,7 @@ class Complaint_model extends CI_Model {
         $mail->IsHTML(true);                                  // set email format to HTML
         $mail->Subject = $subject;
         $mail->Body = $body;
-//        $mail->send();
+        $mail->send();
 //************************************ZONE***SEND****EMAIL*************************************//      
     }
 
@@ -504,16 +551,16 @@ class Complaint_model extends CI_Model {
         $mail->Subject = $subject;
         $mail->Body = $body;
 
-//        if (!$mail->send()) {
-//            echo '<script language="javascript">';
-//            echo 'alert("Start Investigate Failed !!")';
-//            echo '</script>';
-//            exit();
-//        } else {
-//            echo '<script language="javascript">';
-//            echo 'alert("Start Investigate Success")';
-//            echo '</script>';
-//        }
+        if (!$mail->send()) {
+            echo '<script language="javascript">';
+            echo 'alert("Start Investigate Failed !!")';
+            echo '</script>';
+            exit();
+        } else {
+            echo '<script language="javascript">';
+            echo 'alert("Start Investigate Success")';
+            echo '</script>';
+        }
     }
 
     public function add_detail_inves($cp_no) {/*     * *******Add Detail investigate+Upload file to db********************* */
@@ -578,8 +625,9 @@ class Complaint_model extends CI_Model {
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
             foreach ($this->get_pri_view($cp_no) as $getpv) {
-                $body .= "<strong>" . $getpv['cp_pri_topic'] . ": </strong>&nbsp;&nbsp;" . $getpv['cp_pri_name'] . "<br>";
+                $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
             }
+            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
             $body .= "<br>";
 
 
@@ -611,8 +659,9 @@ class Complaint_model extends CI_Model {
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
             foreach ($this->get_pri_view($cp_no) as $getpv) {
-                $body .= "<strong>" . $getpv['cp_pri_topic'] . ": </strong>&nbsp;&nbsp;" . $getpv['cp_pri_name'] . "<br>";
+                $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
             }
+            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
             $body .= "<br>";
 
 
@@ -669,16 +718,16 @@ class Complaint_model extends CI_Model {
         $mail->Subject = $subject;
         $mail->Body = $body;
         
-//        if (!$mail->send()) {
-//            echo '<script language="javascript">';
-//            echo 'alert("Start Investigate Failed !!")';
-//            echo '</script>';
-//            exit();
-//        } else {
-//            echo '<script language="javascript">';
-//            echo 'alert("Start Investigate Success")';
-//            echo '</script>';
-//        }
+        if (!$mail->send()) {
+            echo '<script language="javascript">';
+            echo 'alert("Start Investigate Failed !!")';
+            echo '</script>';
+            exit();
+        } else {
+            echo '<script language="javascript">';
+            echo 'alert("Start Investigate Success")';
+            echo '</script>';
+        }
     }
 
     public function add_sum_inves($cp_no) {/*     * ***********SUMMARY OF INVESTIGATION**************** */
@@ -768,8 +817,9 @@ class Complaint_model extends CI_Model {
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
                 foreach ($this->get_pri_view($cp_no) as $getpv) {
-                    $body .= "<strong>" . $getpv['cp_pri_topic'] . ": </strong>&nbsp;&nbsp;" . $getpv['cp_pri_name'] . "<br>";
+                    $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                 }
+                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
                 $body .= "<br>";
 
 
@@ -809,8 +859,9 @@ class Complaint_model extends CI_Model {
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
                 foreach ($this->get_pri_view($cp_no) as $getpv) {
-                    $body .= "<strong>" . $getpv['cp_pri_topic'] . ": </strong>&nbsp;&nbsp;" . $getpv['cp_pri_name'] . "<br>";
+                    $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                 }
+                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
                 $body .= "<br>";
 
 
@@ -855,8 +906,9 @@ class Complaint_model extends CI_Model {
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
                 foreach ($this->get_pri_view($cp_no) as $getpv) {
-                    $body .= "<strong>" . $getpv['cp_pri_topic'] . ": </strong>&nbsp;&nbsp;" . $getpv['cp_pri_name'] . "<br>";
+                    $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                 }
+                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
                 $body .= "<br>";
 
 
@@ -896,8 +948,9 @@ class Complaint_model extends CI_Model {
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
                 foreach ($this->get_pri_view($cp_no) as $getpv) {
-                    $body .= "<strong>" . $getpv['cp_pri_topic'] . ": </strong>&nbsp;&nbsp;" . $getpv['cp_pri_name'] . "<br>";
+                    $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                 }
+                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
                 $body .= "<br>";
 
 
@@ -964,16 +1017,16 @@ class Complaint_model extends CI_Model {
         $mail->Subject = $subject;
         $mail->Body = $body;
 
-//        if (!$mail->send()) {
-//            echo '<script language="javascript">';
-//            echo 'alert("Start Investigate Failed !!")';
-//            echo '</script>';
-//            exit();
-//        } else {
-//            echo '<script language="javascript">';
-//            echo 'alert("Start Investigate Success")';
-//            echo '</script>';
-//        }
+        if (!$mail->send()) {
+            echo '<script language="javascript">';
+            echo 'alert("Start Investigate Failed !!")';
+            echo '</script>';
+            exit();
+        } else {
+            echo '<script language="javascript">';
+            echo 'alert("Start Investigate Success")';
+            echo '</script>';
+        }
 
 
         //************************Email***Zone***********************************//  
@@ -1030,8 +1083,10 @@ class Complaint_model extends CI_Model {
 
         $body .= "<strong><h2>Priority</h2></strong>";
         foreach ($this->get_pri_view($cp_no) as $getpv) {
-            $body .= "<strong>" . $getpv['cp_pri_topic'] . ": </strong>" . $getpv['cp_pri_name'] . "<br>";
+            $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>" . $getpv['pri_name'] . "<br>";
         }
+        $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
+        $body .= "<br>";
 
         $body .= "<h2>User Information</h2>";
         $body .= "<strong>Complaint Person :</strong>" . $get_owner_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>" . $get_owner_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>" . $get_owner_email->cp_user_dept;
@@ -1091,15 +1146,15 @@ class Complaint_model extends CI_Model {
         $mail->Subject = $subject;
         $mail->Body = $body;
 
-//        if (!$mail->send()) {
-//            echo '<script language="javascript">';
-//            echo 'alert("Save Data Failed")';
-//            echo '</script>';
-//        } else {
-//            echo '<script language="javascript">';
-//            echo 'alert("Save Data Success")';
-//            echo '</script>';
-//        }
+        if (!$mail->send()) {
+            echo '<script language="javascript">';
+            echo 'alert("Save Data Failed")';
+            echo '</script>';
+        } else {
+            echo '<script language="javascript">';
+            echo 'alert("Save Data Success")';
+            echo '</script>';
+        }
 
 
         //************************Email***Zone***********************************//       
@@ -1107,21 +1162,22 @@ class Complaint_model extends CI_Model {
 
     public function savedata_edit($cp_no) {
 
-        if ($this->input->post("file_add_edit") != "") {
-            $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
-            $file_name = $_FILES['file_add']['name'];
+      if($_FILES['file_add_edit']['tmp_name'] !==""){
+          $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
+            $file_name = $_FILES['file_add_edit']['name'];
             $file_name_cut = str_replace(" ", "", $file_name);
             $file_name_date = str_replace(".", "-" . $date . ".", $file_name_cut);
-            $file_size = $_FILES['file_add']['size'];
-            $file_tmp = $_FILES['file_add']['tmp_name'];
-            $file_type = $_FILES['file_add']['type'];
+            $file_size = $_FILES['file_add_edit']['size'];
+            $file_tmp = $_FILES['file_add_edit']['tmp_name'];
+            $file_type = $_FILES['file_add_edit']['type'];
             move_uploaded_file($file_tmp, "asset/add/" . $file_name_date);
 
             print_r($file_name);
             echo "<br>" . "Copy/Upload Complete" . "<br>";
-        } else {
-            $file_name_date = $this->input->post("showfile");
-        }
+      }else{
+          $file_name_date = $this->input->post("showfile");
+      }
+
 
 
         $this->db->where("cp_pri_use_cpno", $cp_no);
@@ -1135,6 +1191,16 @@ class Complaint_model extends CI_Model {
             );
             $this->db->insert("complaint_priority_use", $save_pri);
         }/*         * *****Code Insert select array******* */
+        
+        
+        
+              //        Query เพื่อเอาค่าของ Score ออกมาเพื่อเอาไปคำนวนต่อ
+        $sumscore = $this->db->query("SELECT complaint_priority_use.cp_pri_use_cpno, SUM(complaint_priorityn.pri_score) as score FROM complaint_priority_use INNER JOIN complaint_priorityn ON complaint_priorityn.pri_id = complaint_priority_use.cp_pri_use_id INNER JOIN complaint_priorityn_category ON complaint_priorityn_category.pricat_id = complaint_priorityn.pri_catid WHERE cp_pri_use_cpno ='$cp_no' ");
+        $result_score = $sumscore->row();
+//        ดึงค่าออกมาเป็น Row
+        
+        $sum_score = (double)$result_score->score / 7 ;
+//        นำค่าที่ได้มา Convert เป็น Double จากนั้นเอามาหาร 7
 
 
 
@@ -1159,7 +1225,7 @@ class Complaint_model extends CI_Model {
 //                "cp_date" => $this->input->post("cp_date"),
             "cp_topic" => $this->input->post("cp_topic_hide_edit"),
             "cp_topic_cat" => $this->input->post("cp_topic_cat_edit"),
-//                "cp_priority" => $this->input->post(""),
+            "cp_priority" => number_format($sum_score,1),
 //                "cp_user_name" => $this->input->post("cp_user_name"),
 //                "cp_user_empid" => $this->input->post("cp_user_empid"),
 //                "cp_user_dept" => $this->input->post("cp_user_dept"),
@@ -1191,7 +1257,7 @@ class Complaint_model extends CI_Model {
 
     public function save_edit_inves($cp_no) {
 
-        if ($this->input->post("cp_detail_inves_file_edit") == "") {
+        if ($_FILES['cp_detail_inves_file_edit']['tmp_name'] =="") {
             $file_name_date = $this->input->post("inves_showfile");
         } else {
 

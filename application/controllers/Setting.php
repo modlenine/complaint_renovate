@@ -113,8 +113,9 @@ class Setting extends CI_Controller{
         $this->load->view("setting/priority/view",$data);
     }
     
-    public function add_priority(){
-        $data['get_pri_catadd'] = $this->setting_model->get_pri_catadd();
+    
+    public function add_priority($by_catid){
+        $data['callcatid'] = $this->setting_model->callcatid($by_catid);
         $data['get_pri'] = $this->setting_model->get_pri();
         
         $this->load->view("head/head_code");
@@ -138,11 +139,12 @@ class Setting extends CI_Controller{
     
         $data['getuser'] = $this->login_model->getuser();
         $data['get_pri_cat'] = $this->setting_model->get_pri_cat();
-        $data['get_pri'] = $this->setting_model->selectby_cat($by_catid);
+        $data['selectby_cat'] = $this->setting_model->selectby_cat($by_catid);
+        $data['callcatid'] = $this->setting_model->callcatid($by_catid);
         
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
-        $this->load->view("setting/priority/view",$data);
+        $this->load->view("setting/priority/view_select",$data);
     }
     
     

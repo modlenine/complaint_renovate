@@ -141,9 +141,6 @@ public function get_pri_cat(){
     return $this->db->query("SELECT * FROM complaint_priorityN_category");
 }
 
-public function get_pri_catadd(){
-    return $this->db->query("SELECT * FROM complaint_priorityn_category WHERE NOT pricat_score = 0 ");
-}
 
 public function get_pri(){
     return $this->db->query("SELECT * FROM complaint_priorityN ");
@@ -216,6 +213,11 @@ public function selectby_cat($by_catid){
     return $this->db->query("SELECT * FROM complaint_priorityn INNER JOIN complaint_priorityn_category ON complaint_priorityn_category.pricat_id = complaint_priorityn.pri_catid WHERE pricat_id = $by_catid ");
     
     
+}
+
+public function callcatid($by_catid){
+    $result = $this->db->query(" SELECT * FROM complaint_priorityN_category WHERE pricat_id =$by_catid ");
+    return $result->row();
 }
 
 

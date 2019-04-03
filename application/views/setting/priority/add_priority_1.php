@@ -26,17 +26,23 @@ and open the template in the editor.
             <form name="frmMainPri" id="frmMainPri" action="<?php echo base_url("setting/save_priority/"); ?>" method="post">
                 <div class="input-group">
                     <span class="input-group-addon">Category :</span>
-                    <input readonly="" type="text" name="priority_cat" id="priority_cat" class="form-control" value="<?php echo $callcatid->pricat_name; ?>"/>
-                    
+                    <select class="form-control" name="priority_cat" id="priority_cat" OnChange="resutNamePri(this.value);">
+                        <option>กรุณาเลือกหมวดหมู่ที่จะเพิ่ม</option>
+                        <?php foreach ($get_pri_catadd->result_array() as $gpric): ?>
+                            <option value="<?php echo $gpric['pricat_id']; ?>|<?php echo $gpric['pricat_name']; ?>|<?php echo $gpric['pricat_score']; ?>"><?php echo $gpric['pricat_name']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <br>
-                <input type="text" name="show_id" id="show_id" value="<?php echo $callcatid->pricat_id; ?>" hidden="" />
+
+                <input type="text" name="show_id" id="show_id" hidden=""/>
+                <input type="text" name="show_name" id="show_name" hidden=""/>
 
                 <div class="input-group">
                     <span class="input-group-addon">Score :</span>
-                    <input readonly="" type="number" name="show_score" id="show_score" class="form-control" placeholder="Score" value="<?php echo $callcatid->pricat_score; ?>"/>
+                    <input readonly="" type="number" name="show_score" id="show_score" class="form-control" placeholder="Score" />
                     <input readonly="" type="number" name="show_scoreN" id="show_scoreN" class="form-control" placeholder="Score" />
-                    <span class="input-group-addon">Level</span>
+                    <span class="input-group-addon">%</span>
                 </div><hr>
                 
 
@@ -48,7 +54,7 @@ and open the template in the editor.
                 <div class="input-group">
                     <span class="input-group-addon">Set Score :</span>
                     <input type="number" name="set_score" id="set_score" class="form-control cal" placeholder="set_score"/>
-                    <span class="input-group-addon">Level</span>
+                    <span class="input-group-addon">%</span>
                 </div><br>
 
 

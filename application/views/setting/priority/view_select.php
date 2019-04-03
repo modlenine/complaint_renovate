@@ -33,8 +33,8 @@ and open the template in the editor.
                             <table id="topic_cat" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th style="width:20%;text-align: center;">Category ID</th>
-                                        <th style="width:100px;text-align: center;">Category Name</th>
+                                        <th style="width:10%;text-align: center;">Category ID</th>
+                                        <th style="width:20%;text-align: center;">Category Name</th>
                                         <th style="width:20%;text-align: center;">Score</th>
                                         <th style="width:20%;text-align: center;">Modify</th>
                                     </tr>
@@ -70,7 +70,10 @@ and open the template in the editor.
                                     $('#topic_cat').DataTable({
                                         "order": [[0, "asc"]],
                                         "columnDefs": [{ "visible": false, "targets": 0 }]
+                                        
+                                        
                                     });
+                                    
                                 });
                             </script>
                             <hr>
@@ -99,33 +102,37 @@ and open the template in the editor.
                         <div class="panel-body">
 
 
-                            <table id="topic" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                            <table id="topic" class="table table-striped table-bordered dt-responsive " style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th style="width:100px;text-align: center;">Priority Name</th>
-                                        <th style="width:100px;text-align: center;">Category</th>
-                                        <th style="width:25%;text-align: center;">Score</th>
+                                        <th style="width:50%;">Priority Name</th>
+                                        <th style="width:20%;text-align: center;">Category</th>
+                                        <th style="width:20%;text-align: center;">Score</th>
                                         <th style="width:20%;text-align: center;">Modify</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                   
+                                    <?php foreach ($selectby_cat->result_array() as $vtopic): ?>
                                         <tr>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
+                                            <td><?php echo $vtopic['pri_name']; ?></td>
+                                            <td style="text-align: center;"><?php echo $vtopic['pri_catid']; ?></td>
+                                            <td style="text-align: center;"><?php echo $vtopic['pri_score']; ?></td>
+                                            <td style="text-align: center;"><a href="javascript:popup('<?php echo base_url("setting/edit_priority/"); ?><?php echo $vtopic['pri_id']; ?>','',500,500)"><button class="btn btn-warning btn-xs">edit</button></a>&nbsp;<a href="<?php echo base_url("setting/del_priority/"); ?><?php echo $vtopic['pri_id']; ?>/<?php echo $vtopic['pri_catid']; ?>"><button name="btn_topic_del" id="btn_topic_del" class="btn btn-danger btn-xs" onclick="javascript:return confirm('Are you sure?');">Del</button></a>
+                                            </td>
                                         </tr>
-                                
+                                    <?php endforeach; ?>
                                 </tbody>
 
                             </table>
+                            
+                            
 
                             <script type="text/javascript" >
                                 $(document).ready(function () {
                                     $('#topic').DataTable({
-                                        "order": [[0, "desc"]]
+                                        "order": [[1, "desc"]],
+                                        "columnDefs": [{ "visible": false, "targets": 1 }]
                                     });
                                 });
                             </script>
@@ -142,6 +149,8 @@ and open the template in the editor.
                             </script>
                             <hr>
                             
+                            
+                            <a href="javascript:popup('<?php echo base_url("setting/add_priority/"); ?><?php echo $callcatid->pricat_id; ?>','',500,500)"><button class="btn btn-primary btn-block">Add Priority</button></a>
 
                         </div>
                     </div>

@@ -34,6 +34,17 @@ class History_model extends CI_Model{
     
     
     public function saveedit_history(){
+        
+        if($_FILES['file_add_edit']['tmp_name'] ==""){
+            $fileupdate = $this->input->post("showfile");
+        }else{
+            $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
+            $file_name = $_FILES['file_add_edit']['name'];
+            $file_name_cut = str_replace(" ", "", $file_name);
+            $file_name_date = str_replace(".", "-" . $date . ".", $file_name_cut);
+            $fileupdate = $file_name_date;
+        }
+        
         $data = array(
             "his_cpno" => $this->input->post("history_cpno"),
             "his_date" => $this->input->post("cp_date_get"),
@@ -52,7 +63,7 @@ class History_model extends CI_Model{
             "his_lotno" => $this->input->post("cp_pro_lotno_edit"),
             "his_qty" => $this->input->post("cp_pro_qty_edit"),
             "his_cpdetail" => $this->input->post("cp_detail_edit"),
-            "his_file" => $this->input->post("showfile"),
+            "his_file" => $fileupdate,
             "his_action" => $this->input->post("his_action"),
             "his_memo" => $this->input->post("cp_modify_reason"),
             "his_user_modify" => $this->input->post("getuser_check"),
@@ -85,10 +96,16 @@ class History_model extends CI_Model{
     }
     
     public function saveedit_inves_history(){
-        if($this->input->post("cp_detail_inves_file_edit")== ""){
+        
+        if($_FILES['cp_detail_inves_file_edit']['tmp_name'] ==""){
             $file_name_date = $this->input->post("inves_showfile");
         }else{
-            $file_name_date = $this->input->post("cp_detail_inves_file_edit");
+            //อัพโหลดไฟล์แบบหลายไฟล์ลง Folderโดย+วันที่+เวลาต่อท้ายไฟล์
+            $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
+
+            $file_name = $_FILES['cp_detail_inves_file_edit']['name'];
+            $file_name_cut = str_replace(" ", "", $file_name);
+            $file_name_date = str_replace(".", "-" . $date . ".", $file_name_cut);
         }
         
         

@@ -86,13 +86,15 @@
             $('#cp_detail_inves_cost').prop("readonly", true);
         }
 
-        if ($('.check_status').text() !== "cp03") {/*********Check Edit button**********/
+        if ($('.check_status').text() !== "Investigation Complete") {/*********Check Edit button**********/
+            $('#btn_save_history').hide();
+        }
+        
+        if($('#check_user').val()!== $('#cu').val()){/*********Check Edit button**********/
             $('#btn_save_history').hide();
         }
 
-        if ($('#check_user').val() !== $('#cp_detail_inves_signature').val()) {
-            $('#btn_save_history').hide();
-        }
+        
         
         if($('#cp_topic_cat').val() == "Safety" || $('#cp_topic_cat').val() == "Environment" || $('#cp_topic_cat').val() == "System"){
             $('#h_username').hide();

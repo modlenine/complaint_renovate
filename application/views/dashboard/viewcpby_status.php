@@ -52,8 +52,31 @@ and open the template in the editor.
                         <td style="text-align: center;"><?php echo $l_cp['cp_user_name']; ?></td>
                         <td style="text-align: center;"><?php echo $l_cp['cp_topic']; ?></td>
                         <td style="text-align: center;"><?php echo $l_cp['cp_cus_name']; ?></td>
-                        <td style="text-align: center;"><?php echo $l_cp['cp_status_name']; ?></td>
-                        <td style="text-align: center;"><?php echo $l_cp['cp_priority']; ?></td>
+                        
+                        <?php  
+                            if($l_cp['cp_status_id']== "cp01"){
+                                $color = "#0066FF";
+                            }
+                            if($l_cp['cp_status_id']== "cp02"){
+                                $color = "#00BFFF";
+                            }
+                            if($l_cp['cp_status_id']== "cp03"){
+                                $color = "#33CC33";
+                            }
+                            if($l_cp['cp_status_id']== "cp04"){
+                                $color = "#BEBEBE";
+                            }
+                            if($l_cp['cp_status_id']== "cp05"){
+                                $color = "#FF4500";
+                            }
+                            if($l_cp['cp_status_id']== "cp06"){
+                                $color = "#228B22";
+                            }
+                            
+                        ?>
+                        
+                        <td style="text-align: center;color:<?php echo $color; ?>;"><?php echo $l_cp['cp_status_name']; ?></td>
+                        <td style="text-align: center;"><?php echo $this->complaint_model->conpriority($l_cp['cp_priority']); ?></td>
                     </tr>
 <?php endforeach; ?>
                 </tbody>
