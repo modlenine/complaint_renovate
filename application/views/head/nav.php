@@ -11,6 +11,8 @@ $this->load->view("head/javascript");
 <html>
     <head>
         <meta charset="UTF-8">
+        
+        
     </head>
     <body>
 <nav class="navbar navbar-inverse navbar-fixed-left">
@@ -28,8 +30,12 @@ $this->load->view("head/javascript");
           <div>
               <p><span style="padding-left: 10px;">Hi <?php echo $getuser['username']; ?></span></p>
               <p><span style="padding-left: 10px;" class="check_dept">Dept. <?php echo $getuser['Dept']; ?></span></p>
+              
               <input hidden="" type="text" name="check_user" id="check_user" value="<?php echo $getuser['username']; ?>" /><!--Check User-->
               <input hidden="" type="text" name="check_dept" id="check_dept" value="<?php echo $getuser['Dept']; ?>" /><!-- Check Dept -->
+              <input hidden="" type="text" name="check_posi" id="check_posi" value="<?php echo $getuser['posi']; ?>" /><!-- Check Posi -->
+              
+              
               <a href="<?php echo base_url('complaint/logout'); ?>" onclick="javascript:return confirm('คุณต้องการออกจากระบบหรือไม่');"><i class="fas fa-sign-out-alt fa-2x logout_btn"></i></a>
           </div>
           
@@ -49,7 +55,7 @@ $this->load->view("head/javascript");
             
           
 
-          <li class="dropdown" style="border-top:0.5px solid #54acf3;">
+<!--          <li class="dropdown" style="border-top:0.5px solid #54acf3;">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>&nbsp;User Profile <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">Action</a></li>
@@ -60,9 +66,19 @@ $this->load->view("head/javascript");
               <li><a href="#">Separated link</a></li>
               <li><a href="#">One more separated link</a></li>
             </ul>
-          </li>
+          </li>-->
           
-          <li class="dropdown" style="border-top:0.5px solid #54acf3;border-bottom:1px solid #54acf3;">
+          <?php  
+            if($getuser['posi'] == 15){
+                $display = 'display:none;';
+            }
+            if($getuser['posi'] == 75){
+                $display = '';
+            }
+          ?>
+<!--Check permission-->
+
+          <li class="dropdown user_permission" style="border-top:0.5px solid #54acf3;border-bottom:1px solid #54acf3;<?php echo $display; ?>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-tools"></i>&nbsp;Setting <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li class="dropdown-header">Complaint</li>

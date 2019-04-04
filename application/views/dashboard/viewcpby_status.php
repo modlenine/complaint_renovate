@@ -41,17 +41,17 @@ and open the template in the editor.
                                 $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
-                        <td style="text-align: center;"><a href="<?php echo base_url().$url_page; ?><?php echo $l_cp['cp_no']; ?>"><?php echo $l_cp['cp_no']; ?></a><?php echo $newgif; ?></td>
-                        <td style="text-align: center;">
+                        <td style="text-align: left;"><a href="<?php echo base_url().$url_page; ?><?php echo $l_cp['cp_no']; ?>"><?php echo $l_cp['cp_no']; ?></a><?php echo $newgif; ?></td>
+                        <td style="text-align: left;">
                             <?php
                             $date = date_create($l_cp['cp_date']);
                             echo date_format($date, "d/m/Y");
                             
                             ?>
                         </td>
-                        <td style="text-align: center;"><?php echo $l_cp['cp_user_name']; ?></td>
-                        <td style="text-align: center;"><?php echo $l_cp['cp_topic']; ?></td>
-                        <td style="text-align: center;"><?php echo $l_cp['cp_cus_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_cp['cp_user_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_cp['cp_topic']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_cp['cp_cus_name']; ?></td>
                         
                         <?php  
                             if($l_cp['cp_status_id']== "cp01"){
@@ -75,8 +75,8 @@ and open the template in the editor.
                             
                         ?>
                         
-                        <td style="text-align: center;color:<?php echo $color; ?>;"><?php echo $l_cp['cp_status_name']; ?></td>
-                        <td style="text-align: center;"><?php echo $this->complaint_model->conpriority($l_cp['cp_priority']); ?></td>
+                        <td style="text-align: left;color:<?php echo $color; ?>;"><?php echo $l_cp['cp_status_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $this->complaint_model->conpriority($l_cp['cp_priority']); ?></td>
                     </tr>
 <?php endforeach; ?>
                 </tbody>

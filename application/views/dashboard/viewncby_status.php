@@ -48,17 +48,17 @@ and open the template in the editor.
                             }else{$newgif="";}
                         ?>
                         
-                        <td style="text-align: center;"><a href="<?php echo base_url("nc/main/");?><?php echo $l_nc['cp_no']; ?>"><?php echo $l_nc['cp_no']; ?></a><?php echo $newgif; ?></td>
-                        <td style="text-align: center;">
+                        <td style="text-align: left;"><a href="<?php echo base_url("nc/main/");?><?php echo $l_nc['cp_no']; ?>"><?php echo $l_nc['cp_no']; ?></a><?php echo $newgif; ?></td>
+                        <td style="text-align: left;">
                             <?php
                             $date = date_create($l_nc['cp_date']);
                             echo date_format($date, "d/m/Y");
                             
                             ?>
                         </td>
-                        <td style="text-align: center;"><?php echo $l_nc['cp_user_name']; ?></td>
-                        <td style="text-align: center;"><?php echo $l_nc['cp_topic']; ?></td>
-                        <td style="text-align: center;"><?php echo $l_nc['cp_cus_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_nc['cp_user_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_nc['cp_topic']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_nc['cp_cus_name']; ?></td>
                         
                         <?php
                         
@@ -99,8 +99,8 @@ and open the template in the editor.
                             
                         ?>
                         
-                        <td style="text-align: center;color:<?php echo $color; ?>"><?php echo $l_nc['cp_status_name']; ?></td>
-                        <td style="text-align: center;"><?php echo $this->complaint_model->conpriority($l_nc['cp_priority']); ?></td>
+                        <td style="text-align: left;color:<?php echo $color; ?>"><?php echo $l_nc['cp_status_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $this->complaint_model->conpriority($l_nc['cp_priority']); ?></td>
                     </tr>
 <?php endforeach; ?>
                 </tbody>

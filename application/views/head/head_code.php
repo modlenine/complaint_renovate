@@ -225,6 +225,7 @@ display: none;
 }
 .showdate3text{
     color:red;
+    
 }
 
 

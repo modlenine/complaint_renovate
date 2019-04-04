@@ -803,6 +803,13 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
 
 
+/*************************SETTING****ZONE************************/
+
+//if($('#check_posi').val() == 15){
+//    $('.user_permission').hide(0);
+
+/*************************SETTING****ZONE************************/
+
 
 
 
