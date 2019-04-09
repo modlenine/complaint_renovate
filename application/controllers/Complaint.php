@@ -44,7 +44,10 @@ class Complaint extends CI_Controller{
     public function add($dept_code){/***************Add Page***************/
         $this->login_model->call_login();
         
-        $data['get_toppic'] = $this->complaint_model->get_toppic();
+        $data['topic_category'] = $this->complaint_model->fetch_topic_category();
+        
+        
+        $data['get_category'] = $this->complaint_model->get_category();
         
         $data['getuser'] = $this->login_model->getuser();
         $data['get_dept_respons'] = $this->complaint_model->get_dept_respons($dept_code);
@@ -55,6 +58,14 @@ class Complaint extends CI_Controller{
         $this->load->view("head/javascript");
         $this->load->view("complaint/add",$data);
     }
+    
+    
+    public function fetch_topic(){
+        if($this->input->post("topic_cat_id")){
+            echo $this->complaint_model->fetch_topic($this->input->post("topic_cat_id"));
+        }
+    }
+    
     
     public function edit($cp_no){/************Edit data Page**************/
         $this->login_model->call_login();

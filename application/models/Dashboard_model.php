@@ -56,6 +56,12 @@ class Dashboard_model extends CI_Model{
     }
     
     
+    public function graph1CP(){
+        $result = $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_date, COUNT(complaint_main.cp_date) AS total, complaint_main.cp_status_code FROM complaint_main WHERE cp_status_code= 'cp01' GROUP BY complaint_main.cp_date");
+        return $result->result_array();
+    }
+    
+    
     
     
     

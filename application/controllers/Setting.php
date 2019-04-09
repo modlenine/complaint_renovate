@@ -14,7 +14,6 @@ class Setting extends CI_Controller{
         $this->login_model->call_login();
         
         $data['getuser'] = $this->login_model->getuser();
-        $data['view_topic'] = $this->setting_model->view_topic();
         $data['get_topiccat'] = $this->setting_model->get_topiccat();
         
         $this->load->view("head/head_code");
@@ -85,21 +84,34 @@ class Setting extends CI_Controller{
         $this->load->view("setting/department/dept_setting",$data);
     }
     
-    public function dept_edit_setting(){
+    public function dept_edit_setting($deptid){
         $this->login_model->call_login();
+        $data['get_dept_edit'] = $this->setting_model->get_dept_edit($deptid);
         
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
-        $this->load->view("setting/department/dept_edit_setting");
+        $this->load->view("setting/department/dept_edit_setting",$data);
     }
     
-    public function del_dept_setting(){
-        
+    
+    public function save_dept_edit_setting($deptid){
+        $this->setting_model->save_dept_edit_setting($deptid);
     }
     
-    public function add_dept_setting(){
-        
+    
+    
+    public function del_dept_setting($deptid){
+        $this->setting_model->del_dept_setting($deptid);
+        redirect('setting/dept_setting/');
     }
+    
+    public function add_dept(){
+        $this->setting_model->add_dept();
+        redirect('setting/dept_setting/');
+    }
+    
+    
+    
     
     public function priority_setting(){
         $this->login_model->call_login();
@@ -145,6 +157,19 @@ class Setting extends CI_Controller{
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
         $this->load->view("setting/priority/view_select",$data);
+    }
+    
+    
+    public function select_toppicby_cat($toppic_cat_id){
+        $this->login_model->call_login();
+        $data['view_topic'] = $this->setting_model->view_topic($toppic_cat_id);
+        $data['getuser'] = $this->login_model->getuser();
+        $data['get_topiccat'] = $this->setting_model->get_topiccat();
+        
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("setting/selectby_topic",$data);
+        
     }
     
     

@@ -39,7 +39,7 @@ and open the template in the editor.
                                         <tr>
                                             <td style="text-align: center;"><?php echo $vcate['cp_dept_main_code']; ?></td>
                                             <td style="text-align: center;"><?php echo $vcate['cp_dept_main_name']; ?></td>
-                                            <td style="text-align: center;"><a href="javascript:popup_dept('<?php echo base_url("setting/dept_edit_setting/"); ?><?php echo $vcate['cp_dept_main_code']; ?>','',500,500)"><button class="btn btn-warning btn-xs">edit</button></a>&nbsp;<a href="<?php echo base_url("setting/del_dept_setting/"); ?><?php echo $vcate['cp_dept_main_code']; ?>"><button name="btn_cat_del" id="btn_cat_del" class="btn btn-danger btn-xs" onclick="javascript:return confirm('Are you sure?');">Del</button></a>
+                                            <td style="text-align: center;"><a href="javascript:popup_dept('<?php echo base_url("setting/dept_edit_setting/"); ?><?php echo $vcate['cp_dept_main_id']; ?>','',500,500)"><button class="btn btn-warning btn-xs">edit</button></a>&nbsp;<a href="<?php echo base_url("setting/del_dept_setting/"); ?><?php echo $vcate['cp_dept_main_id']; ?>"><button name="btn_cat_del" id="btn_cat_del" class="btn btn-danger btn-xs" onclick="javascript:return confirm('Are you sure?');">Del</button></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -67,9 +67,10 @@ and open the template in the editor.
                             </script>
                             <hr>
                             <div class="col-md-12 form-inline">
-                                <form action="<?php echo base_url("setting/add_category/"); ?>" method="post" name="frm_addcate">
+                                <form action="<?php echo base_url("setting/add_dept/"); ?>" method="post" name="frm_addcate">
                                     <div class=" form-inline">
                                         <input type="text" name="add_catename" id="add_catename" placeholder="Add Category Name" class="form-control"/>
+                                        <input type="text" name="add_catcode" id="add_catcode" placeholder="Add Category Code" class="form-control" />
                                         <input type="submit" name="btn_addcate" id="btn_addcate" class="btn btn-primary btn-xs" value="ADD"/>
                                     </div>
                                 </form>  

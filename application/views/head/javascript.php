@@ -47,6 +47,9 @@
                 $('#characterLeft').removeClass('red');
             }
         });
+        
+        
+
 
 
 
@@ -562,12 +565,7 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
 
         /**********************NAV*********************************/
-        if ($('#check_numrow_cp').val() == "0") {
-            $('.cpnew').hide();
-        }
-        if ($('#check_numrow_nc').val() == "0") {
-            $('.ncnew').hide();
-        }
+        
 
 
 
@@ -812,7 +810,25 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
 
 
+/*********************ทำ Select Box 2 ชั้น******************************/
 
+$('#cp_category').change(function(){
+    var topic_cat_id = $('#cp_category').val();
+    if(topic_cat_id != '')
+    {
+        $.ajax({
+            url:"<?php echo base_url(); ?>complaint/fetch_topic",
+            method:"POST",
+            data:{topic_cat_id:topic_cat_id},
+            success:function(data)
+            {
+                $('#cp_topic').html(data);
+            }
+        })
+    }
+});
+
+/***********************ทำ Select Box 2 ชั้น**********************/
 
 
 

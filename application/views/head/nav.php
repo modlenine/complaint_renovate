@@ -46,11 +46,25 @@ $this->load->view("head/javascript");
             
             <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url("dashboard"); ?>"><i class="fas fa-tachometer-alt"></i>&nbsp;Dash Board</a></li>
           
-            <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url(); ?>complaint"><i class="fas fa-book-open"></i>&nbsp;Complaint &nbsp;&nbsp;<span class="label label-success cpnew">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newcp(); ?></span></span></a></li>
             
-            <input hidden="" type="text" name="check_numrow_cp" id="check_numrow_cp" value="<?php echo $this->complaint_model->get_newcp(); ?>"/><!--check cp row-->
+            <?php
+                if($this->complaint_model->get_newcp() == 0){
+                    $newcp = 'display:none;';
+                }else{
+                    $newcp = "";
+                }
+                if($this->complaint_model->get_newnc() == 0){
+                    $newnc = 'display:none;';
+                }else{
+                    $newnc = "";
+                }
+            ?>
+            
+            <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url(); ?>complaint"><i class="fas fa-book-open"></i>&nbsp;Complaint &nbsp;&nbsp;<span class="label label-success" style="<?php echo $newcp; ?>">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newcp(); ?></span></span></a></li>
+            
+            
           
-          <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url(); ?>nc"><i class="fas fa-book-open"></i>&nbsp;NC &nbsp;&nbsp;<span class="label label-success ncnew">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newnc(); ?></span></span></a></li>
+            <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url(); ?>nc"><i class="fas fa-book-open"></i>&nbsp;NC &nbsp;&nbsp;<span class="label label-success" style="<?php echo $newnc; ?>">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newnc(); ?></span></span></a></li>
             <input hidden="" type="text" name="check_numrow_nc" id="check_numrow_nc" value="<?php echo $this->complaint_model->get_newnc(); ?>"/><!--check nc row-->
             
           

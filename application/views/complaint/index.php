@@ -89,9 +89,9 @@ and open the template in the editor.
                                    }else if ($number >= 2.6 && $number <= 3.5){
                                        $level = "<span style='color:#87CEEB;'>Normal</span>";
                                    }else if ($number >= 3.6 && $number <= 4.5){
-                                       $level = "<span style='color:#FF4500;'>Height</span>";
+                                       $level = "<span style='color:#FF4500;'>Hight</span>";
                                    }else{
-                                       $level = "<span style='color:#FF0000;'>Very Height</span>";
+                                       $level = "<span style='color:#FF0000;'>Very Hight</span>";
                                    }
                             ?>
                         

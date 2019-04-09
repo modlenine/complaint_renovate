@@ -41,8 +41,55 @@ and open the template in the editor.
                                     frmMain.cp_topic_cat.value = strCusName.split("|")[1];
                                 }
                             </script>
-                            <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->   
+                            <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->  
+                            
+
+                            
                             <div class="col-md-3 pri">
+                                <label><b>Category</b></label>
+                                <select name="cp_category" id="cp_category" class="form-control form-control-sm" >
+                                    <option value="">Select Category</option>
+                                    <?php  
+                                    foreach ($topic_category as $row)
+                                    {
+                                        echo '<option value="'.$row->topic_cat_id.'">'.$row->topic_cat_name.'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            
+                            
+                            <div class="col-md-3 pri">
+                                <label><b>Topic</b></label>
+                                <select name="cp_topic" id="cp_topic" class="form-control form-control-sm" >
+                                    <option value="">Select Topic</option>
+                                    
+                                </select>
+                            </div>
+                            
+
+                            
+<!--                            <div class="col-md-3 pri">
+                                <label><b>Topic</b></label>
+                                <select name="cp_topic" id="cp_topic" class="form-control form-control-sm">
+                                    <option>Please Choose Topic</option>
+                                    
+                                    <?php
+                                    $cat_name = $this->input->post("cp_category");
+                                       $result = $this->complaint_model->get_toppic($cat_name);
+                                    ?>
+                                    <?php foreach($result as $tt): ?>
+                                    <option value="<?php echo $tt['topic_name']; ?>"><?php echo $tt['topic_name']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>-->
+                            
+            
+                            
+                            
+                            
+                            
+<!--                            <div class="col-md-3 pri">
                                 <label><b>Topic</b></label>
                                 <select name="cp_topic" id="cp_topic" class="form-control form-control-sm" OnChange="resutName(this.value);" required="">
                                     <option selected="">Please choose topic</option>
@@ -55,10 +102,10 @@ and open the template in the editor.
 
                             <div class="col-md-3 pri">
                                 <label><b>Catagory</b></label>
-                                <input type="hidden" name="cp_topic_hide" id="cp_topic_hide" class="form-control form-control-sm"/><!-- Topicname -->
-                                <input type="text" name="cp_topic_cat" id="cp_topic_cat" class="form-control" readonly=""/><!-- Topic catagory -->
+                                <input type="hidden" name="cp_topic_hide" id="cp_topic_hide" class="form-control form-control-sm"/> Topicname 
+                                <input type="text" name="cp_topic_cat" id="cp_topic_cat" class="form-control" readonly=""/> Topic catagory 
 
-                            </div>
+                            </div>-->
 
 
                             <div class="col-md-2">

@@ -111,13 +111,14 @@ and open the template in the editor.
                                 </thead>
                                 <tbody>
 
-                                    
+                                    <?php foreach ($view_topic as $vtopic): ?>
                                         <tr>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"><?php echo $vtopic['topic_name']; ?></td>
+                                            <td style="text-align: center;"><?php echo $vtopic['topic_cat_name']; ?></td>
+                                            <td style="text-align: center;"><a href="javascript:popup('<?php echo base_url("setting/topic_edit/"); ?><?php echo $vtopic['topic_id']; ?>','',500,500)"><button class="btn btn-warning btn-xs">edit</button></a>&nbsp;<a href="<?php echo base_url("setting/del_topic/"); ?><?php echo $vtopic['topic_id']; ?>"><button name="btn_topic_del" id="btn_topic_del" class="btn btn-danger btn-xs" onclick="javascript:return confirm('Are you sure?');">Del</button></a>
+                                            </td>
                                         </tr>
-
+                                    <?php endforeach; ?>
                                 </tbody>
 
                             </table>
@@ -130,8 +131,33 @@ and open the template in the editor.
                                 });
                             </script>
 
-
-                           
+                            <!-- Start code popup -->
+                            <script type="text/javascript">
+                                function popup(url, name, windowWidth, windowHeight) {
+                                    myleft = (screen.width) ? (screen.width - windowWidth) / 2 : 100;
+                                    mytop = (screen.height) ? (screen.height - windowHeight) / 2 : 100;
+                                    properties = "width=" + windowWidth + ",height=" + windowHeight;
+                                    properties += ",scrollbars=yes, top=" + mytop + ",left=" + myleft;
+                                    window.open(url, name, properties);
+                                }
+                            </script>
+                            <hr>
+                            <div class="col-md-12 form-inline">
+                                <form action="<?php echo base_url("setting/add_topic/"); ?>" method="post" name="frm_addtopic">
+                                    <div class=" form-inline">
+                                        <input type="text" name="add_topicname" id="add_topicname" placeholder="Add Topic" class="form-control"/>
+                                        <select name="topic_category" id="topic_category" class="form-control">
+                                            <option>Please Choose Category</option>
+                                            
+                                            <?php foreach ($get_topiccat as $get_top): ?>
+                                                <option value="<?php echo $get_top['topic_cat_id']; ?>"><?php echo $get_top['topic_cat_name']; ?></option>
+                                            <?php endforeach; ?>
+                                            
+                                        </select>
+                                        <input type="submit" name="btn_addtopic" id="btn_addtopic" class="btn btn-primary btn-xs" value="ADD"/>
+                                    </div>
+                                </form>  
+                            </div>
 
                         </div>
                     </div>

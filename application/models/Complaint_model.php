@@ -1,38 +1,41 @@
 <?php
 
-class Complaint_model extends CI_Model {
+class Complaint_model extends CI_Model
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model("login_model");
         require("PHPMailer_5.2.0/class.phpmailer.php");
     }
 
-    public function smtpmail($email, $subject, $body) { //Email Function
+    public function smtpmail($email, $subject, $body)
+    { //Email Function
         $mail = new PHPMailer();
         $mail->IsSMTP();
         $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
-//        $mail->Host = "smtp.gmail.com";
+        //        $mail->Host = "smtp.gmail.com";
         $mail->Port = 587; // พอร์ท
-//        $mail->SMTPSecure = 'tls';
+        //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
         $mail->Username = "websystem@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
+        //        $mail->Username = "chainarong039@gmail.com";
         $mail->Password = "Ae8686#"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
         $mail->From = "websystem@saleecolour.com";
         $mail->FromName = "Salee Colour WEB System";
         $mail->AddAddress($email);
-//        $mail->AddCC("chainarong039@gmail.com");
-// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        //        $mail->AddCC("chainarong039@gmail.com");
+        // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
-// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
-// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+        // $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
         $mail->IsHTML(true);                                  // set email format to HTML
         $mail->Subject = $subject;
         $mail->Body = $body;
@@ -40,79 +43,151 @@ class Complaint_model extends CI_Model {
         return $result;
     }
 
-    public function active_email() {
+
+
+
+
+
+    public function active_email()
+    {
         $get_input_dept = $this->input->post("dept"); /*         * **Code Insert radio array***** */
-        foreach ($get_input_dept as $gd) {/*         * ****Check array input radio********* */
+        foreach ($get_input_dept as $gd) { /*         * ****Check array input radio********* */
             $save_dept = array(
                 "cp_mail_active" => 1
             );
             $this->db->where("deptcode", $gd);
             $this->db->update("maillist", $save_dept);
-        }/*         * **Code Insert radio array***** */
+        } /*         * **Code Insert radio array***** */
     }
 
-    public function deactive_email() {
+
+
+
+
+    public function deactive_email()
+    {
         $this->db->query("UPDATE maillist SET cp_mail_active =0 ");
     }
 
-    public function list_cp() {
+
+
+
+
+    public function list_cp()
+    {
         $result = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code");
         return $result->result_array();
     }
 
-    public function view_cp($cp_no) {
+
+
+
+
+    public function view_cp($cp_no)
+    {
         $result = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_no='$cp_no' ");
         return $result->row_array();
     }
 
-    /*     * *************GET ZONE****************** */
-    
-    
 
-    public function get_priority($sql) {/*     * **Get Priority to view page******* */
+
+
+
+    /*     * *************GET ZONE****************** */
+
+
+
+    public function get_priority($sql)
+    { /*     * **Get Priority to view page******* */
         $result = $this->db->query($sql);
         return $result->row_array();
     }
 
-    public function get_file($cp_no) {
+
+
+
+
+    public function get_file($cp_no)
+    {
         $result = $this->db->query("SELECT * FROM complaint_file_upload WHERE file_cp_no ='$cp_no' ");
         return $result->result_array();
     }
 
-    public function get_dept($cp_no) {
+
+
+
+
+    public function get_dept($cp_no)
+    {
         $result = $this->db->query("SELECT complaint_department.cp_dept_id, complaint_department.cp_dept_code, complaint_department.cp_dept_cp_no, member.Dept FROM complaint_department INNER JOIN member ON member.DeptCode = complaint_department.cp_dept_code WHERE complaint_department.cp_dept_cp_no = '$cp_no' GROUP BY complaint_department.cp_dept_code DESC");
         return $result->result_array();
     }
 
-    public function getdept_checkbox($cp_no) {
+
+
+
+
+    public function getdept_checkbox($cp_no)
+    {
         $result = $this->db->query("SELECT complaint_department_main.cp_dept_main_name, complaint_department.cp_dept_code, complaint_department.cp_dept_cp_no FROM complaint_department_main INNER JOIN complaint_department ON complaint_department.cp_dept_code = complaint_department_main.cp_dept_main_code WHERE cp_dept_cp_no = '$cp_no' ");
 
         return $result;
     }
 
-    public function get_toppic() {
-        $result = $this->db->query("SELECT topic_name , topic_cat_name  FROM complaint_topic LEFT JOIN complaint_topic_catagory ON complaint_topic.topic_cat_id = complaint_topic_catagory.topic_cat_id");
+
+
+
+
+    public function get_toppic($toppic_cat)
+    {
+        $result = $this->db->query("SELECT topic_name , topic_cat_name  FROM complaint_topic LEFT JOIN complaint_topic_catagory ON complaint_topic.topic_cat_id = complaint_topic_catagory.topic_cat_id WHERE topic_cat_name='$toppic_cat' ");
         return $result->result_array();
     }
+    
+    public function get_category(){
+        $result = $this->db->query("SELECT * FROM complaint_topic_catagory");
+        return $result->result_array();
+        
+    }
 
-    public function get_priority_main($sql) {
+
+
+
+
+    public function get_priority_main($sql)
+    {
         $result = $this->db->query($sql);
         return $result->result_array();
     }
 
-    public function get_dept_respons($dept_code) {
+
+
+
+
+    public function get_dept_respons($dept_code)
+    {
         $result = $this->db->query("SELECT * FROM complaint_department_main WHERE cp_dept_main_code NOT IN ('$dept_code')");
         return $result->result_array();
     }
 
-    public function get_pri_topic() {
+
+
+
+
+    public function get_pri_topic()
+    {
         $result = $this->db->query("SELECT * FROM complaint_priorityn_category GROUP BY pricat_id ASC");
         return $result->result_array();
     }
-    
 
 
-    public function getCPno() { //สร้าง Auto complaint number
+
+
+
+
+
+    public function getCPno()
+    { //สร้าง Auto complaint number
         $query = $this->db->query("select cp_no from complaint_main"); //ไปนับแถวของ cp_no ก่อน
         $numrow = $query->num_rows(); //ไปนับแถวของ cp_no ก่อน
         $year_cur = date("Y"); //กำหนด ปีปัจจุบันใส่ตัวแปร year_cur
@@ -121,58 +196,98 @@ class Complaint_model extends CI_Model {
         if ($numrow == 0) { //นับแถวของข้อมูล ถ้าเท่ากับ 0
             $cp_no = "CP" . $cut_year_cur . "001"; // กำหนดค่าลงไปเลย
         } else { // ถ้าไม่เป็นตามเงื่อนไขบน
-            $query2 = $this->db->query("select cp_no from complaint_main order by SUBSTR(cp_no,5) desc LIMIT 1"); //ไป query เอา cp_no มาโดยตัดเอาแค่ 3 ตัวหลังตัวล่าสุดมา 1 ตัว
+            $query2 = $this->db->query("select cp_no from complaint_main order by SUBSTR(cp_no,3) desc LIMIT 1"); //ไป query เอา cp_no มาโดยตัดเอาแค่ 3 ตัวหลังตัวล่าสุดมา 1 ตัว
 
             foreach ($query2->result_array() as $rs) { //ไปวิ่งเช็คข้อมูล
                 $cal = $rs['cp_no']; //ตรงนี้เราจะได้ค่า CP18100
             }
-            $cut_yold = substr($cal, 2, 2); //ตัดปี 2 ตัวท้าย
-            $cut_cp = substr($cal, 2); // 18100
-            $cut_cp ++;
+                
+            $cut_yold = substr($cal, 2, 2); //ตัดปี 2 ตัวท้ายเพื่อเอาไว้เช็ค
+            if($cut_yold != $cut_year_cur){
+                $start_newyear = "CP".$cut_year_cur."001";
+                $cp_no = $start_newyear;
+            }else{
+                $cut_cp = substr($cal, 2); // 18100
+            $cut_cp++;
             $set_y = str_replace($cut_cp, "CP" . $cut_cp, $cut_cp); //ทำการ Get Year ของปัจจุบันลงไป
 
             $cp_no = $set_y;
+            }
+
+
+
+
+            
         }
         return $cp_no; // ส่งค่ากลับไป
     }
 
-    public function get_pri_view($cp_no) {
+
+
+
+
+
+
+    public function get_pri_view($cp_no)
+    {
         $result = $this->db->query("SELECT complaint_priority_use.cp_pri_use_cpno, complaint_priority_use.cp_pri_use_id, complaint_priorityn.pri_name, complaint_priorityn.pri_catid, complaint_priorityn.pri_score, complaint_priorityn_category.pricat_name FROM complaint_priority_use INNER JOIN complaint_priorityn ON complaint_priorityn.pri_id = complaint_priority_use.cp_pri_use_id INNER JOIN complaint_priorityn_category ON complaint_priorityn_category.pricat_id = complaint_priorityn.pri_catid WHERE cp_pri_use_cpno ='$cp_no' ");
         return $result->result_array();
     }
 
-    public function get_newcp() {
+
+
+
+
+
+    public function get_newcp()
+    {
         $get_newcp = $this->db->query("SELECT cp_status_code FROM complaint_main WHERE cp_status_code='cp01' ");
         return $get_newcp->num_rows();
     }
 
-    public function get_newnc() {
+
+
+
+
+    public function get_newnc()
+    {
         $get_newnc = $this->db->query("SELECT nc_status_code FROM complaint_main WHERE nc_status_code='nc01' ");
         return $get_newnc->num_rows();
     }
 
-    public function get_owner_email($cp_no) {
+
+
+
+
+
+    public function get_owner_email($cp_no)
+    {
         $result = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_no='$cp_no' ");
         return $result->row();
     }
-    public function conpriority($priscore){
+
+
+
+
+    public function conpriority($priscore)
+    {
         $number =  $priscore;
-                                   if($number >= 1 && $number <= 1.5){
-                                       $level = "<span style='color:#696969;'>Very Low</span>";
-                                   }else if ($number >= 1.6 && $number <= 2.5){
-                                       $level = "Low";
-                                   }else if ($number >= 2.6 && $number <= 3.5){
-                                       $level = "<span style='color:#87CEEB;'>Normal</span>";
-                                   }else if ($number >= 3.6 && $number <= 4.5){
-                                       $level = "<span style='color:#FF4500;'>Height</span>";
-                                   }else{
-                                       $level = "<span style='color:#FF0000;'>Very Height</span>";
-                                   }
-                                   return $level;
+        if ($number >= 1 && $number <= 1.5) {
+            $level = "<span style='color:#696969;'>Very Low</span>";
+        } else if ($number >= 1.6 && $number <= 2.5) {
+            $level = "Low";
+        } else if ($number >= 2.6 && $number <= 3.5) {
+            $level = "<span style='color:#87CEEB;'>Normal</span>";
+        } else if ($number >= 3.6 && $number <= 4.5) {
+            $level = "<span style='color:#FF4500;'>Height</span>";
+        } else {
+            $level = "<span style='color:#FF0000;'>Very Height</span>";
+        }
+        return $level;
     }
-    
-    
-    
+
+
+
 
     /*     * *************GET ZONE****************** */
 
@@ -181,46 +296,50 @@ class Complaint_model extends CI_Model {
 
 
 
+
+
     /*     * ************INSERT ZONE***************** */
 
-    public function save_newcomplaint() {/*     * *start save_newcomplaint** */
-        
-      //*******************Check**การกรอกข้อมูล***********************//
-            if($this->input->post("cp_topic_cat")==""){
-                echo '<script language="javascript">';
-                echo 'alert("Please choose topic!")';
-                echo '</script>';
-                
-                echo '<script lanaguage="javascript">';
-                echo 'history.back()';
-                echo '</script>';
-                exit();
-            }
-            if($this->input->post("cp_detail")==""){
-                echo '<script language="javascript">';
-                echo 'alert("Please fill data.!")';
-                echo '</script>';
-                
-                echo '<script lanaguage="javascript">';
-                echo 'history.back()';
-                echo '</script>';
-                exit();
-            }
-            if($this->input->post("dept")==""){
-                echo '<script language="javascript">';
-                echo 'alert("Please choose department.!")';
-                echo '</script>';
-                
-                echo '<script lanaguage="javascript">';
-                echo 'history.back()';
-                echo '</script>';
-                exit();
-            }
-        
-        
-        
+    public function save_newcomplaint()
+    { /*     * *start save_newcomplaint** */
 
-        $get_cp_no = $this->getCPno(); /** ******Get new cp_no********* */
+        //*******************Check**การกรอกข้อมูล***********************//
+        if ($this->input->post("cp_topic_cat") == "") {
+            echo '<script language="javascript">';
+            echo 'alert("Please choose topic!")';
+            echo '</script>';
+
+            echo '<script lanaguage="javascript">';
+            echo 'history.back()';
+            echo '</script>';
+            exit();
+        }
+        if ($this->input->post("cp_detail") == "") {
+            echo '<script language="javascript">';
+            echo 'alert("Please fill data.!")';
+            echo '</script>';
+
+            echo '<script lanaguage="javascript">';
+            echo 'history.back()';
+            echo '</script>';
+            exit();
+        }
+        if ($this->input->post("dept") == "") {
+            echo '<script language="javascript">';
+            echo 'alert("Please choose department.!")';
+            echo '</script>';
+
+            echo '<script lanaguage="javascript">';
+            echo 'history.back()';
+            echo '</script>';
+            exit();
+        }
+
+
+
+
+        $get_cp_no = $this->getCPno();
+        /** ******Get new cp_no********* */
 
         $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
         $file_name = $_FILES['file_add']['name'];
@@ -237,46 +356,46 @@ class Complaint_model extends CI_Model {
 
 
         $get_input_priority = $this->input->post("cp_pri_name_get"); /*         * *****Code Insert select array******* */
-        foreach ($get_input_priority as $gp) {/*         * *****Check array input select******** */
+        foreach ($get_input_priority as $gp) { /*         * *****Check array input select******** */
             $save_pri = array(
                 "cp_pri_use_id" => $gp,
                 "cp_pri_use_cpno" => $get_cp_no
             );
             $this->db->insert("complaint_priority_use", $save_pri);
-        }/*         * *****Code Insert select array******* */
-        
-        
-//        Query เพื่อเอาค่าของ Score ออกมาเพื่อเอาไปคำนวนต่อ
+        } /*         * *****Code Insert select array******* */
+
+
+        //        Query เพื่อเอาค่าของ Score ออกมาเพื่อเอาไปคำนวนต่อ
         $sumscore = $this->db->query("SELECT complaint_priority_use.cp_pri_use_cpno, SUM(complaint_priorityn.pri_score) as score FROM complaint_priority_use INNER JOIN complaint_priorityn ON complaint_priorityn.pri_id = complaint_priority_use.cp_pri_use_id INNER JOIN complaint_priorityn_category ON complaint_priorityn_category.pricat_id = complaint_priorityn.pri_catid WHERE cp_pri_use_cpno ='$get_cp_no' ");
         $result_score = $sumscore->row();
-//        ดึงค่าออกมาเป็น Row
-        
-        $sum_score = (double)$result_score->score / 7 ;
-//        นำค่าที่ได้มา Convert เป็น Double จากนั้นเอามาหาร 7
+        //        ดึงค่าออกมาเป็น Row
+
+        $sum_score = (double)$result_score->score / 7;
+        //        นำค่าที่ได้มา Convert เป็น Double จากนั้นเอามาหาร 7
 
 
 
 
         $get_input_dept = $this->input->post("dept"); /*         * **Code Insert radio array***** */
-        foreach ($get_input_dept as $gd) {/*         * ****Check array input radio********* */
+        foreach ($get_input_dept as $gd) { /*         * ****Check array input radio********* */
             $save_dept = array(
                 "cp_dept_cp_no" => $get_cp_no,
                 "cp_dept_code" => $gd
             );
             $this->db->insert("complaint_department", $save_dept);
-        }/*         * **Code Insert radio array***** */
+        } /*         * **Code Insert radio array***** */
 
 
         $qty_convert = $this->input->post("cp_pro_qty");
         $qty_cut_comma = str_replace(",", "", $qty_convert);
 
 
-        $data = array(/*             * *****Insert data to complaint_main table******* */
+        $data = array( /*             * *****Insert data to complaint_main table******* */
             "cp_no" => $get_cp_no,
             "cp_date" => $this->input->post("cp_date"),
             "cp_topic" => $this->input->post("cp_topic_hide"),
             "cp_topic_cat" => $this->input->post("cp_topic_cat"),
-            "cp_priority" => number_format($sum_score,1),
+            "cp_priority" => number_format($sum_score, 1),
             "cp_user_name" => $this->input->post("cp_user_name"),
             "cp_user_empid" => $this->input->post("cp_user_empid"),
             "cp_user_dept" => $this->input->post("cp_user_dept"),
@@ -300,27 +419,27 @@ class Complaint_model extends CI_Model {
             echo '<script language="javascript">';
             echo 'alert("Save Data Failed !!!!")';
             echo '</script>';
-        }/*         * *****Insert data to complaint_main table******* */
-
-
-                                
-//                                   $number =  number_format($sum_score,1);
-//                                   if($number >= 1 && $number <= 1.5){
-//                                       $level = "<span style='color:#696969;'>Very Low</span>";
-//                                   }else if ($number >= 1.6 && $number <= 2.5){
-//                                       $level = "Low";
-//                                   }else if ($number >= 2.6 && $number <= 3.5){
-//                                       $level = "<span style='color:#87CEEB;'>Normal</span>";
-//                                   }else if ($number >= 3.6 && $number <= 4.5){
-//                                       $level = "<span style='color:#FF4500;'>Height</span>";
-//                                   }else{
-//                                       $level = "<span style='color:#FF0000;'>Very Height</span>";
-//                                   }
-                            
+        } /*         * *****Insert data to complaint_main table******* */
 
 
 
-//************************************ZONE***SEND****EMAIL*************************************// 
+        //                                   $number =  number_format($sum_score,1);
+        //                                   if($number >= 1 && $number <= 1.5){
+        //                                       $level = "<span style='color:#696969;'>Very Low</span>";
+        //                                   }else if ($number >= 1.6 && $number <= 2.5){
+        //                                       $level = "Low";
+        //                                   }else if ($number >= 2.6 && $number <= 3.5){
+        //                                       $level = "<span style='color:#87CEEB;'>Normal</span>";
+        //                                   }else if ($number >= 3.6 && $number <= 4.5){
+        //                                       $level = "<span style='color:#FF4500;'>Height</span>";
+        //                                   }else{
+        //                                       $level = "<span style='color:#FF0000;'>Very Height</span>";
+        //                                   }
+
+
+
+
+        //************************************ZONE***SEND****EMAIL*************************************// 
         $getdata_foremail = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_no='$get_cp_no' ");
         $getdata_email = $getdata_foremail->row();
 
@@ -344,7 +463,7 @@ class Complaint_model extends CI_Model {
             foreach ($this->get_pri_view($get_cp_no) as $getpv) {
                 $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
             }
-            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority(number_format($sum_score,1))."<br>";
+            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . $this->conpriority(number_format($sum_score, 1)) . "<br>";
             $body .= "<br>";
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>User Information</strong><br>";
@@ -366,8 +485,8 @@ class Complaint_model extends CI_Model {
             foreach ($this->get_pri_view($get_cp_no) as $getpv) {
                 $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
             }
-            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority(number_format($sum_score,1))."<br>";
-            "<br>";
+            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . $this->conpriority(number_format($sum_score, 1)) . "<br>";
+            $body .= "<br>";
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>User Information</strong><br>";
             $body .= "<strong>Complaint Person :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_dept . "<br><br>";
@@ -388,16 +507,16 @@ class Complaint_model extends CI_Model {
         $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
-//        $mail->Host = "smtp.gmail.com";
+        //        $mail->Host = "smtp.gmail.com";
         $mail->Port = 587; // พอร์ท
-//        $mail->SMTPSecure = 'tls';
+        //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
         $mail->Username = "websystem@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
+        //        $mail->Username = "chainarong039@gmail.com";
         $mail->Password = "Ae8686#"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
         $mail->From = "websystem@saleecolour.com";
         $mail->FromName = "Salee Colour WEB System";
@@ -406,20 +525,25 @@ class Complaint_model extends CI_Model {
         }
 
         $mail->AddCC($getdata_email->cp_user_email);
-// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
-// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
-// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+        // $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
         $mail->IsHTML(true);                                  // set email format to HTML
         $mail->Subject = $subject;
         $mail->Body = $body;
         $mail->send();
-//************************************ZONE***SEND****EMAIL*************************************//      
+        //************************************ZONE***SEND****EMAIL*************************************//      
     }
 
-/*     * *end save_newcomplaint** */
+    /*     * *end save_newcomplaint** */
 
-    public function saveData_failed() {
+
+
+
+
+    public function saveData_failed()
+    {
         $get_cp_no = $this->getCPno(); /*         * ******Get new cp_no********* */
 
         $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
@@ -437,36 +561,36 @@ class Complaint_model extends CI_Model {
 
 
         $get_input_priority = $this->input->post("cp_pri_name_get"); /*         * *****Code Insert select array******* */
-        foreach ($get_input_priority as $gp) {/*         * *****Check array input select******** */
+        foreach ($get_input_priority as $gp) { /*         * *****Check array input select******** */
             $save_pri = array(
                 "cp_pri_use_id" => $gp,
                 "cp_pri_use_cpno" => $get_cp_no
             );
             $this->db->insert("complaint_priority_use", $save_pri);
-        }/*         * *****Code Insert select array******* */
+        } /*         * *****Code Insert select array******* */
 
 
 
 
         $get_input_dept = $this->input->post("dept_edit"); /*         * **Code Insert radio array***** */
-        foreach ($get_input_dept as $gd) {/*         * ****Check array input radio********* */
+        foreach ($get_input_dept as $gd) { /*         * ****Check array input radio********* */
             $save_dept = array(
                 "cp_dept_cp_no" => $get_cp_no,
                 "cp_dept_code" => $gd
             );
             $this->db->insert("complaint_department", $save_dept);
-        }/*         * **Code Insert radio array***** */
+        } /*         * **Code Insert radio array***** */
 
 
 
 
 
-        $data = array(/*             * *****Insert data to complaint_main table******* */
+        $data = array( /*             * *****Insert data to complaint_main table******* */
             "cp_no" => $get_cp_no,
             "cp_date" => $this->input->post("cp_date"),
             "cp_topic" => $this->input->post("cp_topic_f"),
             "cp_topic_cat" => $this->input->post("cp_topic_cat"),
-//                "cp_priority" => $this->input->post(""),
+            //                "cp_priority" => $this->input->post(""),
             "cp_user_name" => $this->input->post("cp_user_name"),
             "cp_user_empid" => $this->input->post("cp_user_empid"),
             "cp_user_dept" => $this->input->post("cp_user_dept"),
@@ -492,7 +616,7 @@ class Complaint_model extends CI_Model {
             echo '<script language="javascript">';
             echo 'alert("Save Data Failed !!!!")';
             echo '</script>';
-        }/*         * *****Insert data to complaint_main table******* */
+        } /*         * *****Insert data to complaint_main table******* */
     }
 
     /*     * ************INSERT ZONE***************** */
@@ -502,9 +626,13 @@ class Complaint_model extends CI_Model {
 
 
 
+
+
+
     /*     * ************UPDATE ZONE***************** */
 
-    public function change_status_to1($cp_no) {/*     * *****Change New Complaint to Complaint Analyzed********* */
+    public function change_status_to1($cp_no)
+    { /*     * *****Change New Complaint to Complaint Analyzed********* */
         $this->db->query("UPDATE complaint_main SET cp_status_code='cp02' WHERE cp_no='$cp_no' ");
 
         $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
@@ -525,16 +653,16 @@ class Complaint_model extends CI_Model {
         $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
-//        $mail->Host = "smtp.gmail.com";
+        //        $mail->Host = "smtp.gmail.com";
         $mail->Port = 587; // พอร์ท
-//        $mail->SMTPSecure = 'tls';
+        //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
         $mail->Username = "websystem@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
+        //        $mail->Username = "chainarong039@gmail.com";
         $mail->Password = "Ae8686#"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
         $mail->From = "websystem@saleecolour.com";
         $mail->FromName = "Salee Colour WEB System";
@@ -543,10 +671,10 @@ class Complaint_model extends CI_Model {
         }
 
         $mail->AddCC($get_owner_email->cp_user_email);
-// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
-// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
-// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+        // $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
         $mail->IsHTML(true);                                  // set email format to HTML
         $mail->Subject = $subject;
         $mail->Body = $body;
@@ -563,22 +691,26 @@ class Complaint_model extends CI_Model {
         }
     }
 
-    public function add_detail_inves($cp_no) {/*     * *******Add Detail investigate+Upload file to db********************* */
-        
+
+
+
+    public function add_detail_inves($cp_no)
+    { /*     * *******Add Detail investigate+Upload file to db********************* */
+
         //*******************Check**การกรอกข้อมูล***********************//
-            if($this->input->post("cp_detail_inves")==""){
-                echo '<script language="javascript">';
-                echo 'alert("Please fill data!")';
-                echo '</script>';
-                
-                echo '<script lanaguage="javascript">';
-                echo 'history.back()';
-                echo '</script>';
-                exit();
-            }
-        
-        
-        
+        if ($this->input->post("cp_detail_inves") == "") {
+            echo '<script language="javascript">';
+            echo 'alert("Please fill data!")';
+            echo '</script>';
+
+            echo '<script lanaguage="javascript">';
+            echo 'history.back()';
+            echo '</script>';
+            exit();
+        }
+
+
+
         //อัพโหลดไฟล์แบบหลายไฟล์ลง Folderโดย+วันที่+เวลาต่อท้ายไฟล์
         $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
 
@@ -627,7 +759,7 @@ class Complaint_model extends CI_Model {
             foreach ($this->get_pri_view($cp_no) as $getpv) {
                 $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
             }
-            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
+            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . $this->conpriority($get_owner_email->cp_priority) . "<br>";
             $body .= "<br>";
 
 
@@ -661,7 +793,7 @@ class Complaint_model extends CI_Model {
             foreach ($this->get_pri_view($cp_no) as $getpv) {
                 $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
             }
-            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
+            $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . $this->conpriority($get_owner_email->cp_priority) . "<br>";
             $body .= "<br>";
 
 
@@ -692,16 +824,16 @@ class Complaint_model extends CI_Model {
         $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
-//        $mail->Host = "smtp.gmail.com";
+        //        $mail->Host = "smtp.gmail.com";
         $mail->Port = 587; // พอร์ท
-//        $mail->SMTPSecure = 'tls';
+        //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
         $mail->Username = "websystem@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
+        //        $mail->Username = "chainarong039@gmail.com";
         $mail->Password = "Ae8686#"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
         $mail->From = "websystem@saleecolour.com";
         $mail->FromName = "Salee Colour WEB System";
@@ -710,14 +842,14 @@ class Complaint_model extends CI_Model {
         }
 
         $mail->AddCC($get_owner_email->cp_user_email);
-// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
-// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
-// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+        // $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
         $mail->IsHTML(true);                                  // set email format to HTML
         $mail->Subject = $subject;
         $mail->Body = $body;
-        
+
         if (!$mail->send()) {
             echo '<script language="javascript">';
             echo 'alert("Start Investigate Failed !!")';
@@ -730,31 +862,35 @@ class Complaint_model extends CI_Model {
         }
     }
 
-    public function add_sum_inves($cp_no) {/*     * ***********SUMMARY OF INVESTIGATION**************** */
-        
+
+
+
+    public function add_sum_inves($cp_no)
+    { /*     * ***********SUMMARY OF INVESTIGATION**************** */
+
         //*******************Check**การกรอกข้อมูล***********************//
-            if($this->input->post("cp_sum_inves")==""){
-                echo '<script language="javascript">';
-                echo 'alert("Please fill data!")';
-                echo '</script>';
-                
-                echo '<script lanaguage="javascript">';
-                echo 'history.back()';
-                echo '</script>';
-                exit();
-            }
-            if($this->input->post("cp_sum")==""){
-                echo '<script language="javascript">';
-                echo 'alert("Please choose choice!")';
-                echo '</script>';
-                
-                header("refresh:0; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
-//                redirect('/complaint/investigate/'.$cp_no);
-                exit();
-            }
-            
-            
-            
+        if ($this->input->post("cp_sum_inves") == "") {
+            echo '<script language="javascript">';
+            echo 'alert("Please fill data!")';
+            echo '</script>';
+
+            echo '<script lanaguage="javascript">';
+            echo 'history.back()';
+            echo '</script>';
+            exit();
+        }
+        if ($this->input->post("cp_sum") == "") {
+            echo '<script language="javascript">';
+            echo 'alert("Please choose choice!")';
+            echo '</script>';
+
+            header("refresh:0; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
+            //                redirect('/complaint/investigate/'.$cp_no);
+            exit();
+        }
+
+
+
 
         //อัพโหลดไฟล์แบบหลายไฟล์ลง Folderโดย+วันที่+เวลาต่อท้ายไฟล์
         $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
@@ -819,7 +955,7 @@ class Complaint_model extends CI_Model {
                 foreach ($this->get_pri_view($cp_no) as $getpv) {
                     $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                 }
-                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
+                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . $this->conpriority($get_owner_email->cp_priority) . "<br>";
                 $body .= "<br>";
 
 
@@ -861,7 +997,7 @@ class Complaint_model extends CI_Model {
                 foreach ($this->get_pri_view($cp_no) as $getpv) {
                     $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                 }
-                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
+                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . $this->conpriority($get_owner_email->cp_priority) . "<br>";
                 $body .= "<br>";
 
 
@@ -908,7 +1044,7 @@ class Complaint_model extends CI_Model {
                 foreach ($this->get_pri_view($cp_no) as $getpv) {
                     $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                 }
-                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
+                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . $this->conpriority($get_owner_email->cp_priority) . "<br>";
                 $body .= "<br>";
 
 
@@ -950,7 +1086,7 @@ class Complaint_model extends CI_Model {
                 foreach ($this->get_pri_view($cp_no) as $getpv) {
                     $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                 }
-                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
+                $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . $this->conpriority($get_owner_email->cp_priority) . "<br>";
                 $body .= "<br>";
 
 
@@ -991,16 +1127,16 @@ class Complaint_model extends CI_Model {
         $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
-//        $mail->Host = "smtp.gmail.com";
+        //        $mail->Host = "smtp.gmail.com";
         $mail->Port = 587; // พอร์ท
-//        $mail->SMTPSecure = 'tls';
+        //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
         $mail->Username = "websystem@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
+        //        $mail->Username = "chainarong039@gmail.com";
         $mail->Password = "Ae8686#"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
         $mail->From = "websystem@saleecolour.com";
         $mail->FromName = "Salee Colour WEB System";
@@ -1009,10 +1145,10 @@ class Complaint_model extends CI_Model {
         }
 
         $mail->AddCC($get_owner_email->cp_user_email);
-// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
-// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
-// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+        // $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
         $mail->IsHTML(true);                                  // set email format to HTML
         $mail->Subject = $subject;
         $mail->Body = $body;
@@ -1032,7 +1168,12 @@ class Complaint_model extends CI_Model {
         //************************Email***Zone***********************************//  
     }
 
-    public function add_conclusion($cp_no) {
+
+
+
+
+    public function add_conclusion($cp_no)
+    {
         //อัพโหลดไฟล์แบบหลายไฟล์ลง Folderโดย+วันที่+เวลาต่อท้ายไฟล์
         $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
 
@@ -1069,7 +1210,7 @@ class Complaint_model extends CI_Model {
 
 
 
-//************************Email***Zone***********************************//     
+        //************************Email***Zone***********************************//     
         $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
 
         $get_owner_email = $this->get_owner_email($cp_no);
@@ -1085,7 +1226,7 @@ class Complaint_model extends CI_Model {
         foreach ($this->get_pri_view($cp_no) as $getpv) {
             $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>" . $getpv['pri_name'] . "<br>";
         }
-        $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;".$this->conpriority($get_owner_email->cp_priority)."<br>";
+        $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . $this->conpriority($get_owner_email->cp_priority) . "<br>";
         $body .= "<br>";
 
         $body .= "<h2>User Information</h2>";
@@ -1120,16 +1261,16 @@ class Complaint_model extends CI_Model {
         $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
-//        $mail->Host = "smtp.gmail.com";
+        //        $mail->Host = "smtp.gmail.com";
         $mail->Port = 587; // พอร์ท
-//        $mail->SMTPSecure = 'tls';
+        //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
         $mail->Username = "websystem@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
+        //        $mail->Username = "chainarong039@gmail.com";
         $mail->Password = "Ae8686#"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
         $mail->From = "websystem@saleecolour.com";
         $mail->FromName = "Salee Colour WEB System";
@@ -1138,10 +1279,10 @@ class Complaint_model extends CI_Model {
         }
 
         $mail->AddCC($get_owner_email->cp_user_email);
-// $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
+        // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
-// $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
-// $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+        // $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
         $mail->IsHTML(true);                                  // set email format to HTML
         $mail->Subject = $subject;
         $mail->Body = $body;
@@ -1160,10 +1301,11 @@ class Complaint_model extends CI_Model {
         //************************Email***Zone***********************************//       
     }
 
-    public function savedata_edit($cp_no) {
+    public function savedata_edit($cp_no)
+    {
 
-      if($_FILES['file_add_edit']['tmp_name'] !==""){
-          $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
+        if ($_FILES['file_add_edit']['tmp_name'] !== "") {
+            $date = date("d-m-Y-H-i-s"); //ดึงวันที่และเวลามาก่อน
             $file_name = $_FILES['file_add_edit']['name'];
             $file_name_cut = str_replace(" ", "", $file_name);
             $file_name_date = str_replace(".", "-" . $date . ".", $file_name_cut);
@@ -1174,9 +1316,9 @@ class Complaint_model extends CI_Model {
 
             print_r($file_name);
             echo "<br>" . "Copy/Upload Complete" . "<br>";
-      }else{
-          $file_name_date = $this->input->post("showfile");
-      }
+        } else {
+            $file_name_date = $this->input->post("showfile");
+        }
 
 
 
@@ -1184,23 +1326,23 @@ class Complaint_model extends CI_Model {
         $this->db->delete("complaint_priority_use");
 
         $get_input_priority = $this->input->post("cp_pri_name_get_edit"); /*         * *****Code Insert select array******* */
-        foreach ($get_input_priority as $gp) {/*         * *****Check array input select******** */
+        foreach ($get_input_priority as $gp) { /*         * *****Check array input select******** */
             $save_pri = array(
                 "cp_pri_use_id" => $gp,
                 "cp_pri_use_cpno" => $cp_no
             );
             $this->db->insert("complaint_priority_use", $save_pri);
-        }/*         * *****Code Insert select array******* */
-        
-        
-        
-              //        Query เพื่อเอาค่าของ Score ออกมาเพื่อเอาไปคำนวนต่อ
+        } /*         * *****Code Insert select array******* */
+
+
+
+        //        Query เพื่อเอาค่าของ Score ออกมาเพื่อเอาไปคำนวนต่อ
         $sumscore = $this->db->query("SELECT complaint_priority_use.cp_pri_use_cpno, SUM(complaint_priorityn.pri_score) as score FROM complaint_priority_use INNER JOIN complaint_priorityn ON complaint_priorityn.pri_id = complaint_priority_use.cp_pri_use_id INNER JOIN complaint_priorityn_category ON complaint_priorityn_category.pricat_id = complaint_priorityn.pri_catid WHERE cp_pri_use_cpno ='$cp_no' ");
         $result_score = $sumscore->row();
-//        ดึงค่าออกมาเป็น Row
-        
-        $sum_score = (double)$result_score->score / 7 ;
-//        นำค่าที่ได้มา Convert เป็น Double จากนั้นเอามาหาร 7
+        //        ดึงค่าออกมาเป็น Row
+
+        $sum_score = (double)$result_score->score / 7;
+        //        นำค่าที่ได้มา Convert เป็น Double จากนั้นเอามาหาร 7
 
 
 
@@ -1208,27 +1350,27 @@ class Complaint_model extends CI_Model {
         $this->db->delete("complaint_department");
 
         $get_input_dept = $this->input->post("dept_edit"); /*         * **Code Insert radio array***** */
-        foreach ($get_input_dept as $gd) {/*         * ****Check array input radio********* */
+        foreach ($get_input_dept as $gd) { /*         * ****Check array input radio********* */
             $save_dept = array(
                 "cp_dept_cp_no" => $cp_no,
                 "cp_dept_code" => $gd
             );
             $this->db->insert("complaint_department", $save_dept);
-        }/*         * **Code Insert radio array***** */
+        } /*         * **Code Insert radio array***** */
 
 
 
 
 
-        $data = array(/*             * *****Update data to complaint_main table******* */
-//                "cp_no" => $get_cp_no,
-//                "cp_date" => $this->input->post("cp_date"),
+        $data = array( /*             * *****Update data to complaint_main table******* */
+            //                "cp_no" => $get_cp_no,
+            //                "cp_date" => $this->input->post("cp_date"),
             "cp_topic" => $this->input->post("cp_topic_hide_edit"),
             "cp_topic_cat" => $this->input->post("cp_topic_cat_edit"),
-            "cp_priority" => number_format($sum_score,1),
-//                "cp_user_name" => $this->input->post("cp_user_name"),
-//                "cp_user_empid" => $this->input->post("cp_user_empid"),
-//                "cp_user_dept" => $this->input->post("cp_user_dept"),
+            "cp_priority" => number_format($sum_score, 1),
+            //                "cp_user_name" => $this->input->post("cp_user_name"),
+            //                "cp_user_empid" => $this->input->post("cp_user_empid"),
+            //                "cp_user_dept" => $this->input->post("cp_user_dept"),
             "cp_cus_name" => $this->input->post("cp_cus_name_edit"),
             "cp_cus_ref" => $this->input->post("cp_cus_ref_edit"),
             "cp_invoice_no" => $this->input->post("cp_invoice_no_edit"),
@@ -1252,12 +1394,13 @@ class Complaint_model extends CI_Model {
             echo '<script language="javascript">';
             echo 'alert("Save Edit Data Failed !!!!")';
             echo '</script>';
-        }/*         * *****Insert data to complaint_main table******* */
+        } /*         * *****Insert data to complaint_main table******* */
     }
 
-    public function save_edit_inves($cp_no) {
+    public function save_edit_inves($cp_no)
+    {
 
-        if ($_FILES['cp_detail_inves_file_edit']['tmp_name'] =="") {
+        if ($_FILES['cp_detail_inves_file_edit']['tmp_name'] == "") {
             $file_name_date = $this->input->post("inves_showfile");
         } else {
 
@@ -1291,15 +1434,15 @@ class Complaint_model extends CI_Model {
         $this->db->update("complaint_main", $data);
     }
 
-//        public function update_ncstatus($cp_no){
-//            $data = array(
-//                "nc_status_code" => "Followup_3rd (Failed!)"
-//            );
-//            
-//            $this->db->where("cp_no",$cp_no);
-//            $this->db->update("complaint_main",$data);
-//            
-//        }
+            public function update_ncstatus($cp_no){
+                $data = array(
+                    "nc_status_code" => "Followup_3rd (Failed!)"
+                );
+                
+                $this->db->where("cp_no",$cp_no);
+                $this->db->update("complaint_main",$data);
+                
+            }
 
 
     /*     * ************UPDATE ZONE***************** */
@@ -1310,7 +1453,8 @@ class Complaint_model extends CI_Model {
 
 
     /*     * ***********SET ZONE********************** */
-    public function set_activeEmail() {
+    public function set_activeEmail()
+    {
         $lab = $this->input->post("lab");
         $admin = $this->input->post("admin");
         $hr = $this->input->post("hr");
@@ -1329,7 +1473,7 @@ class Complaint_model extends CI_Model {
         if ($lab == "" and $admin == "" and $hr == "" and $account == "" and $qc == "" and $maintenance == "" and $pd == "" and $sales == "" and $warehouse == "" and $planning == "" and $it == "" && $pu == "") {
             echo "please choose department for sent email";
             exit();
-        } else {//ถ้ามีการติ๊กเลือก ให้ดำเนินการปรับ สถานะ
+        } else { //ถ้ามีการติ๊กเลือก ให้ดำเนินการปรับ สถานะ
             $this->queryData("update maillist set cp_mail_active = 1 where deptcode = '$lab' ");
             $this->queryData("update maillist set cp_mail_active = 1 where deptcode = '$admin' ");
             $this->queryData("update maillist set cp_mail_active = 1 where deptcode = '$hr' ");
@@ -1353,7 +1497,8 @@ class Complaint_model extends CI_Model {
 
     /*     * ***************CHECK ZONE******************** */
 
-    public function check_status_page($cp_no) {/*     * *****Check status page******* */
+    public function check_status_page($cp_no)
+    { /*     * *****Check status page******* */
         $result = $this->db->query("SELECT cp_status_code FROM complaint_main WHERE cp_no='$cp_no' ");
         $get_status = $result->row();
         if ($get_status->cp_status_code !== "cp01") {
@@ -1361,7 +1506,8 @@ class Complaint_model extends CI_Model {
         }
     }
 
-    public function check_status_page2($cp_no) {/*     * *****Check status page******* */
+    public function check_status_page2($cp_no)
+    { /*     * *****Check status page******* */
         $result = $this->db->query("SELECT cp_status_code FROM complaint_main WHERE cp_no='$cp_no' ");
         $get_status = $result->row();
         if ($get_status->cp_status_code == "cp01") {
@@ -1369,7 +1515,8 @@ class Complaint_model extends CI_Model {
         }
     }
 
-    public function getcpno_test() { //สร้าง Auto complaint number
+    public function getcpno_test()
+    { //สร้าง Auto complaint number
         $query = $this->db->query("select cptest_cp_no from complaint_test"); //ไปนับแถวของ cp_no ก่อน
         $numrow = $query->num_rows(); //ไปนับแถวของ cp_no ก่อน
         $year_cur = date("Y"); //กำหนด ปีปัจจุบันใส่ตัวแปร year_cur
@@ -1385,13 +1532,36 @@ class Complaint_model extends CI_Model {
             }
             $cut_yold = substr($cal, 2, 2); //ตัดปี 2 ตัวท้าย
             $cut_cp = substr($cal, 2); // 18100
-            $cut_cp ++;
+            $cut_cp++;
             $set_y = str_replace($cut_cp, "CP" . $cut_cp, $cut_cp); //ทำการ Get Year ของปัจจุบันลงไป
         }
         return $set_y; // ส่งค่ากลับไป
     }
 
     /*     * ***************CHECK ZONE******************** */
+    
+    
+    /*สร้าง Select box 2 ชั้น */
+    
+    public function fetch_topic_category(){
+        $this->db->order_by("topic_cat_name","ASC");
+        $query = $this->db->get("complaint_topic_catagory");
+        return $query->result();
+    }
+    
+    public function fetch_topic($topic_cat_id)
+    {
+        $this->db->where("topic_cat_id",$topic_cat_id);
+        $query = $this->db->get("complaint_topic");
+        $output = '<option value="">Select Topic</option>';
+        foreach ($query->result() as $row )
+        {
+            $output .= '<option value="'.$row->topic_id.'">'.$row->topic_name.'</option>';
+        }
+        return $output;
+    }
+    
+    
+    
+    
 }
-
-?>

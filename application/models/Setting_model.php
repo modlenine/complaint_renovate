@@ -8,8 +8,8 @@ class Setting_model extends CI_Model{
     
     
 //    TOPIC SETTING++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function view_topic(){
-        $result = $this->db->query("SELECT complaint_topic.topic_id, complaint_topic.topic_name, complaint_topic.topic_cat_id, complaint_topic_catagory.topic_cat_name FROM complaint_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_topic.topic_cat_id");
+    public function view_topic($toppic_cat_id){
+        $result = $this->db->query("SELECT complaint_topic.topic_id, complaint_topic.topic_name, complaint_topic.topic_cat_id, complaint_topic_catagory.topic_cat_name FROM complaint_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_topic.topic_cat_id WHERE complaint_topic.topic_cat_id='$toppic_cat_id' ");
         return $result->result_array();
     }
     
@@ -106,16 +106,53 @@ class Setting_model extends CI_Model{
     
 //DEPARTMENT SETTING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 public function get_dept_setting(){
-    $result = $this->db->query("SELECT cp_dept_main_name , cp_dept_main_code FROM complaint_department_main");
+    $result = $this->db->query("SELECT * FROM complaint_department_main");
     return $result->result_array();
 }
 
-public function get_dept_edit(){
-    $result = $this->db->query("SELECT cp_dept_main_name , cp_dept_main_code FROM complaint_depart");
+public function get_dept_edit($deptid){
+    $result = $this->db->query("SELECT * FROM complaint_department_main WHERE cp_dept_main_id='$deptid' ");
+    return $result->row();
 }
 
-public function dept_edit_setting(){
+public function save_dept_edit_setting($deptid){
+    $data = array(
+        "cp_dept_main_name" => $this->input->post("edit_deptname"),
+        "cp_dept_main_code" => $this->input->post("edit_deptcode")
+    );
     
+    $this->db->where("cp_dept_main_id",$deptid);
+    $update = $this->db->update("complaint_department_main",$data);
+    
+    if(!$update){
+        echo '<script language="javascript">';
+            echo 'alert("Start Investigate Failed !!")';
+            echo '</script>';
+            exit();
+        } else {
+            echo '<script language="javascript">';
+            echo 'alert("Update Success")';
+            echo '</script>';
+            redirect('setting/thkpage/');
+        }
+    
+}
+
+
+
+public function add_dept(){
+    $data = array(
+        "cp_dept_main_name" => $this->input->post("add_catename"),
+        "cp_dept_main_code" => $this->input->post("add_catcode")
+    );
+    
+    $this->db->insert("complaint_department_main",$data);
+    
+}
+
+
+public function del_dept_setting($deptid){
+    $this->db->delete("complaint_department_main" , array("cp_dept_main_id" => $deptid) );
 }
     
     

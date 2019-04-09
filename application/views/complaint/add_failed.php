@@ -72,23 +72,7 @@ and open the template in the editor.
                 </div>
                 
 
-                <div class="panel panel-danger"><!--************* Priority ******************-->
-                    <div class="panel-heading">Priority Old</div>
-                    <div class="panel-body">
-                        
-                        <div class="form-row col-md-12">
-                        <?php foreach ($get_pri_use as $gpu): ?>
-                        <div class="col-md-3 m_pri">
-                            <label><b><?php echo $gpu['cp_pri_topic']; ?></b></label>
-                            <label><?php echo $gpu['cp_pri_name']; ?></label>
-                            <input hidden="" type="text" name="history_cppritopic" id="history_cppritopic" value="<?php echo $gpu['cp_pri_topic']; ?>" />
-                            <input hidden="" type="text" name="history_cppriname" id="history_cppriname" value="<?php echo $gpu['cp_pri_name']; ?>" />
-                        </div>
-                        <?php endforeach; ?>
-                        </div><br>
-                    
-                    </div>
-                </div><!--************* Priority ******************-->
+               
                 
                 
                 <div class="panel panel-danger"><!--************* Priority ******************-->
@@ -96,21 +80,21 @@ and open the template in the editor.
                     <div class="panel-body">
                     
                     <div class="form-row">
-                            <?php foreach ($get_pri_topic as $gpt): ?>
+                            <?php foreach ($get_pri_use as $gpt): ?>
                             <div class="col-md-3 pri">
 
-                                <label ><b><?php echo $gpt['cp_pri_topic']; ?></b></label>
-                                <input hidden="" type="text" name="cp_pri_topic" id="cp_pri_topic" value="<?php echo $gpt['cp_pri_topic']; ?>" />
+                                <label ><b><?php echo $gpt['pricat_name']; ?></b></label>
+                                <input hidden="" type="text" name="cp_pri_topic" id="cp_pri_topic" value="<?php echo $gpt['pricat_name']; ?>" />
                                 
                                 <select name="cp_pri_name_get[]" id="cp_pri_name_get" class="form-control form-control-sm" required="" >
-                                     <option>Please Choose Priority</option>
+                                     <option value="<?php echo $gpt['cp_pri_use_id']; ?>"><?php echo $gpt['pri_name']; ?></option>
                                     <?php 
-                                    $pri_group = $gpt['cp_pri_group'];
-                                    $result = $this->db->query("SELECT * FROM complaint_priority WHERE cp_pri_group=$pri_group ");
+                                    $pri_group = $gpt['pri_catid'];
+                                    $result = $this->db->query("SELECT * FROM complaint_priorityn WHERE pri_catid=$pri_group ");
                                     
                                     foreach ($result->result_array() as $gpn): ?>
                                      
-                                     <option value="<?php echo $gpn['cp_pri_id']; ?>"><?php echo $gpn['cp_pri_name']; ?> &nbsp;|&nbsp;<?php echo $gpn['cp_pri_id']; ?></option>
+                                     <option value="<?php echo $gpn['pri_id']; ?>"><?php echo $gpn['pri_name']; ?></option>
                                      
                                     <?php endforeach; ?>
                                 </select>
