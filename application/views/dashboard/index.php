@@ -16,15 +16,15 @@ and open the template in the editor.
 
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/sonification.js"></script>
-        
-   
+
+
     </head>
     <body>
         <?php
         $this->load->view("head/nav");
         ?>
-        
-        <div id="container" class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
+
+        <div id="container" class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <div class="row">
                 <h3 style="text-align: center;">View by Status</h3>
                 <div class="col-md-6">
@@ -35,10 +35,10 @@ and open the template in the editor.
                     <?php foreach ($get_cpstatus->result_array() as $gcp): ?>
                     <a href="<?php echo base_url("dashboard/viewcpby_status/"); ?><?php echo $gcp['cp_status_code']; ?>" class="list-group-item"><?php echo $gcp['cp_status_name']; ?><span class="badge"><?php echo $gcp['sum']; ?></span></a>
                 <?php endforeach; ?>
-                
+
             </div>
             </div>
-            
+
             <div class="col-md-6">
                 <div class="list-group">
                 <a href="#" class="list-group-item active">
@@ -51,9 +51,9 @@ and open the template in the editor.
             </div>
             </div>
             </div><hr>
-            
+
             <div class="row">
-                
+
                 <div class="col-md-4">
                     <h3 style="text-align: center;">View by User</h3>
                     <div class="list-group">
@@ -66,7 +66,7 @@ and open the template in the editor.
 
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <h3 style="text-align: center;">View by Department</h3>
                     <div class="list-group">
@@ -79,35 +79,35 @@ and open the template in the editor.
 
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
-                    <h3 style="text-align: center;">View by Topic</h3>
+                    <h3 style="text-align: center;">View by Topic Category</h3>
                     <div class="list-group">
                 <a href="#" class="list-group-item active">
                     Complaint / NC
                 </a>
-                <?php foreach ($getby_topic->result_array() as $gbt): ?>
-                <a href="<?php echo base_url("dashboard/viewby_topic/"); ?><?php echo $gbt['topic_id']; ?>" class="list-group-item"><?php echo $gbt['cp_topic']; ?><span class="badge"><?php echo $gbt['num_topic']; ?></span></a>
+                <?php foreach ($getby_topic_cat->result_array() as $gbt): ?>
+                <a href="<?php echo base_url("dashboard/viewby_topic_cat/"); ?><?php echo $gbt['cp_topic_cat']; ?>" class="list-group-item"><?php echo $gbt['topic_cat_name']; ?><span class="badge"><?php echo $gbt['cat_num']; ?></span></a>
                 <?php endforeach; ?>
 
                     </div>
                 </div>
-                
-                
-                
+
+
+
             </div>
-             
-            
+
+
             <div class="row">
                 <div id="mychart"></div>
             </div>
-            
+
             <hr>
 
-            
-         
+
+
 <script type="text/javascript">
-                
+
  /***************************กราฟแท่ง**************************************************/
  Highcharts.chart('mychart', {
 
@@ -116,7 +116,7 @@ and open the template in the editor.
     },
 
     title: {
-        text: 'Graph CP / NC'
+        text: 'Graph CP'
     },
 
     xAxis: {
@@ -129,7 +129,7 @@ and open the template in the editor.
             point: {
                 events: {
                     click: function () {
-                        location.href = 'http://192.190.10.27/complaint/dashboard/' +
+                        location.href = 'http://192.190.10.27/complaint/dashboard/graph_cp/' +
                             this.name;
                     }
                 }
@@ -140,26 +140,27 @@ and open the template in the editor.
     series: [{
     	name:"CP",
         data: [
-            
+
             <?php
          $result_graph = $this->dashboard_model->graph1CP();
          foreach ($result_graph as $getgraph){
              $getgraph['total'];
              $getgraph['cp_date'];
-             
+
              $con_date = date_create($getgraph['cp_date']);
              $date_format = date_format($con_date, "m-Y");
-             
+
              $getgraph['cp_id'];
-             
+
              $result = "['". $date_format."',".$getgraph['total'].",".$getgraph['cp_id'].",],";
-             
+
              echo $result;
          }
 ?>
-            
-        ]
-    }]
+
+            ]
+    }
+    ]
 });
 
 /*******************************กราฟแท่ง**************************************************/

@@ -37,7 +37,7 @@ and open the template in the editor.
                         <p><label><b>Attached file : </b><a href="<?php echo base_url(); ?>asset/investigate/detail_inves/<?php echo $view_cp['cp_detail_inves_file']; ?>" target="_blank"><?php echo $view_cp['cp_detail_inves_file']; ?></a></label></p>
                         <input hidden="" type="text" name="inves_showfile" id="inves_showfile" value="<?php echo $view_cp['cp_detail_inves_file']; ?>" />
                         <p><input type="file" name="cp_detail_inves_file_edit" id="cp_detail_inves_file_edit" class="form-control"/></p>
-                        <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
+                        <span style="color:red;font-size:12px;">Max file size = 10MB and word , pdf only</span>
                     </div>
                 </div>
 
@@ -96,8 +96,8 @@ and open the template in the editor.
         <input hidden="" type="text" name="check_dept_inves" id="check_dept_inves" value="<?php echo $ckd_result;?>" />
           
         <div class="form-group col-md-8">
-              <label class="sec4label">Reason for revision</label>
-              <textarea name="his_memo" id="his_memo" class="form-control"></textarea>
+              <label class="sec4label">Reason for revision * Require *</label>
+              <textarea name="his_memo" id="his_memo" class="form-control" required=""></textarea>
               <input style="margin-top: 5px;" type="submit" name="btn_inves_edit" id="btn_inves_edit" value="Update" class="btn btn-primary" onclick="javascript:return confirm('ก่อนที่ท่านจะทำการยืนยันการบันทึกข้อมูลนั้น ท่านได้ทำการสอบสวนเหตุกาณ์ที่เกิดขึ้น ร่วมกับ หน่วยงานที่เกี่ยวข้อง มาเป็นอย่างดีแล้ว ใช่หรือไม่ หากใช่ กรุณาทำการกดยืนยันการบันทึกข้อมูล เพื่อเข้าสู่ขั้นตอนต่อไป');"/>
         </div>
           

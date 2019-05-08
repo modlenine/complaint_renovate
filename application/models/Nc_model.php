@@ -8,17 +8,137 @@ class Nc_model extends CI_Model{
     }
     
     public function list_nc(){
-        return $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.nc_status_code, complaint_status.cp_status_id, complaint_status.cp_status_name, complaint_main.cp_cus_name, complaint_main.cp_priority FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.nc_status_code WHERE cp_status_code='cp05' " );
+        return $this->db->query("SELECT
+complaint_main.cp_id,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_main.cp_topic,
+complaint_main.cp_user_name,
+complaint_main.cp_user_empid,
+complaint_main.nc_status_code,
+complaint_status.cp_status_id,
+complaint_status.cp_status_name,
+complaint_main.cp_cus_name,
+complaint_main.cp_priority,
+complaint_topic.topic_name
+FROM
+complaint_main
+INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.nc_status_code
+INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
+WHERE cp_status_code='cp05'
+ " );
     }
     
     public function getdata_main($cp_no){
-        $result = $this->db->query("SELECT * FROM complaint_main WHERE cp_no='$cp_no' ");
+        $result = $this->db->query("SELECT
+complaint_main.cp_no,
+complaint_status.cp_status_name,
+complaint_main.cp_id,
+complaint_main.cp_date,
+complaint_main.cp_topic,
+complaint_main.cp_topic_cat,
+complaint_main.cp_priority,
+complaint_main.cp_user_name,
+complaint_main.cp_user_empid,
+complaint_main.cp_user_email,
+complaint_main.cp_user_dept,
+complaint_main.cp_cus_name,
+complaint_main.cp_cus_ref,
+complaint_main.cp_invoice_no,
+complaint_main.cp_pro_code,
+complaint_main.cp_pro_lotno,
+complaint_main.cp_pro_qty,
+complaint_main.cp_detail,
+complaint_main.cp_file,
+complaint_main.cp_status_code,
+complaint_main.cp_detail_inves,
+complaint_main.cp_detail_inves_signature,
+complaint_main.cp_detail_inves_dept,
+complaint_main.cp_detail_inves_date,
+complaint_main.cp_detail_inves_file,
+complaint_main.cp_sum_inves,
+complaint_main.cp_sum_inves_signature,
+complaint_main.cp_sum_inves_dept,
+complaint_main.cp_sum_inves_date,
+complaint_main.cp_sum_inves_file,
+complaint_main.cp_sum,
+complaint_main.cp_conclu_detail,
+complaint_main.cp_conclu_signature,
+complaint_main.cp_conclu_dept,
+complaint_main.cp_conclu_date,
+complaint_main.cp_conclu_costdetail,
+complaint_main.cp_conclu_cost,
+complaint_main.cp_conclu_file,
+complaint_main.cp_modify_by,
+complaint_main.cp_modify_datetime,
+complaint_main.cp_modify_reason,
+complaint_main.nc_status_code,
+complaint_main.nc_sec31,
+complaint_main.nc_sec32,
+complaint_main.nc_sec32date,
+complaint_main.nc_sec32time,
+complaint_main.nc_sec33,
+complaint_main.nc_sec33date,
+complaint_main.nc_sec33time,
+complaint_main.nc_sec3owner,
+complaint_main.nc_sec3empid,
+complaint_main.nc_sec3dept,
+complaint_main.nc_sec3date,
+complaint_main.nc_sec3edit_memo,
+complaint_main.nc_sec3file,
+complaint_main.nc_sec4f1,
+complaint_main.nc_sec4f1_file,
+complaint_main.nc_sec4f1_status,
+complaint_main.nc_sec4f1_date,
+complaint_main.nc_sec4f1_time,
+complaint_main.nc_sec4f1_signature,
+complaint_main.nc_sec4f2,
+complaint_main.nc_sec4f2_file,
+complaint_main.nc_sec4f2_status,
+complaint_main.nc_sec4f2_date,
+complaint_main.nc_sec4f2_time,
+complaint_main.nc_sec4f2_signature,
+complaint_main.nc_sec4f3,
+complaint_main.nc_sec4f3_file,
+complaint_main.nc_sec4f3_status,
+complaint_main.nc_sec4f3_signature,
+complaint_main.nc_sec5,
+complaint_main.nc_sec5file,
+complaint_main.nc_sec5cost_detail,
+complaint_main.nc_sec5cost,
+complaint_main.nc_sec5failed,
+complaint_main.nc_sec5filefailed,
+complaint_main.nc_sec5costfailed,
+complaint_main.cp_no_old,
+complaint_main.nc_modify_by,
+complaint_main.nc_modify_date
+FROM
+complaint_main
+INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.nc_status_code WHERE cp_no='$cp_no' ");
         return $result->row();
     }
     
     
     
     public function save_ncsec3($cp_no){
+        
+        //อัพโหลดไฟล์แบบหลายไฟล์ลง Folderโดย+วันที่+เวลาต่อท้ายไฟล์
+        $date = date("d-m-Y-H-i-s");//ดึงวันที่และเวลามาก่อน
+
+		$file_name = $_FILES['nc_sec3file']['name'];
+                $file_name_cut = str_replace(" ", "", $file_name);
+                $file_name_date = str_replace(".","-".$date.".", $file_name_cut);
+                
+		$file_size =$_FILES['nc_sec3file']['size'];
+		$file_tmp =$_FILES['nc_sec3file']['tmp_name'];
+		$file_type=$_FILES['nc_sec3file']['type'];  
+		move_uploaded_file($file_tmp,"asset/nc/sec3/".$file_name_date);
+                
+                print_r($file_name);
+
+	echo "<br>"."Copy/Upload Complete"."<br>";
+        
+        
         $data = array(
             "nc_sec31" => $this->input->post("nc_sec31"),
             "nc_sec32" => $this->input->post("nc_sec32"),
@@ -31,6 +151,7 @@ class Nc_model extends CI_Model{
             "nc_sec3empid" => $this->input->post("nc_sec3empid"),
             "nc_sec3dept" => $this->input->post("nc_sec3dept"),
             "nc_sec3date" => $this->input->post("nc_sec3date"),
+            "nc_sec3file" => $file_name_date,
             "nc_status_code" => "nc02"
         );
         
@@ -54,8 +175,8 @@ class Nc_model extends CI_Model{
     
     $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รอดำเนินการ";
             $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
-            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $condate . "<br>";
+            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
             
 
@@ -103,7 +224,7 @@ class Nc_model extends CI_Model{
             $body .= "<strong>กำหนดเสร็จ :</strong>&nbsp;&nbsp;".$result_date2."<br>";
             $body .= "<strong>ผู้รับผิดชอบ :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3owner."&nbsp;&nbsp;<strong>รหัสพนักงาน :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3empid."&nbsp;&nbsp;<strong>แผนก :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3dept."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$result_sec3date."<br>";
             
-            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$cp_no.">" . "Go to Page</a>"; 
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/nc/main/".$cp_no.">" . "Go to Page</a>"; 
     
     
     $mail = new PHPMailer();
@@ -155,8 +276,41 @@ class Nc_model extends CI_Model{
     public function savenc_sec3edit($cp_no){
 //        $date = date_create($this->input->post("datetime1_edit"));
 //        $dateformat = date_format($date, "Y-m-d H:i:s");
+        if($_FILES['nc_sec3file_edit']['name']!= ""){
+            //อัพโหลดไฟล์แบบหลายไฟล์ลง Folderโดย+วันที่+เวลาต่อท้ายไฟล์
+        $date = date("d-m-Y-H-i-s");//ดึงวันที่และเวลามาก่อน
+
+		$file_name = $_FILES['nc_sec3file_edit']['name'];
+                $file_name_cut = str_replace(" ", "", $file_name);
+                $file_name_date = str_replace(".","-".$date.".", $file_name_cut);
+                
+		$file_size =$_FILES['nc_sec3file_edit']['size'];
+		$file_tmp =$_FILES['nc_sec3file_edit']['tmp_name'];
+		$file_type=$_FILES['nc_sec3file_edit']['type'];  
+		move_uploaded_file($file_tmp,"asset/nc/sec3/".$file_name_date);
+                
+                print_r($file_name);
+
+	echo "<br>"."Copy/Upload Complete"."<br>";
         
         $data = array(
+            "nc_sec31" => $this->input->post("nc_sec31edit"),
+            "nc_sec32" => $this->input->post("nc_sec32edit"),
+            "nc_sec32date" => $this->input->post("datetime1_edit"),
+//            "nc_sec32time" => $this->input->post("nc_sec32timeedit"),
+            "nc_sec33" => $this->input->post("nc_sec33edit"),
+            "nc_sec33date" => $this->input->post("datetime2_edit"),
+            "nc_sec3file" => $file_name_date,
+//            "nc_sec33time" => $this->input->post("nc_sec33timeedit"),
+            "nc_sec3edit_memo" => $this->input->post("nc_sec3edit_memo"),
+            "nc_modify_by" => $this->input->post("nc_modify_by"),
+            "nc_modify_date" => $this->input->post("nc_modify_date")
+            
+        );
+        
+        
+        }else{
+            $data = array(
             "nc_sec31" => $this->input->post("nc_sec31edit"),
             "nc_sec32" => $this->input->post("nc_sec32edit"),
             "nc_sec32date" => $this->input->post("datetime1_edit"),
@@ -169,6 +323,9 @@ class Nc_model extends CI_Model{
             "nc_modify_date" => $this->input->post("nc_modify_date")
             
         );
+        }
+        
+        
         
         $this->db->where("cp_no",$cp_no);
         $this->db->update("complaint_main",$data);
@@ -233,8 +390,8 @@ class Nc_model extends CI_Model{
     
     $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามครั้งที่ 1";
             $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
-            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
             
 
@@ -296,7 +453,7 @@ class Nc_model extends CI_Model{
             
             $body .= "<strong>สถานะ :</strong>&nbsp;&nbsp;".$f1status."<br>";
             
-            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$cp_no.">" . "Go to Page</a>"; 
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/nc/main/".$cp_no.">" . "Go to Page</a>"; 
     
     
     $mail = new PHPMailer();
@@ -399,8 +556,8 @@ class Nc_model extends CI_Model{
     
     $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามผลครั้งที่ 2";
             $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
-            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
             
 
@@ -470,7 +627,7 @@ class Nc_model extends CI_Model{
             }  
             $body .= "<strong>สถานะ :</strong>&nbsp;&nbsp;".$f2status."<br>";
             
-            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$cp_no.">" . "Go to Page</a>"; 
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/nc/main/".$cp_no.">" . "Go to Page</a>"; 
     
     
     $mail = new PHPMailer();
@@ -574,8 +731,8 @@ class Nc_model extends CI_Model{
     
     $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามครั้งที่ 3";
             $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
-            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
             
 
@@ -660,7 +817,7 @@ class Nc_model extends CI_Model{
             
             
             
-            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$cp_no.">" . "Go to Page</a>"; 
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/nc/main/".$cp_no.">" . "Go to Page</a>"; 
     
     
     $mail = new PHPMailer();
@@ -735,6 +892,7 @@ class Nc_model extends CI_Model{
         $data = array(
             "nc_sec5" => $this->input->post("nc_sec5"),
             "nc_sec5file" => $file_name_date,
+            "nc_sec5cost_detail" => $this->input->post("nc_sec5cost_detail"),
             "nc_sec5cost" => $sec5_cut_comma,
             "nc_status_code" => "nc11"
         );
@@ -758,8 +916,8 @@ class Nc_model extends CI_Model{
     
     $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ Conclusion of nc";
             $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
-            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
             
 
@@ -846,11 +1004,12 @@ class Nc_model extends CI_Model{
             $body .= "<strong style='font-size:18px;font-weight:600;'>5. Conclusion Of NC</strong><br>";
             $body .= "<strong>Conclusion Of NC : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5."<br>";
             $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec5/$get_owner_email->nc_sec5file'>".$get_owner_email->nc_sec5file . "</a>"."<br>";
+            $body .= "<strong>รายละเอียดค่าใช้จ่ายที่เกิดขึ้น :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5cost_detail."<br>";
             $body .= "<strong>ค่าใช้จ่ายที่เกิดขึ้น โดยประมาณ :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5cost."<br>";
             
             
             
-            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/".$cp_no.">" . "Go to Page</a>"; 
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/nc/main/".$cp_no.">" . "Go to Page</a>"; 
     
     
     $mail = new PHPMailer();

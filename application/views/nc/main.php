@@ -23,18 +23,27 @@ and open the template in the editor.
         $this->load->view("head/nav");
         ?>
 
-        <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;"><!-- Start main container -->
+        <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;"><!-- Start main container -->
             <h1>ใบรายงานปัญหา / ข้อบกพร่อง NC</h1><br>
-            <h3>Complaint : <?php echo $getdatamain->cp_no; ?></h3><hr>
-            <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+            <h4>Complaint : <?php echo $getdatamain->cp_no; ?>&nbsp;&nbsp;&nbsp;NC Status :&nbsp;<span class="fontfix"><?php echo $getdatamain->cp_status_name; ?></span></h4><hr>
 
+            <div class="btn_back">
+                <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
+                <button class="btn btn-success btn-sm btn_back" onclick="myFunction()"><i class="fas fa-print"></i>&nbsp;Print</button>
+            </div>
+
+            <script>
+function myFunction() {
+  window.print();
+}
+</script>
 
             <div class="panel panel-primary"><!--SECTION 1-->
                 <div class="panel-heading">1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</div>
                 <div class="panel-body">
                     <p><label class="ncmain_s1_label">เรียน ผู้จัดการฝ่าย</label></p>
                     <p class="gdmcp_hover"><label class="ncmain_s1_label">Transform Complaint No.</label>&nbsp;
-                        <a href="<?php echo base_url("complaint/investigate/"); ?><?php echo $getdatamain->cp_no; ?>" target="_blank"><label data-toggle="tooltip" title="คลิกที่นี่เพื่อดู Complaint ต้นฉบับ"><?php echo $getdatamain->cp_no; ?></label></a>
+                        <a href="<?php echo base_url("complaint/investigate/"); ?><?php echo $getdatamain->cp_no; ?>" target="_blank"><label data-toggle="tooltip" title="คลิกที่นี่เพื่อดู Complaint ต้นฉบับ"><i class="fas fa-book-open"></i>&nbsp;<?php echo $getdatamain->cp_no; ?></label></a>
                     </p>
 
 
@@ -67,7 +76,7 @@ and open the template in the editor.
                     <p><label class="ncmain_s1_label">ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </label>
                         <?php foreach ($get_dept as $gdn): ?>
                             <label><?php echo $gdn['Dept'] . "&nbsp;,"; ?></label>&nbsp;
-                        <?php endforeach; ?> 
+                        <?php endforeach; ?>
                     </p>
 
                     <?php
@@ -92,7 +101,7 @@ and open the template in the editor.
 
 
 
-            <!-- *********************************SECTION**3**AREA******************************************************* --> 
+            <!-- *********************************SECTION**3**AREA******************************************************* -->
 
             <div class="panel panel-primary"><!--SECTION 3-->
 
@@ -103,7 +112,7 @@ and open the template in the editor.
                     <form name="sec1" method="post" action="<?php echo base_url("nc/save_sec3/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
                         <span style="font-size: 18px;">Corrective</span><hr>
                         <div class="col-md-12" style="margin-bottom: 20px;">
-                            
+
                             <div class="form-group col-md-10">
                                 <label>3.1 สาเหตุ</label>
                                 <textarea class="form-control" rows="5" name="nc_sec31" id="nc_sec31"><?php echo $getdatamain->nc_sec31; ?></textarea>
@@ -124,7 +133,7 @@ and open the template in the editor.
 
                                     $date_2 = date_create($getdatamain->nc_sec33date);
                                     $result_date2 = date_format($date_2, "d/m/Y H:i:s");
-                                    ?>  
+                                    ?>
                                     <input class="form-control" type="text" name="datetime32show" id="datetime32show" value="<?php echo $result_date; ?>"/><!--test countdown-->
                                     <span id="dateshow32" class="showdate3text"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="dateshow_text32" class="showdate3text"></span><!-- Show Countdown time -->
                                 </div>
@@ -138,7 +147,7 @@ and open the template in the editor.
 
                             </div>
                         </div>
-                        
+
                         <span style="font-size: 18px;">Preventive</span><hr>
                         <div class="col-md-12">
                         <div class="form-group col-md-10">
@@ -160,6 +169,12 @@ and open the template in the editor.
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div><!-- Input type datetime -->
+
+                             <label style="margin-top: 5px;">เอกสารประกอบ</label>
+                            <input type="file" class="form-control" name="nc_sec3file" id="nc_sec3file" value="<?php echo $getdatamain->nc_sec3file; ?>"/>
+
+                            <label id="get_nc_sec3file">&nbsp;&nbsp;<a href="<?php echo base_url("asset/nc/sec3/"); ?><?php echo $getdatamain->nc_sec3file; ?>" target="_blank"><?php echo $getdatamain->nc_sec3file; ?></a></label>
+                            <span style="color:red;font-size:12px;">Max file size = 10MB and word , pdf only</span><br>
 
                             <input type="submit" name="sec3save" id="sec3save" class="btn btn-primary" style="margin-top: 10px;"/>
 
@@ -186,11 +201,12 @@ and open the template in the editor.
                             <input hidden="" type="text" name="his_nc_sec3empid" id="his_nc_sec3empid" value="<?php echo $getdatamain->nc_sec3empid; ?>" />
                             <input hidden="" type="text" name="his_nc_sec3dept" id="his_nc_sec3dept" value="<?php echo $getdatamain->nc_sec3dept; ?>" />
                             <input hidden="" type="text" name="his_nc_sec3date" id="his_nc_sec3date" value="<?php echo $getdatamain->nc_sec3date; ?>" />
+                            <input hidden="" type="text" name="his_nc_sec3file" id="his_nc_sec3file" value="<?php echo $getdatamain->nc_sec3file; ?>" />
 
                             <input hidden="" type="text" name="his_action" id="his_action" value="Start Edit NC Sec3" />
                             <input hidden="" type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
                             <input hidden="" type="text" name="his_date_modify" id="his_date_modify" value="<?php echo date("Y/m/d H:i:s") ?>" />
-                            <a href="<?php echo base_url("nc/nc_sec3edit/"); ?><?php echo $getdatamain->cp_no; ?>"><button class="btn btn-warning" name="btn_sec3edit" id="btn_sec3edit">Edit</button></a> 
+                            <a href="<?php echo base_url("nc/nc_sec3edit/"); ?><?php echo $getdatamain->cp_no; ?>"><button class="btn btn-warning" name="btn_sec3edit" id="btn_sec3edit">Edit</button></a>
                         </form>
 
                     </div>
@@ -217,7 +233,7 @@ and open the template in the editor.
 
 
 
-            <!-- *********************************SECTION**3**AREA*********************************** -->            
+            <!-- *********************************SECTION**3**AREA*********************************** -->
 
 
 
@@ -239,7 +255,7 @@ and open the template in the editor.
                             <input type="file" class="form-control" name="nc_sec4f1_file" id="nc_sec4f1_file" value="<?php echo $getdatamain->nc_sec4f1_file; ?>"/>
 
                             <label id="get_nc_sec4f1_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec4/f1/"); ?><?php echo $getdatamain->nc_sec4f1_file; ?>" target="_blank"><?php echo $getdatamain->nc_sec4f1_file; ?></a></label>
-                            <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
+                            <span style="color:red;font-size:12px;">Max file size = 10MB and word , pdf only</span>
 
                             <div class="form-inline" style="margin-top: 5px;">
                                 <input type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -366,7 +382,7 @@ and open the template in the editor.
 
 
 
-<!-- *********************************SECTION5****AREA**************************************--> 
+<!-- *********************************SECTION5****AREA**************************************-->
 <?php
 if ($getdatamain->nc_sec4f3_status == "no") {
     $ncfailed = "( Failed )";
@@ -384,6 +400,7 @@ if ($getdatamain->nc_status_code == "nc10") {
     $show = $getdatamain->nc_sec5;
     $showfile = $getdatamain->nc_sec5file;
     $showcost = $getdatamain->nc_sec5cost;
+
 }
 ?>
             <div class="panel panel-primary"><!--SECTION 5-->
@@ -397,10 +414,29 @@ if ($getdatamain->nc_status_code == "nc10") {
                             <input type="file" class="form-control" name="nc_sec5file" id="nc_sec5file" value="<?php echo $showfile; ?>"/>
                             <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                             <label id="get_nc_sec5_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec5/"); ?><?php echo $showfile; ?>" target="_blank"><?php echo $showfile; ?></a></label><br>
-                            <label style="margin-top: 5px;">ค่าใช้จ่ายที่เกิดขึ้น โดยประมาณ</label>
+
+
+                            <div class="form-row">
+                    <div class="col-md-7 pri">
+                        <label><b>รายละเอียดค่าใช้จ่าย</b></label>
+                        <input type="text" name="nc_sec5cost_detail" id="nc_sec5cost_detail" class="form-control form-control-sm" value="<?php echo $getdatamain->nc_sec5cost_detail; ?>"/>
+                    </div>
+                    <div class="col-md-5 pri">
+                        <label><b>ค่าใช้จ่ายที่เกิดขึ้น</b></label>
+                        <div class="input-group">
+                            <input type="text" name="nc_sec5cost" id="nc_sec5cost" class="form-control form-control-sm number" value="<?php echo $showcost ?>"/>
+                        <span class="input-group-addon">บาท</span>
+                        </div>
+                    </div>
+                </div>
+
+
+<!--                            <label style="margin-top: 5px;">ค่าใช้จ่ายที่เกิดขึ้น โดยประมาณ</label>
                             <div class="form-inline">
                                 <input type="text" class="form-control" name="nc_sec5cost" id="nc_sec5cost" value="<?php echo $showcost; ?>"/>&nbsp;<label>บาท</label>
-                            </div>
+                            </div>-->
+
+
                             <label class="sec4label">สำหรับ qmr เท่านั้น</label>
                         </div>
                         <div class="col-md-10">
@@ -414,7 +450,7 @@ if ($getdatamain->nc_status_code == "nc10") {
                 </div>
 
             </div>
-            <!-- *********************************SECTION5****AREA**************************************--> 
+            <!-- *********************************SECTION5****AREA**************************************-->
             <script>
                 $(document).ready(function () {
 
@@ -438,11 +474,11 @@ if ($getdatamain->nc_status_code == "nc10") {
                         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                        
-                        
+
+
                         document.getElementById("dateshow32").innerHTML = days + "d " + hours + "h "
                                 + minutes + "m " + seconds + "s ";
-                        
+
 
 
                         // If the count down is over, write some text
@@ -502,13 +538,13 @@ if ($getdatamain->nc_status_code == "nc10") {
                         var hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         var minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
                         var seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
-                        
-                        
+
+
                             // Output the result in an element with id="demo"
                         document.getElementById("dateshow33").innerHTML = days2 + "d " + hours2 + "h "
                                 + minutes2 + "m " + seconds2 + "s ";
-                        
-                        
+
+
 
                         // If the count down is over, write some text
                         if (distance2 < 0) {
@@ -575,7 +611,7 @@ if ($getdatamain->nc_status_code == "nc10") {
                         // Output the result in an element with id="demo"
                         document.getElementById("dateshow41").innerHTML = days41 + "d " + hours41 + "h "
                                 + minutes41 + "m " + seconds41 + "s ";
-                        
+
 
                         // If the count down is over, write some text
                         if (distance41 < 0) {
@@ -587,7 +623,7 @@ if ($getdatamain->nc_status_code == "nc10") {
                             document.getElementById("dateshow41").innerHTML = "เสร็จสิ้นการติดตาม";
                         }else if ($('#nc_sec4f1_radiocheck').val() == "no"){
                             clearInterval(x41);
-                            document.getElementById("dateshow41").innerHTML = "ดำเนินการติดตามครั้งที่2";
+                            document.getElementById("dateshow41").innerHTML = "กำลังดำเนินการติดตามครั้งที่2";
                         }
 
 
@@ -620,8 +656,8 @@ if ($getdatamain->nc_status_code == "nc10") {
                         // Output the result in an element with id="demo"
                         document.getElementById("dateshow42").innerHTML = days42 + "d " + hours42 + "h "
                                 + minutes42 + "m " + seconds42 + "s ";
-                        
-                        
+
+
 
                         // If the count down is over, write some text
                         if (distance42 < 0) {
@@ -633,7 +669,7 @@ if ($getdatamain->nc_status_code == "nc10") {
                             document.getElementById("dateshow42").innerHTML = "เสร็จสิ้นการติดตาม";
                         }else if($('#nc_sec4f2_radiocheck').val() == "no"){
                             clearInterval(x42);
-                            document.getElementById("dateshow42").innerHTML = "ดำเนินการติดตามครั้งที่3";
+                            document.getElementById("dateshow42").innerHTML = "กำลังดำเนินการติดตามครั้งที่3";
                         }
 
 
@@ -665,7 +701,7 @@ if ($getdatamain->nc_status_code == "nc10") {
             </script>
 
 
-            <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>   
+            <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
         </div><!--End Main container-->
     </body>
 </html>

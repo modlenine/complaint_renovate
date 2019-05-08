@@ -11,23 +11,68 @@ and open the template in the editor.
     </head>
     <body>
         <?php $this->load->view("head/nav"); ?>
-        
-        <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
+
+        <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <h1 class="head_text">LIST OF NC</h1><hr>
-            
-<!--            <div class="form-inline">
+
+            <div class="form-inline">
                 <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
-                <label>ค้นหาเอกสาร โดย :</label>
-                <select class="form-control">
-                    <option>วันที่</option>
-                    <option>เลขเอกสาร</option>
-                    <option>ผู้แจ้ง</option>
+<!--                <a href="<?php echo base_url(); ?>complaint/add/<?php echo $getuser['DeptCode']; ?>"><button class="btn btn-primary btn-sm btn_back">New Complaint</button></a>-->
+
+
+                <label><i class="fas fa-search"></i>&nbsp;ค้นหาเอกสาร โดย :</label>
+                <select class="form-control" name="search_form" id="search_form">
+                    <option value="">กรุณาเลือกประเภทการค้นหา</option>
+                    <option value="searchby_date">วันที่</option>
+                    <option value="searchby_docnum">เลขเอกสาร</option>
+                    <option value="searchby_userinform">ผู้แจ้ง</option>
+                    <option value="searchby_topic">หัวข้อเรื่อง</option>
+<!--                    <option value="searchby_status">Status</option>-->
                 </select>
-                <input type="date" class="form-control"/>&nbsp;<label>TO</label>&nbsp;<input type="date" class="form-control"/>&nbsp;<button class="btn btn-warning btn-sm">Search</button>
-            </div><hr>-->
-            
-            
-             <table id="view_nc" class="table table-bordered table-hover dt-responsive nowrap" style="width:100%">
+
+<!--                <button style="float:right;" class="btn btn-success btn-sm">Export</button>-->
+
+
+
+                <form action="<?php echo base_url("search/searchby_date_nc"); ?>" method="post" name="searchby_date" style="margin-top:5px;">
+                <span id="searchby_date" hidden="">
+                    <input type="date" class="form-control" name="date_start"/>&nbsp;<label>TO</label>&nbsp;
+                    <input type="date" class="form-control" name="date_end"/>&nbsp;
+                    <button class="btn btn-warning btn-sm">Search</button></span>
+                </form>
+
+
+
+                <form action="<?php echo base_url("search/searchby_docnum_nc"); ?>" method="post" name="searchby_docnum" style="margin-top:5px;">
+                <span id="searchby_docnum" hidden=""><input type="text" name="searchby_docnum" id="searchby_docnum" class="form-control" placeholder="ค้นหาด้วยเลขเอกสาร CP1234"/>&nbsp;<button class="btn btn-warning btn-sm">Search</button></span>
+                </form>
+
+
+
+                <form action="<?php echo base_url("search/searchby_userinform_nc"); ?>" method="post" name="searchby_userinform" style="margin-top:5px;">
+                <span id="searchby_userinform" hidden=""><input type="text" name="searchby_userinform" id="searchby_userinform" class="form-control" placeholder="ค้นหาด้วยชื่อผู้แจ้ง"/>&nbsp;<button class="btn btn-warning btn-sm">Search</button></span>
+                </form>
+
+
+
+                <form action="<?php echo base_url("search/searchby_topic_nc"); ?>" method="post" name="searchby_topic" style="margin-top:5px;">
+                <span id="searchby_topic" hidden="">
+<!--                    <input type="text" name="searchby_topic" id="searchby_topic" class="form-control" placeholder="ค้นหาด้วยหัวข้อเรื่อง"/>&nbsp;-->
+                    <select class="form-control" name="searchby_topic" id="searchby_topic">
+                        <option>Please select topic.</option>
+
+                        <?php foreach ($get_topic_search as $gtop): ?>
+                        <option value="<?php echo $gtop['topic_id'] ?>"><?php echo $gtop['topic_name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button class="btn btn-warning btn-sm">Search</button>
+                </span>
+                </form>
+            </div><hr>
+
+
+             <table id="view_nc" class="table table-bordered table-hover dt-responsive " style="width:100%">
+               <!-- ตอนนี้ไม่ได้ใช้ nowrap -->
                 <thead>
                     <tr>
                         <th style="width:80px;text-align: center;">ID</th>
@@ -35,33 +80,34 @@ and open the template in the editor.
                         <th style="width:100px;text-align: center;">COMPLAINT BY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
-                        <th style="text-align: center;">STATUS</th>
+                        <th style="width:200px;text-align: center;">Related Department.</th>
+                        <th style="width:200px;text-align: center;">STATUS</th>
                         <th style="width:80px;text-align: center;">PRIORITY</th>
                     </tr>
                 </thead>
                 <tbody>
 <?php foreach ($list_nc->result_array() as $l_nc): ?>
                     <tr>
-                        <?php  
+                        <?php
                             if($l_nc['nc_status_code']=="nc01"){
                                 $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
-                        
-                        <td style="text-align: left;"><a href="<?php echo base_url("nc/main/");?><?php echo $l_nc['cp_no']; ?>"><?php echo $l_nc['cp_no']; ?></a><?php echo $newgif; ?></td>
+
+                        <td style="text-align: left;font-weight: 600;"><a href="<?php echo base_url("nc/main/");?><?php echo $l_nc['cp_no']; ?>"><?php echo $l_nc['cp_no']; ?></a><?php echo $newgif; ?></td>
                         <td style="text-align: left;">
                             <?php
                             $date = date_create($l_nc['cp_date']);
                             echo date_format($date, "d/m/Y");
-                            
+
                             ?>
                         </td>
                         <td style="text-align: left;"><?php echo $l_nc['cp_user_name']; ?></td>
-                        <td style="text-align: left;"><?php echo $l_nc['cp_topic']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_nc['topic_name']; ?></td>
                         <td style="text-align: left;"><?php echo $l_nc['cp_cus_name']; ?></td>
-                        
+
                         <?php
-                        
+
                             if($l_nc['cp_status_name'] == "Transform Complaint"){
                                 $color = ' #87CEEB; ';
                             }
@@ -86,6 +132,9 @@ and open the template in the editor.
                             if($l_nc['cp_status_name'] == "Followup_3rd NC Close"){
                                 $color = ' #F4A460; ';
                             }
+                            if($l_nc['cp_status_name'] == "Followup_3rd Fail"){
+                                $color = ' #F4A460; ';
+                            }
                             if($l_nc['cp_status_name'] == "NC Failed"){
                                 $color = ' #FF8C00; ';
                             }
@@ -95,10 +144,19 @@ and open the template in the editor.
                             if($l_nc['cp_status_name'] == "Conclusion of NC"){
                                 $color = ' #32CD32; ';
                             }
-                            
-                            
+
+
                         ?>
-                        
+                        <td style="text-align: left;">
+                          <?php
+                          $cp_no = $l_nc['cp_no'];
+                            $getdept = $this->db->query("SELECT complaint_department.cp_dept_id, complaint_department.cp_dept_code, complaint_department.cp_dept_cp_no, member.Dept FROM complaint_department INNER JOIN member ON member.DeptCode = complaint_department.cp_dept_code WHERE complaint_department.cp_dept_cp_no = '$cp_no' GROUP BY complaint_department.cp_dept_code DESC");
+                          ?>
+
+                          <?php foreach ($getdept->result_array() as $gdn): ?>
+                              <?php echo $gdn['Dept'] . "&nbsp;,"; ?>
+                          <?php endforeach; ?>
+                        </td>
                         <td style="text-align: left;color:<?php echo $color; ?>"><?php echo $l_nc['cp_status_name']; ?></td>
                         <td style="text-align: center;"><?php echo $this->complaint_model->conpriority($l_nc['cp_priority']); ?></td>
                     </tr>
@@ -111,6 +169,7 @@ and open the template in the editor.
                         <th style="text-align: center;">COMPLAINT BY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
+                        <th style="text-align: center;">Related Department.</th>
                         <th style="text-align: center;">STATUS</th>
                         <th style="text-align: center;">PRIORITY</th>
                     </tr>
@@ -124,11 +183,11 @@ and open the template in the editor.
                 });
             });
     </script>
-            
-            
-            
+
+
+
         </div>
-        
-        
+
+
     </body>
 </html>

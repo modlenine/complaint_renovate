@@ -9,9 +9,10 @@
 
         /********************Add page***************************/
         /********************************Use In add Controller***************************/
-        $("#cp_topic").change(function () {
-            var value = $("#cp_topic_cat").val();
-            if (value == "Safety" || value == "System" || value == "Environment") {
+
+        $("#cp_category").change(function () {
+            var value = $("#cp_category").val();
+            if (value == "3" || value == "4" || value == "5") {
 
                 $('#h_username').hide();
                 $('#cp_cus_name').val("Saleecolour");
@@ -30,6 +31,26 @@
             }
         });
 
+//        คำสั่งส่วนนี้เอาไว้ซ่อนช่อง Input ที่ไม่ได้อยู่ในเงื่อนไข ในหน้า Edit
+        if ($("#cp_category").val() == "3" || $("#cp_category").val() == "4" || $("#cp_category").val() == "5") {
+
+                $('#h_username').hide();
+                $('#cp_cus_name').val("Saleecolour");
+                $('#h_cusref').hide();
+                $('#h_inv').hide();
+                $('#h_procode').hide();
+                $('#h_lotno').hide();
+                $('#h_qty').hide();
+            } else {
+                $('#h_username').show();
+                $('#h_cusref').show();
+                $('#h_inv').show();
+                $('#h_procode').show();
+                $('#h_lotno').show();
+                $('#h_qty').show();
+            }
+
+
 
         /***********************************Text area 2000 char*****************************************/
         $('#characterLeft').text('2000 characters left');
@@ -47,8 +68,8 @@
                 $('#characterLeft').removeClass('red');
             }
         });
-        
-        
+
+
 
 
 
@@ -58,6 +79,8 @@
         var check_pms_view = $('#check_dept_view').val();
         if (check_pms_view != 1) {
             $('.result_pms').hide();
+        }else{
+            $('#cancle_btn').hide();
         }
 
         if ($('#check_user').val() !== $('#history_cpusername').val()) {
@@ -66,6 +89,12 @@
 
         if ($('#get_oldcp').val() == "") {
             $('#view_oldcp').hide();
+        }
+
+        if($('#history_cpstatus').val() == "cp07"){
+            $('#cancle_btn').hide();
+            $('.result_pms').hide();
+            $('#edit').hide();
         }
 
 
@@ -92,13 +121,13 @@
         if ($('.check_status').text() !== "Investigation Complete") {/*********Check Edit button**********/
             $('#btn_save_history').hide();
         }
-        
+
         if($('#check_user').val()!== $('#cu').val()){/*********Check Edit button**********/
             $('#btn_save_history').hide();
         }
 
-        
-        
+
+
         if($('#cp_topic_cat').val() == "Safety" || $('#cp_topic_cat').val() == "Environment" || $('#cp_topic_cat').val() == "System"){
             $('#h_username').hide();
             $('#h_cusref').hide();
@@ -106,8 +135,12 @@
             $('#h_procode').hide();
             $('#h_lotno').hide();
             $('#h_qty').hide();
-           
+
         }
+
+
+        // Check Summary of investigate ซ่อน Check box กรณีที่เลือก เป็นข้อบกพร่องของบริษัท
+
 
 
 
@@ -120,11 +153,14 @@
 
 
         $('.conclusion').show();
+        $('.checkbox_dept').hide();
         $('input[name="cp_sum"]').change(function () {
             if ($(this).val() == "no") {
                 $('.conclusion').show();
             } else {
                 $('.conclusion').hide();
+                $('.checkbox_dept').show();
+                $('.label_dept').hide();
             }
         });
 
@@ -132,7 +168,7 @@
             $('.result_pms_sum_inves').hide();
             $('.result_pms_conclu').hide();
             $('#cp_conclu_detail').prop("readonly", true);
-            $('#cp_conclu_detail_cost').prop("readonly", true);
+            $('#cp_conclu_costdetail').prop("readonly", true);
             $('#cp_conclu_cost').prop("readonly", true);
             $('#cp_conclu_file').prop("readonly", true);
 
@@ -144,9 +180,11 @@
 
         }
 
+        $('#gotonc').hide();
         if ($('#radio_check').val() == "yes") {/******Check radio button********/
             $('input[name="cp_sum"]').val("yes").prop("checked", true);
             $('.conclusion').hide();
+            $('#gotonc').show();
         }
         if ($('#radio_check').val() == "no") {/******Check radio button********/
             $('#cp_sum_no').val("no").prop("checked", true);
@@ -170,7 +208,7 @@
 
         if ($('#cp_conclu_detail').val() != "") {
             $('#cp_conclu_detail').prop("readonly", true);
-            $('#cp_conclu_costdetail').prop("readonly", true);
+            $('#cp_conclu_costdetail_show').prop("readonly", true);
             $('#cp_conclu_cost_show').prop("readonly", true);
             $('.result_pms_conclu').hide();
         }
@@ -200,9 +238,9 @@
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     ;
         });
-        
-        
-        
+
+
+
 //****************Quantity************
 
         $('input#cp_pro_qty').keyup(function (event) {/*****Comma function*******/
@@ -219,24 +257,24 @@
                         ;
             });
         });
-        
-        
-     //**********Quantity Show number+comma   
+
+
+     //**********Quantity Show number+comma
         function numberWithCommas(number) {
     var parts = number.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
 }
-        
+
         $("#cp_pro_qty_show2").each(function() {
     var num = $(this).text();
     var commaNum = numberWithCommas(num);
     $(this).text(commaNum);
   });
-     
+
  //****************Quantity************
- 
- 
+
+
 // Conclusion of NC
 
 $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
@@ -253,7 +291,7 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                         ;
             });
         });
-        
+
         // format number
         $('input#nc_sec5cost').val(function (index, value) {
             return value
@@ -287,8 +325,10 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
             $('#nc_sec33date').prop("readonly", true);
             $('#nc_sec33time').prop("readonly", true);
             $('#sec3save').hide();
+            $('#nc_sec3file').hide();
         } else {
             $('#btn_sec3edit').hide();
+
         }
 
         if ($('#check_permit').val() == 0) {
@@ -400,6 +440,7 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
             $('#get_nc_sec4f1_file').hide();
             $('#nc_sec5').prop("readonly", true);
             $('#nc_sec5file').prop("readonly", true);
+            $('#nc_sec5cost_detail').prop("readonly", true);
             $('#nc_sec5cost').prop("readonly", true);
             $('#btn_sec5').hide();
         }
@@ -443,6 +484,12 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
             $('#datetime42show').hide();
             $('#dateshow42').hide();
+
+            $('#nc_sec5').prop("readonly", true);
+            $('#nc_sec5file').prop("readonly", true);
+            $('#nc_sec5cost_detail').prop("readonly", true);
+            $('#nc_sec5cost').prop("readonly", true);
+            $('#btn_sec5').hide();
         }
 
         if ($('#nc_sec4f2_radiocheck').val() == "yes") {/******Check radio button***********/
@@ -473,6 +520,12 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
         } else {
             $('#get_nc_sec4f3_file').hide();
+
+            $('#nc_sec5').prop("readonly", true);
+            $('#nc_sec5file').prop("readonly", true);
+            $('#nc_sec5cost_detail').prop("readonly", true);
+            $('#nc_sec5cost').prop("readonly", true);
+            $('#btn_sec5').hide();
         }
 
         if ($('#nc_sec4f3_radiocheck').val() == "yes") {/******Check radio button***********/
@@ -486,6 +539,7 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
         if ($('#checkstatus_failed').val() == "nc09") {
     $('#nc_sec5').prop("readonly",true);
     $('#nc_sec5file').prop("readonly",true);
+    $('#nc_sec5cost_detail').prop("readonly", true);
     $('#nc_sec5cost').prop("readonly",true);
     $('#btn_sec5').hide();
 
@@ -535,6 +589,7 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
             $('#nc_sec5file').hide();
             $('#nc_sec5').prop("readonly", true);
             $('#btn_sec5').hide();
+            $('#nc_sec5cost_detail').prop("readonly", true);
             $('#nc_sec5cost').prop("readonly", true);
 
 
@@ -545,6 +600,7 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
             $('#nc_sec5file').hide();
             $('#nc_sec5').prop("readonly", true);
             $('#btn_sec5').hide();
+            $('#nc_sec5cost_detail').prop("readonly", true);
             $('#nc_sec5cost').prop("readonly", true);
 
             $('#datetime41').prop("readonly", true);
@@ -556,6 +612,7 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
         if ($('#check_qmr').val() !== "QMR") {
             $('#nc_sec5').prop("readonly", true);
             $('#nc_sec5file').prop("readonly", true);
+            $('#nc_sec5cost_detail').prop("readonly", true);
             $('#nc_sec5cost').prop("readonly", true);
             $('#btn_sec5').hide();
         }
@@ -565,7 +622,7 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
 
         /**********************NAV*********************************/
-        
+
 
 
 
@@ -577,8 +634,8 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                 alert('The file type is invalid!');
                 $('#file_add').val("");
             }
-            if (this.files[0].size > 1048576) {
-                alert("Maximum image size is 1MB !!");
+            if (this.files[0].size > 10485760) {
+                alert("Maximum image size is 10MB !!");
                 this.value = "";
                 exit;
             }
@@ -596,8 +653,8 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                 alert('The file type is invalid!');
                 $('#cp_detail_inves_file').val("");
             }
-            if (this.files[0].size > 1048576) {
-                alert("Maximum image size is 1MB !!");
+            if (this.files[0].size > 10485760) {
+                alert("Maximum image size is 10MB !!");
                 this.value = "";
                 exit;
             }
@@ -615,8 +672,8 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                 alert('The file type is invalid!');
                 $('#cp_sum_inves_file').val("");
             }
-            if (this.files[0].size > 1048576) {
-                alert("Maximum image size is 1MB !!");
+            if (this.files[0].size > 10485760) {
+                alert("Maximum image size is 10MB !!");
                 this.value = "";
                 exit;
             }
@@ -634,8 +691,8 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                 $('#cp_conclu_file').val("");
 
             }
-            if (this.files[0].size > 1048576) {
-                alert("Maximum image size is 1MB !!");
+            if (this.files[0].size > 10485760) {
+                alert("Maximum image size is 10MB !!");
                 this.value = "";
                 exit;
             }
@@ -655,8 +712,8 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                 $('#file_add_edit').val("");
 
             }
-            if (this.files[0].size > 1048576) {
-                alert("Maximum image size is 1MB !!");
+            if (this.files[0].size > 10485760) {
+                alert("Maximum image size is 10MB !!");
                 this.value = "";
                 exit;
             }
@@ -675,8 +732,8 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                 $('#cp_detail_inves_file_edit').val("");
 
             }
-            if (this.files[0].size > 1048576) {
-                alert("Maximum image size is 1MB !!");
+            if (this.files[0].size > 10485760) {
+                alert("Maximum image size is 10MB !!");
                 this.value = "";
                 exit;
             }
@@ -696,8 +753,8 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                 $('#nc_sec4f1_file').val("");
 
             }
-            if (this.files[0].size > 1048576) {
-                alert("Maximum image size is 1MB !!");
+            if (this.files[0].size > 10485760) {
+                alert("Maximum image size is 10MB !!");
                 this.value = "";
                 exit;
             }
@@ -715,8 +772,8 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                 $('#nc_sec4f2_file').val("");
 
             }
-            if (this.files[0].size > 1048576) {
-                alert("Maximum image size is 1MB !!");
+            if (this.files[0].size > 10485760) {
+                alert("Maximum image size is 10MB !!");
                 this.value = "";
                 exit;
             }
@@ -735,8 +792,8 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                 $('#nc_sec4f3_file').val("");
 
             }
-            if (this.files[0].size > 1048576) {
-                alert("Maximum image size is 1MB !!");
+            if (this.files[0].size > 10485760) {
+                alert("Maximum image size is 10MB !!");
                 this.value = "";
                 exit;
             }
@@ -757,8 +814,8 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
                 $('#nc_sec5file').val("");
 
             }
-            if (this.files[0].size > 1048576) {
-                alert("Maximum image size is 1MB !!");
+            if (this.files[0].size > 10485760) {
+                alert("Maximum image size is 10MB !!");
                 this.value = "";
                 exit;
             }
@@ -775,12 +832,13 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
         /******* 102400 ** = 100KB********/
         /******* 1048576 *** = 1MB *******************/
+        /******* 10485760 *** = 10MB *******************/
 
 
         /*********************DASHBOARD**************************/
 
         /*********************DASHBOARD**************************/
-        
+
 
 
 
@@ -789,7 +847,7 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 //            var total_score = $('#show_score').val();
 //            var pri_score = $('#set_score').val();
 //            var regExp = /^[0-9]*$/;
-//            
+//
 //            if(total_score <= 0){
 //                alert("The score not enough");
 //                location.reload();
@@ -807,6 +865,43 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 //    $('.user_permission').hide(0);
 
 /*************************SETTING****ZONE************************/
+$('#search_form').change(function (){
+
+   if($('#search_form').val()=="searchby_docnum"){
+       $('#searchby_docnum').show();
+   }else{
+       $('#searchby_docnum').hide();
+   }
+
+   if($('#search_form').val()=="searchby_date"){
+       $('#searchby_date').show();
+   }else{
+       $('#searchby_date').hide();
+   }
+
+   if($('#search_form').val()=="searchby_userinform"){
+       $('#searchby_userinform').show();
+   }else{
+       $('#searchby_userinform').hide();
+   }
+
+   if($('#search_form').val()=="searchby_topic"){
+       $('#searchby_topic').show();
+   }else{
+       $('#searchby_topic').hide();
+   }
+
+   if($('#search_form').val()=="searchby_status"){
+       $('#searchby_status').show();
+   }else{
+       $('#searchby_status').hide();
+   }
+
+
+});
+
+
+
 
 
 
@@ -831,6 +926,22 @@ $('#cp_category').change(function(){
 /***********************ทำ Select Box 2 ชั้น**********************/
 
 
+/********************ทำ Search box*************************/
+
+
+
+
+
+/**************************CHECK ค่าว่าง*************************/
+
+
+
+
+
+
+
+
+
 
 
 
@@ -840,6 +951,3 @@ $('#cp_category').change(function(){
 
 
 </script>
-
-
-

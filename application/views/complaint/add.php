@@ -47,7 +47,7 @@ and open the template in the editor.
                             
                             <div class="col-md-3 pri">
                                 <label><b>Category</b></label>
-                                <select name="cp_category" id="cp_category" class="form-control form-control-sm" >
+                                <select name="cp_category" id="cp_category" class="form-control form-control-sm" required="">
                                     <option value="">Select Category</option>
                                     <?php  
                                     foreach ($topic_category as $row)
@@ -61,51 +61,13 @@ and open the template in the editor.
                             
                             <div class="col-md-3 pri">
                                 <label><b>Topic</b></label>
-                                <select name="cp_topic" id="cp_topic" class="form-control form-control-sm" >
+                                <select name="cp_topic" id="cp_topic" class="form-control form-control-sm" required="">
                                     <option value="">Select Topic</option>
                                     
                                 </select>
                             </div>
                             
 
-                            
-<!--                            <div class="col-md-3 pri">
-                                <label><b>Topic</b></label>
-                                <select name="cp_topic" id="cp_topic" class="form-control form-control-sm">
-                                    <option>Please Choose Topic</option>
-                                    
-                                    <?php
-                                    $cat_name = $this->input->post("cp_category");
-                                       $result = $this->complaint_model->get_toppic($cat_name);
-                                    ?>
-                                    <?php foreach($result as $tt): ?>
-                                    <option value="<?php echo $tt['topic_name']; ?>"><?php echo $tt['topic_name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>-->
-                            
-            
-                            
-                            
-                            
-                            
-<!--                            <div class="col-md-3 pri">
-                                <label><b>Topic</b></label>
-                                <select name="cp_topic" id="cp_topic" class="form-control form-control-sm" OnChange="resutName(this.value);" required="">
-                                    <option selected="">Please choose topic</option>
-                                    <?php foreach ($get_toppic as $t): ?>
-                                        <option value="<?php echo $t['topic_name']; ?>|<?php echo $t['topic_cat_name']; ?>"><?php echo $t['topic_name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-
-
-                            <div class="col-md-3 pri">
-                                <label><b>Catagory</b></label>
-                                <input type="hidden" name="cp_topic_hide" id="cp_topic_hide" class="form-control form-control-sm"/> Topicname 
-                                <input type="text" name="cp_topic_cat" id="cp_topic_cat" class="form-control" readonly=""/> Topic catagory 
-
-                            </div>-->
 
 
                             <div class="col-md-2">
@@ -125,13 +87,14 @@ and open the template in the editor.
 
                         <div class="form-row">
                             <?php foreach ($get_pri_topic as $gpt): ?>
+                            
                                 <div class="col-md-3 pri">
 
                                     <label ><b><?php echo $gpt['pricat_name']; ?></b></label>
                                     <input hidden="" type="text" name="cp_pri_topic" id="cp_pri_topic" value="<?php echo $gpt['pricat_name']; ?>" />
 
-                                    <select name="cp_pri_name_get[]" id="cp_pri_name_get" class="form-control form-control-sm pri"  required="">
-                                        <option>Please Choose Priority</option>
+                                    <select name="cp_pri_name_get[]" id="cp_pri_name_get" class="form-control form-control-sm pri">
+                                        <option value="">Please Choose Priority</option>
                                         <?php
                                         $pri_group = $gpt['pricat_id'];
                                         $result = $this->db->query("SELECT * FROM complaint_priorityn WHERE pri_catid=$pri_group ");
@@ -144,6 +107,7 @@ and open the template in the editor.
     <?php endforeach; ?>
 
                                     </select>
+                                   
                                     
                                 </div>
                                 
@@ -234,7 +198,7 @@ and open the template in the editor.
                             </div>
                             <div class="col-md-6 pri">
                                 <p><input name="file_add" id="file_add" type="file" class="form-control form-control-sm"/></p>
-                                <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
+                                <span style="color:red;font-size:12px;">Max file size = 10MB and word , pdf only</span>
                             </div>
 
                         </div>
@@ -258,7 +222,7 @@ and open the template in the editor.
 
                     </div>
                 </div>
-                <div><input class="btn btn-primary" type="submit" name="add_btn" id="add_btn" value="Submit" onclick="javascript:return confirm('คุณต้องการบันทึกข้อมูล ใช่หรือไม่');"/>&nbsp;<input class="btn btn-warning" type="reset" name="reset_btn" id="reset_btn" value="Reset"/></div><hr>
+                <div><input class="btn btn-primary" type="submit" name="add_btn" id="add_btn" value="Submit" />&nbsp;<input class="btn btn-warning" type="reset" name="reset_btn" id="reset_btn" value="Reset"/></div><hr>
                 <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
 
 

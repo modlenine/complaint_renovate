@@ -14,6 +14,7 @@ class Nc extends CI_Controller {
        $this->login_model->call_login();
        $data['getuser'] = $this->login_model->getuser();
        $data['list_nc'] = $this->nc_model->list_nc();
+       $data['get_topic_search'] = $this->complaint_model->get_topic_search();
         
         
         $this->load->view("head/head_code");

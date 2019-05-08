@@ -201,6 +201,12 @@ display: none;
 }
 
 
+.btn_gotonc{
+    padding: 0px;
+    float: right;
+    margin-top: -5px;
+}
+
 
 
 
@@ -226,6 +232,9 @@ display: none;
 .showdate3text{
     color:red;
     
+}
+.fontfix{
+    color: #0033ff;
 }
 
 

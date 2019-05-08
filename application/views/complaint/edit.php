@@ -27,7 +27,7 @@ and open the template in the editor.
                     <input hidden="" type="text" name="history_cpstatus" id="history_cpstatus" value="<?php echo $view_cp['cp_status_code']; ?>" /><!-- For history table-->
                     
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Topic</div>
+                    <div class="panel-heading">Topic </div>
                     <div class="panel-body">
                         
                         <div class="form-row">
@@ -50,24 +50,31 @@ and open the template in the editor.
                                     frmMain.cp_topic_cat_edit.value = strCusName.split("|")[1];
                                 }
                             </script>
-                            <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->   
+                            <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | --> 
+                            
                             <div class="col-md-3 pri">
-                                <label><b>Topic</b></label>
-                                <select name="cp_topic_edit" id="cp_topic_edit" class="form-control form-control-sm" OnChange="resutName(this.value);" required="">
-                                    <option selected="" value="<?php echo $view_cp['cp_topic']; ?>"><?php echo $view_cp['cp_topic']; ?></option>
-                                    <?php foreach ($get_toppic as $t): ?>
-                                        <option value="<?php echo $t['topic_name']; ?>|<?php echo $t['topic_cat_name']; ?>"><?php echo $t['topic_name']; ?></option>
-                                    <?php endforeach; ?>
+                                <label><b>Category</b></label>
+                                <select name="cp_category" id="cp_category" class="form-control form-control-sm" >
+                                    <option value="<?php echo $view_cp['topic_cat_id']; ?>"><?php echo $view_cp['topic_name']; ?></option>
+                                    <?php  
+                                    foreach ($topic_category as $row)
+                                    {
+                                        echo '<option value="'.$row->topic_cat_id.'">'.$row->topic_cat_name.'</option>';
+                                    }
+                                    ?>
                                 </select>
                             </div>
-
-
+                            
+                            
                             <div class="col-md-3 pri">
-                                <label><b>Catagory</b></label>
-                                <input type="hidden" name="cp_topic_hide_edit" id="cp_topic_hide_edit" class="form-control form-control-sm" value="<?php echo $view_cp['cp_topic']; ?>"/><!-- Topicname -->
-                                <input type="text" name="cp_topic_cat_edit" id="cp_topic_cat_edit" class="form-control" readonly="" value="<?php echo $view_cp['cp_topic_cat']; ?>"/><!-- Topic catagory -->
-
+                                <label><b>Topic</b></label>
+                                <select name="cp_topic" id="cp_topic" class="form-control form-control-sm" >
+                                    <option value="<?php echo $view_cp['topic_id']; ?>"><?php echo $view_cp['topic_cat_name']; ?></option>
+                                    
+                                </select>
                             </div>
+                            
+                            
 
 
                             <div class="col-md-2">
@@ -194,10 +201,10 @@ and open the template in the editor.
                                 <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
                             </div>
                             <div class="col-md-6 pri">
-                                <p><label><?php echo $view_cp['cp_file']; ?></label></p>
+                                <p><label><a href="<?php echo base_url("asset/add/".$view_cp['cp_file']); ?>" target="_blank"><?php echo $view_cp['cp_file']; ?></label></a></p>
                                 <input hidden="" type="text" name="showfile" id="showfile" value="<?php echo $view_cp['cp_file']; ?>"/>
                                 <p><input name="file_add_edit" id="file_add_edit" type="file" class="form-control form-control-sm"/></p>
-                                <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
+                                <span style="color:red;font-size:12px;">Max file size = 10MB and word , pdf only</span>
                             </div>
 
                         </div>
@@ -248,8 +255,8 @@ and open the template in the editor.
                     <div class="panel-heading">Memo.</div>
                     <div class="panel-body">
                         <div class="col-md-8">
-                            <label class="sec4label">Reason for revision.</label>
-                            <textarea class="form-control" name="cp_modify_reason" id="cp_modify_reason"></textarea>
+                            <label class="sec4label">Reason for revision. * Require *</label>
+                            <textarea class="form-control" name="cp_modify_reason" id="cp_modify_reason" required=""></textarea>
                         </div>
                     </div>
                 </div>

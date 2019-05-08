@@ -25,7 +25,7 @@ and open the template in the editor.
                         <div class="form-row">
                             <div class="col-md-2">
                                 <label><b>Old ID</b></label>
-                                <input type="text" name="cp_noold" id="cp_noold" value="<?php echo $view_cp['cp_no']; ?>" class="form-control"/>
+                                <input readonly="" type="text" name="cp_noold" id="cp_noold" value="<?php echo $view_cp['cp_no']; ?>" class="form-control"/>
                             </div>
                             <div class="col-md-2 pri">
                                 <label><b>ID</b></label>
@@ -45,24 +45,28 @@ and open the template in the editor.
                                     frmMain.cp_topic_cat.value = strCusName.split("|")[1];
                                 }
                             </script>
-                            <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->   
+                            <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->
+                            
+                            <div class="col-md-3 pri">
+                                <label><b>Category</b></label>
+                                <select name="cp_category" id="cp_category" class="form-control form-control-sm" >
+                                    <option value="<?php echo $view_cp['topic_cat_id']; ?>"><?php echo $view_cp['topic_cat_name']; ?></option>
+                                    <?php  
+                                    foreach ($topic_category as $row)
+                                    {
+                                        echo '<option value="'.$row->topic_cat_id.'">'.$row->topic_cat_name.'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            
+                            
                             <div class="col-md-3 pri">
                                 <label><b>Topic</b></label>
-                                <input type="text" name="cp_topic_f" id="cp_topic_f" value="<?php echo $view_cp['cp_topic']; ?>" class="form-control" readonly=""/>
-<!--                                <select name="cp_topic" id="cp_topic" class="form-control form-control-sm" OnChange="resutName(this.value);" required="">
-                                    <option selected="">Please choose topic</option>
-                                    <?php foreach ($get_toppic as $t): ?>
-                                        <option value="<?php echo $t['topic_name']; ?>|<?php echo $t['topic_cat_name']; ?>"><?php echo $t['topic_name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>-->
-                            </div>
-
-
-                            <div class="col-md-3 pri">
-                                <label><b>Catagory</b></label>
-                                <input type="hidden" name="cp_topic_hide" id="cp_topic_hide" class="form-control form-control-sm"/><!-- Topicname -->
-                                <input type="text" name="cp_topic_cat" id="cp_topic_cat" class="form-control" readonly="" value="<?php echo $view_cp['cp_topic_cat']; ?>"/><!-- Topic catagory -->
-
+                                <select name="cp_topic" id="cp_topic" class="form-control form-control-sm" >
+                                    <option value="<?php echo $view_cp['topic_id']; ?>"><?php echo $view_cp['topic_name']; ?></option>
+                                    
+                                </select>
                             </div>
 
 

@@ -12,20 +12,20 @@ and open the template in the editor.
     <body>
         <?php $this->load->view("head/nav"); ?>
 
-        <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
+        <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <form name="frmMain" action="<?php echo base_url('history/add_history/'); ?><?php echo $view_cp['cp_no']; ?>" method="post" enctype="multipart/form-data">
             <h1 class="h1_view">View Complaint : <?php echo $view_cp['cp_no']; ?></h1>
             <input hidden="" type="text" name="get_oldcp" id="get_oldcp" value="<?php echo $view_cp['cp_no_old']; ?>"/><!--Check cp_no old-->
-            <h3 class="h1_view" id="view_oldcp"><span style="color: red;">Old Complaint No : <?php echo $view_cp['cp_no_old']; ?></span></h3>
+            <h3 class="h1_view" id="view_oldcp"></h3>
             <div class="btn_back">
                 <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>&nbsp;
                 <input type="submit" name="edit" id="edit" class="btn btn-warning btn-sm btn_back" onclick="javascript:return confirm('ท่านยืนยันที่จะเข้าไปแก้ไขข้อมูล ใช่ หรือ ไม่');" value="Edit"/>
             </div>
-            
+
             <div class="panel panel-primary">
-                <div class="panel-heading">Basic Information <span>: Old Complaint No : <?php echo $view_cp['cp_no_old']; ?></span></div>
+                <div class="panel-heading">Basic Information</div>
                 <div class="panel-body">
-                    
+
                     <div class="form-row">
                         <div class="col-md-3">
                             <label><b>ID :</b></label>
@@ -34,25 +34,25 @@ and open the template in the editor.
                         </div>
                         <div class="col-md-3">
                             <label><b>Date :</b></label>
-                            <label><?php 
+                            <label><?php
                             $date = date_create($view_cp['cp_date']);
                             echo date_format($date, "d-m-Y");
                             ?></label>
                             <input hidden="" type="text" name="history_cpdate" id="history_cpdate" value="<?php echo $view_cp['cp_date']; ?>" />
                         </div>
 
-   
+
                         <div class="col-md-3">
                             <label><b>Topic :</b></label>
-                            <label id="cp_topic"><?php echo $view_cp['cp_topic']; ?></label>
+                            <label id="cp_topic"><?php echo $view_cp['topic_name']; ?></label>
                             <input hidden="" type="text" name="history_cptopic" id="history_cptopic" value="<?php echo $view_cp['cp_topic']; ?>" />
                         </div>
 
 
                         <div class="col-md-3">
                             <label><b>Category :</b></label>
-                            <label><?php echo $view_cp['cp_topic_cat']; ?></label>
-                            <input type="text" name="cp_topic_cat" id="cp_topic_cat" hidden="" value="<?php echo $view_cp['cp_topic_cat']; ?>" />
+                            <label><?php echo $view_cp['topic_cat_name']; ?></label>
+                            <input type="text" name="cp_topic_cat" id="cp_topic_cat" hidden="" value="<?php echo $view_cp['topic_cat_name']; ?>" />
                             <input type="text" name="history_cptopiccat" id="history_cptopiccat" hidden="" value="<?php echo $view_cp['cp_topic_cat']; ?>" />
                         </div>
                     </div>
@@ -81,7 +81,7 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-            
+
             <div class="panel panel-primary">
                 <div class="panel-heading">Priority</div>
                 <div class="panel-body">
@@ -91,17 +91,17 @@ and open the template in the editor.
                         <div class="col-md-3 m_pri">
                             <label><b><?php echo $gpu['pricat_name']; ?></b></label>
                             <label><?php echo $gpu['pri_name']; ?></label>
-                           
+
                             <input hidden="" type="text" name="history_cppritopic" id="history_cppritopic" value="<?php echo $gpu['pricat_name']; ?>" />
                             <input hidden="" type="text" name="history_cppriname" id="history_cppriname" value="<?php echo $gpu['pri_name']; ?>" />
                         </div>
                         <?php endforeach;?>
                     </div>
-                    
-                    
-                    
+
+
+
                 </div>
-                
+
                 <div class="panel-body">
                     <div class="col-md-12">
                         <div class="col-md-6">
@@ -111,13 +111,13 @@ and open the template in the editor.
                             <input readonly="" class="form-control" type="text" name="sumscore" id="sumscore" value="<?php echo $view_cp['cp_priority']; ?>"/>
                             </div>
                         </div>
-                    
+
                     <div class="col-md-6">
 
                             <div class="input-group ">
                             <span class="input-group-addon">Priority Level</span>
-                            <?php  
-                                
+                            <?php
+
                                    $number =  $view_cp['cp_priority'];
                                    if($number >= 1 && $number <= 1.5){
                                        $level = "Very Low";
@@ -136,13 +136,13 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
-                
+
             </div>
-            
+
             <div class="panel panel-primary">
                 <div class="panel-heading">Details of Complaint / Damages</div>
                 <div class="panel-body">
-                
+
                     <div class="form-row">
                         <div class="col-md-3" id="h_username">
                             <label><b>Customer Name :</b></label>
@@ -162,7 +162,7 @@ and open the template in the editor.
                             <input hidden="" type="text" name="history_cpinvoiceno" id="history_cpinvoiceno" value="<?php echo $view_cp['cp_invoice_no']; ?>" />
                         </div>
                     </div>
-                    
+
                     <div class="form-row">
                         <div class="col-md-3" id="h_procode">
                             <label><b>Product Code :</b></label>
@@ -182,14 +182,14 @@ and open the template in the editor.
                             <input hidden="" type="text" name="history_cpproqty" id="history_cpproqty" value="<?php echo $view_cp['cp_pro_qty']; ?>" />
                         </div>
                     </div>
-                    
+
                     <div class="form-row">
-                        <div class="col-md-8 form-group">
+                        <div class="col-md-12 form-group">
                             <label><b>Detail of complaint :</b></label>
                             <textarea readonly="" class="form-control" rows="5" name="detail_of_complaint" id="detail_of_compltint"><?php echo $view_cp['cp_detail']; ?></textarea>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                                 <label><b>Attached file :</b></label>
@@ -205,7 +205,7 @@ and open the template in the editor.
                             <?php endforeach; ?>
                         </div>
                     </div>
-                    
+
                     <?php  /*********************Check Related Dept*************************/
                     $ckd_result = 0;
                         foreach ($get_dept as $check_dept){
@@ -215,9 +215,9 @@ and open the template in the editor.
                             $ckd_result = 1;
                         }
                     ?>
-                    
+
                     <input hidden="" type="text" name="check_dept_view" id="check_dept_view" value="<?php echo $ckd_result;?>" />
-                    
+
                     <!-- user zone -->
                     <input hidden="" type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
                     <input hidden="" type="text" name="his_date_modify" id="his_date_modify" value="<?php echo date("Y/m/d H:i:s"); ?>" />
@@ -226,17 +226,20 @@ and open the template in the editor.
                 </div>
             </div>
               </form>
-            <div class="btn_start_inves result_pms"><a href="<?php echo base_url(); ?>complaint/inves_starting/<?php echo $view_cp['cp_no']; ?>"><button name="btn_v_cp" id="btn_v_cp" onclick="javascript:return confirm('คุณต้องการเริ่มการสืบสวนใช่หรือไม่');" class="btn btn-primary">Start Investigation</button></a></div>
-            
+            <div class="btn_start_inves result_pms">
+                <a href="<?php echo base_url(); ?>complaint/inves_starting/<?php echo $view_cp['cp_no']; ?>"><button name="btn_v_cp" id="btn_v_cp" onclick="javascript:return confirm('คุณต้องการเริ่มการสืบสวนใช่หรือไม่');" class="btn btn-primary">Start Investigation</button></a>
+            </div>
+            <a href="<?php echo base_url("complaint/cancel_complaint/"); ?><?php echo $view_cp['cp_no']; ?>"><button id="cancle_btn" class="btn btn-danger" style="margin-bottom: 5px;">Cancel Complaint</button></a>
+
             <footer>
-              <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> 
+              <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
             </footer>
 
-            
-                
-</div><!-- Main content page -->
-            
 
-      
+
+</div><!-- Main content page -->
+
+
+
     </body>
 </html>

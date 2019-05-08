@@ -15,7 +15,7 @@ class Dashboard extends CI_Controller{
         $data['get_ncstatus'] = $this->dashboard_model->get_ncstatus();
         $data['getby_username'] = $this->dashboard_model->getby_username();
         $data['getby_dept'] = $this->dashboard_model->getby_dept();
-        $data['getby_topic'] = $this->dashboard_model->getby_topic();
+        $data['getby_topic_cat'] = $this->dashboard_model->getby_topic_cat();
         
         
         $data['getuser'] = $this->login_model->getuser();
@@ -70,20 +70,20 @@ class Dashboard extends CI_Controller{
         $this->load->view("dashboard/viewby_department",$data);
     }
     
-    public function viewby_topic($cp_topic_id){
+    public function viewby_topic_cat($cp_topiccat_id){
         $this->login_model->call_login();
         
         $data['getuser'] = $this->login_model->getuser();
-        $data['viewby_topic'] = $this->dashboard_model->viewby_topic($cp_topic_id);
+        $data['viewby_topic_cat'] = $this->dashboard_model->viewby_topic_cat($cp_topiccat_id);
         
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
-        $this->load->view("dashboard/viewby_topic",$data);
+        $this->load->view("dashboard/viewby_topic_cat",$data);
     }
     
     
-    public function graph1(){
-       
+    public function graph_cp(){
+       $this->load->view("");
     }
     
     

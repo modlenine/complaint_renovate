@@ -14,7 +14,7 @@ class Complaint_model extends CI_Model
     { //Email Function
         $mail = new PHPMailer();
         $mail->IsSMTP();
-        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
         //        $mail->Host = "smtp.gmail.com";
@@ -75,7 +75,25 @@ class Complaint_model extends CI_Model
 
     public function list_cp()
     {
-        $result = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code");
+        $result = $this->db->query("SELECT
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_status.cp_status_name,
+complaint_topic.topic_name,
+complaint_topic_catagory.topic_cat_name,
+complaint_main.cp_user_name,
+complaint_main.cp_cus_name,
+complaint_main.cp_status_code,
+complaint_main.cp_no_old,
+complaint_status.cp_status_id,
+complaint_main.cp_priority
+FROM
+complaint_main
+INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code
+INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+
+");
         return $result->result_array();
     }
 
@@ -85,7 +103,59 @@ class Complaint_model extends CI_Model
 
     public function view_cp($cp_no)
     {
-        $result = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_no='$cp_no' ");
+        $result = $this->db->query("SELECT
+complaint_main.cp_id,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_main.cp_topic,
+complaint_main.cp_topic_cat,
+complaint_main.cp_priority,
+complaint_main.cp_user_name,
+complaint_main.cp_user_empid,
+complaint_main.cp_user_email,
+complaint_main.cp_user_dept,
+complaint_main.cp_cus_name,
+complaint_main.cp_cus_ref,
+complaint_main.cp_invoice_no,
+complaint_main.cp_pro_code,
+complaint_main.cp_pro_lotno,
+complaint_main.cp_pro_qty,
+complaint_main.cp_detail,
+complaint_main.cp_file,
+complaint_main.cp_status_code,
+complaint_main.cp_detail_inves,
+complaint_main.cp_detail_inves_signature,
+complaint_main.cp_detail_inves_dept,
+complaint_main.cp_detail_inves_date,
+complaint_main.cp_detail_inves_file,
+complaint_main.cp_sum_inves,
+complaint_main.cp_sum_inves_signature,
+complaint_main.cp_sum_inves_dept,
+complaint_main.cp_sum_inves_date,
+complaint_main.cp_sum_inves_file,
+complaint_main.cp_sum,
+complaint_main.cp_conclu_detail,
+complaint_main.cp_conclu_signature,
+complaint_main.cp_conclu_dept,
+complaint_main.cp_conclu_date,
+complaint_main.cp_conclu_costdetail,
+complaint_main.cp_conclu_cost,
+complaint_main.cp_conclu_file,
+complaint_main.cp_modify_by,
+complaint_main.cp_modify_datetime,
+complaint_main.cp_modify_reason,
+complaint_status.cp_status_name,
+complaint_topic_catagory.topic_cat_name,
+complaint_topic.topic_name,
+complaint_main.cp_no_old,
+complaint_topic.topic_id,
+complaint_topic_catagory.topic_cat_id
+FROM
+complaint_main
+INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code
+INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+WHERE cp_no='$cp_no' ");
         return $result->row_array();
     }
 
@@ -143,11 +213,11 @@ class Complaint_model extends CI_Model
         $result = $this->db->query("SELECT topic_name , topic_cat_name  FROM complaint_topic LEFT JOIN complaint_topic_catagory ON complaint_topic.topic_cat_id = complaint_topic_catagory.topic_cat_id WHERE topic_cat_name='$toppic_cat' ");
         return $result->result_array();
     }
-    
+
     public function get_category(){
         $result = $this->db->query("SELECT * FROM complaint_topic_catagory");
         return $result->result_array();
-        
+
     }
 
 
@@ -181,6 +251,12 @@ class Complaint_model extends CI_Model
     }
 
 
+    public function get_topic_search(){
+        $result = $this->db->query("SELECT * FROM complaint_topic");
+        return $result->result_array();
+    }
+
+
 
 
 
@@ -201,7 +277,7 @@ class Complaint_model extends CI_Model
             foreach ($query2->result_array() as $rs) { //ไปวิ่งเช็คข้อมูล
                 $cal = $rs['cp_no']; //ตรงนี้เราจะได้ค่า CP18100
             }
-                
+
             $cut_yold = substr($cal, 2, 2); //ตัดปี 2 ตัวท้ายเพื่อเอาไว้เช็ค
             if($cut_yold != $cut_year_cur){
                 $start_newyear = "CP".$cut_year_cur."001";
@@ -217,7 +293,7 @@ class Complaint_model extends CI_Model
 
 
 
-            
+
         }
         return $cp_no; // ส่งค่ากลับไป
     }
@@ -262,7 +338,95 @@ class Complaint_model extends CI_Model
 
     public function get_owner_email($cp_no)
     {
-        $result = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_no='$cp_no' ");
+        $result = $this->db->query("SELECT
+complaint_main.cp_id,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_main.cp_topic,
+complaint_main.cp_topic_cat,
+complaint_main.cp_priority,
+complaint_main.cp_user_name,
+complaint_main.cp_user_empid,
+complaint_main.cp_user_email,
+complaint_main.cp_user_dept,
+complaint_main.cp_cus_name,
+complaint_main.cp_cus_ref,
+complaint_main.cp_invoice_no,
+complaint_main.cp_pro_code,
+complaint_main.cp_pro_lotno,
+complaint_main.cp_pro_qty,
+complaint_main.cp_detail,
+complaint_main.cp_file,
+complaint_main.cp_status_code,
+complaint_main.cp_detail_inves,
+complaint_main.cp_detail_inves_signature,
+complaint_main.cp_detail_inves_dept,
+complaint_main.cp_detail_inves_date,
+complaint_main.cp_detail_inves_file,
+complaint_main.cp_sum_inves,
+complaint_main.cp_sum_inves_signature,
+complaint_main.cp_sum_inves_dept,
+complaint_main.cp_sum_inves_date,
+complaint_main.cp_sum_inves_file,
+complaint_main.cp_sum,
+complaint_main.cp_conclu_detail,
+complaint_main.cp_conclu_signature,
+complaint_main.cp_conclu_dept,
+complaint_main.cp_conclu_date,
+complaint_main.cp_conclu_costdetail,
+complaint_main.cp_conclu_cost,
+complaint_main.cp_conclu_file,
+complaint_main.cp_modify_by,
+complaint_main.cp_modify_datetime,
+complaint_main.cp_modify_reason,
+complaint_main.nc_status_code,
+complaint_main.nc_sec31,
+complaint_main.nc_sec32,
+complaint_main.nc_sec32date,
+complaint_main.nc_sec32time,
+complaint_main.nc_sec33,
+complaint_main.nc_sec33date,
+complaint_main.nc_sec33time,
+complaint_main.nc_sec3owner,
+complaint_main.nc_sec3empid,
+complaint_main.nc_sec3dept,
+complaint_main.nc_sec3date,
+complaint_main.nc_sec3edit_memo,
+complaint_main.nc_sec4f1,
+complaint_main.nc_sec4f1_file,
+complaint_main.nc_sec4f1_status,
+complaint_main.nc_sec4f1_date,
+complaint_main.nc_sec4f1_time,
+complaint_main.nc_sec4f1_signature,
+complaint_main.nc_sec4f2,
+complaint_main.nc_sec4f2_file,
+complaint_main.nc_sec4f2_status,
+complaint_main.nc_sec4f2_date,
+complaint_main.nc_sec4f2_time,
+complaint_main.nc_sec4f2_signature,
+complaint_main.nc_sec4f3,
+complaint_main.nc_sec4f3_file,
+complaint_main.nc_sec4f3_status,
+complaint_main.nc_sec4f3_signature,
+complaint_main.nc_sec5,
+complaint_main.nc_sec5file,
+complaint_main.nc_sec5cost_detail,
+complaint_main.nc_sec5cost,
+complaint_main.nc_sec5failed,
+complaint_main.nc_sec5filefailed,
+complaint_main.nc_sec5costfailed,
+complaint_main.cp_no_old,
+complaint_main.nc_modify_by,
+complaint_main.nc_modify_date,
+complaint_status.cp_status_name,
+complaint_topic.topic_name,
+complaint_topic_catagory.topic_cat_name
+FROM
+complaint_main
+INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code
+INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+WHERE cp_no='$cp_no' ");
         return $result->row();
     }
 
@@ -302,40 +466,6 @@ class Complaint_model extends CI_Model
 
     public function save_newcomplaint()
     { /*     * *start save_newcomplaint** */
-
-        //*******************Check**การกรอกข้อมูล***********************//
-        if ($this->input->post("cp_topic_cat") == "") {
-            echo '<script language="javascript">';
-            echo 'alert("Please choose topic!")';
-            echo '</script>';
-
-            echo '<script lanaguage="javascript">';
-            echo 'history.back()';
-            echo '</script>';
-            exit();
-        }
-        if ($this->input->post("cp_detail") == "") {
-            echo '<script language="javascript">';
-            echo 'alert("Please fill data.!")';
-            echo '</script>';
-
-            echo '<script lanaguage="javascript">';
-            echo 'history.back()';
-            echo '</script>';
-            exit();
-        }
-        if ($this->input->post("dept") == "") {
-            echo '<script language="javascript">';
-            echo 'alert("Please choose department.!")';
-            echo '</script>';
-
-            echo '<script lanaguage="javascript">';
-            echo 'history.back()';
-            echo '</script>';
-            exit();
-        }
-
-
 
 
         $get_cp_no = $this->getCPno();
@@ -393,8 +523,8 @@ class Complaint_model extends CI_Model
         $data = array( /*             * *****Insert data to complaint_main table******* */
             "cp_no" => $get_cp_no,
             "cp_date" => $this->input->post("cp_date"),
-            "cp_topic" => $this->input->post("cp_topic_hide"),
-            "cp_topic_cat" => $this->input->post("cp_topic_cat"),
+            "cp_topic" => $this->input->post("cp_topic"),
+            "cp_topic_cat" => $this->input->post("cp_category"),
             "cp_priority" => number_format($sum_score, 1),
             "cp_user_name" => $this->input->post("cp_user_name"),
             "cp_user_empid" => $this->input->post("cp_user_empid"),
@@ -423,24 +553,11 @@ class Complaint_model extends CI_Model
 
 
 
-        //                                   $number =  number_format($sum_score,1);
-        //                                   if($number >= 1 && $number <= 1.5){
-        //                                       $level = "<span style='color:#696969;'>Very Low</span>";
-        //                                   }else if ($number >= 1.6 && $number <= 2.5){
-        //                                       $level = "Low";
-        //                                   }else if ($number >= 2.6 && $number <= 3.5){
-        //                                       $level = "<span style='color:#87CEEB;'>Normal</span>";
-        //                                   }else if ($number >= 3.6 && $number <= 4.5){
-        //                                       $level = "<span style='color:#FF4500;'>Height</span>";
-        //                                   }else{
-        //                                       $level = "<span style='color:#FF0000;'>Very Height</span>";
-        //                                   }
 
 
 
-
-        //************************************ZONE***SEND****EMAIL*************************************// 
-        $getdata_foremail = $this->db->query("SELECT * FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_no='$get_cp_no' ");
+        //************************************ZONE***SEND****EMAIL*************************************//
+        $getdata_foremail = $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_topic_cat, complaint_main.cp_priority, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.cp_user_email, complaint_main.cp_user_dept, complaint_main.cp_cus_name, complaint_main.cp_cus_ref, complaint_main.cp_invoice_no, complaint_main.cp_pro_code, complaint_main.cp_pro_lotno, complaint_main.cp_pro_qty, complaint_main.cp_detail, complaint_main.cp_file, complaint_main.cp_status_code, complaint_main.cp_detail_inves, complaint_main.cp_detail_inves_signature, complaint_main.cp_detail_inves_dept, complaint_main.cp_detail_inves_date, complaint_main.cp_detail_inves_file, complaint_main.cp_sum_inves, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves_dept, complaint_main.cp_sum_inves_date, complaint_main.cp_sum_inves_file, complaint_main.cp_sum, complaint_main.cp_conclu_detail, complaint_main.cp_conclu_signature, complaint_main.cp_conclu_dept, complaint_main.cp_conclu_date, complaint_main.cp_conclu_costdetail, complaint_main.cp_conclu_cost, complaint_main.cp_conclu_file, complaint_main.cp_modify_by, complaint_main.cp_modify_datetime, complaint_main.cp_modify_reason, complaint_main.nc_status_code, complaint_main.nc_sec31, complaint_main.nc_sec32, complaint_main.nc_sec32date, complaint_main.nc_sec32time, complaint_main.nc_sec33, complaint_main.nc_sec33date, complaint_main.nc_sec33time, complaint_main.nc_sec3owner, complaint_main.nc_sec3empid, complaint_main.nc_sec3dept, complaint_main.nc_sec3date, complaint_main.nc_sec3edit_memo, complaint_main.nc_sec4f1, complaint_main.nc_sec4f1_file, complaint_main.nc_sec4f1_status, complaint_main.nc_sec4f1_date, complaint_main.nc_sec4f1_time, complaint_main.nc_sec4f1_signature, complaint_main.nc_sec4f2, complaint_main.nc_sec4f2_file, complaint_main.nc_sec4f2_status, complaint_main.nc_sec4f2_date, complaint_main.nc_sec4f2_time, complaint_main.nc_sec4f2_signature, complaint_main.nc_sec4f3, complaint_main.nc_sec4f3_file, complaint_main.nc_sec4f3_status, complaint_main.nc_sec4f3_signature, complaint_main.nc_sec5, complaint_main.nc_sec5file, complaint_main.nc_sec5cost, complaint_main.nc_sec5failed, complaint_main.nc_sec5filefailed, complaint_main.nc_sec5costfailed, complaint_main.cp_no_old, complaint_main.nc_modify_by, complaint_main.nc_modify_date, complaint_status.cp_status_name, complaint_topic.topic_name, complaint_topic_catagory.topic_cat_name FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat WHERE cp_no='$get_cp_no' ");
         $getdata_email = $getdata_foremail->row();
 
 
@@ -451,12 +568,18 @@ class Complaint_model extends CI_Model
         $sqlEmail = "SELECT email FROM maillist WHERE cp_mail_active = 1 "; //1=it , 2=sales , 3=cs
         $query = $this->db->query($sqlEmail);
 
-        if ($getdata_email->cp_topic_cat == "Safety" || $getdata_email->cp_topic_cat == "System" || $getdata_email->cp_topic_cat == "Environment") {
+        if ($getdata_email->cp_topic_cat == "3" || $getdata_email->cp_topic_cat == "4" || $getdata_email->cp_topic_cat == "5") {
+
+
+            $date = date_create($getdata_email->cp_date);
+             $condate = date_format($date, "d/m/Y");
+
+
 
             $subject = "New Complaint";
             $body = "<h3>New Complaint for Validation.</h3>";
-            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $getdata_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $getdata_email->cp_date . "<br>";
-            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $getdata_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $getdata_email->cp_topic_cat . "<br>";
+            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $getdata_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $getdata_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $getdata_email->topic_cat_name . "<br>";
             $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $getdata_email->cp_status_name . "<br><br>";
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
@@ -477,8 +600,8 @@ class Complaint_model extends CI_Model
 
             $subject = "New Complaint";
             $body = "<h3>New Complaint for Validation.</h3>";
-            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $getdata_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $getdata_email->cp_date . "<br>";
-            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $getdata_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $getdata_email->cp_topic_cat . "<br>";
+            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $getdata_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $getdata_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $getdata_email->topic_cat_name . "<br>";
             $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $getdata_email->cp_status_name . "<br><br>";
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
@@ -504,7 +627,7 @@ class Complaint_model extends CI_Model
 
         $mail = new PHPMailer();
         $mail->IsSMTP();
-        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
         //        $mail->Host = "smtp.gmail.com";
@@ -533,7 +656,7 @@ class Complaint_model extends CI_Model
         $mail->Subject = $subject;
         $mail->Body = $body;
         $mail->send();
-        //************************************ZONE***SEND****EMAIL*************************************//      
+        //************************************ZONE***SEND****EMAIL*************************************//
     }
 
     /*     * *end save_newcomplaint** */
@@ -588,8 +711,8 @@ class Complaint_model extends CI_Model
         $data = array( /*             * *****Insert data to complaint_main table******* */
             "cp_no" => $get_cp_no,
             "cp_date" => $this->input->post("cp_date"),
-            "cp_topic" => $this->input->post("cp_topic_f"),
-            "cp_topic_cat" => $this->input->post("cp_topic_cat"),
+            "cp_topic" => $this->input->post("cp_topic"),
+            "cp_topic_cat" => $this->input->post("cp_category"),
             //                "cp_priority" => $this->input->post(""),
             "cp_user_name" => $this->input->post("cp_user_name"),
             "cp_user_empid" => $this->input->post("cp_user_empid"),
@@ -640,17 +763,21 @@ class Complaint_model extends CI_Model
         $get_owner_email = $this->get_owner_email($cp_no);
 
 
+        $date = date_create($get_owner_email->cp_date);
+        $cpdate = date_format($date, "d-m-Y");
+
+
         $subject = "Investigate Start !";
         $body = "<h3>The Complaint is starting an investigation.</h3>";
-        $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-        $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+        $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$cpdate. "<br>";
+        $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
         $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name . "<br>";
         $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
         $mail = new PHPMailer();
         $mail->IsSMTP();
-        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
         //        $mail->Host = "smtp.gmail.com";
@@ -741,17 +868,25 @@ class Complaint_model extends CI_Model
         $this->db->update("complaint_main", $data);
 
 
-        //***************************Email***Zone************************************************//           
+        //***************************Email***Zone************************************************//
         $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
 
         $get_owner_email = $this->get_owner_email($cp_no);
 
-        if ($get_owner_email->cp_topic_cat == "Safety" || $get_owner_email->cp_topic_cat == "System" || $get_owner_email->cp_topic_cat == "Environment") {
+        if ($get_owner_email->cp_topic_cat == "3" || $get_owner_email->cp_topic_cat == "4" || $get_owner_email->cp_topic_cat == "5") {
+
+
+            $date = date_create($get_owner_email->cp_date);
+             $condate = date_format($date, "d/m/Y");
+
+             $date2 = date_create( $get_owner_email->cp_detail_inves_date );
+             $condate2 = date_format($date2, "d/m/Y");
+
 
             $subject = "Investigation Complete";
             $body = "<h3>The Complaint Investigation Complete.</h3>";
-            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name . "<br><br>";
 
 
@@ -776,7 +911,7 @@ class Complaint_model extends CI_Model
             $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
             $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
-            $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_date . "<br>";
+            $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
 
 
             $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
@@ -784,8 +919,8 @@ class Complaint_model extends CI_Model
 
             $subject = "Investigation Complete";
             $body = "<h3>The Complaint Investigation Complete.</h3>";
-            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+            $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+            $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name . "<br><br>";
 
 
@@ -811,7 +946,7 @@ class Complaint_model extends CI_Model
             $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
             $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
-            $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_date . "<br>";
+            $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
 
 
             $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
@@ -821,7 +956,7 @@ class Complaint_model extends CI_Model
 
         $mail = new PHPMailer();
         $mail->IsSMTP();
-        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
         //        $mail->Host = "smtp.gmail.com";
@@ -913,6 +1048,20 @@ class Complaint_model extends CI_Model
         if ($this->input->post("cp_sum") == "yes") {
             $update_status = "cp05";
             $update_status_nc = "nc01";
+
+            $this->db->where("cp_dept_cp_no", $cp_no);
+            $this->db->delete("complaint_department");
+
+            $get_input_dept = $this->input->post("dept_edit"); /*         * **Code Insert radio array***** */
+            foreach ($get_input_dept as $gd) { /*         * ****Check array input radio********* */
+                $save_dept = array(
+                    "cp_dept_cp_no" => $cp_no,
+                    "cp_dept_code" => $gd
+                );
+                $this->db->insert("complaint_department", $save_dept);
+            } /*         * **Code Insert radio array***** */
+
+
         } else {
             $update_status = "cp04";
             $update_status_nc = "";
@@ -940,14 +1089,23 @@ class Complaint_model extends CI_Model
 
         $get_owner_email = $this->get_owner_email($cp_no);
 
+            $date = date_create($get_owner_email->cp_date);
+             $condate = date_format($date, "d/m/Y");
+
+             $date2 = date_create( $get_owner_email->cp_detail_inves_date );
+             $condate2 = date_format($date2, "d/m/Y");
+
+             $date3 = date_create( $get_owner_email->cp_sum_inves_date );
+             $condate3 = date_format($date2, "d/m/Y");
+
 
         if ($get_owner_email->cp_sum == "no") {
-            if ($get_owner_email->cp_topic_cat == "Safety" || $get_owner_email->cp_topic_cat == "System" || $get_owner_email->cp_topic_cat == "Environment") {
+            if ($get_owner_email->cp_topic_cat == "3" || $get_owner_email->cp_topic_cat == "4" || $get_owner_email->cp_topic_cat == "5") {
 
                 $subject = "Normal Complaint";
                 $body = "<h3>The Complaint is normal complaint.</h3>";
-                $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-                $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+                $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+                $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
                 $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name . "<br><br>";
 
 
@@ -972,7 +1130,7 @@ class Complaint_model extends CI_Model
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
                 $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
-                $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_date . "<br>";
+                $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
 
 
@@ -980,7 +1138,7 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
                 $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>ไม่เป็นข้อบกพร่องของบริษัท</strong><br>";
-                $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_sum_inves_date . "<br>";
+                $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
 
 
                 $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
@@ -988,8 +1146,8 @@ class Complaint_model extends CI_Model
 
                 $subject = "Normal Complaint";
                 $body = "<h3>The Complaint is normal complaint.</h3>";
-                $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-                $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+                $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+                $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
                 $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name . "<br><br>";
 
 
@@ -1016,7 +1174,7 @@ class Complaint_model extends CI_Model
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
                 $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
-                $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_date . "<br>";
+                $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
 
 
@@ -1024,19 +1182,19 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
                 $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>ไม่เป็นข้อบกพร่องของบริษัท</strong><br>";
-                $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_sum_inves_date . "<br>";
+                $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
 
 
                 $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
             }
         } else {
 
-            if ($this->input->post('cp_topic_cat') == "Safety" || $this->input->post('cp_topic_cat') == "System" || $this->input->post('cp_topic_cat') == "Environment") {
+            if ($this->input->post('cp_topic_cat') == "3" || $this->input->post('cp_topic_cat') == "4" || $this->input->post('cp_topic_cat') == "5") {
 
                 $subject = "Transfered to NC";
                 $body = "<h3>The Complaint is normal complaint.</h3>";
-                $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-                $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+                $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+                $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
                 $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name . "<br><br>";
 
 
@@ -1061,7 +1219,7 @@ class Complaint_model extends CI_Model
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
                 $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
-                $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_date . "<br>";
+                $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
 
 
@@ -1069,16 +1227,16 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
                 $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>เป็นข้อบกพร่องของบริษัท</strong><br>";
-                $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_sum_inves_date . "<br>";
+                $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
 
 
-                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/nc/main/" . $cp_no . ">" . "Go to Page</a>";
             } else {
 
                 $subject = "Transfered to NC";
                 $body = "<h3>The Complaint is Transfered to NC.</h3>";
-                $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_date . "<br>";
-                $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_topic_cat . "<br>";
+                $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
+                $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
                 $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name . "<br><br>";
 
 
@@ -1105,7 +1263,7 @@ class Complaint_model extends CI_Model
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
                 $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
-                $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_date . "<br>";
+                $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
 
 
@@ -1113,10 +1271,10 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
                 $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>เป็นข้อบกพร่องของบริษัท</strong><br>";
-                $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_sum_inves_date . "<br>";
+                $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
 
 
-                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/nc/main/" . $cp_no . ">" . "Go to Page</a>";
             }
         }
 
@@ -1124,7 +1282,7 @@ class Complaint_model extends CI_Model
 
         $mail = new PHPMailer();
         $mail->IsSMTP();
-        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
         //        $mail->Host = "smtp.gmail.com";
@@ -1155,17 +1313,17 @@ class Complaint_model extends CI_Model
 
         if (!$mail->send()) {
             echo '<script language="javascript">';
-            echo 'alert("Start Investigate Failed !!")';
+            echo 'alert("Summary of Investigate Failed !!")';
             echo '</script>';
             exit();
         } else {
             echo '<script language="javascript">';
-            echo 'alert("Start Investigate Success")';
+            echo 'alert("Summary of Investigate Success")';
             echo '</script>';
         }
 
 
-        //************************Email***Zone***********************************//  
+        //************************Email***Zone***********************************//
     }
 
 
@@ -1210,7 +1368,7 @@ class Complaint_model extends CI_Model
 
 
 
-        //************************Email***Zone***********************************//     
+        //************************Email***Zone***********************************//
         $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
 
         $get_owner_email = $this->get_owner_email($cp_no);
@@ -1219,7 +1377,7 @@ class Complaint_model extends CI_Model
         $subject = "Conclusion of Complaint";
         $body = "<h2>The Complaint is Conclusion of Complaint.</h2>";
         $body .= "<strong>Complaint No. : </strong>" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_date . "<br>";
-        $body .= "<strong>Topic : </strong>" . $get_owner_email->cp_topic . "&nbsp;&nbsp;<strong>Category : </strong>" . $get_owner_email->cp_topic_cat . "<br>";
+        $body .= "<strong>Topic : </strong>" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>" . $get_owner_email->topic_cat_name . "<br>";
         $body .= "<strong>Status : </strong>" . $get_owner_email->cp_status_name . "<br>";
 
         $body .= "<strong><h2>Priority</h2></strong>";
@@ -1258,7 +1416,7 @@ class Complaint_model extends CI_Model
 
         $mail = new PHPMailer();
         $mail->IsSMTP();
-        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้ 
+        $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้
         $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
         $mail->Host = "mail.saleecolour.com";  // specify main and backup server
         //        $mail->Host = "smtp.gmail.com";
@@ -1298,7 +1456,7 @@ class Complaint_model extends CI_Model
         }
 
 
-        //************************Email***Zone***********************************//       
+        //************************Email***Zone***********************************//
     }
 
     public function savedata_edit($cp_no)
@@ -1365,8 +1523,8 @@ class Complaint_model extends CI_Model
         $data = array( /*             * *****Update data to complaint_main table******* */
             //                "cp_no" => $get_cp_no,
             //                "cp_date" => $this->input->post("cp_date"),
-            "cp_topic" => $this->input->post("cp_topic_hide_edit"),
-            "cp_topic_cat" => $this->input->post("cp_topic_cat_edit"),
+            "cp_topic" => $this->input->post("cp_topic"),
+            "cp_topic_cat" => $this->input->post("cp_category"),
             "cp_priority" => number_format($sum_score, 1),
             //                "cp_user_name" => $this->input->post("cp_user_name"),
             //                "cp_user_empid" => $this->input->post("cp_user_empid"),
@@ -1436,12 +1594,12 @@ class Complaint_model extends CI_Model
 
             public function update_ncstatus($cp_no){
                 $data = array(
-                    "nc_status_code" => "Followup_3rd (Failed!)"
+                    "nc_status_code" => "nc12"
                 );
-                
+
                 $this->db->where("cp_no",$cp_no);
                 $this->db->update("complaint_main",$data);
-                
+
             }
 
 
@@ -1497,20 +1655,20 @@ class Complaint_model extends CI_Model
 
     /*     * ***************CHECK ZONE******************** */
 
-    public function check_status_page($cp_no)
+    public function check_status_page($cp_no)/******เช็คหน้า View************/
     { /*     * *****Check status page******* */
         $result = $this->db->query("SELECT cp_status_code FROM complaint_main WHERE cp_no='$cp_no' ");
         $get_status = $result->row();
-        if ($get_status->cp_status_code !== "cp01") {
+        if ($get_status->cp_status_code != "cp07" && $get_status->cp_status_code != "cp01") {
             redirect('/complaint/investigate/' . $cp_no);
         }
     }
 
-    public function check_status_page2($cp_no)
+    public function check_status_page2($cp_no)/******เช็คหน้า Investigate************/
     { /*     * *****Check status page******* */
         $result = $this->db->query("SELECT cp_status_code FROM complaint_main WHERE cp_no='$cp_no' ");
         $get_status = $result->row();
-        if ($get_status->cp_status_code == "cp01") {
+        if ($get_status->cp_status_code == "cp07" || $get_status->cp_status_code == "cp01") {
             redirect('/complaint/view/' . $cp_no);
         }
     }
@@ -1538,17 +1696,54 @@ class Complaint_model extends CI_Model
         return $set_y; // ส่งค่ากลับไป
     }
 
+
+    public function check_pri_empty(){
+
+                $get_input_priority = $this->input->post("cp_pri_name_get"); /*         * *****Code Insert select array******* */
+        foreach ($get_input_priority as $gp) { /*         * *****Check array input select******** */
+            if($gp == ""){
+                echo '<script language="javascript">';
+            echo 'alert("Please choose priority fill!")';
+            echo '</script>';
+
+                echo '<script lanaguage="javascript">';
+            echo 'history.back()';
+            echo '</script>';
+            exit();
+            }
+
+        }
+    }
+
+
+    public function check_dept_empty(){
+        $get_input_dept = $this->input->post("dept"); /*         * **Code Insert radio array***** */
+
+            if($get_input_dept == ""){
+                echo '<script language="javascript">';
+            echo 'alert("Please choose dept fill!")';
+            echo '</script>';
+
+                echo '<script lanaguage="javascript">';
+            echo 'history.back()';
+            echo '</script>';
+            exit();
+
+        } /*         * **Code Insert radio array***** */
+    }
+
+
     /*     * ***************CHECK ZONE******************** */
-    
-    
+
+
     /*สร้าง Select box 2 ชั้น */
-    
+
     public function fetch_topic_category(){
         $this->db->order_by("topic_cat_name","ASC");
         $query = $this->db->get("complaint_topic_catagory");
         return $query->result();
     }
-    
+
     public function fetch_topic($topic_cat_id)
     {
         $this->db->where("topic_cat_id",$topic_cat_id);
@@ -1560,8 +1755,25 @@ class Complaint_model extends CI_Model
         }
         return $output;
     }
-    
-    
-    
-    
+
+
+    public function cancel_complaint($cp_no){
+        $data = array(
+            "cp_status_code" => "cp07"
+        );
+        $this->db->where("cp_no",$cp_no);
+        $this->db->update("complaint_main",$data);
+
+
+
+
+    }
+
+
+
+
+
+
+
+
 }
