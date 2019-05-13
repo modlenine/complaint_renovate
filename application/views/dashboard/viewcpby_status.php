@@ -10,11 +10,17 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <?php $this->load->view("head/nav"); ?>
-        
+        <?php
+        $this->load->view("head/nav");
+        $get_cp_status_code = $viewcpby_status->row();
+        ?>
+
         <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <h1 class="head_list_cp">List of Complaint</h1>
-            <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div><hr>
+            <div class="btn_back">
+              <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
+              <a href="<?php echo base_url('report/export_cpby_status/') ?><?php echo $get_cp_status_code->cp_status_code; ?>"><button class="btn btn-success btn-sm btn_back" type="text" name="cp_exportby_status">Export</button></a>
+            </div><hr>
             <table id="view_cp" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
@@ -28,15 +34,15 @@ and open the template in the editor.
                     </tr>
                 </thead>
                 <tbody>
-<?php foreach ($viewcpby_status as $l_cp): ?>
+<?php foreach ($viewcpby_status->result_array() as $l_cp): ?>
                     <tr>
-                        <?php  
+                        <?php
                             if($l_cp['cp_status_code']=="cp01"){
                                 $url_page = "complaint/view/";
                             }else{
                                 $url_page = "complaint/investigate/";
                             }
-                            
+
                             if($l_cp['cp_status_code']=="cp01"){
                                 $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
@@ -46,14 +52,14 @@ and open the template in the editor.
                             <?php
                             $date = date_create($l_cp['cp_date']);
                             echo date_format($date, "d/m/Y");
-                            
+
                             ?>
                         </td>
                         <td style="text-align: left;"><?php echo $l_cp['cp_user_name']; ?></td>
-                        <td style="text-align: left;"><?php echo $l_cp['cp_topic']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_cp['topic_name']; ?></td>
                         <td style="text-align: left;"><?php echo $l_cp['cp_cus_name']; ?></td>
-                        
-                        <?php  
+
+                        <?php
                             if($l_cp['cp_status_id']== "cp01"){
                                 $color = "#0066FF";
                             }
@@ -72,9 +78,9 @@ and open the template in the editor.
                             if($l_cp['cp_status_id']== "cp06"){
                                 $color = "#228B22";
                             }
-                            
+
                         ?>
-                        
+
                         <td style="text-align: left;color:<?php echo $color; ?>;"><?php echo $l_cp['cp_status_name']; ?></td>
                         <td style="text-align: left;"><?php echo $this->complaint_model->conpriority($l_cp['cp_priority']); ?></td>
                     </tr>

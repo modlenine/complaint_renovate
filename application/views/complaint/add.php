@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
         <?php $this->load->view("head/nav"); ?>
 
-        <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
+        <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
 
             <h1 class="h1_add">Complaint Form</h1><hr>
             <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
@@ -33,7 +33,7 @@ and open the template in the editor.
                                 <input type="text" name="cp_date" id="cp_date" value="<?php echo date('Y-m-d'); ?>" hidden=""/>
                             </div>
 
-                            <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->                                   
+                            <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->
                             <script language="JavaScript">
                                 function resutName(strCusName)
                                 {
@@ -41,15 +41,15 @@ and open the template in the editor.
                                     frmMain.cp_topic_cat.value = strCusName.split("|")[1];
                                 }
                             </script>
-                            <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->  
-                            
+                            <!-- Code สำหรับการ ตัดคำที่ดึงมา 2 Value และคั่นด้วย | -->
 
-                            
+
+
                             <div class="col-md-3 pri">
                                 <label><b>Category</b></label>
                                 <select name="cp_category" id="cp_category" class="form-control form-control-sm" required="">
                                     <option value="">Select Category</option>
-                                    <?php  
+                                    <?php
                                     foreach ($topic_category as $row)
                                     {
                                         echo '<option value="'.$row->topic_cat_id.'">'.$row->topic_cat_name.'</option>';
@@ -57,16 +57,16 @@ and open the template in the editor.
                                     ?>
                                 </select>
                             </div>
-                            
-                            
+
+
                             <div class="col-md-3 pri">
                                 <label><b>Topic</b></label>
                                 <select name="cp_topic" id="cp_topic" class="form-control form-control-sm" required="">
                                     <option value="">Select Topic</option>
-                                    
+
                                 </select>
                             </div>
-                            
+
 
 
 
@@ -87,7 +87,7 @@ and open the template in the editor.
 
                         <div class="form-row">
                             <?php foreach ($get_pri_topic as $gpt): ?>
-                            
+
                                 <div class="col-md-3 pri">
 
                                     <label ><b><?php echo $gpt['pricat_name']; ?></b></label>
@@ -107,13 +107,13 @@ and open the template in the editor.
     <?php endforeach; ?>
 
                                     </select>
-                                   
-                                    
+
+
                                 </div>
-                                
+
 
 <?php endforeach; ?>
-                            
+
                         </div>
 
 
@@ -194,7 +194,7 @@ and open the template in the editor.
                         <div class="form-row">
                             <div class="col-md-12 form-group pri" style="margin-top: 15px;">
                                 <textarea name="cp_detail" class="form-control form-control-sm" type="textarea" id="message" placeholder="Message" maxlength="2000" rows="7" required=""></textarea>
-                                <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
+                                <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
                             </div>
                             <div class="col-md-6 pri">
                                 <p><input name="file_add" id="file_add" type="file" class="form-control form-control-sm"/></p>

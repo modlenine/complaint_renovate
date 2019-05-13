@@ -157,6 +157,8 @@
         $('input[name="cp_sum"]').change(function () {
             if ($(this).val() == "no") {
                 $('.conclusion').show();
+                $('.checkbox_dept').hide();
+                $('.label_dept').show();
             } else {
                 $('.conclusion').hide();
                 $('.checkbox_dept').show();
@@ -824,20 +826,12 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
         });
 
-
-
-
-
-
-
         /******* 102400 ** = 100KB********/
         /******* 1048576 *** = 1MB *******************/
         /******* 10485760 *** = 10MB *******************/
 
 
-        /*********************DASHBOARD**************************/
 
-        /*********************DASHBOARD**************************/
 
 
 
@@ -865,6 +859,9 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 //    $('.user_permission').hide(0);
 
 /*************************SETTING****ZONE************************/
+
+
+
 $('#search_form').change(function (){
 
    if($('#search_form').val()=="searchby_docnum"){
@@ -922,17 +919,46 @@ $('#cp_category').change(function(){
         })
     }
 });
-
 /***********************ทำ Select Box 2 ชั้น**********************/
 
 
-/********************ทำ Search box*************************/
+
+/*********************EXPORT**ZONE*************************/
+// Check step1
+$('#cptype_export').hide();
+$('#nctype_export').hide();
+$('#export_type').change(function (){
+    if($('#export_type').val() == "Complaint"){
+      $('#cptype_export').show();
+      $('#nctype_export').hide();
+    }else{
+      $('#nctype_export').show();
+      $('#cptype_export').hide();
+    }
+
+});
+
+
+// check step2
+$('#by_status').hide();
+$('#by_dept').hide();
+$('#cptype_export').change(function(){
+    if($('#cptype_export').val() == "Status"){
+      $('#by_status').show();
+    }else{
+      $('#by_status').hide();
+    }
+    if($('#cptype_export').val() == "Department"){
+      $('#by_dept').show();
+    }else{
+      $('#by_dept').hide();
+    }
+});
 
 
 
 
 
-/**************************CHECK ค่าว่าง*************************/
 
 
 

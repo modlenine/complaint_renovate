@@ -1059,6 +1059,15 @@ WHERE cp_no='$cp_no' ");
                     "cp_dept_code" => $gd
                 );
                 $this->db->insert("complaint_department", $save_dept);
+
+
+                $data_nc = array(
+                  "nc_no" => $cp_no,
+                  "nc_related_dept" => $gd,
+                  "nc_status_code" => $update_status_nc
+                );
+                $this->db->insert("nc_main",$data_nc);
+
             } /*         * **Code Insert radio array***** */
 
 
@@ -1074,12 +1083,18 @@ WHERE cp_no='$cp_no' ");
             "cp_sum_inves_date" => $this->input->post("cp_sum_inves_date"),
             "cp_sum_inves_file" => $file_name_date,
             "cp_status_code" => $update_status,
-            "nc_status_code" => $update_status_nc,
             "cp_sum" => $this->input->post("cp_sum")
         );
 
         $this->db->where("cp_no", $cp_no);
-        $this->db->update("complaint_main", $data);
+        $result_cp = $this->db->update("complaint_main", $data);
+        if(!$result_cp){
+          echo "บันทึกข้อมูล cp_main table ไม่สำเร็จ";
+        }else{
+          echo "บันทึกข้อมูล cp_main table สำเร็จ";
+        }
+
+
 
 
 

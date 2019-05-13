@@ -67,7 +67,7 @@ class login_model extends CI_Model {
             $_SESSION['RedirectKe'] = $_SERVER['REQUEST_URI'];
 
             echo "<h1 style='text-align:center;margin-top:50px;'>กรุณา Login เข้าสู่ระบบ</h1>";
-            header("refresh:2; url=http://192.190.10.27/complaint/login/");
+            header("refresh:1; url=http://192.190.10.27/complaint/login/");
             die();
         }
     }

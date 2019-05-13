@@ -45,7 +45,7 @@ and open the template in the editor.
                     NC
                 </a>
                 <?php foreach($get_ncstatus->result_array() as $gnc): ?>
-                <a href="<?php echo base_url("dashboard/viewncby_status/"); ?><?php echo $gnc['nc_status_code']; ?>" class="list-group-item"><?php echo $gnc['cp_status_name']; ?><span class="badge"><?php echo $gnc['sumnc']; ?></span></a>
+                <a href="<?php echo base_url("dashboard/viewncby_status/"); ?><?php echo $gnc['nc_status_code']; ?>" class="list-group-item"><?php echo $gnc['cp_status_name']; ?><span class="badge"><?php echo $gnc['sum']; ?></span></a>
                 <?php endforeach; ?>
 
             </div>

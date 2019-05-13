@@ -41,7 +41,7 @@ function myFunction() {
             <div class="panel panel-primary"><!--SECTION 1-->
                 <div class="panel-heading">1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</div>
                 <div class="panel-body">
-                    <p><label class="ncmain_s1_label">เรียน ผู้จัดการฝ่าย</label></p>
+                    <p><label class="ncmain_s1_label">เรียน ผู้จัดการฝ่าย &nbsp;<?php echo $getdatamain->cp_dept_main_name; ?></label></p>
                     <p class="gdmcp_hover"><label class="ncmain_s1_label">Transform Complaint No.</label>&nbsp;
                         <a href="<?php echo base_url("complaint/investigate/"); ?><?php echo $getdatamain->cp_no; ?>" target="_blank"><label data-toggle="tooltip" title="คลิกที่นี่เพื่อดู Complaint ต้นฉบับ"><i class="fas fa-book-open"></i>&nbsp;<?php echo $getdatamain->cp_no; ?></label></a>
                     </p>
@@ -74,19 +74,17 @@ function myFunction() {
                 <div class="panel-heading">2. สำหรับฝ่ายบริหาร (พิจารณาและกำหนดฝ่ายที่รับผิดชอบ แล้วส่งให้ MR. ดำเนินการ)</div>
                 <div class="panel-body">
                     <p><label class="ncmain_s1_label">ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </label>
-                        <?php foreach ($get_dept as $gdn): ?>
-                            <label><?php echo $gdn['Dept'] . "&nbsp;,"; ?></label>&nbsp;
-                        <?php endforeach; ?>
+                            <label><?php echo $getdatamain->cp_dept_main_name; ?></label>&nbsp;
                     </p>
 
                     <?php
                     $ckd_result = 0;
-                    foreach ($get_dept as $check_dept) {
-                        if ($check_dept['cp_dept_code'] !== $getuser['DeptCode']) {
-                            continue;
+
+                        if ($getdatamain->nc_related_dept == $getuser['DeptCode']) {
+                          $ckd_result = 1;
                         }
-                        $ckd_result = 1;
-                    }
+
+
                     ?>
                     <input hidden="" type="text" name="check_qmr" id="check_qmr" value="<?php echo $getuser['Dept']; ?>" /><!--Check qmr-->
                     <input hidden="" type="text" name="check_permit" id="check_permit" value="<?php echo $ckd_result; ?>"/><!-- Check permission -->
@@ -109,24 +107,22 @@ function myFunction() {
                 <div class="panel-heading">3. สำหรับฝ่ายที่รับผิดชอบให้หาสาเหตุ. วิธีแก้ไขและป้องกันและกำหนดแผนการปฎิบัติการแก้ไข</div>
                 <div class="panel-body">
 
-                    <form name="sec1" method="post" action="<?php echo base_url("nc/save_sec3/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
+                    <form name="sec1" method="post" action="<?php echo base_url("nc/save_sec3/"); ?><?php echo $getdatamain->nc_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
                         <span style="font-size: 18px;">Corrective</span><hr>
                         <div class="col-md-12" style="margin-bottom: 20px;">
 
-                            <div class="form-group col-md-10">
+                            <div class="form-group col-md-12">
                                 <label>3.1 สาเหตุ</label>
                                 <textarea class="form-control" rows="5" name="nc_sec31" id="nc_sec31"><?php echo $getdatamain->nc_sec31; ?></textarea>
                             </div>
 
 
-                            <div class="form-group col-md-10">
+                            <div class="form-group col-md-12">
                                 <label>3.2 วิธีแก้ไข</label>
                                 <textarea class="form-control" rows="5" name="nc_sec32" id="nc_sec32"><?php echo $getdatamain->nc_sec32; ?></textarea>
                                 <label style="margin-top: 5px;">กำหนดเสร็จ</label>
                                 <div class="form-inline">
 
-<!--                            <input type="date" name="nc_sec32date" id="nc_sec32date" class="form-control" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
-<input type="time" name="nc_sec32time" id="nc_sec32time" class="form-control" value="<?php echo $getdatamain->nc_sec32time; ?>"/>-->
                                     <?php
                                     $date1 = date_create($getdatamain->nc_sec32date);
                                     $result_date = date_format($date1, "d/m/Y H:i:s");
@@ -150,7 +146,7 @@ function myFunction() {
 
                         <span style="font-size: 18px;">Preventive</span><hr>
                         <div class="col-md-12">
-                        <div class="form-group col-md-10">
+                        <div class="form-group col-md-12">
                             <label>3.3 วิธีป้องกัน ( Action Plan )</label>
                             <textarea class="form-control" rows="5" name="nc_sec33" id="nc_sec33"><?php echo $getdatamain->nc_sec33; ?></textarea>
                             <label style="margin-top: 5px;">กำหนดเสร็จ</label>
@@ -193,10 +189,10 @@ function myFunction() {
                             <input hidden="" type="text" name="his_nc_sec31" id="his_nc_sec31" value="<?php echo $getdatamain->nc_sec31; ?>" />
                             <input hidden="" type="text" name="his_nc_sec32" id="his_nc_sec32" value="<?php echo $getdatamain->nc_sec32; ?>" />
                             <input hidden="" type="text" name="his_nc_sec32date" id="his_nc_sec32date" value="<?php echo $getdatamain->nc_sec32date; ?>" />
-                            <input hidden="" type="text" name="his_nc_sec32time" id="his_nc_sec32time" value="<?php echo $getdatamain->nc_sec32time; ?>" />
+
                             <input hidden="" type="text" name="his_nc_sec33" id="his_nc_sec33" value="<?php echo $getdatamain->nc_sec33; ?>" />
                             <input hidden="" type="text" name="his_nc_sec33date" id="his_nc_sec33date" value="<?php echo $getdatamain->nc_sec33date; ?>" />
-                            <input hidden="" type="text" name="his_nc_sec33time" id="his_nc_sec33time" value="<?php echo $getdatamain->nc_sec33time; ?>" />
+
                             <input hidden="" type="text" name="his_nc_sec3owner" id="his_nc_sec3owner" value="<?php echo $getdatamain->nc_sec3owner; ?>" />
                             <input hidden="" type="text" name="his_nc_sec3empid" id="his_nc_sec3empid" value="<?php echo $getdatamain->nc_sec3empid; ?>" />
                             <input hidden="" type="text" name="his_nc_sec3dept" id="his_nc_sec3dept" value="<?php echo $getdatamain->nc_sec3dept; ?>" />
@@ -248,7 +244,8 @@ function myFunction() {
                 <div class="panel-body">
 
                     <div class="form-group col-md-10">
-                        <form name="sec4f1" method="post" action="<?php echo base_url("nc/save_sec4f1/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
+                      <!-- ติดตามผลครั้งที่ 1 -->
+                        <form name="sec4f1" method="post" action="<?php echo base_url("nc/save_sec4f1/"); ?><?php echo $getdatamain->nc_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
                             <label>ผลการติดตามครั้งที่ 1</label>
                             <textarea class="form-control" rows="5" name="nc_sec4f1" id="nc_sec4f1"><?php echo $getdatamain->nc_sec4f1; ?></textarea>
                             <label style="margin-top: 5px;">เอกสารประกอบ</label>
@@ -297,8 +294,10 @@ function myFunction() {
                         </form>
                     </div>
 
+
+                    <!-- ติดตามผลครั้งที่ 2 -->
                     <div class="form-group col-md-10">
-                        <form name="sec4f2" method="post" action="<?php echo base_url("nc/save_sec4f2/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
+                        <form name="sec4f2" method="post" action="<?php echo base_url("nc/save_sec4f2/"); ?><?php echo $getdatamain->cp_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
                             <label>ผลการติดตามครั้งที่ 2</label>
                             <textarea class="form-control" rows="5" name="nc_sec4f2" id="nc_sec4f2"><?php echo $getdatamain->nc_sec4f2; ?></textarea>
                             <label style="margin-top: 5px;">เอกสารประกอบ</label>
@@ -339,8 +338,9 @@ function myFunction() {
                     </div>
 
 
+                    <!-- ติดตามผลครั้งที่ 3 -->
                     <div class="form-group col-md-10">
-                        <form name="sec4f3" method="post" action="<?php echo base_url("nc/save_sec4f3/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
+                        <form name="sec4f3" method="post" action="<?php echo base_url("nc/save_sec4f3/"); ?><?php echo $getdatamain->cp_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
                             <label>ผลการติดตามครั้งที่ 3</label>
                             <textarea class="form-control" rows="5" name="nc_sec4f3" id="nc_sec4f3"><?php echo $getdatamain->nc_sec4f3; ?></textarea>
                             <label style="margin-top: 5px;">เอกสารประกอบ</label>
@@ -398,7 +398,7 @@ if ($getdatamain->nc_status_code == "nc10") {
     $showcost = $getdatamain->nc_sec5costfailed;
 } else {
     $show = $getdatamain->nc_sec5;
-    $showfile = $getdatamain->nc_sec5file;
+    $showfile = $getdatamain->nc_sec5_file;
     $showcost = $getdatamain->nc_sec5cost;
 
 }
@@ -406,7 +406,7 @@ if ($getdatamain->nc_status_code == "nc10") {
             <div class="panel panel-primary"><!--SECTION 5-->
                 <div class="panel-heading">5. Conclusion Of NC <?php echo $ncfailed; ?></div>
                 <div class="panel-body">
-                    <form name="sec4f2" method="post" action="<?php echo base_url($baseurl); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
+                    <form name="sec4f2" method="post" action="<?php echo base_url($baseurl); ?><?php echo $getdatamain->nc_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
                         <div class="form-group col-md-10">
                             <label>Conclusion Of NC</label>
                             <textarea class="form-control" rows="5" name="nc_sec5" id="nc_sec5"><?php echo $show; ?></textarea>

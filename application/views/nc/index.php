@@ -94,7 +94,7 @@ and open the template in the editor.
                             }else{$newgif="";}
                         ?>
 
-                        <td style="text-align: left;font-weight: 600;"><a href="<?php echo base_url("nc/main/");?><?php echo $l_nc['cp_no']; ?>"><?php echo $l_nc['cp_no']; ?></a><?php echo $newgif; ?></td>
+                        <td style="text-align: left;font-weight: 600;"><a href="<?php echo base_url("nc/main/");?><?php echo $l_nc['cp_no']; ?>/<?php echo $l_nc['nc_related_dept']; ?>"><?php echo $l_nc['cp_no']; ?></a><?php echo $newgif; ?></td>
                         <td style="text-align: left;">
                             <?php
                             $date = date_create($l_nc['cp_date']);
@@ -147,16 +147,7 @@ and open the template in the editor.
 
 
                         ?>
-                        <td style="text-align: left;">
-                          <?php
-                          $cp_no = $l_nc['cp_no'];
-                            $getdept = $this->db->query("SELECT complaint_department.cp_dept_id, complaint_department.cp_dept_code, complaint_department.cp_dept_cp_no, member.Dept FROM complaint_department INNER JOIN member ON member.DeptCode = complaint_department.cp_dept_code WHERE complaint_department.cp_dept_cp_no = '$cp_no' GROUP BY complaint_department.cp_dept_code DESC");
-                          ?>
-
-                          <?php foreach ($getdept->result_array() as $gdn): ?>
-                              <?php echo $gdn['Dept'] . "&nbsp;,"; ?>
-                          <?php endforeach; ?>
-                        </td>
+                        <td style="text-align: left;"><?php echo $l_nc['cp_dept_main_name']; ?></td>
                         <td style="text-align: left;color:<?php echo $color; ?>"><?php echo $l_nc['cp_status_name']; ?></td>
                         <td style="text-align: center;"><?php echo $this->complaint_model->conpriority($l_nc['cp_priority']); ?></td>
                     </tr>

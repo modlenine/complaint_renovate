@@ -108,7 +108,7 @@ class Complaint extends CI_Controller{
     }
 
 
-    public function savedata_edit($cp_no){
+    public function savedata_edit($cp_no){/*********Save data edit**************/
 
         $this->complaint_model->savedata_edit($cp_no);
         $this->history_model->saveedit_history();

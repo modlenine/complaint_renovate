@@ -11,10 +11,10 @@ and open the template in the editor.
     </head>
     <body>
         <?php $this->load->view("head/nav"); ?>
-        
+
         <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <h1 class="head_text">LIST OF NC</h1><hr>
-            
+
 <!--            <div class="form-inline">
                 <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
                 <label>ค้นหาเอกสาร โดย :</label>
@@ -25,8 +25,8 @@ and open the template in the editor.
                 </select>
                 <input type="date" class="form-control"/>&nbsp;<label>TO</label>&nbsp;<input type="date" class="form-control"/>&nbsp;<button class="btn btn-warning btn-sm">Search</button>
             </div><hr>-->
-            
-            
+
+
              <table id="view_nc" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
@@ -42,26 +42,26 @@ and open the template in the editor.
                 <tbody>
 <?php foreach ($viewncby_status as $l_nc): ?>
                     <tr>
-                        <?php  
+                        <?php
                             if($l_nc['nc_status_code']=="nc01"){
                                 $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
-                        
-                        <td style="text-align: left;"><a href="<?php echo base_url("nc/main/");?><?php echo $l_nc['cp_no']; ?>"><?php echo $l_nc['cp_no']; ?></a><?php echo $newgif; ?></td>
+
+                        <td style="text-align: left;"><a href="<?php echo base_url("nc/main/");?><?php echo $l_nc['nc_no']; ?>/<?php echo $l_nc['nc_related_dept']; ?>"><?php echo $l_nc['nc_no']; ?></a><?php echo $newgif; ?></td>
                         <td style="text-align: left;">
                             <?php
                             $date = date_create($l_nc['cp_date']);
                             echo date_format($date, "d/m/Y");
-                            
+
                             ?>
                         </td>
                         <td style="text-align: left;"><?php echo $l_nc['cp_user_name']; ?></td>
                         <td style="text-align: left;"><?php echo $l_nc['cp_topic']; ?></td>
                         <td style="text-align: left;"><?php echo $l_nc['cp_cus_name']; ?></td>
-                        
+
                         <?php
-                        
+
                             if($l_nc['cp_status_name'] == "Transform Complaint"){
                                 $color = ' #87CEEB; ';
                             }
@@ -95,10 +95,10 @@ and open the template in the editor.
                             if($l_nc['cp_status_name'] == "Conclusion of NC"){
                                 $color = ' #32CD32; ';
                             }
-                            
-                            
+
+
                         ?>
-                        
+
                         <td style="text-align: left;color:<?php echo $color; ?>"><?php echo $l_nc['cp_status_name']; ?></td>
                         <td style="text-align: left;"><?php echo $this->complaint_model->conpriority($l_nc['cp_priority']); ?></td>
                     </tr>
@@ -124,11 +124,11 @@ and open the template in the editor.
                 });
             });
     </script>
-            
-            
-            
+
+
+
         </div>
-        
-        
+
+
     </body>
 </html>
