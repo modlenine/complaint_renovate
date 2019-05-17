@@ -46,6 +46,9 @@ function myFunction() {
                         <a href="<?php echo base_url("complaint/investigate/"); ?><?php echo $getdatamain->cp_no; ?>" target="_blank"><label data-toggle="tooltip" title="คลิกที่นี่เพื่อดู Complaint ต้นฉบับ"><i class="fas fa-book-open"></i>&nbsp;<?php echo $getdatamain->cp_no; ?></label></a>
                     </p>
 
+                    <p><label class="ncmain_s1_label">Category</label>&nbsp;<label><?php echo $getdatamain->topic_cat_name; ?></label>&nbsp;&nbsp;<label class="ncmain_s1_label">Topic</label>&nbsp;<label><?php echo $getdatamain->topic_name; ?></label></p>
+                    <!-- Check topic category  -->
+                    <input hidden type="text" name="check_tecnical" id="check_tecnical" value="<?php echo $getdatamain->topic_cat_name; ?>">
 
                     <p><label class="ncmain_s1_label">Detail of Complaint / Damage</label>&nbsp;<label><?php echo $getdatamain->cp_detail; ?></label></p>
                     <p><label class="ncmain_s1_label">Detail of Investigate</label>&nbsp;<label><?php echo $getdatamain->cp_detail_inves; ?></label></p>
@@ -75,6 +78,7 @@ function myFunction() {
                 <div class="panel-body">
                     <p><label class="ncmain_s1_label">ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </label>
                             <label><?php echo $getdatamain->cp_dept_main_name; ?></label>&nbsp;
+                            <input type="text" name="check_related_deptcode" id="check_related_deptcode" value="<?php echo $getdatamain->nc_related_dept; ?>">
                     </p>
 
                     <?php
@@ -180,11 +184,13 @@ function myFunction() {
                         <input hidden="" type="text" name="nc_sec3empid" id="nc_sec3empid" value="<?php echo $getuser['ecode']; ?>"/>
                         <input hidden="" type="text" name="nc_sec3dept" id="nc_sec3dept" value="<?php echo $getuser['Dept']; ?>"/>
                         <input hidden="" type="text" name="nc_sec3date" id="nc_sec3date" value="<?php echo date("Y-m-d"); ?>"/>
+                        <input type="text" name="check_related_deptcode_s3" id="check_related_deptcode_s3" value="<?php echo $getdatamain->nc_related_dept; ?>"> <!-- Check related dept code -->
+
                     </form>
 
 
                     <div class="col-md-10">
-                        <form name="sec1" method="post" action="<?php echo base_url("history/savenc_sec3_history/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
+                        <form name="sec1" method="post" action="<?php echo base_url("history/savenc_sec3_history/"); ?><?php echo $getdatamain->cp_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
                             <input hidden="" type="text" name="his_cpno" id="his_cpno" value="<?php echo $getdatamain->cp_no; ?>" />
                             <input hidden="" type="text" name="his_nc_sec31" id="his_nc_sec31" value="<?php echo $getdatamain->nc_sec31; ?>" />
                             <input hidden="" type="text" name="his_nc_sec32" id="his_nc_sec32" value="<?php echo $getdatamain->nc_sec32; ?>" />
@@ -243,7 +249,7 @@ function myFunction() {
                 <div class="panel-heading">4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</div>
                 <div class="panel-body">
 
-                    <div class="form-group col-md-10">
+                    <div class="form-group col-md-12">
                       <!-- ติดตามผลครั้งที่ 1 -->
                         <form name="sec4f1" method="post" action="<?php echo base_url("nc/save_sec4f1/"); ?><?php echo $getdatamain->nc_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
                             <label>ผลการติดตามครั้งที่ 1</label>
@@ -296,7 +302,7 @@ function myFunction() {
 
 
                     <!-- ติดตามผลครั้งที่ 2 -->
-                    <div class="form-group col-md-10">
+                    <div class="form-group col-md-12">
                         <form name="sec4f2" method="post" action="<?php echo base_url("nc/save_sec4f2/"); ?><?php echo $getdatamain->cp_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
                             <label>ผลการติดตามครั้งที่ 2</label>
                             <textarea class="form-control" rows="5" name="nc_sec4f2" id="nc_sec4f2"><?php echo $getdatamain->nc_sec4f2; ?></textarea>
@@ -339,7 +345,7 @@ function myFunction() {
 
 
                     <!-- ติดตามผลครั้งที่ 3 -->
-                    <div class="form-group col-md-10">
+                    <div class="form-group col-md-12">
                         <form name="sec4f3" method="post" action="<?php echo base_url("nc/save_sec4f3/"); ?><?php echo $getdatamain->cp_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
                             <label>ผลการติดตามครั้งที่ 3</label>
                             <textarea class="form-control" rows="5" name="nc_sec4f3" id="nc_sec4f3"><?php echo $getdatamain->nc_sec4f3; ?></textarea>

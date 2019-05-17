@@ -169,7 +169,7 @@ class Complaint extends CI_Controller{
         $this->history_model->saveedit_inves_history();
         $this->complaint_model->save_edit_inves($cp_no);
         redirect('/complaint/investigate/'.$cp_no);
-//        header("refresh:1; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
+       header("refresh:1; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
     }
 
 

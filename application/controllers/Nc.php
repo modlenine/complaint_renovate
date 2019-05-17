@@ -44,10 +44,10 @@ class Nc extends CI_Controller {
     }
 
 
-    public function nc_sec3edit($cp_no){
+    public function nc_sec3edit($cp_no,$nc_related_dept){
         $this->login_model->call_login();
         $data['getuser'] = $this->login_model->getuser();
-        $data['getdatamain'] = $this->nc_model->getdata_main($cp_no);
+        $data['getdatamain'] = $this->nc_model->getdata_main($cp_no,$nc_related_dept);
         $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
 
 
@@ -57,9 +57,9 @@ class Nc extends CI_Controller {
     }
 
 
-    public function savenc_sec3edit($cp_no){
+    public function savenc_sec3edit($cp_no,$nc_related_dept){
         $this->history_model->save_editnc_sec3();
-        $this->nc_model->savenc_sec3edit($cp_no);
+        $this->nc_model->savenc_sec3edit($cp_no,$nc_related_dept);
     }
 
 

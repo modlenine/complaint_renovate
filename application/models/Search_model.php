@@ -239,7 +239,81 @@ GROUP BY cp_user_dept");
 
 
         public function expcp_getuser(){
-          $result_getuser = $this->db->query();
+          $result_getuser = $this->db->query("SELECT
+complaint_main.cp_user_name
+FROM
+complaint_main GROUP BY cp_user_name
+");
+        return $result_getuser;
+        }
+
+
+        public function expcp_getcat(){
+          $result_getcat = $this->db->query("SELECT
+complaint_topic_catagory.topic_cat_name,
+complaint_topic_catagory.topic_cat_id
+FROM
+complaint_main
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+GROUP BY topic_cat_id");
+
+        return $result_getcat;
+        }
+
+
+// NC
+        public function expnc_getstatus(){
+          $resultnc_getstatus = $this->db->query("SELECT
+complaint_status.cp_status_name,
+complaint_status.cp_status_id
+FROM
+nc_main
+INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status_code
+GROUP BY cp_status_id
+");
+          return $resultnc_getstatus;
+        }
+
+
+        public function expnc_getdept(){
+          $resultnc_getdept = $this->db->query("SELECT
+complaint_department_main.cp_dept_main_name,
+complaint_department_main.cp_dept_main_code
+FROM
+nc_main
+INNER JOIN complaint_department_main ON complaint_department_main.cp_dept_main_code = nc_main.nc_related_dept
+GROUP BY cp_dept_main_code
+");
+        return $resultnc_getdept;
+
+        }
+
+
+        public function expnc_getuser(){
+          $resultnc_getuser = $this->db->query("SELECT
+complaint_main.cp_user_name,
+nc_main.nc_no
+FROM
+nc_main
+INNER JOIN complaint_main ON nc_main.nc_no = complaint_main.cp_no
+GROUP BY cp_user_name");
+        return $resultnc_getuser;
+        }
+
+
+        public function expnc_getcat(){
+          $resultnc_getcat = $this->db->query("SELECT
+nc_main.nc_no,
+complaint_main.cp_topic_cat,
+complaint_topic_catagory.topic_cat_name,
+complaint_topic_catagory.topic_cat_id
+FROM
+nc_main
+INNER JOIN complaint_main ON nc_main.nc_no = complaint_main.cp_no
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+GROUP BY cp_topic_cat
+");
+return $resultnc_getcat;
         }
 
 

@@ -85,6 +85,7 @@
 
         if ($('#check_user').val() !== $('#history_cpusername').val()) {
             $('#edit').hide();
+            $('#cancle_btn').hide();
         }
 
         if ($('#get_oldcp').val() == "") {
@@ -105,11 +106,16 @@
 
         /***********************INVESTIGATE PAGE********************************/
         var check_pms_inves = $('#check_dept_inves').val();
-        if (check_pms_inves != 1) {
-            $('.result_pms_inves').hide();
-            $('#cp_detail_inves').prop("readonly", true);
-            $('#cp_detail_inves_file').prop("readonly", true);
+        if($('#cp_topic_cat').val() == "Technical"){
+
+        }else{
+          if (check_pms_inves != 1) {
+              $('.result_pms_inves').hide();
+              $('#cp_detail_inves').prop("readonly", true);
+              $('#cp_detail_inves_file').prop("readonly", true);
+          }
         }
+
 
         if ($('#cp_detail_inves').val() != "") {
             $('.result_pms_inves').hide();
@@ -931,29 +937,155 @@ $('#export_type').change(function (){
     if($('#export_type').val() == "Complaint"){
       $('#cptype_export').show();
       $('#nctype_export').hide();
-    }else{
+      $('.step2').show();
+      $('.step2nc').hide();
+    }
+
+    if($('#export_type').val() == "NC"){
       $('#nctype_export').show();
       $('#cptype_export').hide();
+      $('.step2').hide();
+      $('.step2nc').show();
+    }
+
+    if($('#export_type').val() == ""){
+      $('#cptype_export').hide();
+      $('#nctype_export').hide();
+      $('.step2').hide();
     }
 
 });
 
 
-// check step2
+// check step2 CP
+$('.btn_status').hide();
+$('.btn_dept').hide();
+$('.btn_user').hide();
+$('.btn_cat').hide();
+$('.btn_all').hide();
+
+
+$('#by_category').hide();
+$('#by_user').hide();
 $('#by_status').hide();
 $('#by_dept').hide();
+
+
+// CP
 $('#cptype_export').change(function(){
     if($('#cptype_export').val() == "Status"){
       $('#by_status').show();
+      $('.btn_status').show();
     }else{
       $('#by_status').hide();
+      $('.btn_status').hide();
     }
+
+
     if($('#cptype_export').val() == "Department"){
       $('#by_dept').show();
+      $('.btn_dept').show();
     }else{
       $('#by_dept').hide();
+      $('.btn_dept').hide();
     }
+
+    if($('#cptype_export').val() == "User"){
+      $('#by_user').show();
+      $('.btn_user').show();
+    }else{
+      $('#by_user').hide();
+      $('.btn_user').hide();
+    }
+
+    if($('#cptype_export').val() == "Category"){
+      $('#by_category').show();
+      $('.btn_cat').show();
+    }else{
+      $('#by_category').hide();
+      $('.btn_cat').hide();
+    }
+
+    if($('#cptype_export').val() == "All"){
+      $('.btn_all').show();
+    }else{
+      $('.btn_all').hide();
+    }
+
 });
+
+
+// NC
+$('.btn_status_nc').hide();
+$('.btn_dept_nc').hide();
+$('.btn_user_nc').hide();
+$('.btn_cat_nc').hide();
+$('.btn_all_nc').hide();
+
+
+$('#by_category_nc').hide();
+$('#by_user_nc').hide();
+$('#by_status_nc').hide();
+$('#by_dept_nc').hide();
+
+
+$('#nctype_export').change(function(){
+    if($('#nctype_export').val() == "Status"){
+      $('#by_status_nc').show();
+      $('.btn_status_nc').show();
+    }else{
+      $('#by_status_nc').hide();
+      $('.btn_status_nc').hide();
+    }
+
+
+    if($('#nctype_export').val() == "Department"){
+      $('#by_dept_nc').show();
+      $('.btn_dept_nc').show();
+    }else{
+      $('#by_dept_nc').hide();
+      $('.btn_dept_nc').hide();
+    }
+
+    if($('#nctype_export').val() == "User"){
+      $('#by_user_nc').show();
+      $('.btn_user_nc').show();
+    }else{
+      $('#by_user_nc').hide();
+      $('.btn_user_nc').hide();
+    }
+
+    if($('#nctype_export').val() == "Category"){
+      $('#by_category_nc').show();
+      $('.btn_cat_nc').show();
+    }else{
+      $('#by_category_nc').hide();
+      $('.btn_cat_nc').hide();
+    }
+
+    if($('#nctype_export').val() == "All"){
+      $('.btn_all_nc').show();
+    }else{
+      $('.btn_all_nc').hide();
+    }
+
+});
+
+// check technical
+if($('#cp_topic_cat').val() == "Technical"){
+  var getEmailCheck = $('#get_emailCheck').val();
+
+  if(getEmailCheck == 0){
+    $('#cp_detail_inves').prop("readonly",true);
+    $('#cp_detail_inves_file').prop("readonly",true);
+    $('.result_pms_inves').hide();
+  }else{
+    $('.label_tec').hide();
+  }
+
+
+}
+
 
 
 

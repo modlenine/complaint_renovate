@@ -19,7 +19,6 @@ and open the template in the editor.
             <h1 class="head_list_cp">List of Complaint</h1>
             <div class="btn_back">
               <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
-              <a href="<?php echo base_url('report/export_cpby_status/') ?><?php echo $get_cp_status_code->cp_status_code; ?>"><button class="btn btn-success btn-sm btn_back" type="text" name="cp_exportby_status">Export</button></a>
             </div><hr>
             <table id="view_cp" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>

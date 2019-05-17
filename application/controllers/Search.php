@@ -1,4 +1,5 @@
 <?php
+
 class Search extends CI_Controller{
     public function __construct() {
         parent::__construct();
@@ -88,6 +89,12 @@ class Search extends CI_Controller{
         $data['expcp_getstatus'] = $this->search_model->expcp_getstatus();
         $data['expcp_getdept'] = $this->search_model->expcp_getdept();
         $data['expcp_getuser'] = $this->search_model->expcp_getuser();
+        $data['expcp_getcat'] = $this->search_model->expcp_getcat();
+
+        $data['expnc_getstatus'] = $this->search_model->expnc_getstatus();
+        $data['expnc_getdept'] = $this->search_model->expnc_getdept();
+        $data['expnc_getuser'] = $this->search_model->expnc_getuser();
+        $data['expnc_getcat'] = $this->search_model->expnc_getcat();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");

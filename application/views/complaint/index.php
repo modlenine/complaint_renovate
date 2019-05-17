@@ -92,6 +92,7 @@ and open the template in the editor.
                         <th style="width:80px;text-align: center;">ID</th>
                         <th style="width:60px;text-align: center;">DATE</th>
                         <th style="width:100px;text-align: center;">COMPLAINT BY</th>
+                        <th style="text-align: center;">CATEGORY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
                         <th style="width:200px;text-align: center;">RELATED DEPARTMENT.</th>
@@ -134,6 +135,7 @@ and open the template in the editor.
                             ?>
                         </td>
                         <td style="text-align: left;"><?php echo $l_cp['cp_user_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_cp['topic_cat_name']; ?></td>
                         <td style="text-align: left;"><?php echo $l_cp['topic_name']; ?></td>
                         <td style="text-align: left;"><?php echo $l_cp['cp_cus_name']; ?></td>
 
@@ -202,6 +204,7 @@ and open the template in the editor.
                         <th style="text-align: center;">ID</th>
                         <th style="text-align: center;">DATE</th>
                         <th style="text-align: center;">COMPLAINT BY</th>
+                        <th style="text-align: center;">CATEGORY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
                         <th style="text-align: center;">RELATED DEPARTMENT.</th>

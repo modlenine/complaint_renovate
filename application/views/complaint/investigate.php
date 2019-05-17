@@ -48,13 +48,28 @@ function myFunction() {
                             <label id="cp_topic"><?php echo $view_cp['topic_name']; ?></label>
                         </div>
 
+<!-- Check Technical User permission -->
+                        <?php
+                        $cpemailcheck = $getuser['memberemail'];
+                          $getComplaintEmail = $this->db->query("SELECT
+complaint_email.cp_email_user,
+complaint_email.remark
+FROM
+complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
+
+                          $queryComplaintEmail = $getComplaintEmail->num_rows();
+                         ?>
+                         <input hidden type="text" name="get_emailCheck" id="get_emailCheck" value="<?php echo $queryComplaintEmail; ?>">
+                         <!-- Check Technical User permission -->
+
 
                         <div class="col-md-3">
                             <label><b>Catagory :</b></label>
                             <label><?php echo $view_cp['topic_cat_name']; ?></label>
-                            <input type="text" name="cp_topic_cat" id="cp_topic_cat" hidden="" value="<?php echo $view_cp['topic_cat_name']; ?>" />
+                            <input type="text" name="cp_topic_cat" id="cp_topic_cat" hidden value="<?php echo $view_cp['topic_cat_name']; ?>" />
                         </div>
                     </div>
+
 
                     <div class="form-row">
                         <div class="col-md-3">
@@ -209,6 +224,7 @@ function myFunction() {
                 <div class="col-md-12">
                         <label><b>Detail of investigate</b></label>
                         <textarea name="cp_detail_inves" id="cp_detail_inves" class="form-control pri" rows="5" required=""></textarea>
+                        <span class="label_tec" style="color:red;font-size:12px;">For Technical team only.</span>
                     </div>
                 </div>
 

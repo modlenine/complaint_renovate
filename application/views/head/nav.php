@@ -11,8 +11,8 @@ $this->load->view("head/javascript");
 <html>
     <head>
         <meta charset="UTF-8">
-        
-        
+
+
     </head>
     <body>
 <nav class="navbar navbar-inverse navbar-fixed-left">
@@ -30,23 +30,24 @@ $this->load->view("head/javascript");
           <div>
               <p><span style="padding-left: 10px;">Hi <?php echo $getuser['username']; ?></span></p>
               <p><span style="padding-left: 10px;" class="check_dept">Dept. <?php echo $getuser['Dept']; ?></span></p>
-              
+
               <input hidden="" type="text" name="check_user" id="check_user" value="<?php echo $getuser['username']; ?>" /><!--Check User-->
               <input hidden="" type="text" name="check_dept" id="check_dept" value="<?php echo $getuser['Dept']; ?>" /><!-- Check Dept -->
               <input hidden="" type="text" name="check_posi" id="check_posi" value="<?php echo $getuser['posi']; ?>" /><!-- Check Posi -->
-              
-              
+              <input hidden type="text" name="check_tecnical" id="check_tecnical" value="<?php echo $getuser['memberemail']; ?>"><!-- Check Technical -->
+
+
               <a href="<?php echo base_url('complaint/logout'); ?>" onclick="javascript:return confirm('คุณต้องการออกจากระบบหรือไม่');"><i class="fas fa-sign-out-alt fa-2x logout_btn"></i></a>
           </div>
-          
+
         <ul class="nav navbar-nav">
 <!--          <li><a href="#"><i class="far fa-eye"></i>&nbsp;View Complaint&nbsp;<h6><span class="label label-success">New&nbsp;<span class="badge bg_new">3</span></span></h6></a></li>
           <li><a href="#"><i class="fas fa-plus-circle"></i>&nbsp;New Complaint</a></li>
           <li><a href="#"><i class="far fa-eye"></i>&nbsp;View NC</a></li>-->
-            
+
             <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url("dashboard"); ?>"><i class="fas fa-tachometer-alt"></i>&nbsp;Dash Board</a></li>
-          
-            
+
+
             <?php
                 if($this->complaint_model->get_newcp() == 0){
                     $newcp = 'display:none;';
@@ -59,18 +60,18 @@ $this->load->view("head/javascript");
                     $newnc = "";
                 }
             ?>
-            
+
             <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url(); ?>complaint"><i class="fas fa-book-open"></i>&nbsp;Complaint &nbsp;&nbsp;<span class="label label-success" style="<?php echo $newcp; ?>">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newcp(); ?></span></span></a></li>
-            
-            
-          
+
+
+
             <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url(); ?>nc"><i class="fas fa-book-open"></i>&nbsp;NC &nbsp;&nbsp;<span class="label label-success" style="<?php echo $newnc; ?>">New&nbsp;<span class="badge bg_new"><?php echo $this->complaint_model->get_newnc(); ?></span></span></a></li>
             <input hidden="" type="text" name="check_numrow_nc" id="check_numrow_nc" value="<?php echo $this->complaint_model->get_newnc(); ?>"/><!--check nc row-->
-            
-            
+
+
             <li class="dropdown" style="border-top:0.5px solid #54acf3;"><a href="<?php echo base_url("search/export_section"); ?>"><i class="fas fa-file-export"></i>&nbsp;Export</a></li>
-            
-          
+
+
 
 <!--          <li class="dropdown" style="border-top:0.5px solid #54acf3;">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i>&nbsp;User Profile <span class="caret"></span></a>
@@ -84,8 +85,8 @@ $this->load->view("head/javascript");
               <li><a href="#">One more separated link</a></li>
             </ul>
           </li>-->
-          
-          <?php  
+
+          <?php
             if($getuser['posi'] == 15){
                 $display = 'display:none;';
             }
@@ -109,7 +110,7 @@ $this->load->view("head/javascript");
             </ul>
           </li>
         </ul>
-          
+
 <!--        <ul class="nav navbar-nav navbar-right">
           <li>
             <a data-class="navbar-fixed-left">

@@ -183,7 +183,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
  //****************************Email***Zone*********************************************//
-  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code= '$nc_related_dept' ");
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
 
@@ -193,6 +193,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
              $date2 = date_create($get_owner_email->cp_sum_inves_date);
              $condate2 = date_format($date2, "d/m/Y");
+
 
 
     $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รอดำเนินการ";
@@ -272,6 +273,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         }
 
         $mail->AddCC($get_owner_email->cp_user_email);
+
 // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
 // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
@@ -295,7 +297,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
     }
 
 
-    public function savenc_sec3edit($cp_no){
+    public function savenc_sec3edit($cp_no,$nc_related_dept){
 //        $date = date_create($this->input->post("datetime1_edit"));
 //        $dateformat = date_format($date, "Y-m-d H:i:s");
         if($_FILES['nc_sec3file_edit']['name']!= ""){
@@ -349,11 +351,11 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
 
-        $this->db->where("cp_no",$cp_no);
-        $this->db->update("complaint_main",$data);
+        $this->db->where("nc_no",$cp_no);
+        $this->db->update("nc_main",$data);
 
 
-        header("refresh:0; url=http://192.190.10.27/complaint/nc/main/$cp_no");
+        header("refresh:0; url=http://192.190.10.27/complaint/nc/main/$cp_no/$nc_related_dept");
         }
 
 
@@ -399,7 +401,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
                      //****************************Email***Zone*********************************************//
-  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' AND cp_dept_code = '$nc_related_dept' ");
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
 
@@ -566,7 +568,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
   //****************************Email***Zone*********************************************//
-  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' ");
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
 
@@ -742,7 +744,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
        //****************************Email***Zone*********************************************//
-  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' ");
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
 
@@ -928,7 +930,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
            //****************************Email***Zone*********************************************//
-  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' ");
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
 
@@ -938,6 +940,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
              $date2 = date_create($get_owner_email->cp_sum_inves_date);
              $condate2 = date_format($date2, "d/m/Y");
+
+             $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email ";
+             $sqlget_query = $this->db->query($sqlget_ccemail);
 
 
     $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ Conclusion of nc";
@@ -1061,6 +1066,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         }
 
         $mail->AddCC($get_owner_email->cp_user_email);
+        foreach ($sqlget_query->result_array() as $sqlget_querys){
+              $mail->AddCC($sqlget_querys['cp_email_user']);
+        }
 // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
 // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
