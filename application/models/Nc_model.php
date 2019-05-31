@@ -202,8 +202,8 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
 
-            $subject = "[ทดสอบโปรแกรม Complaint ส่วนของ NC]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รอดำเนินการ";
-            $body = "<strong style='font-size:18px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name;
+            $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รอดำเนินการ";
+            $body = "<strong style='font-size:18px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name."<br>";
             $body .= "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
             $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $condate . "<br>";
             $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
@@ -425,7 +425,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
              $condate2 = date_format($date2, "d/m/Y");
 
 
-    $subject = "[ทดสอบโปรแกรม Complaint ส่วนของ NC]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามครั้งที่ 1";
+    $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามครั้งที่ 1";
             $body = "<strong style='font-size:20px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name."<br>";
             $body .= "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
             $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
@@ -600,7 +600,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
              $condate2 = date_format($date2, "d/m/Y");
 
 
-    $subject = "[ทดสอบโปรแกรม Complaint ส่วนของ NC]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามผลครั้งที่ 2";
+    $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามผลครั้งที่ 2";
             $body = "<strong style='font-size:18px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name;
             $body .= "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
             $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
@@ -785,7 +785,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
 
-    $subject = "[ทดสอบโปรแกรม Complaint ส่วนของ NC]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามครั้งที่ 3";
+    $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามครั้งที่ 3";
             $body = "<strong style='font-size:18px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name;
             $body .= "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
             $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
@@ -981,7 +981,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
              $sqlget_query = $this->db->query($sqlget_ccemail);
 
 
-    $subject = "[ทดสอบโปรแกรม Complaint ส่วนของ NC]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ Conclusion of nc";
+    $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ Conclusion of nc";
             $body = "<strong style='font-size:18px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name;
             $body .= "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
             $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
@@ -1200,7 +1200,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
 
-                $subject = "[ทดสอบระบบ Auto Email กรณี เกินระยะเวลาที่กำหนด]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ ไม่มีการดำเนินการใดๆ";
+                $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ ไม่มีการดำเนินการใดๆ";
                 $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
                 $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $condate . "<br>";
                 $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
