@@ -12,8 +12,10 @@ and open the template in the editor.
     </head>
     <body>
         <div class="container login_margin">
+            <div style="text-align:center;margin:10px;"><img src="<?php echo base_url("asset/NewLogo.png"); ?>" alt="" width="250"></div>
+
             <div class="panel panel-info form_layout">
-                <div class="panel-heading">Complaint Login Form</div>
+                <div class="panel-heading"><h3>Complaint Login Form</h3></div>
                 <div class="panel-body">
                     <form name="" id="" action="<?php echo base_url('login/check_login'); ?>" method="post">
                         <div class="input-group">
@@ -24,7 +26,7 @@ and open the template in the editor.
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                             <input type="password" name="password" id="password" class="form-control" placeholder="Password"/>
                         </div><br>
-                        
+
                         <input type="submit" name="btn_login" id="btn_login" value="login" class="btn btn-primary"/>
                     </form>
                 </div>

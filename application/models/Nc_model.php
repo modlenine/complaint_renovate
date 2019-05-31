@@ -128,7 +128,9 @@ nc_main.nc_sec5filefailed,
 nc_main.nc_sec5costfailed,
 nc_main.cp_no_old,
 nc_main.nc_modify_by,
+nc_main.nc_autoemail,
 nc_main.nc_modify_date
+
 FROM
 nc_main
 INNER JOIN complaint_main ON complaint_main.cp_no = nc_main.nc_no
@@ -138,6 +140,7 @@ INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
 INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status_code WHERE nc_no='$cp_no' AND nc_related_dept='$nc_related_dept' ");
         return $result->row();
     }
+
 
 
 
@@ -183,7 +186,10 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
  //****************************Email***Zone*********************************************//
-  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code= '$nc_related_dept' ");
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code= '$nc_related_dept' && cp_mail_status='1' ");
+
+  $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_external='1' || default_sd='1' ";
+  $sqlget_query = $this->db->query($sqlget_ccemail);
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
 
@@ -196,8 +202,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
 
-    $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รอดำเนินการ";
-            $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
+            $subject = "[ทดสอบโปรแกรม Complaint ส่วนของ NC]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รอดำเนินการ";
+            $body = "<strong style='font-size:18px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name;
+            $body .= "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
             $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $condate . "<br>";
             $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
@@ -205,17 +212,17 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
             $body .= "<strong>Details of Complaint / Damages</strong>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
             $body .= "<strong>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
 
             $body .= "<strong>Summary of Investigation</strong><br>";
             $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
             $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
 
@@ -247,7 +254,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
             $body .= "<strong>กำหนดเสร็จ :</strong>&nbsp;&nbsp;".$result_date2."<br>";
             $body .= "<strong>ผู้รับผิดชอบ :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3owner."&nbsp;&nbsp;<strong>รหัสพนักงาน :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3empid."&nbsp;&nbsp;<strong>แผนก :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3dept."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$result_sec3date."<br>";
 
-            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://203.107.156.180/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
     $mail = new PHPMailer();
@@ -273,7 +280,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         }
 
         $mail->AddCC($get_owner_email->cp_user_email);
-
+        foreach ($sqlget_query->result_array() as $sqlget_querys){
+          $mail->AddCC($sqlget_querys['cp_email_user']);
+        }
 // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
 // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
@@ -355,7 +364,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         $this->db->update("nc_main",$data);
 
 
-        header("refresh:0; url=http://192.190.10.27/complaint/nc/main/$cp_no/$nc_related_dept");
+        header("refresh:0; url=http://203.107.156.180/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
         }
 
 
@@ -401,7 +410,10 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
                      //****************************Email***Zone*********************************************//
-  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' AND cp_dept_code = '$nc_related_dept' ");
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' && cp_mail_status='1' ");
+
+  $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_sd='1' ";
+  $sqlget_query = $this->db->query($sqlget_ccemail);
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
 
@@ -413,8 +425,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
              $condate2 = date_format($date2, "d/m/Y");
 
 
-    $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามครั้งที่ 1";
-            $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
+    $subject = "[ทดสอบโปรแกรม Complaint ส่วนของ NC]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามครั้งที่ 1";
+            $body = "<strong style='font-size:20px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name."<br>";
+            $body .= "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
             $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
             $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
@@ -422,17 +435,17 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
             $body .= "<strong>Details of Complaint / Damages</strong>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
             $body .= "<strong>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
 
             $body .= "<strong>Summary of Investigation</strong><br>";
             $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
             $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
 
@@ -468,7 +481,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</strong><br>";
             $body .= "<strong>ผลการติดตามครั้งที่ 1 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1."<br>";
-            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
+            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://203.107.156.180/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
 
             if($get_owner_email->nc_sec4f1_status == "no"){
                 $f1status = "ไม่ปิดสรุป";
@@ -477,8 +490,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
             }
 
             $body .= "<strong>สถานะ :</strong>&nbsp;&nbsp;".$f1status."<br>";
+            $body .= "<strong>กำหนดการติดตามผลครั้งที่ 2</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1_date."<br>";
 
-            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://203.107.156.180/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
     $mail = new PHPMailer();
@@ -504,6 +518,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         }
 
         $mail->AddCC($get_owner_email->cp_user_email);
+        foreach ($sqlget_query->result_array() as $sqlget_querys){
+          $mail->AddCC($sqlget_querys['cp_email_user']);
+        }
 // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
 // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
@@ -520,7 +537,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
             echo '<script language="javascript">';
             echo 'alert("Save Data Success")';
             echo '</script>';
-            header("refresh:0; url=http://192.190.10.27/complaint/nc/main/$cp_no/$nc_related_dept");
+            header("refresh:0; url=http://203.107.156.180/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
         }
 
 
@@ -568,7 +585,10 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
   //****************************Email***Zone*********************************************//
-  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' ");
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' && cp_mail_status='1' ");
+
+  $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_sd='1' ";
+  $sqlget_query = $this->db->query($sqlget_ccemail);
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
 
@@ -580,8 +600,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
              $condate2 = date_format($date2, "d/m/Y");
 
 
-    $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามผลครั้งที่ 2";
-            $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
+    $subject = "[ทดสอบโปรแกรม Complaint ส่วนของ NC]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามผลครั้งที่ 2";
+            $body = "<strong style='font-size:18px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name;
+            $body .= "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
             $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
             $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
@@ -589,17 +610,17 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
             $body .= "<strong>Details of Complaint / Damages</strong>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
             $body .= "<strong>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
 
             $body .= "<strong>Summary of Investigation</strong><br>";
             $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
             $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
 
@@ -633,7 +654,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</strong><br>";
             $body .= "<strong>ผลการติดตามครั้งที่ 1 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1."<br>";
-            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
+            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://203.107.156.180/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
 
             if($get_owner_email->nc_sec4f1_status == "no"){
                 $f1status = "ไม่ปิดสรุป";
@@ -644,7 +665,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
             $body .= "<strong>ผลการติดตามครั้งที่ 2 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f2."<br>";
-            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
+            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://203.107.156.180/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
 
             if($get_owner_email->nc_sec4f2_status == "no"){
                 $f2status = "ไม่ปิดสรุป";
@@ -653,7 +674,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
             }
             $body .= "<strong>สถานะ :</strong>&nbsp;&nbsp;".$f2status."<br>";
 
-            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://203.107.156.180/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
     $mail = new PHPMailer();
@@ -679,6 +700,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         }
 
         $mail->AddCC($get_owner_email->cp_user_email);
+        foreach ($sqlget_query->result_array() as $sqlget_querys){
+          $mail->AddCC($sqlget_querys['cp_email_user']);
+        }
 // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
 // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
@@ -695,7 +719,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
             echo '<script language="javascript">';
             echo 'alert("Save Data Success")';
             echo '</script>';
-            header("refresh:0; url=http://192.190.10.27/complaint/nc/main/$cp_no/$nc_related_dept");
+            header("refresh:0; url=http://203.107.156.180/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
         }
 
 
@@ -744,7 +768,11 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
        //****************************Email***Zone*********************************************//
-  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' ");
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' && cp_mail_status='1' ");
+
+  $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_sd='1' || default_cp_external='1' ";
+  $sqlget_query = $this->db->query($sqlget_ccemail);
+
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
 
@@ -756,8 +784,10 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
              $condate2 = date_format($date2, "d/m/Y");
 
 
-    $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามครั้งที่ 3";
-            $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
+
+    $subject = "[ทดสอบโปรแกรม Complaint ส่วนของ NC]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ รายงานผลการติดตามครั้งที่ 3";
+            $body = "<strong style='font-size:18px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name;
+            $body .= "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
             $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
             $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
@@ -765,17 +795,17 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
             $body .= "<strong>Details of Complaint / Damages</strong>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
             $body .= "<strong>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
 
             $body .= "<strong>Summary of Investigation</strong><br>";
             $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
             $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
 
@@ -809,7 +839,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</strong><br>";
             $body .= "<strong>ผลการติดตามครั้งที่ 1 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1."<br>";
-            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
+            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://203.107.156.180/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
 
             if($get_owner_email->nc_sec4f1_status == "no"){
                 $f1status = "ไม่ปิดสรุป";
@@ -821,7 +851,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
             $body .= "<strong>ผลการติดตามครั้งที่ 2 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f2."<br>";
-            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
+            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://203.107.156.180/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
 
             if($get_owner_email->nc_sec4f2_status == "no"){
                 $f2status = "ไม่ปิดสรุป";
@@ -833,7 +863,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
             $body .= "<strong>ผลการติดตามครั้งที่ 3 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f3."<br>";
-            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec4/f3/$get_owner_email->nc_sec4f3_file'>".$get_owner_email->nc_sec4f3_file . "</a>"."<br>";
+            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://203.107.156.180/intsys/complaint/asset/nc/sec4/f3/$get_owner_email->nc_sec4f3_file'>".$get_owner_email->nc_sec4f3_file . "</a>"."<br>";
 
             if($get_owner_email->nc_sec4f3_status == "no"){
                 $f3status = "ไม่ปิดสรุป";
@@ -844,7 +874,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
 
-            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://203.107.156.180/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
     $mail = new PHPMailer();
@@ -870,6 +900,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         }
 
         $mail->AddCC($get_owner_email->cp_user_email);
+        foreach ($sqlget_query->result_array() as $sqlget_querys){
+          $mail->AddCC($sqlget_querys['cp_email_user']);
+        }
 // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
 // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
@@ -886,7 +919,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
             echo '<script language="javascript">';
             echo 'alert("Save Data Success")';
             echo '</script>';
-            header("refresh:0; url=http://192.190.10.27/complaint/$linkurl");
+            header("refresh:0; url=http://203.107.156.180/intsys/complaint/$linkurl");
         }
 
 
@@ -930,7 +963,10 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
            //****************************Email***Zone*********************************************//
-  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' ");
+  $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' && cp_mail_status='1' ");
+
+  $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_external='1' || default_sd='1' ";
+  $sqlget_query = $this->db->query($sqlget_ccemail);
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
 
@@ -945,8 +981,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
              $sqlget_query = $this->db->query($sqlget_ccemail);
 
 
-    $subject = "ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ Conclusion of nc";
-            $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
+    $subject = "[ทดสอบโปรแกรม Complaint ส่วนของ NC]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ Conclusion of nc";
+            $body = "<strong style='font-size:18px;'>เรียนผู้จัดการฝ่าย</strong>".$get_owner_email->cp_dept_main_name;
+            $body .= "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
             $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
             $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
             $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
@@ -954,17 +991,17 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
             $body .= "<strong>Details of Complaint / Damages</strong>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
             $body .= "<strong>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
 
             $body .= "<strong>Summary of Investigation</strong><br>";
             $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
             $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
 
@@ -998,7 +1035,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</strong><br>";
             $body .= "<strong>ผลการติดตามครั้งที่ 1 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1."<br>";
-            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
+            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://203.107.156.180/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
 
             if($get_owner_email->nc_sec4f1_status == "no"){
                 $f1status = "ไม่ปิดสรุป";
@@ -1010,7 +1047,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
             $body .= "<strong>ผลการติดตามครั้งที่ 2 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f2."<br>";
-            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
+            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://203.107.156.180/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
 
             if($get_owner_email->nc_sec4f2_status == "no"){
                 $f2status = "ไม่ปิดสรุป";
@@ -1022,7 +1059,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
 
             $body .= "<strong>ผลการติดตามครั้งที่ 3 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f3."<br>";
-            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec4/f3/$get_owner_email->nc_sec4f3_file'>".$get_owner_email->nc_sec4f3_file . "</a>"."<br>";
+            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://203.107.156.180/intsys/complaint/asset/nc/sec4/f3/$get_owner_email->nc_sec4f3_file'>".$get_owner_email->nc_sec4f3_file . "</a>"."<br>";
 
             if($get_owner_email->nc_sec4f3_status == "no"){
                 $f3status = "ไม่ปิดสรุป";
@@ -1034,13 +1071,13 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>5. Conclusion Of NC</strong><br>";
             $body .= "<strong>Conclusion Of NC : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5."<br>";
-            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://192.190.10.27/complaint/asset/nc/sec5/$get_owner_email->nc_sec5_file'>".$get_owner_email->nc_sec5_file . "</a>"."<br>";
+            $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://203.107.156.180/intsys/complaint/asset/nc/sec5/$get_owner_email->nc_sec5_file'>".$get_owner_email->nc_sec5_file . "</a>"."<br>";
             $body .= "<strong>รายละเอียดค่าใช้จ่ายที่เกิดขึ้น :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5cost_detail."<br>";
             $body .= "<strong>ค่าใช้จ่ายที่เกิดขึ้น โดยประมาณ :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5cost."<br>";
 
 
 
-            $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>" . "<a href=http://203.107.156.180/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
     $mail = new PHPMailer();
@@ -1067,7 +1104,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
 
         $mail->AddCC($get_owner_email->cp_user_email);
         foreach ($sqlget_query->result_array() as $sqlget_querys){
-              $mail->AddCC($sqlget_querys['cp_email_user']);
+          $mail->AddCC($sqlget_querys['cp_email_user']);
         }
 // $mail->AddAddress("chainarong039@gmail.com");                  // name is optional
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
@@ -1085,7 +1122,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
             echo '<script language="javascript">';
             echo 'alert("Save Data Success")';
             echo '</script>';
-            header("refresh:0; url=http://192.190.10.27/complaint/nc/main/$cp_no/$nc_related_dept");
+            header("refresh:0; url=http://203.107.156.180/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
         }
 
 
@@ -1096,7 +1133,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
     }
 
 
-        public function save_sec5failed($cp_no){
+        public function save_sec5failed($nc_no){
             $dept_code = $this->input->post("getdeptcode");
                     //อัพโหลดไฟล์แบบหลายไฟล์ลง Folderโดย+วันที่+เวลาต่อท้ายไฟล์
         $date = date("d-m-Y-H-i-s");//ดึงวันที่และเวลามาก่อน
@@ -1121,9 +1158,9 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
             "nc_status_code" => "nc10"
         );
 
-        $this->db->where("cp_no",$cp_no);
+        $this->db->where("nc_no",$nc_no);
 
-        if(!$this->db->update("complaint_main",$data)){
+        if(!$this->db->update("na_main",$data)){
             echo '<script language="javascript">';
             echo 'alert("Update data Failed !!")';
             echo '</script>';
@@ -1132,14 +1169,128 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
             echo 'alert("Update data Success")';
             echo '</script>';
 
-            header("refresh:0; url=http://192.190.10.27/complaint/nc/main/$cp_no");
+            header("refresh:0; url=http://203.107.156.180/intsys/complaint/nc/main/$nc_no");
         }
     }
 
 
-    public function create_cpfailed($cp_no){
+    public function create_cpfailed($nc_no){
         $dept_code = $this->input->post("getdeptcode");
-        header("refresh:0; url=http://192.190.10.27/complaint/complaint/add_failed/$cp_no/$dept_code");
+        header("refresh:0; url=http://203.107.156.180/intsys/complaint/complaint/add_failed/$nc_no/$dept_code");
+    }
+
+
+
+
+    public function alert_endgame($cp_no,$nc_related_dept){
+
+      $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code= '$nc_related_dept' && cp_mail_status='1' ");
+
+      $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_internal='1' || default_sd='1' ";
+      $sqlget_query = $this->db->query($sqlget_ccemail);
+
+        $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
+
+
+                $date = date_create($get_owner_email->cp_date);
+                 $condate = date_format($date, "d/m/Y");
+
+                 $date2 = date_create($get_owner_email->cp_sum_inves_date);
+                 $condate2 = date_format($date2, "d/m/Y");
+
+
+
+                $subject = "[ทดสอบระบบ Auto Email กรณี เกินระยะเวลาที่กำหนด]ใบรายงานปัญหา / ข้อบกพร่อง NC สถานะ ไม่มีการดำเนินการใดๆ";
+                $body = "<strong style='font-size:18px;font-weight:600;'>1. รายละเอียดปัญหา/ข้อบกพร่อง สำหรับผู้พบปัญหา</strong><br>";
+                $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" . $condate . "<br>";
+                $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
+                $body .="<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name ."<br><br>";
+
+
+                $body .= "<strong>Details of Complaint / Damages</strong>";
+                $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+
+
+                $body .= "<strong>Investigation</strong><br>";
+                $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+
+
+                $body .= "<strong>Summary of Investigation</strong><br>";
+                $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+                $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
+
+
+                $body .= "<strong style='font-size:18px;font-weight:600;'>2. สำหรับฝ่ายบริหาร (พิจารณาและกำหนดฝ่ายที่รับผิดชอบ แล้วส่งให้ MR. ดำเนินการ)</strong><br>";
+                $body .= "<strong>ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </strong>";
+
+                $body .="&nbsp;&nbsp;".$get_owner_email->cp_dept_main_name;
+
+                $body .= "<br>";
+                $body .= "<strong>ลงชื่อฝ่ายบริหาร : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
+
+                $body .= "<strong style='font-size:18px;font-weight:600;'>3. สำหรับฝ่ายที่รับผิดชอบให้หาสาเหตุ. วิธีแก้ไขและป้องกันและกำหนดแผนการปฎิบัติการแก้ไข</strong><br>";
+                $body .= "<strong style='font-size:16px;font-weight:600;'>Corrective</strong><br>";
+                $body .= "<strong>3.1 สาเหตุ : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec31."<br>";
+                $body .= "<strong>3.2 วิธีแก้ไข : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec32."<br>";
+
+                                        $date1 = date_create($get_owner_email->nc_sec32date);
+                                        $result_date = date_format($date1, "d/m/Y H:i:s");
+
+                                        $date_2 = date_create($get_owner_email->nc_sec33date);
+                                        $result_date2 = date_format($date_2, "d/m/Y H:i:s");
+
+                                        $sec3date = date_create($get_owner_email->nc_sec3date);
+                                        $result_sec3date = date_format($sec3date, "d/m/Y");
+
+                $body .= "<strong>กำหนดเสร็จ :</strong>&nbsp;&nbsp;".$result_date."<br>";
+                $body .= "<span style='color:red;font-size:24px'>ไม่มีความคืบหน้าหรือการดำเนินการใดๆ จนเกินระยะเวลาที่กำหนด</span><br>";
+                $body .= "<strong style='font-size:16px;font-weight:600;'>Preventive</strong><br>";
+                $body .= "<strong>3.3 วิธีการป้องกัน (Action plan)</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec33."<br>";
+                $body .= "<strong>กำหนดเสร็จ :</strong>&nbsp;&nbsp;".$result_date2."<br>";
+                $body .= "<strong>ผู้รับผิดชอบ :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3owner."&nbsp;&nbsp;<strong>รหัสพนักงาน :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3empid."&nbsp;&nbsp;<strong>แผนก :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3dept."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$result_sec3date."<br>";
+
+                $body .= "<strong>Link Program : </strong>" . "<a href=http://203.107.156.180/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+
+
+        $mail = new PHPMailer();
+            $mail->IsSMTP();
+            $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้
+            $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
+            $mail->Host = "mail.saleecolour.com";  // specify main and backup server
+    //        $mail->Host = "smtp.gmail.com";
+            $mail->Port = 587; // พอร์ท
+    //        $mail->SMTPSecure = 'tls';
+            $mail->SMTPAuth = true;     // turn on SMTP authentication
+            $mail->Username = "websystem@saleecolour.com";  // SMTP username
+            //websystem@saleecolour.com
+    //        $mail->Username = "chainarong039@gmail.com";
+            $mail->Password = "Ae8686#"; // SMTP password
+            //Ae8686#
+    //        $mail->Password = "ShctBkk1";
+
+            $mail->From = "websystem@saleecolour.com";
+            $mail->FromName = "Salee Colour WEB System";
+            foreach ($getEmail->result_array() as $fetch) {
+                $mail->AddAddress($fetch['email']);
+            }
+
+            $mail->AddCC($get_owner_email->cp_user_email);
+            foreach ($sqlget_query->result_array() as $sqlget_querys){
+              $mail->AddCC($sqlget_querys['cp_email_user']);
+            }
+     $mail->AddAddress("chainarong_k@saleecolour.com");                  // name is optional
+            $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+    // $mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+    // $mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+            $mail->IsHTML(true);                                  // set email format to HTML
+            $mail->Subject = $subject;
+            $mail->Body = $body;
+            $mail->send();
+
+
     }
 
 

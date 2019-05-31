@@ -78,9 +78,10 @@ and open the template in the editor.
                         <th style="width:80px;text-align: center;">ID</th>
                         <th style="width:60px;text-align: center;">DATE</th>
                         <th style="width:100px;text-align: center;">COMPLAINT BY</th>
+                        <th style="text-align: center;">CATEGORY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
-                        <th style="width:200px;text-align: center;">Related Department.</th>
+                        <th style="width:200px;text-align: center;">RELATED DEPARTMENT.</th>
                         <th style="width:200px;text-align: center;">STATUS</th>
                         <th style="width:80px;text-align: center;">PRIORITY</th>
                     </tr>
@@ -90,7 +91,7 @@ and open the template in the editor.
                     <tr>
                         <?php
                             if($l_nc['nc_status_code']=="nc01"){
-                                $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
+                                $newgif = '&nbsp;<img src="http://203.107.156.180/intsys/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
 
@@ -103,6 +104,7 @@ and open the template in the editor.
                             ?>
                         </td>
                         <td style="text-align: left;"><?php echo $l_nc['cp_user_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_nc['topic_cat_name']; ?></td>
                         <td style="text-align: left;"><?php echo $l_nc['topic_name']; ?></td>
                         <td style="text-align: left;"><?php echo $l_nc['cp_cus_name']; ?></td>
 
@@ -158,9 +160,10 @@ and open the template in the editor.
                         <th style="text-align: center;">ID</th>
                         <th style="text-align: center;">DATE</th>
                         <th style="text-align: center;">COMPLAINT BY</th>
+                        <th style="text-align: center;">CATEGORY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
-                        <th style="text-align: center;">Related Department.</th>
+                        <th style="width:200px;text-align: center;">RELATED DEPARTMENT.</th>
                         <th style="text-align: center;">STATUS</th>
                         <th style="text-align: center;">PRIORITY</th>
                     </tr>

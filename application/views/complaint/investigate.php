@@ -27,7 +27,7 @@ function myFunction() {
 </script>
 
             <div class="panel panel-warning">
-                <div class="panel-heading">Basic Information</div>
+                <div class="panel-heading"><i class="fas fa-caret-right"></i>&nbsp;Basic Information</div>
                 <div class="panel-body">
 
                     <div class="form-row">
@@ -39,7 +39,7 @@ function myFunction() {
                             <label><b>Date :</b></label>
                             <label><?php
                             $date = date_create($view_cp['cp_date']);
-                            echo date_format($date, "d-m-Y");
+                            echo date_format($date, "d/m/Y");
                             ?></label>
                         </div>
 
@@ -95,7 +95,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
 
 
             <div class="panel panel-warning">
-                <div class="panel-heading">Priority</div>
+                <div class="panel-heading"><i class="fas fa-caret-right"></i>&nbsp;Priority</div>
                 <div class="panel-body">
 
                     <div class="form-row">
@@ -149,7 +149,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
 
 
             <div class="panel panel-warning">
-                <div class="panel-heading">Details of Complaint / Damages</div>
+                <div class="panel-heading"><i class="fas fa-caret-right"></i>&nbsp;Details of Complaint / Damages</div>
                 <div class="panel-body">
 
                     <div class="form-row">
@@ -212,7 +212,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
 <!--********************************************************INVESTIGATION SECTION******************************************************************************-->
 
 <div class="panel panel-warning">
-    <div class="panel-heading">Investigation &nbsp;</div>
+    <div class="panel-heading"><i class="fas fa-caret-right"></i>&nbsp;Investigation &nbsp;</div>
 
 
 
@@ -372,9 +372,9 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
 <!--***********************************SUMMARY OF INVESTIGATION***************************************-->
 
 <div class="panel panel-warning">
-    <div class="panel-heading form-inline">Summary of Investigation
+    <div class="panel-heading form-inline"><i class="fas fa-caret-right"></i>&nbsp;Summary of Investigation
 
-        <div class="btn_gotonc">&nbsp;<a href="<?php echo base_url("nc/main/"); ?><?php echo $view_cp['cp_no']; ?>"><button name="gotonc" id="gotonc" class="btn btn-info btn-sm"><i class="fas fa-book-open"></i>&nbsp;ไปที่ NC</button></a></div>
+        <div class="btn_gotonc">&nbsp;<a href="<?php echo base_url("nc/"); ?>"><button name="gotonc" id="gotonc" class="btn btn-info btn-sm"><i class="fas fa-book-open"></i>&nbsp;ไปที่ NC</button></a></div>
 
     </div>
       <div class="panel-body">
@@ -527,9 +527,21 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
           <input hidden="" type="text" name="check_dept_sum_inves" id="check_dept_sum_inves" value="<?php echo $ckd_result;?>" />
 
 
+<?php
+
+$getCheckQmr = $this->db->query("SELECT
+complaint_email.cp_email_user,
+complaint_email.remark
+FROM
+complaint_email WHERE cp_email_user='$cpemailcheck' && remark='QMR' ");
+
+$checkQmrResult = $getCheckQmr->num_rows();
+
+ ?>
+
           <div class="col-md-12 pri">
               <span class="sum_text">For QMR only.</span>
-              <input type="text" name="check_qmr" id="check_qmr" value="<?php echo $getuser['Dept']; ?>" hidden=""/>
+              <input type="text" name="check_qmr" id="check_qmr" value="<?php echo $checkQmrResult; ?>" hidden/>
           </div>
 
           <div class="col-md-3 result_pms_sum_inves"><input type="submit" name="btn_sum" id="btn_sum" value="Submit" class="btn btn-primary btn-block" onclick="javascript:return confirm('ยืนยันการบันทึกข้อมูล');"/></div>
@@ -651,7 +663,6 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
 
                 <div class="col-md-12 pri">
               <span class="sum_text">For QMR only.</span>
-              <input type="text" name="check_qmr" id="check_qmr" value="<?php echo $getuser['Dept']; ?>" hidden=""/>
           </div>
 
                 <div class="col-md-3 result_pms_conclu"><input type="submit" name="btn_conclu" id="btn_conclu" value="Submit" class="btn btn-primary btn-block" onclick="javascript:return confirm('ยืนยันการบันทึกข้อมูล');"/></div>

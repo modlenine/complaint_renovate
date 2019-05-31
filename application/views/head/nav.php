@@ -28,7 +28,7 @@ $this->load->view("head/javascript");
       </div>
       <div id="navbar" class="navbar-collapse collapse">
           <div>
-              <p><span style="padding-left: 10px;">Hi <?php echo $getuser['username']; ?></span></p>
+              <p><span style="padding-left: 10px;"><i class="fas fa-user"></i>&nbsp;Hi <?php echo $getuser['username']; ?></span></p>
               <p><span style="padding-left: 10px;" class="check_dept">Dept. <?php echo $getuser['Dept']; ?></span></p>
 
               <input hidden="" type="text" name="check_user" id="check_user" value="<?php echo $getuser['username']; ?>" /><!--Check User-->

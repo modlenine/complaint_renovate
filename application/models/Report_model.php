@@ -109,7 +109,7 @@ $objPHPExcel->getActiveSheet()->setCellValue('J5', $result->topic_cat_name);
 $objPHPExcel->getActiveSheet()->setCellValue('A6', 'Priority');
 
 // Write data from MySQL result
-$objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+$objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
 mysqli_set_charset($objConnect,"utf8");
 $strSQL = "SELECT complaint_priority_use.cp_pri_use_cpno, complaint_priorityn.pri_name, complaint_priorityn.pri_id, complaint_priorityn_category.pricat_name FROM complaint_priority_use INNER JOIN complaint_priorityn ON complaint_priorityn.pri_id = complaint_priority_use.cp_pri_use_id INNER JOIN complaint_priorityn_category ON complaint_priorityn_category.pricat_id = complaint_priorityn.pri_catid WHERE cp_pri_use_cpno = '$cp_no' ORDER BY pri_id ASC";
 $objQuery = mysqli_query($objConnect,$strSQL);
@@ -404,7 +404,7 @@ $objPHPExcel->getActiveSheet()->setCellValue('AJ2','CP Status');
 }
 
  //Write data from MySQL result
-$objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+$objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
 mysqli_set_charset($objConnect,"utf8");
 $strSQL = "SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_priority, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.cp_user_email, complaint_main.cp_user_dept, complaint_main.cp_cus_name, complaint_main.cp_cus_ref, complaint_main.cp_invoice_no, complaint_main.cp_pro_code, complaint_main.cp_pro_lotno, complaint_main.cp_pro_qty, complaint_main.cp_detail, complaint_main.cp_file, complaint_main.cp_detail_inves, complaint_main.cp_detail_inves_signature, complaint_main.cp_detail_inves_dept, complaint_main.cp_detail_inves_date, complaint_main.cp_detail_inves_file, complaint_main.cp_sum_inves, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves_dept, complaint_main.cp_sum_inves_date, complaint_main.cp_sum_inves_file, complaint_main.cp_sum, complaint_main.cp_conclu_detail, complaint_main.cp_conclu_signature, complaint_main.cp_conclu_dept, complaint_main.cp_conclu_date, complaint_main.cp_conclu_costdetail, complaint_main.cp_conclu_cost, complaint_main.cp_conclu_file, complaint_main.cp_modify_by, complaint_main.cp_modify_datetime, complaint_main.cp_modify_reason, complaint_main.nc_status_code, complaint_main.nc_sec31, complaint_main.nc_sec32, complaint_main.nc_sec32date, complaint_main.nc_sec32time, complaint_main.nc_sec33, complaint_main.nc_sec33date, complaint_main.nc_sec33time, complaint_main.nc_sec3owner, complaint_main.nc_sec3empid, complaint_main.nc_sec3dept, complaint_main.nc_sec3date, complaint_main.nc_sec3edit_memo, complaint_main.nc_sec4f1, complaint_main.nc_sec4f1_file, complaint_main.nc_sec4f1_status, complaint_main.nc_sec4f1_date, complaint_main.nc_sec4f1_time, complaint_main.nc_sec4f1_signature, complaint_main.nc_sec4f2, complaint_main.nc_sec4f2_file, complaint_main.nc_sec4f2_status, complaint_main.nc_sec4f2_date, complaint_main.nc_sec4f2_time, complaint_main.nc_sec4f2_signature, complaint_main.nc_sec4f3, complaint_main.nc_sec4f3_file, complaint_main.nc_sec4f3_status, complaint_main.nc_sec4f3_signature, complaint_main.nc_sec5, complaint_main.nc_sec5file, complaint_main.nc_sec5cost, complaint_main.nc_sec5cost_detail, complaint_main.nc_sec5failed, complaint_main.nc_sec5filefailed, complaint_main.nc_sec5costfailed, complaint_main.cp_no_old, complaint_main.nc_modify_by, complaint_main.nc_modify_date, complaint_topic.topic_name, complaint_topic_catagory.topic_cat_name, complaint_status.cp_status_name FROM complaint_main INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_status_code LIKE '%cp%' $datesearch";
 $objQuery = mysqli_query($objConnect,$strSQL);
@@ -528,7 +528,7 @@ $objPHPExcel->getActiveSheet()->setCellValue('AO2','ค่าใช้จ่า�
 }
 
  //Write data from MySQL result
-$objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+$objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
 mysqli_set_charset($objConnect,"utf8");
 $strSQL = "SELECT complaint_main.cp_no_old, complaint_main.nc_sec5costfailed, complaint_main.nc_sec5filefailed, complaint_main.nc_sec5failed, complaint_main.nc_sec5cost_detail, complaint_main.nc_sec5cost, complaint_main.nc_sec5file, complaint_main.nc_sec5, complaint_main.nc_sec4f3_signature, complaint_main.nc_sec4f3_status, complaint_main.nc_sec4f3_file, complaint_main.nc_sec4f3, complaint_main.nc_sec4f2_signature, complaint_main.nc_sec4f2_time, complaint_main.nc_sec4f2_date, complaint_main.nc_sec4f2_status, complaint_main.nc_sec4f2_file, complaint_main.nc_sec4f1_time, complaint_main.nc_sec4f1_signature, complaint_main.nc_sec4f2, complaint_main.nc_sec4f1_date, complaint_main.nc_sec4f1_status, complaint_main.nc_sec4f1_file, complaint_main.nc_sec4f1, complaint_main.cp_sum, complaint_main.cp_sum_inves_file, complaint_main.cp_sum_inves_date, complaint_main.cp_sum_inves_dept, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves, complaint_main.cp_detail_inves_file, complaint_main.cp_detail_inves_date, complaint_main.cp_detail_inves_dept, complaint_main.cp_detail_inves_signature, complaint_main.cp_detail_inves, complaint_main.cp_status_code, complaint_main.cp_file, complaint_main.cp_detail, complaint_main.cp_pro_lotno, complaint_main.cp_pro_qty, complaint_main.cp_pro_code, complaint_main.cp_invoice_no, complaint_main.cp_cus_ref, complaint_main.cp_cus_name, complaint_main.cp_user_dept, complaint_main.cp_user_email, complaint_main.cp_user_empid, complaint_main.cp_user_name, complaint_main.cp_priority, complaint_main.cp_topic_cat, complaint_main.cp_topic, complaint_main.cp_date, complaint_main.cp_no, complaint_main.nc_status_code, complaint_main.nc_sec31, complaint_main.nc_sec32, complaint_main.nc_sec32date, complaint_main.nc_sec32time, complaint_main.nc_sec33, complaint_main.nc_sec33date, complaint_main.nc_sec33time, complaint_main.nc_sec3owner, complaint_main.nc_sec3empid, complaint_main.nc_sec3dept, complaint_main.nc_sec3date, complaint_main.nc_sec3edit_memo, complaint_status.cp_status_name, complaint_topic.topic_name, complaint_topic_catagory.topic_cat_name FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.nc_status_code INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat WHERE nc_status_code LIKE '%nc%' $datesearch";
 $objQuery = mysqli_query($objConnect,$strSQL);
@@ -711,7 +711,7 @@ $i++;
 
 
  //Write data from MySQL result
-$objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+$objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
 mysqli_set_charset($objConnect,"utf8");
 $strSQL = "SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_topic_cat, complaint_main.cp_priority, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.cp_user_email, complaint_main.cp_user_dept, complaint_main.cp_cus_name, complaint_main.cp_cus_ref, complaint_main.cp_invoice_no, complaint_main.cp_pro_code, complaint_main.cp_pro_lotno, complaint_main.cp_pro_qty, complaint_main.cp_detail, complaint_main.cp_file, complaint_main.cp_detail_inves, complaint_main.cp_detail_inves_signature, complaint_main.cp_detail_inves_dept, complaint_main.cp_detail_inves_date, complaint_main.cp_detail_inves_file, complaint_main.cp_sum_inves, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves_dept, complaint_main.cp_sum_inves_date, complaint_main.cp_sum_inves_file, complaint_main.cp_sum, complaint_main.cp_conclu_detail, complaint_main.cp_conclu_signature, complaint_main.cp_conclu_dept, complaint_main.cp_conclu_date, complaint_main.cp_conclu_costdetail, complaint_main.cp_conclu_cost, complaint_main.cp_conclu_file, complaint_main.cp_modify_by, complaint_main.cp_modify_datetime, complaint_main.cp_modify_reason, complaint_main.cp_no_old, complaint_main.nc_status_code, complaint_status.cp_status_name, complaint_main.cp_status_code, complaint_topic.topic_name, complaint_topic_catagory.topic_cat_name FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat WHERE cp_status_code ='$cp_status_code' ";
 
@@ -823,7 +823,7 @@ $objWriter->save('php://output');
 
 
      //Write data from MySQL result
-    $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+    $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
     mysqli_set_charset($objConnect,"utf8");
     $strSQL = "SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_topic_cat, complaint_main.cp_priority, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.cp_user_email, complaint_main.cp_user_dept, complaint_main.cp_cus_name, complaint_main.cp_cus_ref, complaint_main.cp_invoice_no, complaint_main.cp_pro_code, complaint_main.cp_pro_lotno, complaint_main.cp_pro_qty, complaint_main.cp_detail, complaint_main.cp_file, complaint_main.cp_detail_inves, complaint_main.cp_detail_inves_signature, complaint_main.cp_detail_inves_dept, complaint_main.cp_detail_inves_date, complaint_main.cp_detail_inves_file, complaint_main.cp_sum_inves, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves_dept, complaint_main.cp_sum_inves_date, complaint_main.cp_sum_inves_file, complaint_main.cp_sum, complaint_main.cp_conclu_detail, complaint_main.cp_conclu_signature, complaint_main.cp_conclu_dept, complaint_main.cp_conclu_date, complaint_main.cp_conclu_costdetail, complaint_main.cp_conclu_cost, complaint_main.cp_conclu_file, complaint_main.cp_modify_by, complaint_main.cp_modify_datetime, complaint_main.cp_modify_reason, complaint_main.cp_no_old, complaint_main.nc_status_code, complaint_status.cp_status_name, complaint_main.cp_status_code, complaint_topic.topic_name, complaint_topic_catagory.topic_cat_name FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat WHERE cp_status_code ='$cp_status_code' ";
 
@@ -930,7 +930,7 @@ public function exp_cpby_status($status){
 
 
   //Write data from MySQL result
- $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+ $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
  mysqli_set_charset($objConnect,"utf8");
  $strSQL = "SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_topic_cat, complaint_main.cp_priority, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.cp_user_email, complaint_main.cp_user_dept, complaint_main.cp_cus_name, complaint_main.cp_cus_ref, complaint_main.cp_invoice_no, complaint_main.cp_pro_code, complaint_main.cp_pro_lotno, complaint_main.cp_pro_qty, complaint_main.cp_detail, complaint_main.cp_file, complaint_main.cp_detail_inves, complaint_main.cp_detail_inves_signature, complaint_main.cp_detail_inves_dept, complaint_main.cp_detail_inves_date, complaint_main.cp_detail_inves_file, complaint_main.cp_sum_inves, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves_dept, complaint_main.cp_sum_inves_date, complaint_main.cp_sum_inves_file, complaint_main.cp_sum, complaint_main.cp_conclu_detail, complaint_main.cp_conclu_signature, complaint_main.cp_conclu_dept, complaint_main.cp_conclu_date, complaint_main.cp_conclu_costdetail, complaint_main.cp_conclu_cost, complaint_main.cp_conclu_file, complaint_main.cp_modify_by, complaint_main.cp_modify_datetime, complaint_main.cp_modify_reason, complaint_main.cp_no_old, complaint_main.nc_status_code, complaint_status.cp_status_name, complaint_main.cp_status_code, complaint_topic.topic_name, complaint_topic_catagory.topic_cat_name FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat WHERE cp_status_code ='$status' ";
 
@@ -1033,7 +1033,7 @@ public function exp_cpby_dept($dept){
 
 
   //Write data from MySQL result
- $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+ $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
  mysqli_set_charset($objConnect,"utf8");
  $strSQL = "SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_topic_cat, complaint_main.cp_priority, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.cp_user_email, complaint_main.cp_user_dept, complaint_main.cp_cus_name, complaint_main.cp_cus_ref, complaint_main.cp_invoice_no, complaint_main.cp_pro_code, complaint_main.cp_pro_lotno, complaint_main.cp_pro_qty, complaint_main.cp_detail, complaint_main.cp_file, complaint_main.cp_detail_inves, complaint_main.cp_detail_inves_signature, complaint_main.cp_detail_inves_dept, complaint_main.cp_detail_inves_date, complaint_main.cp_detail_inves_file, complaint_main.cp_sum_inves, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves_dept, complaint_main.cp_sum_inves_date, complaint_main.cp_sum_inves_file, complaint_main.cp_sum, complaint_main.cp_conclu_detail, complaint_main.cp_conclu_signature, complaint_main.cp_conclu_dept, complaint_main.cp_conclu_date, complaint_main.cp_conclu_costdetail, complaint_main.cp_conclu_cost, complaint_main.cp_conclu_file, complaint_main.cp_modify_by, complaint_main.cp_modify_datetime, complaint_main.cp_modify_reason, complaint_main.cp_no_old, complaint_main.nc_status_code, complaint_status.cp_status_name, complaint_main.cp_status_code, complaint_topic.topic_name, complaint_topic_catagory.topic_cat_name FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat WHERE cp_user_dept ='$dept' ";
 
@@ -1136,7 +1136,7 @@ public function exp_cpby_user($user){
 
 
   //Write data from MySQL result
- $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+ $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
  mysqli_set_charset($objConnect,"utf8");
  $strSQL = "SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_topic_cat, complaint_main.cp_priority, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.cp_user_email, complaint_main.cp_user_dept, complaint_main.cp_cus_name, complaint_main.cp_cus_ref, complaint_main.cp_invoice_no, complaint_main.cp_pro_code, complaint_main.cp_pro_lotno, complaint_main.cp_pro_qty, complaint_main.cp_detail, complaint_main.cp_file, complaint_main.cp_detail_inves, complaint_main.cp_detail_inves_signature, complaint_main.cp_detail_inves_dept, complaint_main.cp_detail_inves_date, complaint_main.cp_detail_inves_file, complaint_main.cp_sum_inves, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves_dept, complaint_main.cp_sum_inves_date, complaint_main.cp_sum_inves_file, complaint_main.cp_sum, complaint_main.cp_conclu_detail, complaint_main.cp_conclu_signature, complaint_main.cp_conclu_dept, complaint_main.cp_conclu_date, complaint_main.cp_conclu_costdetail, complaint_main.cp_conclu_cost, complaint_main.cp_conclu_file, complaint_main.cp_modify_by, complaint_main.cp_modify_datetime, complaint_main.cp_modify_reason, complaint_main.cp_no_old, complaint_main.nc_status_code, complaint_status.cp_status_name, complaint_main.cp_status_code, complaint_topic.topic_name, complaint_topic_catagory.topic_cat_name FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat WHERE cp_user_name ='$user' ";
 
@@ -1239,7 +1239,7 @@ public function exp_cpby_cat($category){
 
 
   //Write data from MySQL result
- $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+ $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
  mysqli_set_charset($objConnect,"utf8");
  $strSQL = "SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_topic_cat, complaint_main.cp_priority, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.cp_user_email, complaint_main.cp_user_dept, complaint_main.cp_cus_name, complaint_main.cp_cus_ref, complaint_main.cp_invoice_no, complaint_main.cp_pro_code, complaint_main.cp_pro_lotno, complaint_main.cp_pro_qty, complaint_main.cp_detail, complaint_main.cp_file, complaint_main.cp_detail_inves, complaint_main.cp_detail_inves_signature, complaint_main.cp_detail_inves_dept, complaint_main.cp_detail_inves_date, complaint_main.cp_detail_inves_file, complaint_main.cp_sum_inves, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves_dept, complaint_main.cp_sum_inves_date, complaint_main.cp_sum_inves_file, complaint_main.cp_sum, complaint_main.cp_conclu_detail, complaint_main.cp_conclu_signature, complaint_main.cp_conclu_dept, complaint_main.cp_conclu_date, complaint_main.cp_conclu_costdetail, complaint_main.cp_conclu_cost, complaint_main.cp_conclu_file, complaint_main.cp_modify_by, complaint_main.cp_modify_datetime, complaint_main.cp_modify_reason, complaint_main.cp_no_old, complaint_main.nc_status_code, complaint_status.cp_status_name, complaint_main.cp_status_code, complaint_topic.topic_name, complaint_topic_catagory.topic_cat_name FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat WHERE cp_topic_cat ='$category' ";
 
@@ -1248,41 +1248,41 @@ public function exp_cpby_cat($category){
  $i =2;
  while($fetch = mysqli_fetch_array($objQuery)){
 
-   $objPHPExcel->getActiveSheet()->setCellValue('A' . $i , $fetch['nc_no']);
-   $objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $fetch['cp_detail']);
-   $objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $fetch['cp_detail_inves']);
-   $objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $fetch['cp_sum_inves']);
+   $objPHPExcel->getActiveSheet()->setCellValue('A' . $i , $fetch['cp_no']);
+   $objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $fetch['cp_date']);
+   $objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $fetch['topic_name']);
+   $objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $fetch['topic_cat_name']);
    $objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $fetch['cp_priority']);
    $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $fetch['cp_user_name']);
-   $objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $fetch['cp_date']);
-   $objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $fetch['cp_sum_inves_signature']);
-   $objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $fetch['cp_sum_inves_date']);
-   $objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $fetch['cp_dept_main_name']);
-   $objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $fetch['nc_sec31']);
-   $objPHPExcel->getActiveSheet()->setCellValue('L'.$i, $fetch['nc_sec32']);
-   $objPHPExcel->getActiveSheet()->setCellValue('M'.$i, $fetch['nc_sec32date']);
-   $objPHPExcel->getActiveSheet()->setCellValue('N'.$i, $fetch['nc_sec33']);
-   $objPHPExcel->getActiveSheet()->setCellValue('O'.$i, $fetch['nc_sec33date']);
-   $objPHPExcel->getActiveSheet()->setCellValue('P'.$i, $fetch['nc_sec3file']);
-   $objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, $fetch['nc_sec3owner']);
-   $objPHPExcel->getActiveSheet()->setCellValue('R'.$i, $fetch['nc_sec3empid']);
-   $objPHPExcel->getActiveSheet()->setCellValue('S'.$i, $fetch['nc_sec3dept']);
-   $objPHPExcel->getActiveSheet()->setCellValue('T'.$i, $fetch['nc_sec3date']);
-   $objPHPExcel->getActiveSheet()->setCellValue('U'.$i, $fetch['nc_sec4f1']);
-   $objPHPExcel->getActiveSheet()->setCellValue('V'.$i, $fetch['nc_sec4f1_file']);
-   $objPHPExcel->getActiveSheet()->setCellValue('W'.$i, $fetch['nc_sec4f1_status']);
-   $objPHPExcel->getActiveSheet()->setCellValue('X'.$i, $fetch['nc_sec4f1_date']);
-   $objPHPExcel->getActiveSheet()->setCellValue('Y'.$i, $fetch['nc_sec4f2']);
-   $objPHPExcel->getActiveSheet()->setCellValue('Z'.$i, $fetch['nc_sec4f2_file']);
-   $objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, $fetch['nc_sec4f2_status']);
-   $objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, $fetch['nc_sec4f2_date']);
-   $objPHPExcel->getActiveSheet()->setCellValue('AC'.$i, $fetch['nc_sec4f3']);
-   $objPHPExcel->getActiveSheet()->setCellValue('AD'.$i, $fetch['nc_sec4f3_file']);
-   $objPHPExcel->getActiveSheet()->setCellValue('AE'.$i, $fetch['nc_sec4f3_status']);
-   $objPHPExcel->getActiveSheet()->setCellValue('AF'.$i, $fetch['nc_sec5']);
-   $objPHPExcel->getActiveSheet()->setCellValue('AG'.$i, $fetch['nc_sec5_file']);
-   $objPHPExcel->getActiveSheet()->setCellValue('AH'.$i, $fetch['nc_sec5cost_detail']);
-   $objPHPExcel->getActiveSheet()->setCellValue('AI'.$i, $fetch['nc_sec5cost']);
+   $objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $fetch['cp_user_empid']);
+   $objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $fetch['cp_user_dept']);
+   $objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $fetch['cp_status_name']);
+   $objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $fetch['cp_cus_name']);
+   $objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $fetch['cp_cus_ref']);
+   $objPHPExcel->getActiveSheet()->setCellValue('L'.$i, $fetch['cp_invoice_no']);
+   $objPHPExcel->getActiveSheet()->setCellValue('M'.$i, $fetch['cp_pro_code']);
+   $objPHPExcel->getActiveSheet()->setCellValue('N'.$i, $fetch['cp_pro_lotno']);
+   $objPHPExcel->getActiveSheet()->setCellValue('O'.$i, $fetch['cp_pro_qty']);
+   $objPHPExcel->getActiveSheet()->setCellValue('P'.$i, $fetch['cp_detail']);
+   $objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, $fetch['cp_file']);
+   $objPHPExcel->getActiveSheet()->setCellValue('R'.$i, $fetch['cp_detail_inves']);
+   $objPHPExcel->getActiveSheet()->setCellValue('S'.$i, $fetch['cp_detail_inves_file']);
+   $objPHPExcel->getActiveSheet()->setCellValue('T'.$i, $fetch['cp_detail_inves_signature']);
+   $objPHPExcel->getActiveSheet()->setCellValue('U'.$i, $fetch['cp_detail_inves_dept']);
+   $objPHPExcel->getActiveSheet()->setCellValue('V'.$i, $fetch['cp_detail_inves_date']);
+   $objPHPExcel->getActiveSheet()->setCellValue('W'.$i, $fetch['cp_sum_inves']);
+   $objPHPExcel->getActiveSheet()->setCellValue('X'.$i, $fetch['cp_sum_inves_file']);
+   $objPHPExcel->getActiveSheet()->setCellValue('Y'.$i, $fetch['cp_sum']);
+   $objPHPExcel->getActiveSheet()->setCellValue('Z'.$i, $fetch['cp_sum_inves_signature']);
+   $objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, $fetch['cp_sum_inves_dept']);
+   $objPHPExcel->getActiveSheet()->setCellValue('AB'.$i, $fetch['cp_sum_inves_date']);
+   $objPHPExcel->getActiveSheet()->setCellValue('AC'.$i, $fetch['cp_conclu_detail']);
+   $objPHPExcel->getActiveSheet()->setCellValue('AD'.$i, $fetch['cp_conclu_file']);
+   $objPHPExcel->getActiveSheet()->setCellValue('AE'.$i, $fetch['cp_conclu_costdetail']);
+   $objPHPExcel->getActiveSheet()->setCellValue('AF'.$i, $fetch['cp_conclu_cost']);
+   $objPHPExcel->getActiveSheet()->setCellValue('AG'.$i, $fetch['cp_conclu_signature']);
+   $objPHPExcel->getActiveSheet()->setCellValue('AH'.$i, $fetch['cp_conclu_dept']);
+   $objPHPExcel->getActiveSheet()->setCellValue('AI'.$i, $fetch['cp_conclu_date']);
 
 
  $i++;
@@ -1290,7 +1290,7 @@ public function exp_cpby_cat($category){
  }
 
  header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
- header('Content-Disposition: attachment;filename="Export NC By Category.xlsx"');
+ header('Content-Disposition: attachment;filename="Export Complaint By Category.xlsx"');
  header('Cache-Control: max-age=0');
  $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
  $objWriter->save('php://output');
@@ -1344,7 +1344,7 @@ public function exp_cpby_all(){
 
 
   //Write data from MySQL result
- $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+ $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
  mysqli_set_charset($objConnect,"utf8");
  $strSQL = "SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_topic_cat, complaint_main.cp_priority, complaint_main.cp_user_name, complaint_main.cp_user_empid, complaint_main.cp_user_email, complaint_main.cp_user_dept, complaint_main.cp_cus_name, complaint_main.cp_cus_ref, complaint_main.cp_invoice_no, complaint_main.cp_pro_code, complaint_main.cp_pro_lotno, complaint_main.cp_pro_qty, complaint_main.cp_detail, complaint_main.cp_file, complaint_main.cp_detail_inves, complaint_main.cp_detail_inves_signature, complaint_main.cp_detail_inves_dept, complaint_main.cp_detail_inves_date, complaint_main.cp_detail_inves_file, complaint_main.cp_sum_inves, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves_dept, complaint_main.cp_sum_inves_date, complaint_main.cp_sum_inves_file, complaint_main.cp_sum, complaint_main.cp_conclu_detail, complaint_main.cp_conclu_signature, complaint_main.cp_conclu_dept, complaint_main.cp_conclu_date, complaint_main.cp_conclu_costdetail, complaint_main.cp_conclu_cost, complaint_main.cp_conclu_file, complaint_main.cp_modify_by, complaint_main.cp_modify_datetime, complaint_main.cp_modify_reason, complaint_main.cp_no_old, complaint_main.nc_status_code, complaint_status.cp_status_name, complaint_main.cp_status_code, complaint_topic.topic_name, complaint_topic_catagory.topic_cat_name FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat ";
 
@@ -1453,7 +1453,7 @@ public function exp_ncby_status($status){
 
 
   //Write data from MySQL result
- $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+ $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
  mysqli_set_charset($objConnect,"utf8");
  $strSQL = "SELECT nc_main.nc_id, nc_main.nc_no, nc_main.nc_related_dept, nc_main.nc_status_code, nc_main.nc_sec31, nc_main.nc_sec32, nc_main.nc_sec32date, nc_main.nc_sec33, nc_main.nc_sec33date, nc_main.nc_sec3owner, nc_main.nc_sec3empid, nc_main.nc_sec3dept, nc_main.nc_sec3date, nc_main.nc_sec3file, nc_main.nc_sec4f1, nc_main.nc_sec4f1_file, nc_main.nc_sec4f1_status, nc_main.nc_sec4f1_date, nc_main.nc_sec4f1_signature, nc_main.nc_sec4f2, nc_main.nc_sec4f2_file, nc_main.nc_sec4f2_status, nc_main.nc_sec4f2_date, nc_main.nc_sec4f2_signature, nc_main.nc_sec4f3, nc_main.nc_sec4f3_file, nc_main.nc_sec4f3_status, nc_main.nc_sec4f3_signature, nc_main.nc_sec5, nc_main.nc_sec5_file, nc_main.nc_sec5cost, nc_main.nc_sec5cost_detail, nc_main.nc_sec5failed, nc_main.nc_sec5filefailed, nc_main.nc_sec5costfailed, nc_main.cp_no_old, nc_main.nc_modify_by, nc_main.nc_modify_date, complaint_main.cp_no, complaint_main.cp_detail, complaint_main.cp_detail_inves, complaint_main.cp_sum_inves, complaint_main.cp_priority, complaint_main.cp_user_name, complaint_main.cp_date, complaint_main.cp_sum_inves_signature, complaint_main.cp_sum_inves_date, complaint_department_main.cp_dept_main_name, complaint_status.cp_status_name FROM nc_main INNER JOIN complaint_main ON nc_main.nc_no = complaint_main.cp_no INNER JOIN complaint_department_main ON complaint_department_main.cp_dept_main_code = nc_main.nc_related_dept INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status_code WHERE nc_main.nc_status_code ='$status' ";
 
@@ -1560,7 +1560,7 @@ public function exp_ncby_dept($dept){
 
 
   //Write data from MySQL result
- $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+ $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
  mysqli_set_charset($objConnect,"utf8");
  $strSQL = "SELECT
 nc_main.nc_id,
@@ -1722,7 +1722,7 @@ public function exp_ncby_user($user){
 
 
   //Write data from MySQL result
- $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+ $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
  mysqli_set_charset($objConnect,"utf8");
  $strSQL = "SELECT
 nc_main.nc_id,
@@ -1885,7 +1885,7 @@ public function exp_ncby_cat($category){
 
 
   //Write data from MySQL result
- $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+ $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
  mysqli_set_charset($objConnect,"utf8");
  $strSQL = "SELECT
 nc_main.nc_id,
@@ -2052,7 +2052,7 @@ public function exp_ncby_all(){
 
 
   //Write data from MySQL result
- $objConnect = mysqli_connect("localhost","root","1234","saleecolour") or die("Error Connect to Database");
+ $objConnect = mysqli_connect("192.190.2.3","pasakorn","Palm2018","saleecolour") or die("Error Connect to Database");
  mysqli_set_charset($objConnect,"utf8");
  $strSQL = "SELECT
 nc_main.nc_id,

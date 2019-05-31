@@ -36,7 +36,7 @@ and open the template in the editor.
                             <label><b>Date :</b></label>
                             <label><?php
                             $date = date_create($view_cp['cp_date']);
-                            echo date_format($date, "d-m-Y");
+                            echo date_format($date, "d/m/Y");
                             ?></label>
                             <input hidden="" type="text" name="history_cpdate" id="history_cpdate" value="<?php echo $view_cp['cp_date']; ?>" />
                         </div>
@@ -229,7 +229,7 @@ and open the template in the editor.
             <div class="btn_start_inves result_pms">
                 <a href="<?php echo base_url(); ?>complaint/inves_starting/<?php echo $view_cp['cp_no']; ?>"><button name="btn_v_cp" id="btn_v_cp" onclick="javascript:return confirm('คุณต้องการเริ่มการสืบสวนใช่หรือไม่');" class="btn btn-primary">Start Investigation</button></a>
             </div>
-            <a href="<?php echo base_url("complaint/cancel_complaint/"); ?><?php echo $view_cp['cp_no']; ?>"><button id="cancle_btn" class="btn btn-danger" style="margin-bottom: 5px;">Cancel Complaint</button></a>
+            <a href="<?php echo base_url("complaint/cancel_complaint/"); ?><?php echo $view_cp['cp_no']; ?>"><button onclick="javascript:return confirm('ท่านยืนยันที่จะยกเลิก Complaint ใช่ หรือ ไม่');" id="cancle_btn" class="btn btn-danger" style="margin-bottom: 5px;">Cancel Complaint</button></a>
 
             <footer>
               <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>

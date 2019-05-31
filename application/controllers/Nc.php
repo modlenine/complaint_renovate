@@ -40,7 +40,7 @@ class Nc extends CI_Controller {
 
     public function save_sec3($cp_no,$nc_related_dept){
         $this->nc_model->save_ncsec3($cp_no,$nc_related_dept);
-        header("refresh:1; url=http://192.190.10.27/complaint/nc/main/$cp_no/$nc_related_dept");
+        header("refresh:1; url=http://203.107.156.180/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
     }
 
 
@@ -86,6 +86,7 @@ class Nc extends CI_Controller {
     public function create_cpfailed($cp_no){
         $this->nc_model->create_cpfailed($cp_no);
     }
+
 
 
 

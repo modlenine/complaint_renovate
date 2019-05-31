@@ -8,14 +8,14 @@ class login_model extends CI_Model {
 
 
     public function escape_string() {
-        return mysqli_connect("localhost", "root", "1234", "saleecolour");
+        return mysqli_connect("192.190.2.3", "pasakorn", "Palm2018", "saleecolour");
     }
 
 
     public function check_login() {
 // เข้ารหัส input
         $username = mysqli_escape_string($this->escape_string(), isset($_POST['username']) ? ($_POST['username']) : '');
-        $password = mysqli_escape_string($this->escape_string(), isset($_POST['password']) ? ($_POST['password']) : '');
+        $password = mysqli_escape_string($this->escape_string(), isset($_POST['password']) ? md5($_POST['password']) : '');
 
         $checkuser = $this->db->query(sprintf("SELECT * FROM member WHERE `username` = '%s' and `password` = '%s' ", $username, $password
         ));
@@ -27,7 +27,7 @@ class login_model extends CI_Model {
             echo 'alert("Username หรือ Password ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง")';
             echo '</script>';
 
-            header("refresh:1; url=http://192.190.10.27/complaint/login");
+            header("refresh:1; url=http://203.107.156.180/intsys/complaint/login");
             die();
         } else {
             echo "<h2 style='text-align:center;color:green;margin-top:30px;'>เข้าสู่ระบบสำเร็จ กรุณารอสักครู่ระบบกำลังพาท่านเข้าสู่หน้าโปรแกรม</h2>";
@@ -43,13 +43,13 @@ class login_model extends CI_Model {
 
                 if($r['posi']==75){
                      echo "<h3 style='color:green;text-align:center;'>" . "Welcome &nbsp;" . $r['Fname'] . "&nbsp;Permission : Admin" . "</h3>";
-                     $uri =isset($_SESSION['RedirectKe']) ? $_SESSION['RedirectKe']: '/complaint/';
+                     $uri =isset($_SESSION['RedirectKe']) ? $_SESSION['RedirectKe']: '/intsys/complaint/';
                      header('location:'.$uri);
                 }
 
                 if($r['posi']==15){
                     echo "<h3 style='color:green;text-align:center;'>" . "Welcome &nbsp;" . $r['Fname'] . "&nbsp;Permission : User" . "</h3>";
-                    $uri =isset($_SESSION['RedirectKe']) ? $_SESSION['RedirectKe']: '/complaint/';
+                    $uri =isset($_SESSION['RedirectKe']) ? $_SESSION['RedirectKe']: '/intsys/complaint/';
                     header('location:'.$uri);
                 }
 
@@ -67,7 +67,7 @@ class login_model extends CI_Model {
             $_SESSION['RedirectKe'] = $_SERVER['REQUEST_URI'];
 
             echo "<h1 style='text-align:center;margin-top:50px;'>กรุณา Login เข้าสู่ระบบ</h1>";
-            header("refresh:1; url=http://192.190.10.27/complaint/login/");
+            header("refresh:1; url=http://203.107.156.180/intsys/complaint/login/");
             die();
         }
     }
@@ -92,7 +92,7 @@ class login_model extends CI_Model {
     public function logout(){
         session_destroy();
         $this->session->unset_userdata('referrer_url');
-	header("location:http://192.190.10.27/complaint/login");
+	header("location:http://203.107.156.180/intsys/complaint/login");
     }
 
 

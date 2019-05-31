@@ -10,12 +10,21 @@ and open the template in the editor.
         <title>ใบรายงานปัญหา / ข้อบกพร่อง NC</title>
 
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script> -->
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css"> -->
+
+
+<link href="<?php echo base_url('css/datetimepicker.css'); ?>" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url('js/datetimepicker.js'); ?>"></script>
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 
     </head>
     <body>
@@ -78,7 +87,7 @@ function myFunction() {
                 <div class="panel-body">
                     <p><label class="ncmain_s1_label">ฝ่ายที่รับผิดชอบในการปฎิบัติการแก้ไขและป้องกันปัญหา ได้แก่ : </label>
                             <label><?php echo $getdatamain->cp_dept_main_name; ?></label>&nbsp;
-                            <input type="text" name="check_related_deptcode" id="check_related_deptcode" value="<?php echo $getdatamain->nc_related_dept; ?>">
+                            <input hidden type="text" name="check_related_deptcode" id="check_related_deptcode" value="<?php echo $getdatamain->nc_related_dept; ?>">
                     </p>
 
                     <?php
@@ -90,6 +99,7 @@ function myFunction() {
 
 
                     ?>
+
                     <input hidden="" type="text" name="check_qmr" id="check_qmr" value="<?php echo $getuser['Dept']; ?>" /><!--Check qmr-->
                     <input hidden="" type="text" name="check_permit" id="check_permit" value="<?php echo $ckd_result; ?>"/><!-- Check permission -->
                 </div>
@@ -138,12 +148,40 @@ function myFunction() {
                                     <span id="dateshow32" class="showdate3text"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="dateshow_text32" class="showdate3text"></span><!-- Show Countdown time -->
                                 </div>
 
-                                <div class='input-group date showdate32' id='datetimepicker32'>
+
+                                <!-- <div class='input-group date showdate32' id='datetimepicker32'>
                                     <input type='datetime' class="form-control" name="datetime32" id="datetime32" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
-                                </div><!-- Input type datetime -->
+                                </div> -->
+                                <!-- Input type datetime -->
+
+                                <input hidden type='datetime' name="datetime32count" id="datetime32count" value="<?php echo $getdatamain->nc_sec32date; ?>"/>
+
+
+                                <?php
+                                // $datenow = date("Y-m-d H:i:s");
+                                //
+                                // if($getdatamain->nc_sec32date < $datenow && $getdatamain->nc_autoemail == "0"){
+                                //   $data_autoemail = array(
+                                //     "nc_autoemail" => "1"
+                                //   );
+                                //   $this->db->where('nc_no',$getdatamain->nc_no);
+                                //   $this->db->where('nc_related_dept',$getdatamain->nc_related_dept);
+                                //   $this->db->update('nc_main',$data_autoemail);
+                                //
+                                //   $this->load->model('nc_model');
+                                //   $this->nc_model->alert_endgame($getdatamain->nc_no,$getdatamain->nc_related_dept);
+                                //
+                                // }else{
+                                //   echo "<span style='color:red'>ระบบได้ทำการส่ง Email ถึงผู้บริหารให้รับทราบถึงการนิ่งเฉยต่อปัญหา เรียบร้อยแล้ว</span>";
+                                // }
+                                 ?>
+
+                                <div id="datetimepicker32" class="showdate32"></div>
+                                <input type="hidden" id="result" name="datetime32" value="">
+
 
                             </div>
                         </div>
@@ -163,12 +201,20 @@ function myFunction() {
 
                             </div>
 
-                            <div class='input-group date showdate33' id='datetimepicker33'>
+
+                            <!-- <div class='input-group date showdate33' id='datetimepicker33'>
                                 <input type='datetime' class="form-control" name="datetime33" id="datetime33" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
-                            </div><!-- Input type datetime -->
+                            </div> -->
+                            <!-- Input type datetime -->
+
+                            <input hidden type='datetime' name="datetime33count" id="datetime33count" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
+                            <div id="datetimepicker33" class="showdate33"></div>
+                            <input type="hidden" id="result" name="datetime33" value="">
+
+
 
                              <label style="margin-top: 5px;">เอกสารประกอบ</label>
                             <input type="file" class="form-control" name="nc_sec3file" id="nc_sec3file" value="<?php echo $getdatamain->nc_sec3file; ?>"/>
@@ -184,7 +230,7 @@ function myFunction() {
                         <input hidden="" type="text" name="nc_sec3empid" id="nc_sec3empid" value="<?php echo $getuser['ecode']; ?>"/>
                         <input hidden="" type="text" name="nc_sec3dept" id="nc_sec3dept" value="<?php echo $getuser['Dept']; ?>"/>
                         <input hidden="" type="text" name="nc_sec3date" id="nc_sec3date" value="<?php echo date("Y-m-d"); ?>"/>
-                        <input type="text" name="check_related_deptcode_s3" id="check_related_deptcode_s3" value="<?php echo $getdatamain->nc_related_dept; ?>"> <!-- Check related dept code -->
+                        <input hidden type="text" name="check_related_deptcode_s3" id="check_related_deptcode_s3" value="<?php echo $getdatamain->nc_related_dept; ?>"> <!-- Check related dept code -->
 
                     </form>
 
@@ -240,11 +286,22 @@ function myFunction() {
 
 
 
+            <?php
+            $cpemailcheck = $getuser['memberemail'];
+            $getCheckQmr = $this->db->query("SELECT
+            complaint_email.cp_email_user,
+            complaint_email.remark
+            FROM
+            complaint_email WHERE cp_email_user='$cpemailcheck' && remark='QMR' ");
 
+            $checkQmrResult = $getCheckQmr->num_rows();
+
+             ?>
 
 
 
             <!-- *********************************SECTION**4***AREA************************************ -->
+            <input hidden type="text" name="check_qmr_nc" id="check_qmr_nc" value="<?php echo $checkQmrResult; ?>" />
             <div class="panel panel-primary"><!--SECTION 4-->
                 <div class="panel-heading">4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</div>
                 <div class="panel-body">
@@ -261,8 +318,8 @@ function myFunction() {
                             <span style="color:red;font-size:12px;">Max file size = 10MB and word , pdf only</span>
 
                             <div class="form-inline" style="margin-top: 5px;">
-                                <input type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label>
+                                <input required type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input required type="radio" name="nc_sec4f1_status" id="nc_sec4f1_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label>
                             </div>
 
                             <input hidden="" type="text" name="nc_sec4f1_radiocheck" id="nc_sec4f1_radiocheck" value="<?php echo $getdatamain->nc_sec4f1_status; ?>" /><!-- radio check -->
@@ -274,20 +331,30 @@ function myFunction() {
                             $date42 = date_create($getdatamain->nc_sec4f2_date);
                             $result_date42 = date_format($date42, "d/m/Y H:i:s");
                             ?>
+
                             <label id="label4f1">การติดตามผลครั้งที่ 2</label>
                             <div class="form-inline">
                                 <input type="text" class="form-control" name="datetime41show" id="datetime41show" value="<?php echo $result_date41; ?>"/>
-                                <span id="dateshow41" class="showdate3text"></span><!-- Show Countdown time -->
+                                <span id="dateshow41" class="showdate3text"></span>
+                                <!-- Show Countdown time -->
 
-                                <div class='input-group date showdate41' id='datetimepicker41'>
+
+                                <!-- <div class='input-group date showdate41' id='datetimepicker41'>
                                     <input type='datetime' class="form-control" name="datetime41" id="datetime41" value="<?php echo $getdatamain->nc_sec4f1_date; ?>"/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
-                                </div><!-- Input type datetime -->
+                                </div> -->
+
+                                <input hidden type='datetime' name="datetime41count" id="datetime41count" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
+                                <div id="datetimepicker41" class="showdate41"></div>
+                                <input type="hidden" id="result" name="datetime41" value="">
+                                <!-- Input type datetime -->
+
 
                                 <input type="submit" class="btn btn-primary" name="btn_sec4f1" id="btn_sec4f1"/>
                             </div>
+
 
                             <label style="margin-top: 5px;">ลงชื่อผู้ติดตาม</label>
                             <div class="form-inline">
@@ -300,7 +367,7 @@ function myFunction() {
                         </form>
                     </div>
 
-
+<!-- nc/save_sec4f2/ -->
                     <!-- ติดตามผลครั้งที่ 2 -->
                     <div class="form-group col-md-12">
                         <form name="sec4f2" method="post" action="<?php echo base_url("nc/save_sec4f2/"); ?><?php echo $getdatamain->cp_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
@@ -311,23 +378,32 @@ function myFunction() {
                             <label id="get_nc_sec4f2_file">&nbsp;:&nbsp;<a href="<?php echo base_url("asset/nc/sec4/f2/"); ?><?php echo $getdatamain->nc_sec4f2_file; ?>" target="_blank"><?php echo $getdatamain->nc_sec4f2_file; ?></a></label>
                             <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                             <div class="form-inline" style="margin-top: 5px;">
-                                <input type="radio" name="nc_sec4f2_status" id="nc_sec4f2_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="radio" name="nc_sec4f2_status" id="nc_sec4f2_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label>
+                                <input required type="radio" name="nc_sec4f2_status" id="nc_sec4f2_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input required type="radio" name="nc_sec4f2_status" id="nc_sec4f2_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label>
                             </div>
 
                             <input hidden="" type="text" name="nc_sec4f2_radiocheck" id="nc_sec4f2_radiocheck" value="<?php echo $getdatamain->nc_sec4f2_status; ?>" /><!-- radio check -->
 
                             <label id="label4f2">การติดตามผลครั้งที่ 3</label>
                             <div class="form-inline">
-                                <input type="text" class="form-control" name="datetime42show" id="datetime42show" value="<?php echo $result_date42; ?>"/>
-                                <span id="dateshow42" class="showdate3text"></span><!-- Show Countdown time -->
 
-                                <div class='input-group date showdate42' id='datetimepicker42'>
+                                <input type="text" class="form-control" name="datetime42show" id="datetime42show" value="<?php echo $result_date42; ?>"/>
+                                <span id="dateshow42" class="showdate3text"></span>
+                                <!-- Show Countdown time -->
+
+
+                                <!-- <div class='input-group date showdate42' id='datetimepicker42'>
                                     <input type="datetime" class="form-control" name="datetime42" id="datetime42" value="<?php echo $getdatamain->nc_sec4f2_date; ?>"/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
-                                </div><!-- Input type datetime -->
+                                </div> -->
+
+                                <input hidden type='datetime' name="datetime42count" id="datetime42count" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
+                                <div id="datetimepicker42" class="showdate42"></div>
+                                <input type="hidden" id="result" name="datetime42" value="">
+                                <!-- Input type datetime -->
+
 
                                 <input type="submit" class="btn btn-primary" name="btn_sec4f2" id="btn_sec4f2"/>
                             </div>
@@ -355,8 +431,8 @@ function myFunction() {
 
                             <span style="color:red;font-size:12px;">Max file size = 1MB and word , pdf only</span>
                             <div class="form-inline" style="margin-top: 5px;">
-                                <input type="radio" name="nc_sec4f3_status" id="nc_sec4f3_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="radio" name="nc_sec4f3_status" id="nc_sec4f3_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label><br>
+                                <input required type="radio" name="nc_sec4f3_status" id="nc_sec4f3_status_yes" value="yes"/>&nbsp;<label>ปิดสรุป</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input required type="radio" name="nc_sec4f3_status" id="nc_sec4f3_status_no" value="no"/>&nbsp;<label>ไม่ปิดสรุป</label><br>
 
                                 <input hidden="" type="text" name="nc_sec4f3_radiocheck" id="nc_sec4f3_radiocheck" value="<?php echo $getdatamain->nc_sec4f3_status; ?>" /><!-- radio check -->
 
@@ -413,7 +489,7 @@ if ($getdatamain->nc_status_code == "nc10") {
                 <div class="panel-heading">5. Conclusion Of NC <?php echo $ncfailed; ?></div>
                 <div class="panel-body">
                     <form name="sec4f2" method="post" action="<?php echo base_url($baseurl); ?><?php echo $getdatamain->nc_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
-                        <div class="form-group col-md-10">
+                        <div class="form-group col-md-12">
                             <label>Conclusion Of NC</label>
                             <textarea class="form-control" rows="5" name="nc_sec5" id="nc_sec5"><?php echo $show; ?></textarea>
                             <label style="margin-top: 5px;">เอกสารประกอบ</label>
@@ -456,15 +532,46 @@ if ($getdatamain->nc_status_code == "nc10") {
                 </div>
 
             </div>
+            <input type="text" name="check_autoemail" id="check_autoemail" value="<?php echo $getdatamain->nc_autoemail; ?>">
+
             <!-- *********************************SECTION5****AREA**************************************-->
             <script>
                 $(document).ready(function () {
 
+                  $('#datetimepicker32').dateTimePicker({
+                    dateFormat: "YYYY-MM-DD HH:mm",
+                    locale: 'en'
+                  });
+
+                  $('#datetimepicker33').dateTimePicker({
+                    dateFormat: "YYYY-MM-DD HH:mm",
+                    locale: 'en'
+                  });
+
+                  $('#datetimepicker41').dateTimePicker({
+                    dateFormat: "YYYY-MM-DD HH:mm",
+                    locale: 'en'
+                  });
+
+                  $('#datetimepicker42').dateTimePicker({
+                    dateFormat: "YYYY-MM-DD HH:mm",
+                    locale: 'en'
+                  });
+
+
+
+
+
+
+
                 var days;
+                var check_related_deptcode = $('#check_related_deptcode').val();
+                var check_nc_no = $('#his_cpno').val();
                     /****************************COUNTDOWN***SEC32******************************************/
                     // Set the date we're counting down to
                     //var countDownDate = new Date("2019-03-12 09:37:25").getTime();
-                    var countDownDate = new Date($('#datetime32').val()).getTime();
+                    var countDownDate = new Date($('#datetime32count').val()).getTime();
+
 
                     // Update the count down every 1 second
                     var x = setInterval(function () {
@@ -492,6 +599,8 @@ if ($getdatamain->nc_status_code == "nc10") {
                             clearInterval(x);
                             document.getElementById("dateshow_text32").innerHTML = "เกินระยะเวลาที่กำหนด";
                             $('#dateshow32').hide();
+
+
                         }
                         if ($('#nc_sec4f1_radiocheck').val() == "yes") {
                             clearInterval(x);
@@ -528,7 +637,7 @@ if ($getdatamain->nc_status_code == "nc10") {
                     /*********************COUNTDOWN****SEC33********************************************************/
                     // Set the date we're counting down to
                     //var countDownDate = new Date("2019-03-12 09:37:25").getTime();
-                    var countDownDate2 = new Date($('#datetime33').val()).getTime();
+                    var countDownDate2 = new Date($('#datetime33count').val()).getTime();
 
                     // Update the count down every 1 second
                     var x2 = setInterval(function () {
@@ -596,7 +705,7 @@ if ($getdatamain->nc_status_code == "nc10") {
                     /*********************COUNTDOWN****SEC41********************************************************/
                     // Set the date we're counting down to
                     //var countDownDate = new Date("2019-03-12 09:37:25").getTime();
-                    var countDownDate41 = new Date($('#datetime41').val()).getTime();
+                    var countDownDate41 = new Date($('#datetime41count').val()).getTime();
 
                     // Update the count down every 1 second
                     var x41 = setInterval(function () {
@@ -624,13 +733,18 @@ if ($getdatamain->nc_status_code == "nc10") {
                             clearInterval(x41);
                             document.getElementById("dateshow41").innerHTML = "เกินระยะเวลาที่กำหนด";
                         }
+                        if ($('#nc_sec4f2_radiocheck').val() !== "") {
+                            clearInterval(x41);
+                            document.getElementById("dateshow41").innerHTML = "จบการติดตามครั้งที่ 2";
+                        }
                         if ($('#nc_sec4f1_radiocheck').val() == "yes" || $('#nc_sec4f3_radiocheck').val() !== "") {
                             clearInterval(x41);
                             document.getElementById("dateshow41").innerHTML = "เสร็จสิ้นการติดตาม";
-                        }else if ($('#nc_sec4f1_radiocheck').val() == "no"){
-                            clearInterval(x41);
-                            document.getElementById("dateshow41").innerHTML = "กำลังดำเนินการติดตามครั้งที่2";
                         }
+                        // else if ($('#nc_sec4f1_radiocheck').val() == "no"){
+                        //     clearInterval(x41);
+                        //     document.getElementById("dateshow41").innerHTML = "กำลังดำเนินการติดตามครั้งที่2";
+                        // }
 
 
 
@@ -641,7 +755,7 @@ if ($getdatamain->nc_status_code == "nc10") {
                     /*********************COUNTDOWN****SEC42********************************************************/
                     // Set the date we're counting down to
                     //var countDownDate = new Date("2019-03-12 09:37:25").getTime();
-                    var countDownDate42 = new Date($('#datetime42').val()).getTime();
+                    var countDownDate42 = new Date($('#datetime42count').val()).getTime();
 
                     // Update the count down every 1 second
                     var x42 = setInterval(function () {
@@ -673,10 +787,11 @@ if ($getdatamain->nc_status_code == "nc10") {
                         if ($('#nc_sec4f2_radiocheck').val() == "yes" || $('#nc_sec4f3_radiocheck').val() !== "") {
                             clearInterval(x42);
                             document.getElementById("dateshow42").innerHTML = "เสร็จสิ้นการติดตาม";
-                        }else if($('#nc_sec4f2_radiocheck').val() == "no"){
-                            clearInterval(x42);
-                            document.getElementById("dateshow42").innerHTML = "กำลังดำเนินการติดตามครั้งที่3";
                         }
+                        // else if($('#nc_sec4f2_radiocheck').val() == "no"){
+                        //     clearInterval(x42);
+                        //     document.getElementById("dateshow42").innerHTML = "กำลังดำเนินการติดตามครั้งที่3";
+                        // }
 
 
 

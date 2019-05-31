@@ -56,6 +56,7 @@ class Complaint_model extends CI_Model
                 "cp_mail_active" => 1
             );
             $this->db->where("deptcode", $gd);
+            $this->db->where("cp_mail_status","1");
             $this->db->update("maillist", $save_dept);
         } /*         * **Code Insert radio array***** */
     }
@@ -585,7 +586,7 @@ WHERE cp_no='$get_cp_no' ");
 
 
 
-        $sqlEmail = "SELECT email FROM maillist WHERE cp_mail_active = 1 "; //1=it , 2=sales , 3=cs
+        $sqlEmail = "SELECT email FROM maillist WHERE cp_mail_active = 1 AND cp_mail_active != 0 "; //1=it , 2=sales , 3=cs
         $query = $this->db->query($sqlEmail);
 
         $date = date_create($getdata_email->cp_date);
@@ -613,8 +614,8 @@ WHERE cp_no='$get_cp_no' ");
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $getdata_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
-            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
+            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
 
@@ -681,9 +682,9 @@ WHERE cp_no='$get_cp_no' ");
           $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_qty . "<br>";
           $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $getdata_email->cp_detail . "<br>";
 
-          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
+          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
 
-          $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
+          $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
           $mail = new PHPMailer();
@@ -692,7 +693,7 @@ WHERE cp_no='$get_cp_no' ");
           $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
           $mail->Host = "mail.saleecolour.com";  // specify main and backup server
           //        $mail->Host = "smtp.gmail.com";
-          $mail->Port = 587; // พอร์ท
+          $mail->Port = 25; // พอร์ท
           //        $mail->SMTPSecure = 'tls';
           $mail->SMTPAuth = true;     // turn on SMTP authentication
           $mail->Username = "websystem@saleecolour.com";  // SMTP username
@@ -747,9 +748,9 @@ WHERE cp_no='$get_cp_no' ");
             $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_qty . "<br>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $getdata_email->cp_detail . "<br>";
 
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
 
-            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
             $mail = new PHPMailer();
@@ -758,7 +759,7 @@ WHERE cp_no='$get_cp_no' ");
             $mail->SMTPDebug = 1;                                      // set mailer to use SMTP
             $mail->Host = "mail.saleecolour.com";  // specify main and backup server
             //        $mail->Host = "smtp.gmail.com";
-            $mail->Port = 587; // พอร์ท
+            $mail->Port = 25; // พอร์ท
             //        $mail->SMTPSecure = 'tls';
             $mail->SMTPAuth = true;     // turn on SMTP authentication
             $mail->Username = "websystem@saleecolour.com";  // SMTP username
@@ -859,7 +860,7 @@ WHERE cp_no='$get_cp_no' ");
             "cp_pro_qty" => $this->input->post("cp_pro_qty"),
             "cp_detail" => $this->input->post("cp_detail"),
             "cp_file" => $file_name_date,
-            "cp_status_code" => "cp01",
+            "cp_status_code" => "cp08",
             "cp_no_old" => $this->input->post("cp_noold")
         );
 
@@ -874,6 +875,8 @@ WHERE cp_no='$get_cp_no' ");
             echo 'alert("Save Data Failed !!!!")';
             echo '</script>';
         } /*         * *****Insert data to complaint_main table******* */
+
+
     }
 
     /*     * ************INSERT ZONE***************** */
@@ -892,7 +895,7 @@ WHERE cp_no='$get_cp_no' ");
     { /*     * *****Change New Complaint to Complaint Analyzed********* */
         $this->db->query("UPDATE complaint_main SET cp_status_code='cp02' WHERE cp_no='$cp_no' ");
 
-        $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+        $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' AND cp_mail_status='1' ");
 
         $get_owner_email = $this->get_owner_email($cp_no);
 
@@ -906,7 +909,7 @@ WHERE cp_no='$get_cp_no' ");
         $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$cpdate. "<br>";
         $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $get_owner_email->topic_cat_name . "<br>";
         $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name . "<br>";
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
         $mail = new PHPMailer();
@@ -950,6 +953,8 @@ WHERE cp_no='$get_cp_no' ");
             echo 'alert("Start Investigate Success")';
             echo '</script>';
         }
+
+
     }
 
 
@@ -1003,7 +1008,7 @@ WHERE cp_no='$get_cp_no' ");
 
 
         //***************************Email***Zone************************************************//
-        $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+        $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' AND cp_mail_status ='1' ");
 
         $get_owner_email = $this->get_owner_email($cp_no);
 
@@ -1014,6 +1019,7 @@ WHERE cp_no='$get_cp_no' ");
          $condate2 = date_format($date2, "d/m/Y");
 
         if ($get_owner_email->cp_topic_cat == "3" || $get_owner_email->cp_topic_cat == "4" || $get_owner_email->cp_topic_cat == "5") {
+
           $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_internal='1' ";
           $sqlget_query = $this->db->query($sqlget_ccemail);
 
@@ -1038,17 +1044,17 @@ WHERE cp_no='$get_cp_no' ");
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
             $body .= "<br>";
 
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
             $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
 
 
-            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
             $mail = new PHPMailer();
@@ -1126,16 +1132,16 @@ WHERE cp_no='$get_cp_no' ");
           $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
           $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
           $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
           $body .= "<br>";
 
           $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
           $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
           $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
 
 
-          $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+          $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
           $mail = new PHPMailer();
           $mail->IsSMTP();
@@ -1213,16 +1219,16 @@ WHERE cp_no='$get_cp_no' ");
             $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
             $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
             $body .= "<br>";
 
             $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
             $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
 
 
-            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
             $mail = new PHPMailer();
             $mail->IsSMTP();
@@ -1301,7 +1307,7 @@ WHERE cp_no='$get_cp_no' ");
             echo 'alert("Please choose choice!")';
             echo '</script>';
 
-            header("refresh:0; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
+            header("refresh:0; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
             //                redirect('/complaint/investigate/'.$cp_no);
             exit();
         }
@@ -1382,7 +1388,7 @@ WHERE cp_no='$get_cp_no' ");
 
         //************************Email***Zone***********************************//
 
-        $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+        $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' AND cp_mail_status ='1' ");
 
         $get_owner_email = $this->get_owner_email($cp_no);
 
@@ -1425,24 +1431,24 @@ WHERE cp_no='$get_cp_no' ");
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
                 $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
                 $body .= "<br>";
 
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
                 $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
 
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>ไม่เป็นข้อบกพร่องของบริษัท</strong><br>";
                 $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
 
-                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
                 // Code สำหรับส่ง Email
@@ -1521,25 +1527,25 @@ WHERE cp_no='$get_cp_no' ");
               $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
               $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
               $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
               $body .= "<br>";
 
 
               $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
               $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
               $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
               $body .= "<br>";
 
 
               $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
               $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-              $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+              $body .= "<strong>Link Attached File : </strong>" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
               $body .= "<strong>ไม่เป็นข้อบกพร่องของบริษัท</strong><br>";
               $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
 
 
-              $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+              $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
               $mail = new PHPMailer();
               $mail->IsSMTP();
@@ -1587,6 +1593,7 @@ WHERE cp_no='$get_cp_no' ");
                   echo '</script>';
               }
 
+
             }else {
               $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_external='1' ";
               $sqlget_query = $this->db->query($sqlget_ccemail);
@@ -1614,25 +1621,25 @@ WHERE cp_no='$get_cp_no' ");
                 $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
                 $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
                 $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
                 $body .= "<br>";
 
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
                 $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
 
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>ไม่เป็นข้อบกพร่องของบริษัท</strong><br>";
                 $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
 
 
-                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
                 $mail = new PHPMailer();
                 $mail->IsSMTP();
@@ -1711,25 +1718,25 @@ WHERE cp_no='$get_cp_no' ");
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
                 $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
                 $body .= "<br>";
 
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
                 $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
 
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>เป็นข้อบกพร่องของบริษัท</strong><br>";
                 $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
 
 
-                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/nc/main/" . $cp_no . ">" . "Go to Page</a>";
+                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/nc/main/" . $cp_no . ">" . "Go to Page</a>";
 
                 $mail = new PHPMailer();
                 $mail->IsSMTP();
@@ -1806,25 +1813,25 @@ WHERE cp_no='$get_cp_no' ");
               $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
               $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
               $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
               $body .= "<br>";
 
 
               $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
               $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
               $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
               $body .= "<br>";
 
 
               $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
               $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-              $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+              $body .= "<strong>Link Attached File : </strong>" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
               $body .= "<strong>เป็นข้อบกพร่องของบริษัท</strong><br>";
               $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
 
 
-              $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/nc/main/" . $cp_no . ">" . "Go to Page</a>";
+              $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/nc/main/" . $cp_no . ">" . "Go to Page</a>";
 
               $mail = new PHPMailer();
               $mail->IsSMTP();
@@ -1872,6 +1879,7 @@ WHERE cp_no='$get_cp_no' ");
                   echo '</script>';
               }
 
+
             }else{
 
               $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_external='1' ";
@@ -1900,25 +1908,25 @@ WHERE cp_no='$get_cp_no' ");
                 $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
                 $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
                 $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
                 $body .= "<br>";
 
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
                 $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
 
 
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>เป็นข้อบกพร่องของบริษัท</strong><br>";
                 $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
 
 
-                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://192.190.10.27/complaint/nc/main/" . $cp_no . ">" . "Go to Page</a>";
+                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/nc/main/" . $cp_no . ">" . "Go to Page</a>";
 
                 $mail = new PHPMailer();
                 $mail->IsSMTP();
@@ -1964,6 +1972,8 @@ WHERE cp_no='$get_cp_no' ");
                     echo 'alert("Summary of Investigate Success")';
                     echo '</script>';
                 }
+
+
             }
 
 
@@ -2024,7 +2034,7 @@ WHERE cp_no='$get_cp_no' ");
 
 
         //************************Email***Zone***********************************//
-        $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' ");
+        $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' AND cp_mail_status='1' ");
 
         $get_owner_email = $this->get_owner_email($cp_no);
 
@@ -2052,25 +2062,25 @@ WHERE cp_no='$get_cp_no' ");
         $body .= "<h2>Details of Complaint / Damages</h2>";
         $body .= "<strong>Complaint Detail : </strong>" . $get_owner_email->cp_detail . "<br>";
 
-        $body .= "<strong>Link Attached File : </strong>" . "<a href=http://192.190.10.27/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+        $body .= "<strong>Link Attached File : </strong>" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
 
         $body .= "<h2>Investigation</h2>";
         $body .= "<strong>Detail of Investigate : </strong>" . $get_owner_email->cp_detail_inves . "<br>";
-        $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
         $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_detail_inves_date . "<br>";
 
         $body .= "<h2>Summary of Investigation</h2>";
         $body .= "<strong>Detail Summary of Investigation : </strong>" . $get_owner_email->cp_sum_inves . "<br>";
-        $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
         $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_sum_inves_date . "<br>";
 
         $body .= "<h2>Conclusion of Complaint</h2>";
         $body .= "<strong>Detail Conclusion of Complaint : </strong>" . $get_owner_email->cp_conclu_detail . "<br>";
         $body .= "<strong>Detail of Cost : </strong>" . $get_owner_email->cp_conclu_costdetail . "&nbsp;&nbsp;<strong>Cost : </strong>" . $get_owner_email->cp_conclu_cost . "<br>";
-        $body .= "<strong>Link Attached File : </strong>" . "<a href='http://192.190.10.27/complaint/asset/investigate/conclusion_inves/$get_owner_email->cp_conclu_file'>" . $get_owner_email->cp_conclu_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>" . "<a href='http://203.107.156.180/intsys/complaint/asset/investigate/conclusion_inves/$get_owner_email->cp_conclu_file'>" . $get_owner_email->cp_conclu_file . "</a><br>";
         $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_conclu_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_conclu_dept . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_conclu_date . "<br>";
 
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://192.190.10.27/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
         $mail = new PHPMailer();
@@ -2254,13 +2264,14 @@ WHERE cp_no='$get_cp_no' ");
         $this->db->update("complaint_main", $data);
     }
 
-            public function update_ncstatus($cp_no){
+            public function update_ncstatus($cp_no,$nc_related_dept){
                 $data = array(
                     "nc_status_code" => "nc12"
                 );
 
-                $this->db->where("cp_no",$cp_no);
-                $this->db->update("complaint_main",$data);
+                $this->db->where("nc_no",$cp_no);
+                $this->db->where("nc_related_dept",$nc_related_dept);
+                $this->db->update("nc_main",$data);
 
             }
 

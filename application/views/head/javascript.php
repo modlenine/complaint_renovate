@@ -154,6 +154,7 @@
         if ($('#cp_detail_inves').val() == "") {
             $('#cp_sum_inves').prop("readonly", true);
             $('#cp_sum_inves_file').prop("readonly", true);
+            $('.result_pms_sum_inves').hide();
         }
 
 
@@ -172,7 +173,7 @@
             }
         });
 
-        if ($('#check_qmr').val() != "QMR") {/**********CHECK QMR PERMISSION****************/
+        if ($('#check_qmr').val() != "1") {/**********CHECK QMR PERMISSION****************/
             $('.result_pms_sum_inves').hide();
             $('.result_pms_conclu').hide();
             $('#cp_conclu_detail').prop("readonly", true);
@@ -183,8 +184,7 @@
             $('#cp_sum_inves').prop("readonly", true);
             $('#cp_sum_inves_file').prop("readonly", true);
 
-            $('#btn_cre_new').hide();
-            $('#label_cre_new').hide();
+
 
         }
 
@@ -251,20 +251,20 @@
 
 //****************Quantity************
 
-        $('input#cp_pro_qty').keyup(function (event) {/*****Comma function*******/
-
-            // skip for arrow keys
-            if (event.which >= 37 && event.which <= 40)
-                return;
-
-            // format number
-            $(this).val(function (index, value) {
-                return value
-                        .replace(/\D/g, "")
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        ;
-            });
-        });
+        // $('input#cp_pro_qty').keyup(function (event) {/*****Comma function*******/
+        //
+        //     // skip for arrow keys
+        //     if (event.which >= 37 && event.which <= 40)
+        //         return;
+        //
+        //     // format number
+        //     $(this).val(function (index, value) {
+        //         return value
+        //                 .replace(/\D/g, "")
+        //                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        //                 ;
+        //     });
+        // });
 
 
      //**********Quantity Show number+comma
@@ -372,7 +372,7 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
 
 
-        if ($('#check_qmr').val() !== "QMR") {/****************SEC4***CHECK**DEPT****************/
+        if ($('#check_qmr_nc').val() == "0") {/****************SEC4***CHECK**DEPT****************/
             $('#nc_sec4f1').prop("readonly", true);
             $('#nc_sec4f1_file').prop("readonly", true);
             $('#nc_sec4f1_date').prop("readonly", true);
@@ -526,6 +526,12 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
             $('#nc_sec4f3').prop("readonly", true);
             $('#btn_sec4f3').hide();
 
+            // $('#nc_sec5').prop("readonly", false);
+            // $('#nc_sec5file').prop("readonly", false);
+            // $('#nc_sec5cost_detail').prop("readonly", false);
+            // $('#nc_sec5cost').prop("readonly", false);
+            // $('#btn_sec5').show();
+
         } else {
             $('#get_nc_sec4f3_file').hide();
 
@@ -617,12 +623,14 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
         /*************************CONTROL SEC5**************************************/
 
-        if ($('#check_qmr').val() !== "QMR") {
+        if ($('#check_qmr_nc').val() !== "1") {
             $('#nc_sec5').prop("readonly", true);
             $('#nc_sec5file').prop("readonly", true);
             $('#nc_sec5cost_detail').prop("readonly", true);
             $('#nc_sec5cost').prop("readonly", true);
             $('#btn_sec5').hide();
+            $('#btn_cre_new').hide();
+            $('#label_cre_new').hide();
         }
 
 
@@ -1085,6 +1093,8 @@ if($('#cp_topic_cat').val() == "Technical"){
 
 
 }
+
+
 
 
 

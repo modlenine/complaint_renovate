@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
         <?php $this->load->view("head/nav"); ?>
 
-        <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
+        <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <h1 class="head_text">LIST OF NC</h1><hr>
 
 <!--            <div class="form-inline">
@@ -33,8 +33,10 @@ and open the template in the editor.
                         <th style="width:80px;text-align: center;">ID</th>
                         <th style="width:100px;text-align: center;">DATE</th>
                         <th style="width:100px;text-align: center;">COMPLAINT BY</th>
+                        <th style="text-align: center;">CATEGORY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
+                        <th style="width:200px;text-align: center;">Related Department.</th>
                         <th style="text-align: center;">STATUS</th>
                         <th style="width:80px;text-align: center;">PRIORITY</th>
                     </tr>
@@ -57,7 +59,8 @@ and open the template in the editor.
                             ?>
                         </td>
                         <td style="text-align: left;"><?php echo $l_nc['cp_user_name']; ?></td>
-                        <td style="text-align: left;"><?php echo $l_nc['cp_topic']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_nc['topic_cat_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_nc['topic_name']; ?></td>
                         <td style="text-align: left;"><?php echo $l_nc['cp_cus_name']; ?></td>
 
                         <?php
@@ -98,7 +101,7 @@ and open the template in the editor.
 
 
                         ?>
-
+                        <td style="text-align: left;"><?php echo $l_nc['cp_dept_main_name']; ?></td>
                         <td style="text-align: left;color:<?php echo $color; ?>"><?php echo $l_nc['cp_status_name']; ?></td>
                         <td style="text-align: left;"><?php echo $this->complaint_model->conpriority($l_nc['cp_priority']); ?></td>
                     </tr>
@@ -109,8 +112,10 @@ and open the template in the editor.
                         <th style="text-align: center;">ID</th>
                         <th style="text-align: center;">DATE</th>
                         <th style="text-align: center;">COMPLAINT BY</th>
+                        <th style="text-align: center;">CATEGORY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
+                        <th style="text-align: center;">Related Department.</th>
                         <th style="text-align: center;">STATUS</th>
                         <th style="text-align: center;">PRIORITY</th>
                     </tr>

@@ -54,13 +54,13 @@ class Complaint extends CI_Controller{
     public function inves_starting($cp_no){/*******Change New Complaint to Complaint Analyzed**********/
         $this->complaint_model->change_status_to1($cp_no);
 
-        header("refresh:0; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
+        header("refresh:0; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
     }
 
     public function inves_starting_fail($cp_no){/*******Change New Complaint to Complaint Analyzed**********/
         $this->complaint_model->change_status_to1($cp_no);
 
-        header("refresh:0; url=http://192.190.10.27/complaint/complaint/investigate_fail/$cp_no");
+        header("refresh:0; url=http://203.107.156.180/intsys/complaint/complaint/investigate_fail/$cp_no");
     }
 
 
@@ -114,7 +114,7 @@ class Complaint extends CI_Controller{
         $this->history_model->saveedit_history();
 
 
-        header("refresh:1; url=http://192.190.10.27/complaint/complaint/view/$cp_no");
+        header("refresh:1; url=http://203.107.156.180/intsys/complaint/complaint/view/$cp_no");
     }
 
 
@@ -169,7 +169,7 @@ class Complaint extends CI_Controller{
         $this->history_model->saveedit_inves_history();
         $this->complaint_model->save_edit_inves($cp_no);
         redirect('/complaint/investigate/'.$cp_no);
-       header("refresh:1; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
+       header("refresh:1; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
     }
 
 
@@ -178,19 +178,19 @@ class Complaint extends CI_Controller{
 
         $this->complaint_model->add_detail_inves($cp_no);
 
-        header("refresh:1; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
+        header("refresh:1; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
     }
 
 
     public function add_sum_inves($cp_no){
         $this->complaint_model->add_sum_inves($cp_no);
-        header("refresh:1; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
+        header("refresh:1; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
     }
 
 
     public function add_conclusion($cp_no){
         $this->complaint_model->add_conclusion($cp_no);
-        header("refresh:1; url=http://192.190.10.27/complaint/complaint/investigate/$cp_no");
+        header("refresh:1; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
     }
 
 
@@ -202,7 +202,7 @@ class Complaint extends CI_Controller{
         $this->complaint_model->save_newcomplaint();
         $this->complaint_model->deactive_email();
 
-        header("refresh:1; url=http://192.190.10.27/complaint");
+        header("refresh:1; url=http://203.107.156.180/intsys/complaint");
     }
 
     public function add_failed($cp_no,$dept_code){
@@ -214,7 +214,7 @@ class Complaint extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['get_pri_use'] = $this->complaint_model->get_pri_view($cp_no);
         $data['get_pri_topic'] = $this->complaint_model->get_pri_topic();
-        $data['getdatamain'] = $this->nc_model->getdata_main($cp_no);
+        $data['getdatamain'] = $this->nc_model->getdata_main($cp_no,$dept_code);
         $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
         $data['getdept_checkbox'] = $this->complaint_model->getdept_checkbox($cp_no);
 
@@ -225,11 +225,12 @@ class Complaint extends CI_Controller{
         $this->load->view("complaint/add_failed",$data);
     }
 
-    public function saveData_failed($cp_no){
-        $this->complaint_model->update_ncstatus($cp_no);
+    public function saveData_failed($cp_no,$dept_code){
+        $this->complaint_model->update_ncstatus($cp_no,$dept_code);
         $this->complaint_model->saveData_failed();
 
-        redirect('/nc/main/'.$cp_no);
+
+        redirect('/nc/main/'.$cp_no.'/'.$dept_code);
     }
 
     public function test(){
@@ -242,6 +243,7 @@ class Complaint extends CI_Controller{
 
     public function cancel_complaint($cp_no){
         $this->complaint_model->cancel_complaint($cp_no);
+        header("refresh:1; url=http://203.107.156.180/intsys/complaint");
     }
 
 

@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://192.190.10.27/complaint';
+$config['base_url'] = 'http://203.107.156.180/intsys/complaint/';
 
 /*
 |--------------------------------------------------------------------------

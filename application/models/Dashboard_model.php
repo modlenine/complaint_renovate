@@ -48,11 +48,13 @@ complaint_status.cp_status_id,
 complaint_status.cp_status_name,
 complaint_main.cp_priority,
 complaint_main.cp_status_code,
-complaint_topic.topic_name
+complaint_topic.topic_name,
+complaint_topic_catagory.topic_cat_name
 FROM
 complaint_main
 INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code
 INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
  WHERE cp_status_code='$cp_status_code' ");
         return $result;
     }
@@ -86,12 +88,48 @@ WHERE nc_main.nc_status_code='$nc_status_code' ");
 
 
     public function viewby_user($cp_username){
-        $result = $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_user_name, complaint_main.cp_cus_name, complaint_main.cp_priority, complaint_status.cp_status_id, complaint_status.cp_status_name, complaint_main.cp_status_code FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_user_name='$cp_username' ");
+        $result = $this->db->query("SELECT
+complaint_main.cp_id,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_main.cp_user_name,
+complaint_main.cp_cus_name,
+complaint_main.cp_priority,
+complaint_status.cp_status_id,
+complaint_status.cp_status_name,
+complaint_main.cp_status_code,
+complaint_topic.topic_name,
+complaint_topic_catagory.topic_cat_name,
+complaint_topic.topic_name
+FROM
+complaint_main
+INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
+WHERE cp_user_name='$cp_username' ");
         return $result->result_array();
     }
 
     public function viewby_dept($cp_userdept){
-        $result = $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_topic, complaint_main.cp_cus_name, complaint_main.cp_priority, complaint_main.cp_status_code, complaint_status.cp_status_id, complaint_status.cp_status_name, complaint_main.cp_user_dept FROM complaint_main INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE cp_user_dept='$cp_userdept' ");
+        $result = $this->db->query("SELECT
+complaint_main.cp_id,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_main.cp_user_name,
+complaint_main.cp_cus_name,
+complaint_main.cp_priority,
+complaint_status.cp_status_id,
+complaint_status.cp_status_name,
+complaint_main.cp_status_code,
+complaint_topic.topic_name,
+complaint_topic_catagory.topic_cat_name,
+complaint_topic.topic_name,
+complaint_main.cp_user_dept
+FROM
+complaint_main
+INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic WHERE cp_user_dept='$cp_userdept' ");
         return $result->result_array();
     }
 
@@ -102,12 +140,40 @@ WHERE nc_main.nc_status_code='$nc_status_code' ");
 
 
     public function graph1CP(){
-        $result = $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_date, count(complaint_main.cp_date) as total, complaint_main.cp_status_code FROM complaint_main WHERE cp_status_code in ('cp01','cp02','cp03','cp04','cp06') GROUP BY cp_date");
+        $result = $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_date, count(complaint_main.cp_date) as total, complaint_main.cp_status_code , substr(cp_date,6,2) AS months FROM complaint_main WHERE cp_status_code in ('cp01','cp02','cp03','cp04' ,'cp05','cp06','cp07','cp08') GROUP BY months");
         return $result->result_array();
     }
 
     public function graph1NC(){
         $result = $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_date, count(complaint_main.cp_date) as total, complaint_main.cp_status_code FROM complaint_main WHERE cp_status_code = 'cp05' GROUP BY cp_date");
+        return $result->result_array();
+    }
+
+
+    public function graph_cp_day($graph_month){
+$cutdate = substr($graph_month,0,2);
+
+      $result = $this->db->query("SELECT
+complaint_main.cp_id,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_topic_catagory.topic_cat_name,
+COUNT(complaint_topic_catagory.topic_cat_name) AS sum
+FROM
+complaint_main
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+WHERE complaint_main.cp_date LIKE '%$cutdate%'
+GROUP BY complaint_topic_catagory.topic_cat_name");
+
+    return $result;
+    }
+
+
+    public function viewgraph_topic_cat($topiccat,$graph_month){
+
+      $cutdate = substr($graph_month,0,2);
+
+        $result = $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_cus_name, complaint_main.cp_priority, complaint_main.cp_user_dept, complaint_main.cp_topic, complaint_main.cp_topic_cat, complaint_topic_catagory.topic_cat_name, complaint_topic.topic_name, complaint_main.cp_user_name, complaint_status.cp_status_name, complaint_main.cp_status_code FROM complaint_main INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE topic_cat_name ='$topiccat' && cp_date LIKE '%$cutdate%' ");
         return $result->result_array();
     }
 

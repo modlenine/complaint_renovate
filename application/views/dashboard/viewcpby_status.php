@@ -15,7 +15,7 @@ and open the template in the editor.
         $get_cp_status_code = $viewcpby_status->row();
         ?>
 
-        <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
+        <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
             <h1 class="head_list_cp">List of Complaint</h1>
             <div class="btn_back">
               <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
@@ -26,8 +26,10 @@ and open the template in the editor.
                         <th style="width:80px;text-align: center;">ID</th>
                         <th style="width:100px;text-align: center;">DATE</th>
                         <th style="width:100px;text-align: center;">COMPLAINT BY</th>
+                        <th style="text-align: center;">CATEGORY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
+                        <th style="width:200px;text-align: center;">RELATED DEPARTMENT.</th>
                         <th style="text-align: center;">STATUS</th>
                         <th style="width:80px;text-align: center;">PRIORITY</th>
                     </tr>
@@ -55,6 +57,7 @@ and open the template in the editor.
                             ?>
                         </td>
                         <td style="text-align: left;"><?php echo $l_cp['cp_user_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $l_cp['topic_cat_name']; ?></td>
                         <td style="text-align: left;"><?php echo $l_cp['topic_name']; ?></td>
                         <td style="text-align: left;"><?php echo $l_cp['cp_cus_name']; ?></td>
 
@@ -80,6 +83,17 @@ and open the template in the editor.
 
                         ?>
 
+                        <td style="text-align: left;">
+                          <?php
+                          $cp_no = $l_cp['cp_no'];
+                            $getdept = $this->db->query("SELECT complaint_department.cp_dept_id, complaint_department.cp_dept_code, complaint_department.cp_dept_cp_no, member.Dept FROM complaint_department INNER JOIN member ON member.DeptCode = complaint_department.cp_dept_code WHERE complaint_department.cp_dept_cp_no = '$cp_no' GROUP BY complaint_department.cp_dept_code DESC");
+                          ?>
+
+                          <?php foreach ($getdept->result_array() as $gdn): ?>
+                              <?php echo $gdn['Dept'] . "&nbsp;,"; ?>
+                          <?php endforeach; ?>
+                        </td>
+
                         <td style="text-align: left;color:<?php echo $color; ?>;"><?php echo $l_cp['cp_status_name']; ?></td>
                         <td style="text-align: left;"><?php echo $this->complaint_model->conpriority($l_cp['cp_priority']); ?></td>
                     </tr>
@@ -90,8 +104,10 @@ and open the template in the editor.
                         <th style="text-align: center;">ID</th>
                         <th style="text-align: center;">DATE</th>
                         <th style="text-align: center;">COMPLAINT BY</th>
+                        <th style="text-align: center;">CATEGORY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
+                        <th style="text-align: center;">RELATED DEPARTMENT.</th>
                         <th style="text-align: center;">STATUS</th>
                         <th style="text-align: center;">PRIORITY</th>
                     </tr>

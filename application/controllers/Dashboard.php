@@ -70,6 +70,7 @@ class Dashboard extends CI_Controller{
         $this->load->view("dashboard/viewby_department",$data);
     }
 
+
     public function viewby_topic_cat($cp_topiccat_id){
         $this->login_model->call_login();
 
@@ -82,8 +83,41 @@ class Dashboard extends CI_Controller{
     }
 
 
-    public function graph_cp(){
-       $this->load->view("");
+    public function graph_cp_day($graph_month){
+      $this->login_model->call_login();
+
+      $data['get_cpstatus'] = $this->dashboard_model->get_cpstatus();
+      $data['get_ncstatus'] = $this->dashboard_model->get_ncstatus();
+      $data['getby_username'] = $this->dashboard_model->getby_username();
+      $data['getby_dept'] = $this->dashboard_model->getby_dept();
+      $data['getby_topic_cat'] = $this->dashboard_model->getby_topic_cat();
+
+      $data['getuser'] = $this->login_model->getuser();
+
+      $data['graph_cp_day'] = $this->dashboard_model->graph_cp_day($graph_month);
+
+      $this->load->view("head/head_code");
+      $this->load->view("head/javascript");
+      $this->load->view("dashboard/graph_cp_day",$data);
+    }
+
+
+    public function view_gpcat_detail($topiccat,$graph_month){
+      $this->login_model->call_login();
+
+      $data['get_cpstatus'] = $this->dashboard_model->get_cpstatus();
+      $data['get_ncstatus'] = $this->dashboard_model->get_ncstatus();
+      $data['getby_username'] = $this->dashboard_model->getby_username();
+      $data['getby_dept'] = $this->dashboard_model->getby_dept();
+      $data['getby_topic_cat'] = $this->dashboard_model->getby_topic_cat();
+
+      $data['viewgraph_topic_cat'] = $this->dashboard_model->viewgraph_topic_cat($topiccat,$graph_month);
+
+      $data['getuser'] = $this->login_model->getuser();
+
+      $this->load->view("head/head_code");
+      $this->load->view("head/javascript");
+      $this->load->view("dashboard/view_gpcat_detail",$data);
     }
 
 
