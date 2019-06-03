@@ -27,6 +27,7 @@ and open the template in the editor.
                     <option value="searchby_docnum">เลขเอกสาร</option>
                     <option value="searchby_userinform">ผู้แจ้ง</option>
                     <option value="searchby_topic">หัวข้อเรื่อง</option>
+                    <option value="searchby_wording">ค้นหาด้วยคำ</option>
 <!--                    <option value="searchby_status">Status</option>-->
                 </select>
 
@@ -70,6 +71,15 @@ and open the template in the editor.
                 </form>
 
 
+                <form action="<?php echo base_url("search/searchby_wording"); ?>" method="post" name="searchby_wording" style="margin-top:5px;">
+                <span id="searchby_wording" hidden>
+                    <input type="text" name="searchby_wording" id="searchby_wording" class="form-control" placeholder="กรุณาพิมพ์คำที่ต้องการค้นหา">
+                    <button class="btn btn-warning btn-sm">Search</button>
+                    <span style="color:red;">ค้นหาจาก : Email , ชื่อลูกค้า , ข้อมูลอ้างอิง , หมายเลขอินวอยว์ , รหัสสินค้า , หมายเลข Lot number , รายละเอียด Complaint</span>
+                </span>
+                </form>
+
+
 
 
 
@@ -95,7 +105,7 @@ and open the template in the editor.
                         <th style="text-align: center;">CATEGORY</th>
                         <th style="text-align: center;">TOPIC</th>
                         <th style="text-align: center;">FROM</th>
-                        <th style="width:200px;text-align: center;">RELATED DEPARTMENT.</th>
+                        <th style="width:300px;text-align: center;">RELATED DEPARTMENT.</th>
                         <th style="width:200px;text-align: center;">STATUS</th>
                         <th style="width:80px;text-align: center;">PRIORITY</th>
                     </tr>

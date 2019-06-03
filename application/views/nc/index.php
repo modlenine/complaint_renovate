@@ -27,6 +27,7 @@ and open the template in the editor.
                     <option value="searchby_docnum">เลขเอกสาร</option>
                     <option value="searchby_userinform">ผู้แจ้ง</option>
                     <option value="searchby_topic">หัวข้อเรื่อง</option>
+                    <option value="searchby_wording">ค้นหาด้วยคำ</option>
 <!--                    <option value="searchby_status">Status</option>-->
                 </select>
 
@@ -68,6 +69,19 @@ and open the template in the editor.
                     <button class="btn btn-warning btn-sm">Search</button>
                 </span>
                 </form>
+
+
+                <form action="<?php echo base_url("search/searchby_wording_nc"); ?>" method="post" name="searchby_wording" style="margin-top:5px;">
+                <span id="searchby_wording" hidden>
+                    <input type="text" name="searchby_wording" id="searchby_wording" class="form-control" placeholder="กรุณาพิมพ์คำที่ต้องการค้นหา">
+                    <button class="btn btn-warning btn-sm">Search</button>
+                    <span style="color:red;">ค้นหาจาก : สถานะ , รายละเอียดปัญหา , รายละเอียดการติดตามผล</span>
+                </span>
+                </form>
+
+
+
+
             </div><hr>
 
 

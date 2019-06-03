@@ -50,6 +50,11 @@ and open the template in the editor.
 
   <style>
       /******************Main**********************/
+
+body , html , span , div , input{
+  font-size: 14px;
+}
+
       .dataTables_filter {
 display: none;
 }

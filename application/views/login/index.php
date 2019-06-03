@@ -12,7 +12,7 @@ and open the template in the editor.
     </head>
     <body>
         <div class="container login_margin">
-            <div style="text-align:center;margin:10px;"><img src="<?php echo base_url("asset/NewLogo.png"); ?>" alt="" width="250"></div>
+            <!-- <div style="text-align:center;margin:10px;"><img src="<?php echo base_url("asset/NewLogo.png"); ?>" alt="" width="250"></div> -->
 
             <div class="panel panel-info form_layout">
                 <div class="panel-heading"><h3>Complaint Login Form</h3></div>

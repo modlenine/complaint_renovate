@@ -47,7 +47,7 @@
              /**************Check status for redirect page*******************************/
              $redirect ="";
              if($l_nc['cp_status_code']=="cp05"){
-                 $redirect = base_url("nc/main/").$l_nc['cp_no'];
+                 $redirect = base_url("complaint/view/").$l_nc['cp_no'];
              }else{
                  $redirect = base_url("complaint/view/").$l_nc['cp_no'];
              }

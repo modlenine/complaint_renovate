@@ -64,6 +64,18 @@ class Search extends CI_Controller{
         $this->load->view("complaint/index",$data);
     }
 
+    public function searchby_wording(){
+        $this->login_model->call_login();
+
+        $data['getuser'] = $this->login_model->getuser();
+        $data['list_cp'] = $this->search_model->searchby_wording();
+        $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("complaint/index",$data);
+    }
+
 
     public function searchby_other(){
         $this->login_model->call_login();
@@ -147,6 +159,19 @@ class Search extends CI_Controller{
 
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_topic_nc();
+        $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("nc/index",$data);
+    }
+
+
+    public function searchby_wording_nc(){
+        $this->login_model->call_login();
+
+        $data['getuser'] = $this->login_model->getuser();
+        $data['list_nc'] = $this->search_model->searchby_wording_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
 
         $this->load->view("head/head_code");

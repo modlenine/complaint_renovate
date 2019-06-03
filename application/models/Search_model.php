@@ -281,6 +281,171 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
     }
 
 
+
+public function searchby_wording(){
+    $searchby_wording = $this->input->post("searchby_wording");
+
+    $result = $this->db->query("SELECT
+complaint_main.cp_id,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_main.cp_user_name,
+complaint_main.cp_user_empid,
+complaint_main.cp_user_email,
+complaint_main.cp_user_dept,
+complaint_main.cp_cus_name,
+complaint_main.cp_cus_ref,
+complaint_main.cp_invoice_no,
+complaint_main.cp_pro_code,
+complaint_main.cp_pro_lotno,
+complaint_main.cp_pro_qty,
+complaint_main.cp_detail,
+complaint_main.cp_detail_inves,
+complaint_main.cp_detail_inves_signature,
+complaint_main.cp_detail_inves_date,
+complaint_main.cp_sum_inves,
+complaint_main.cp_sum_inves_signature,
+complaint_main.cp_sum_inves_dept,
+complaint_main.cp_sum_inves_date,
+complaint_main.cp_sum,
+complaint_main.cp_conclu_detail,
+complaint_main.cp_conclu_signature,
+complaint_main.cp_conclu_dept,
+complaint_main.cp_conclu_date,
+complaint_main.cp_conclu_costdetail,
+complaint_main.cp_conclu_cost,
+complaint_main.cp_conclu_file,
+complaint_main.cp_modify_by,
+complaint_main.cp_modify_datetime,
+complaint_main.cp_modify_reason,
+complaint_main.cp_no_old,
+complaint_main.nc_status_code,
+complaint_topic_catagory.topic_cat_name,
+complaint_topic.topic_name,
+complaint_main.cp_status_code,
+complaint_status.cp_status_name,
+complaint_status.cp_status_id,
+complaint_main.cp_priority
+    FROM
+    complaint_main
+    INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+    INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
+    INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code
+    WHERE complaint_main.cp_user_email LIKE '%$searchby_wording%' OR
+    complaint_main.cp_cus_name LIKE '%$searchby_wording%' OR
+    complaint_main.cp_cus_ref LIKE '%$searchby_wording%' OR
+    complaint_main.cp_invoice_no LIKE '%$searchby_wording%' OR
+    complaint_main.cp_pro_code LIKE '%$searchby_wording%' OR
+    complaint_main.cp_pro_lotno LIKE '%$searchby_wording%' OR
+    complaint_main.cp_pro_qty LIKE '%$searchby_wording%' OR
+    complaint_main.cp_detail LIKE '%$searchby_wording%' OR
+    complaint_main.cp_detail_inves LIKE '%$searchby_wording%' OR
+    complaint_main.cp_sum_inves LIKE '%$searchby_wording%' OR
+    complaint_main.cp_conclu_detail LIKE '%$searchby_wording%'");
+
+    return $result->result_array();
+}
+
+
+public function searchby_wording_nc(){
+    $searchby_wording = $this->input->post("searchby_wording");
+    $result = $this->db->query("SELECT
+nc_main.nc_related_dept,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_main.cp_topic,
+complaint_main.cp_topic_cat,
+complaint_main.cp_priority,
+complaint_main.cp_user_name,
+complaint_main.cp_user_empid,
+complaint_main.cp_user_email,
+complaint_main.cp_user_dept,
+complaint_main.cp_cus_name,
+complaint_main.cp_cus_ref,
+complaint_main.cp_invoice_no,
+complaint_main.cp_pro_code,
+complaint_main.cp_pro_lotno,
+complaint_main.cp_pro_qty,
+complaint_main.cp_detail,
+complaint_main.cp_file,
+complaint_main.cp_status_code,
+complaint_main.cp_detail_inves,
+complaint_main.cp_detail_inves_signature,
+complaint_main.cp_detail_inves_dept,
+complaint_main.cp_detail_inves_date,
+complaint_main.cp_detail_inves_file,
+complaint_main.cp_sum_inves,
+complaint_main.cp_sum_inves_signature,
+complaint_main.cp_sum_inves_dept,
+complaint_main.cp_sum_inves_date,
+complaint_main.cp_sum_inves_file,
+complaint_main.cp_sum,
+complaint_department_main.cp_dept_main_name,
+complaint_topic_catagory.topic_cat_name,
+complaint_topic.topic_name,
+nc_main.nc_status_code,
+complaint_status.cp_status_name,
+nc_main.nc_id,
+nc_main.nc_sec31,
+nc_main.nc_sec32,
+nc_main.nc_sec32date,
+nc_main.nc_sec33,
+nc_main.nc_sec33date,
+nc_main.nc_sec3owner,
+nc_main.nc_sec3empid,
+nc_main.nc_sec3dept,
+nc_main.nc_sec3date,
+nc_main.nc_sec3file,
+nc_main.nc_sec3edit_memo,
+nc_main.nc_sec4f1,
+nc_main.nc_sec4f1_file,
+nc_main.nc_sec4f1_status,
+nc_main.nc_sec4f1_date,
+nc_main.nc_sec4f1_signature,
+nc_main.nc_sec4f2,
+nc_main.nc_sec4f2_file,
+nc_main.nc_sec4f2_status,
+nc_main.nc_sec4f2_date,
+nc_main.nc_sec4f2_signature,
+nc_main.nc_sec4f3,
+nc_main.nc_sec4f3_file,
+nc_main.nc_sec4f3_status,
+nc_main.nc_sec4f3_signature,
+nc_main.nc_sec5,
+nc_main.nc_sec5_file,
+nc_main.nc_sec5cost,
+nc_main.nc_sec5cost_detail,
+nc_main.nc_sec5failed,
+nc_main.nc_sec5filefailed,
+nc_main.nc_sec5costfailed,
+nc_main.cp_no_old,
+nc_main.nc_modify_by,
+nc_main.nc_modify_date,
+nc_main.nc_autoemail,
+nc_main.nc_no
+FROM
+nc_main
+INNER JOIN complaint_main ON complaint_main.cp_no = nc_main.nc_no
+INNER JOIN complaint_department_main ON complaint_department_main.cp_dept_main_code = nc_main.nc_related_dept
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
+INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status_code
+WHERE complaint_status.cp_status_name LIKE '%$searchby_wording%' OR
+nc_main.nc_sec31 LIKE '%$searchby_wording%' OR
+nc_main.nc_sec32 LIKE '%$searchby_wording%' OR
+nc_main.nc_sec33 LIKE '%$searchby_wording%' OR
+nc_main.nc_sec4f1 LIKE '%$searchby_wording%' OR
+nc_main.nc_sec4f2 LIKE '%$searchby_wording%' OR
+nc_main.nc_sec4f3 LIKE '%$searchby_wording%' OR
+nc_main.nc_sec5 LIKE '%$searchby_wording%' ");
+
+
+    return $result;
+
+}
+
+
+
     public function searchby_topic_nc(){
         $searchby_topic = $this->input->post("searchby_topic");
 

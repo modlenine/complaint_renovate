@@ -80,6 +80,9 @@ and open the template in the editor.
                             if($l_cp['cp_status_id']== "cp06"){
                                 $color = "#228B22";
                             }
+                            if($l_cp['cp_status_id']== "cp07"){
+                                $color = "#FF4500";
+                            }
 
                         ?>
 

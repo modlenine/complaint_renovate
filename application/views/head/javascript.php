@@ -908,6 +908,12 @@ $('#search_form').change(function (){
        $('#searchby_status').hide();
    }
 
+   if($('#search_form').val()=="searchby_wording"){
+        $('#searchby_wording').show();
+   }else{
+        $('#searchby_wording').hide();
+   }
+
 
 });
 

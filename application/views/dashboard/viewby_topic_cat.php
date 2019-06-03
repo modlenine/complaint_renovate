@@ -99,6 +99,9 @@ and open the template in the editor.
                             if($l_nc['cp_status_code']== "cp06"){
                                 $color = "#228B22";
                             }
+                            if($l_nc['cp_status_code']== "cp07"){
+                                $color = "#FF4500";
+                            }
 
                         ?>
 
