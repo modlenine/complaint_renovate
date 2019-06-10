@@ -13,8 +13,8 @@ and open the template in the editor.
         <?php
         $this->load->view("head/nav");
         ?>
-        
-        <div class="container">
+
+        <div class="container-fulid">
             <div class="col-md-3"></div>
             <div class="col-md-6">
 
@@ -44,7 +44,7 @@ and open the template in the editor.
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
-                                
+
                                 <!-- Start code popup -->
                             <script type="text/javascript">
                                 function popup_dept(url, name, windowWidth, windowHeight) {
@@ -73,7 +73,7 @@ and open the template in the editor.
                                         <input type="text" name="add_catcode" id="add_catcode" placeholder="Add Category Code" class="form-control" />
                                         <input type="submit" name="btn_addcate" id="btn_addcate" class="btn btn-primary btn-xs" value="ADD"/>
                                     </div>
-                                </form>  
+                                </form>
                             </div>
 
                         </div>
@@ -83,7 +83,7 @@ and open the template in the editor.
 
                 </div>
             <div class="col-md-3"></div>
-            
+
         </div>
     </body>
 </html>

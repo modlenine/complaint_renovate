@@ -116,7 +116,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
             <div class="panel-body">
                 <div class="col-md-12">
                     <div class="col-md-6">
-                        <?php 
+                        <?php
                         ?>
                         <div class="input-group ">
                             <span class="input-group-addon">Total Score</span>
@@ -197,7 +197,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
                     </div>
                     <div class="col-md-12">
                         <label><b>Attached file :</b></label>
-                        <label><a href="http://192.190.10.27/complaint/asset/add/<?php echo $view_cp['cp_file']; ?>" target="_blank"><?php echo $view_cp['cp_file']; ?></a></label><br>
+                        <label><a href="<?php echo base_url("asset/add/"); ?><?php echo $view_cp['cp_file']; ?>" target="_blank"><?php echo $view_cp['cp_file']; ?></a></label><br>
 
                     </div>
                     <div class="col-md-12">

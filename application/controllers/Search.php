@@ -17,6 +17,7 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_date();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search();
 
 
         $this->load->view("head/head_code");
@@ -32,6 +33,7 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_docnum();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -45,6 +47,7 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_userinform();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -58,6 +61,7 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_topic();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -70,6 +74,20 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_wording();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search();
+
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("complaint/index",$data);
+    }
+
+    public function searchby_related_dept(){
+        $this->login_model->call_login();
+
+        $data['getuser'] = $this->login_model->getuser();
+        $data['list_cp'] = $this->search_model->searchby_related_dept();
+        $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -83,6 +101,7 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_other();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -102,11 +121,13 @@ class Search extends CI_Controller{
         $data['expcp_getdept'] = $this->search_model->expcp_getdept();
         $data['expcp_getuser'] = $this->search_model->expcp_getuser();
         $data['expcp_getcat'] = $this->search_model->expcp_getcat();
+        $data['expcp_get_related_dept']= $this->search_model->expcp_get_related_dept();
 
         $data['expnc_getstatus'] = $this->search_model->expnc_getstatus();
         $data['expnc_getdept'] = $this->search_model->expnc_getdept();
         $data['expnc_getuser'] = $this->search_model->expnc_getuser();
         $data['expnc_getcat'] = $this->search_model->expnc_getcat();
+        $data['expnc_get_related_dept']= $this->search_model->expnc_get_related_dept();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -121,6 +142,7 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_date_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search_nc();
 
 
         $this->load->view("head/head_code");
@@ -135,6 +157,7 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_docnum_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search_nc();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -147,6 +170,7 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_userinform_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search_nc();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -160,6 +184,7 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_topic_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search_nc();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -173,6 +198,21 @@ class Search extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_wording_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search_nc();
+
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("nc/index",$data);
+    }
+
+
+    public function searchby_related_dept_nc(){
+        $this->login_model->call_login();
+
+        $data['getuser'] = $this->login_model->getuser();
+        $data['list_nc'] = $this->search_model->searchby_related_dept_nc();
+        $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search_nc();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");

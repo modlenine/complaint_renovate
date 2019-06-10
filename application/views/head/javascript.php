@@ -106,15 +106,15 @@
 
         /***********************INVESTIGATE PAGE********************************/
         var check_pms_inves = $('#check_dept_inves').val();
-        if($('#cp_topic_cat').val() == "Technical"){
-
-        }else{
-          if (check_pms_inves != 1) {
-              $('.result_pms_inves').hide();
-              $('#cp_detail_inves').prop("readonly", true);
-              $('#cp_detail_inves_file').prop("readonly", true);
-          }
-        }
+        // if($('#cp_topic_cat').val() == "Technical"){
+        //
+        // }else{
+        //   if (check_pms_inves != 1) {
+        //       $('.result_pms_inves').hide();
+        //       $('#cp_detail_inves').prop("readonly", true);
+        //       $('#cp_detail_inves_file').prop("readonly", true);
+        //   }
+        // }
 
 
         if ($('#cp_detail_inves').val() != "") {
@@ -201,6 +201,7 @@
         if ($('#cp_sum_inves').val() != "") {
             $('#cp_sum_inves').prop("readonly", true);
             $('.result_pms_sum_inves').hide();
+            $('input[name="cp_sum"]').prop("disabled",true);
         }
 
 
@@ -412,14 +413,29 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
             $('#datetime42').prop("readonly", true);
 
+            $('#nc_sec5').prop("readonly",true);
+            $('#nc_sec5file').prop("readonly",true);
+            $('#nc_sec5cost_detail').prop("readonly", true);
+            $('#nc_sec5cost').prop("readonly",true);
+            $('#btn_sec5').hide();
+
         } else {
             $('#btn_sec3edit').hide();
+            $('input[name="nc_sec4f1_status"]').prop("disabled",true);
         }
 
         if ($('#nc_sec4f2').val() == "") {
             $('#nc_sec4f3').prop("readonly", true);
             $('#nc_sec4f3_file').prop("readonly", true);
             $('#btn_sec4f3').hide();
+
+            $('#nc_sec5').prop("readonly",true);
+            $('#nc_sec5file').prop("readonly",true);
+            $('#nc_sec5cost_detail').prop("readonly", true);
+            $('#nc_sec5cost').prop("readonly",true);
+            $('#btn_sec5').hide();
+        }else{
+            $('input[name="nc_sec4f2_status"]').prop("disabled",true);
         }
 
         if ($('#nc_sec31').val() == "") {
@@ -446,11 +462,11 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
         } else {
             $('#get_nc_sec4f1_file').hide();
-            $('#nc_sec5').prop("readonly", true);
-            $('#nc_sec5file').prop("readonly", true);
-            $('#nc_sec5cost_detail').prop("readonly", true);
-            $('#nc_sec5cost').prop("readonly", true);
-            $('#btn_sec5').hide();
+            // $('#nc_sec5').prop("readonly", true);
+            // $('#nc_sec5file').prop("readonly", true);
+            // $('#nc_sec5cost_detail').prop("readonly", true);
+            // $('#nc_sec5cost').prop("readonly", true);
+            // $('#btn_sec5').hide();
         }
 
         if ($('#nc_sec4f1_radiocheck').val() == "yes") {/******Check radio button***********/
@@ -466,6 +482,11 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
             $('#label4f1').hide();
             $('#datetime41show').hide();
             $('#dateshow41').hide();
+
+            // $('#nc_sec5').removeProp("readonly");
+            // $('#nc_sec5file').removeProp("readonly");
+            // $('#nc_sec5cost').removeProp("readonly");
+            // $('#btn_sec5').show();
 
         }
         if ($('#nc_sec4f1_radiocheck').val() == "no") {/******Check radio button***********/
@@ -493,11 +514,11 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
             $('#datetime42show').hide();
             $('#dateshow42').hide();
 
-            $('#nc_sec5').prop("readonly", true);
-            $('#nc_sec5file').prop("readonly", true);
-            $('#nc_sec5cost_detail').prop("readonly", true);
-            $('#nc_sec5cost').prop("readonly", true);
-            $('#btn_sec5').hide();
+            // $('#nc_sec5').prop("readonly", true);
+            // $('#nc_sec5file').prop("readonly", true);
+            // $('#nc_sec5cost_detail').prop("readonly", true);
+            // $('#nc_sec5cost').prop("readonly", true);
+            // $('#btn_sec5').hide();
         }
 
         if ($('#nc_sec4f2_radiocheck').val() == "yes") {/******Check radio button***********/
@@ -915,6 +936,13 @@ $('#search_form').change(function (){
    }
 
 
+   if($('#search_form').val()=="searchby_related_dept"){
+        $('#searchby_related_dept').show();
+   }else{
+        $('#searchby_related_dept').hide();
+   }
+
+
 });
 
 
@@ -966,6 +994,7 @@ $('#export_type').change(function (){
       $('#cptype_export').hide();
       $('#nctype_export').hide();
       $('.step2').hide();
+      $('.step2nc').hide();
     }
 
 });
@@ -977,12 +1006,14 @@ $('.btn_dept').hide();
 $('.btn_user').hide();
 $('.btn_cat').hide();
 $('.btn_all').hide();
+$('.btn_related_dept').hide();
 
 
 $('#by_category').hide();
 $('#by_user').hide();
 $('#by_status').hide();
 $('#by_dept').hide();
+$('#by_related_dept').hide();
 
 
 // CP
@@ -1026,6 +1057,14 @@ $('#cptype_export').change(function(){
       $('.btn_all').hide();
     }
 
+    if($('#cptype_export').val() == "Related_dept"){
+      $('#by_related_dept').show();
+      $('.btn_related_dept').show();
+    }else{
+      $('#by_related_dept').hide();
+      $('.btn_related_dept').hide();
+    }
+
 });
 
 
@@ -1035,12 +1074,14 @@ $('.btn_dept_nc').hide();
 $('.btn_user_nc').hide();
 $('.btn_cat_nc').hide();
 $('.btn_all_nc').hide();
+$('.btn_related_dept_nc').hide();
 
 
 $('#by_category_nc').hide();
 $('#by_user_nc').hide();
 $('#by_status_nc').hide();
 $('#by_dept_nc').hide();
+$('#by_related_dept_nc').hide();
 
 
 $('#nctype_export').change(function(){
@@ -1083,6 +1124,14 @@ $('#nctype_export').change(function(){
       $('.btn_all_nc').hide();
     }
 
+    if($('#nctype_export').val() == "Related_dept"){
+      $('#by_related_dept_nc').show();
+      $('.btn_related_dept_nc').show();
+    }else{
+      $('#by_related_dept_nc').hide();
+      $('.btn_related_dept_nc').hide();
+    }
+
 });
 
 // check technical
@@ -1098,7 +1147,32 @@ if($('#cp_topic_cat').val() == "Technical"){
   }
 
 
+}else{
+    $('.label_tec').hide();
 }
+
+// Function ซ่อน Datetime
+// Section4F1
+$('#nc_sec4f1_status_yes').click(function (){
+
+  $('#datetimepicker41').hide();
+
+});
+$('#nc_sec4f1_status_no').click(function (){
+  $('#datetimepicker41').show();
+});
+
+// Section4F2
+$('#nc_sec4f2_status_yes').click(function (){
+
+  $('#datetimepicker42').hide();
+
+});
+$('#nc_sec4f2_status_no').click(function (){
+  $('#datetimepicker42').show();
+});
+
+
 
 
 

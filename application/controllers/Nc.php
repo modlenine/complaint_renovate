@@ -15,6 +15,7 @@ class Nc extends CI_Controller {
        $data['getuser'] = $this->login_model->getuser();
        $data['list_nc'] = $this->nc_model->list_nc();
        $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+       $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search_nc();
 
 
         $this->load->view("head/head_code");
@@ -83,8 +84,8 @@ class Nc extends CI_Controller {
         $this->nc_model->save_sec5failed($cp_no,$nc_related_dept);
     }
 
-    public function create_cpfailed($cp_no){
-        $this->nc_model->create_cpfailed($cp_no);
+    public function create_cpfailed($cp_no,$nc_related_dept){
+        $this->nc_model->create_cpfailed($cp_no,$nc_related_dept);
     }
 
 

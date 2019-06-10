@@ -498,6 +498,88 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
     }
 
 
+public function searchby_related_dept(){
+  $searchby_related_dept = $this->input->post("searchby_related_dept");
+  $result = $this->db->query("SELECT
+complaint_main.cp_id,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_main.cp_user_name,
+complaint_main.cp_cus_name,
+complaint_main.cp_priority,
+complaint_main.cp_status_code,
+complaint_status.cp_status_id,
+complaint_main.cp_no_old,
+complaint_status.cp_status_name,
+complaint_topic.topic_name,
+complaint_topic_catagory.topic_cat_name,
+complaint_department.cp_dept_code
+FROM
+complaint_main
+INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code
+INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+INNER JOIN complaint_department ON complaint_department.cp_dept_cp_no = complaint_main.cp_no
+WHERE cp_dept_code ='$searchby_related_dept'  ");
+return $result->result_array();
+}
+
+
+public function searchby_related_dept_nc(){
+  $searchby_related_dept_nc = $this->input->post("searchby_related_dept");
+  $result = $this->db->query("SELECT
+nc_main.nc_no,
+nc_main.nc_related_dept,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_main.cp_topic,
+complaint_main.cp_topic_cat,
+complaint_main.cp_priority,
+complaint_main.cp_user_name,
+complaint_main.cp_user_empid,
+complaint_main.cp_user_email,
+complaint_main.cp_user_dept,
+complaint_main.cp_cus_name,
+complaint_main.cp_cus_ref,
+complaint_main.cp_invoice_no,
+complaint_main.cp_pro_code,
+complaint_main.cp_pro_lotno,
+complaint_main.cp_pro_qty,
+complaint_main.cp_detail,
+complaint_main.cp_file,
+complaint_main.cp_status_code,
+complaint_main.cp_detail_inves,
+complaint_main.cp_detail_inves_signature,
+complaint_main.cp_detail_inves_dept,
+complaint_main.cp_detail_inves_date,
+complaint_main.cp_detail_inves_file,
+complaint_main.cp_sum_inves,
+complaint_main.cp_sum_inves_signature,
+complaint_main.cp_sum_inves_dept,
+complaint_main.cp_sum_inves_date,
+complaint_main.cp_sum_inves_file,
+complaint_main.cp_sum,
+complaint_department_main.cp_dept_main_name,
+complaint_topic_catagory.topic_cat_name,
+complaint_topic.topic_name,
+nc_main.nc_status_code,
+complaint_status.cp_status_name
+FROM
+nc_main
+INNER JOIN complaint_main ON complaint_main.cp_no = nc_main.nc_no
+INNER JOIN complaint_department_main ON complaint_department_main.cp_dept_main_code = nc_main.nc_related_dept
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
+INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status_code
+WHERE nc_related_dept='$searchby_related_dept_nc' ");
+
+  return $result;
+}
+
+
+
+
+
 
     public function excel(){
 
@@ -606,6 +688,21 @@ GROUP BY topic_cat_id");
         }
 
 
+
+        public function expcp_get_related_dept(){
+          $result= $this->db->query("SELECT
+    complaint_department.cp_dept_code,
+    complaint_department.cp_dept_cp_no,
+    complaint_department_main.cp_dept_main_name
+    FROM
+    complaint_department
+    INNER JOIN complaint_department_main ON complaint_department_main.cp_dept_main_code = complaint_department.cp_dept_code
+    GROUP BY cp_dept_code");
+
+    return $result;
+        }
+
+
 // NC
         public function expnc_getstatus(){
           $resultnc_getstatus = $this->db->query("SELECT
@@ -659,6 +756,18 @@ INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = c
 GROUP BY cp_topic_cat
 ");
 return $resultnc_getcat;
+        }
+
+        public function expnc_get_related_dept(){
+          $result = $this->db->query("SELECT
+    complaint_department_main.cp_dept_main_name,
+    nc_main.nc_related_dept,
+    nc_main.nc_no
+    FROM
+    complaint_department_main
+    INNER JOIN nc_main ON complaint_department_main.cp_dept_main_code = nc_main.nc_related_dept
+    GROUP BY nc_related_dept");
+    return $result;
         }
 
 

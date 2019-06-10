@@ -52,6 +52,11 @@ class Report extends CI_Controller{
       $this->report_model->exp_cpby_all();
     }
 
+    public function exp_cpby_related_dept(){
+      $related_dept = $this->input->post("by_related_dept");
+      $this->report_model->exp_cpby_related_dept($related_dept);
+    }
+
 
     // Export Menu NC
         public function exp_ncby_status(){
@@ -76,6 +81,11 @@ class Report extends CI_Controller{
 
         public function exp_ncby_all(){
           $this->report_model->exp_ncby_all();
+        }
+
+        public function exp_ncby_related_dept(){
+          $related_dept = $this->input->post('by_related_dept_nc');
+          $this->report_model->exp_ncby_related_dept($related_dept);
         }
 
 

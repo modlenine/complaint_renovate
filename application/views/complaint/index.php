@@ -27,6 +27,7 @@ and open the template in the editor.
                     <option value="searchby_docnum">เลขเอกสาร</option>
                     <option value="searchby_userinform">ผู้แจ้ง</option>
                     <option value="searchby_topic">หัวข้อเรื่อง</option>
+                    <option value="searchby_related_dept">แผนกที่ถูกแจ้ง</option>
                     <option value="searchby_wording">ค้นหาด้วยคำ</option>
 <!--                    <option value="searchby_status">Status</option>-->
                 </select>
@@ -76,6 +77,21 @@ and open the template in the editor.
                     <input type="text" name="searchby_wording" id="searchby_wording" class="form-control" placeholder="กรุณาพิมพ์คำที่ต้องการค้นหา">
                     <button class="btn btn-warning btn-sm">Search</button>
                     <span style="color:red;">ค้นหาจาก : Email , ชื่อลูกค้า , ข้อมูลอ้างอิง , หมายเลขอินวอยว์ , รหัสสินค้า , หมายเลข Lot number , รายละเอียด Complaint</span>
+                </span>
+                </form>
+
+
+                <form action="<?php echo base_url("search/searchby_related_dept"); ?>" method="post" name="searchby_related_dept" style="margin-top:5px;">
+                <span id="searchby_related_dept" hidden="">
+<!--                    <input type="text" name="searchby_topic" id="searchby_topic" class="form-control" placeholder="ค้นหาด้วยหัวข้อเรื่อง"/>&nbsp;-->
+                    <select class="form-control" name="searchby_related_dept" id="searchby_related_dept">
+                        <option>Please select Data.</option>
+
+                        <?php foreach ($get_relateddept_search as $grds): ?>
+                        <option value="<?php echo $grds['cp_dept_code']; ?>"><?php echo $grds['cp_dept_main_name']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button class="btn btn-warning btn-sm">Search</button>
                 </span>
                 </form>
 

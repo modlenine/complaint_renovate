@@ -258,6 +258,31 @@ WHERE cp_no='$cp_no' ");
     }
 
 
+    public function get_relateddept_search(){
+      $result = $this->db->query("SELECT
+complaint_department.cp_dept_code,
+complaint_department.cp_dept_cp_no,
+complaint_department_main.cp_dept_main_name
+FROM
+complaint_department
+INNER JOIN complaint_department_main ON complaint_department_main.cp_dept_main_code = complaint_department.cp_dept_code
+GROUP BY cp_dept_code");
+      return $result->result_array();
+    }
+
+    public function get_relateddept_search_nc(){
+      $result = $this->db->query("SELECT
+complaint_department_main.cp_dept_main_name,
+nc_main.nc_related_dept,
+nc_main.nc_no
+FROM
+complaint_department_main
+INNER JOIN nc_main ON complaint_department_main.cp_dept_main_code = nc_main.nc_related_dept
+GROUP BY nc_related_dept");
+      return $result->result_array();
+    }
+
+
 
 
 
@@ -271,7 +296,7 @@ WHERE cp_no='$cp_no' ");
         $cut_year_cur = substr($year_cur, 2, 2); // ตัดจากเดิม 2018 เหลือ 18
 
         if ($numrow == 0) { //นับแถวของข้อมูล ถ้าเท่ากับ 0
-            $cp_no = "CP" . $cut_year_cur . "001"; // กำหนดค่าลงไปเลย
+            $cp_no = "CP" . $cut_year_cur . "107"; // กำหนดค่าลงไปเลย
         } else { // ถ้าไม่เป็นตามเงื่อนไขบน
             $query2 = $this->db->query("select cp_no from complaint_main order by SUBSTR(cp_no,3) desc LIMIT 1"); //ไป query เอา cp_no มาโดยตัดเอาแค่ 3 ตัวหลังตัวล่าสุดมา 1 ตัว
 

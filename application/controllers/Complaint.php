@@ -14,6 +14,7 @@ class Complaint extends CI_Controller{
         $data['list_cp'] = $this->complaint_model->list_cp();
         $data['getuser'] = $this->login_model->getuser();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search();
 
         $this->load->view("head/head_code");
         $this->load->view("head/javascript");
@@ -205,16 +206,17 @@ class Complaint extends CI_Controller{
         header("refresh:1; url=http://203.107.156.180/intsys/complaint");
     }
 
-    public function add_failed($cp_no,$dept_code){
+    public function add_failed($cp_no,$nc_related_dept){
         $this->login_model->call_login();
 
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
 //        $data['get_toppic'] = $this->complaint_model->get_toppic();
-        $data['get_dept_respons'] = $this->complaint_model->get_dept_respons($dept_code);
+        $data['get_dept_respons'] = $this->complaint_model->get_dept_respons($nc_related_dept);
         $data['getuser'] = $this->login_model->getuser();
         $data['get_pri_use'] = $this->complaint_model->get_pri_view($cp_no);
         $data['get_pri_topic'] = $this->complaint_model->get_pri_topic();
-        $data['getdatamain'] = $this->nc_model->getdata_main($cp_no,$dept_code);
+        $data['getdatamain'] = $this->nc_model->getdata_main($cp_no,$nc_related_dept);
+
         $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
         $data['getdept_checkbox'] = $this->complaint_model->getdept_checkbox($cp_no);
 
@@ -225,12 +227,12 @@ class Complaint extends CI_Controller{
         $this->load->view("complaint/add_failed",$data);
     }
 
-    public function saveData_failed($cp_no,$dept_code){
-        $this->complaint_model->update_ncstatus($cp_no,$dept_code);
+    public function saveData_failed($cp_no,$nc_related_dept){
+        $this->complaint_model->update_ncstatus($cp_no,$nc_related_dept);
         $this->complaint_model->saveData_failed();
 
 
-        redirect('/nc/main/'.$cp_no.'/'.$dept_code);
+        redirect('/nc/main/'.$cp_no.'/'.$nc_related_dept);
     }
 
     public function test(){

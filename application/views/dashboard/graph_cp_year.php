@@ -22,7 +22,7 @@
     },
 
     title: {
-    text: 'Graph CP of Monht'
+    text: 'Graph CP of Month'
     },
 
     xAxis: {

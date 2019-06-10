@@ -301,7 +301,7 @@ function myFunction() {
 
 
             <!-- *********************************SECTION**4***AREA************************************ -->
-            <input hidden type="text" name="check_qmr_nc" id="check_qmr_nc" value="<?php echo $checkQmrResult; ?>" />
+            <input  type="text" name="check_qmr_nc" id="check_qmr_nc" value="<?php echo $checkQmrResult; ?>" />
             <div class="panel panel-primary"><!--SECTION 4-->
                 <div class="panel-heading">4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</div>
                 <div class="panel-body">
@@ -449,7 +449,7 @@ function myFunction() {
                         </form>
                         <input hidden="" type="text" name="checkstatus_failed" id="checkstatus_failed" value="<?php echo $getdatamain->nc_status_code; ?>" />
 
-                        <form name="sec4f3" method="post" action="<?php echo base_url("nc/create_cpfailed/"); ?><?php echo $getdatamain->cp_no; ?>" enctype="multipart/form-data">
+                        <form name="sec4f3" method="post" action="<?php echo base_url("nc/create_cpfailed/"); ?><?php echo $getdatamain->cp_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
                             <button class="btn btn-danger" name="btn_cre_new" id="btn_cre_new">Create New Complaint</button>
                             <input hidden="" type="text" name="getdeptcode" id="getdeptcode" value="<?php echo $getuser['DeptCode']; ?>"/><br>
                             <label class="sec4label" id="label_cre_new">กรุณากดปุ่มนี้เพื่อทำการออก Complaint ใหม่เนื่องจากไม่สามารถปิดสรุปได้</label>
@@ -475,9 +475,9 @@ if ($getdatamain->nc_sec4f3_status == "no") {
 }
 
 if ($getdatamain->nc_status_code == "nc10") {
-    $show = $getdatamain->nc_sec5failed;
-    $showfile = $getdatamain->nc_sec5filefailed;
-    $showcost = $getdatamain->nc_sec5costfailed;
+  $show = $getdatamain->nc_sec5;
+  $showfile = $getdatamain->nc_sec5_file;
+  $showcost = $getdatamain->nc_sec5cost;
 } else {
     $show = $getdatamain->nc_sec5;
     $showfile = $getdatamain->nc_sec5_file;
@@ -500,11 +500,11 @@ if ($getdatamain->nc_status_code == "nc10") {
 
                             <div class="form-row">
                     <div class="col-md-7 pri">
-                        <label><b>รายละเอียดค่าใช้จ่าย</b></label>
+                        <label><b>Detail of Cost</b></label>
                         <input type="text" name="nc_sec5cost_detail" id="nc_sec5cost_detail" class="form-control form-control-sm" value="<?php echo $getdatamain->nc_sec5cost_detail; ?>"/>
                     </div>
                     <div class="col-md-5 pri">
-                        <label><b>ค่าใช้จ่ายที่เกิดขึ้น</b></label>
+                        <label><b>Cost</b></label>
                         <div class="input-group">
                             <input type="text" name="nc_sec5cost" id="nc_sec5cost" class="form-control form-control-sm number" value="<?php echo $showcost ?>"/>
                         <span class="input-group-addon">บาท</span>
@@ -540,7 +540,7 @@ if ($getdatamain->nc_status_code == "nc10") {
 
                   $('#datetimepicker32').dateTimePicker({
                     dateFormat: "YYYY-MM-DD HH:mm",
-                    locale: 'en'
+                    locale: 'th',
                   });
 
                   $('#datetimepicker33').dateTimePicker({
@@ -798,24 +798,7 @@ if ($getdatamain->nc_status_code == "nc10") {
                     }, 1000);
 
                     /*****************FUNCTION**COUNTDOWN******************************/
-                    $(function () {
-                        $('#datetimepicker32').datetimepicker({
-                            format: 'YYYY/MM/DD HH:mm'
-                        });
 
-                        $('#datetimepicker33').datetimepicker({
-                            format: 'YYYY/MM/DD HH:mm'
-                        });
-
-                        $('#datetimepicker41').datetimepicker({
-                            format: 'YYYY/MM/DD HH:mm'
-                        });
-
-                        $('#datetimepicker42').datetimepicker({
-                            format: 'YYYY/MM/DD HH:mm'
-                        });
-
-                    });
 
 
                 });

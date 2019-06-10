@@ -32,6 +32,7 @@ and open the template in the editor.
                   <option value="Department">By Department</option>
                   <option value="User">By User</option>
                   <option value="Category">By Category</option>
+                  <option value="Related_dept">By Relate Department</option>
               </select>
           </div>
 
@@ -44,6 +45,7 @@ and open the template in the editor.
                   <option value="Department">By Department</option>
                   <option value="User">By User</option>
                   <option value="Category">By Category</option>
+                  <option value="Related_dept">By Relate Department</option>
               </select>
           </div>
 
@@ -108,6 +110,18 @@ and open the template in the editor.
       </div>
     </form>
 
+    <!--CP By Related Dept -->
+    <form  action="<?php echo base_url('report/exp_cpby_related_dept/'); ?>" method="post">
+    <div class="col-md-12 step2">
+        <select class="form-control" name="by_related_dept" id="by_related_dept">
+        <?php foreach ($expcp_get_related_dept->result() as $expcp_get_related_depts) { ?>
+            <option value="<?php echo $expcp_get_related_depts->cp_dept_code; ?>"><?php echo $expcp_get_related_depts->cp_dept_main_name; ?></option>
+        <?php  } ?>
+      </select>
+        <input style="margin-top:5px;" class="btn btn-success btn_related_dept" type="submit" name="btn_related_dept" value="Export">
+    </div>
+  </form>
+
 <!-- **************************************** -->
 
     <!--NC By All -->
@@ -169,6 +183,21 @@ and open the template in the editor.
     <input style="margin-top:5px;" class="btn btn-success btn_cat_nc" type="submit" name="btn_cat_nc" value="Export">
 </div>
 </form>
+
+<!--NC By Related dept -->
+<form  action="<?php echo base_url('report/exp_ncby_related_dept/'); ?>" method="post">
+<div class="col-md-12 step2nc">
+    <select class="form-control" name="by_related_dept_nc" id="by_related_dept_nc">
+    <?php foreach ($expnc_get_related_dept->result() as $expnc_get_related_depts) { ?>
+        <option value="<?php echo $expnc_get_related_depts->nc_related_dept; ?>"><?php echo $expnc_get_related_depts->cp_dept_main_name; ?></option>
+    <?php  } ?>
+  </select>
+    <input style="margin-top:5px;" class="btn btn-success btn_related_dept_nc" type="submit" name="btn_related_dept_nc" value="Export">
+</div>
+</form>
+
+
+
 
 
 
