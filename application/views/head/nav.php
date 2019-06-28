@@ -138,7 +138,8 @@ $this->load->view("head/javascript");
             </a>
           </li>
         </ul>-->
-
+        <div style="margin-top:10px;"></div>
+        <div id="user_login_status" style="margin-top:10px;width:90%;margin:auto;"></div>
       </div>
     </div>
   </nav>

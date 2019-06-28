@@ -33,10 +33,16 @@ class login_model extends CI_Model {
             echo "<h2 style='text-align:center;color:green;margin-top:30px;'>เข้าสู่ระบบสำเร็จ กรุณารอสักครู่ระบบกำลังพาท่านเข้าสู่หน้าโปรแกรม</h2>";
 
             foreach ($checkuser->result_array() as $r) {
-                $_SESSION['username'] = $r['username'];
-                $_SESSION['password'] = $r['password'];
-                $_SESSION['Fname'] = $r['Fname'];
-                $_SESSION['Lname'] = $r['Lname'];
+
+              $login_id = $this->db->query("insert into complaint_login_detail (cp_login_ecode , cp_login_lastactivity , cp_login_status )values('".$r['ecode']."' , '".date("Y-m-d H:m:s")."' , 'login' )");
+
+              $_SESSION['username'] = $r['username'];
+              $_SESSION['password'] = $r['password'];
+              $_SESSION['Fname'] = $r['Fname'];
+              $_SESSION['Lname'] = $r['Lname'];
+              $_SESSION['ecode'] = $r['ecode'];
+              $_SESSION['posi'] = $r['posi'];
+              $_SESSION['login_id'] = $login_id;
 
 
                 session_write_close();
@@ -90,6 +96,26 @@ class login_model extends CI_Model {
 
 
     public function logout(){
+      $ecode = $_SESSION['ecode'];
+
+              $sqlget = $this->db->query("SELECT
+              MAX(complaint_login_detail.cp_login_id) as cp_login_id,
+              complaint_login_detail.cp_login_ecode,
+              complaint_login_detail.cp_login_lastactivity,
+              complaint_login_detail.cp_login_status,
+              complaint_login_detail.cp_login_lastactivity2,
+              complaint_login_detail.cp_login_status2
+              FROM
+              complaint_login_detail
+              WHERE cp_login_ecode ='$ecode' ");
+
+              $loginids = $sqlget->row();
+              $loginid = $loginids->cp_login_id;
+              $datenow = date("Y-m-d H:m:s");
+
+              $this->db->query("UPDATE complaint_login_detail SET cp_login_lastactivity2='$datenow' , cp_login_status2='logout' WHERE cp_login_id='$loginid' ");
+
+
         session_destroy();
         $this->session->unset_userdata('referrer_url');
 	header("location:http://203.107.156.180/intsys/complaint/login");

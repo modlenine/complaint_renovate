@@ -1175,7 +1175,55 @@ $('#nc_sec4f2_status_no').click(function (){
 
 
 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
+<?php
+if($_SESSION["posi"] == "55")
+{
+?>
+function update_user_activity()
+{
+ var action = 'update_time';
+ $.ajax({
+  url:"http://203.107.156.180/intsys/complaint/login/action",
+  method:"POST",
+  data:{action:action},
+  success:function(data)
+  {
+
+  }
+ });
+}
+setInterval(function(){
+ update_user_activity();
+}, 3000);
+
+
+<?php
+}
+else
+{
+?>
+fetch_user_login_data();
+setInterval(function(){
+ fetch_user_login_data();
+}, 3000);
+function fetch_user_login_data()
+{
+ var action = "fetch_data";
+ $.ajax({
+  url:"http://203.107.156.180/intsys/complaint/login/action",
+  method:"POST",
+  data:{action:action},
+  success:function(data)
+  {
+   $('#user_login_status').html(data);
+  }
+ });
+}
+<?php
+}
+?>
 
 
 
