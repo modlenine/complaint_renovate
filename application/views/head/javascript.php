@@ -86,6 +86,7 @@
         if ($('#check_user').val() !== $('#history_cpusername').val()) {
             $('#edit').hide();
             $('#cancle_btn').hide();
+            $('#btnResendEmail').hide();
         }
 
         if ($('#get_oldcp').val() == "") {

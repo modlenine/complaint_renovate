@@ -15,7 +15,7 @@ and open the template in the editor.
         <div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
 
                 <h1 class="h1_add">Complaint Form ( Edit ): <?php echo $view_cp['cp_no']; ?></h1><hr>
-                <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+                <!-- <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> -->
 
                 <form name="frmMain" action="<?php echo base_url('complaint/savedata_edit/'); ?><?php echo $view_cp['cp_no']; ?>" method="post" enctype="multipart/form-data">
                     <input hidden="" type="text" name="getuser_check" id="getuser_check" value="<?php echo $getuser['username']; ?>" /><!--Get user for check-->
@@ -264,7 +264,7 @@ and open the template in the editor.
 
 
                 <div><input class="btn btn-primary" type="submit" name="add_btn_edit" id="add_btn_edit" value="Update" onclick="javascript:return confirm('คุณต้องการบันทึกข้อมูล ใช่หรือไม่');"/>&nbsp;<input class="btn btn-warning" type="reset" name="reset_btn_edit" id="reset_btn_edit" value="Reset"/></div><hr>
-                <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+                <!-- <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> -->
 
 
 

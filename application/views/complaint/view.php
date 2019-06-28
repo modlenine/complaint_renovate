@@ -13,12 +13,17 @@ and open the template in the editor.
         <?php $this->load->view("head/nav"); ?>
 
         <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
-            <form name="frmMain" action="<?php echo base_url('history/add_history/'); ?><?php echo $view_cp['cp_no']; ?>" method="post" enctype="multipart/form-data">
+
             <h1 class="h1_view">View Complaint : <?php echo $view_cp['cp_no']; ?></h1>
+            <a href="<?=base_url('complaint') ?>"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>&nbsp;
+            <a href="<?=base_url('complaint/resend_email/');?><?=$view_cp['cp_no'];?>"><button id="btnResendEmail" class="btn btn-primary btn-sm btn_back"><i class="fas fa-envelope-open-text"></i>&nbsp;Re Send Email</button></a>
+            <span style="float:right;font-weight:600">MO-F-014-01-10/06/62</span>
+
+            <form name="frmMain" action="<?php echo base_url('history/add_history/'); ?><?php echo $view_cp['cp_no']; ?>" method="post" enctype="multipart/form-data">
             <input hidden="" type="text" name="get_oldcp" id="get_oldcp" value="<?php echo $view_cp['cp_no_old']; ?>"/><!--Check cp_no old-->
             <h3 class="h1_view" id="view_oldcp"></h3>
             <div class="btn_back">
-                <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>&nbsp;
+
                 <input type="submit" name="edit" id="edit" class="btn btn-warning btn-sm btn_back" onclick="javascript:return confirm('ท่านยืนยันที่จะเข้าไปแก้ไขข้อมูล ใช่ หรือ ไม่');" value="Edit"/>
             </div>
 
@@ -199,8 +204,8 @@ and open the template in the editor.
                         <div class="col-md-6">
                             <label><b>Related Department.</b></label>
                             <?php foreach ($get_dept as $gdn): ?>
-                            &nbsp;<label class="check_dept_view"><?php echo $gdn['Dept']; ?></label>&nbsp;,
-                            <input hidden="" type="text" name="history_dept" id="history_dept" value="<?php echo $gdn['Dept']; ?>" />
+                            &nbsp;<label class="check_dept_view"><?php echo $gdn['cp_dept_main_name']; ?></label>&nbsp;,
+                            <input hidden="" type="text" name="history_dept" id="history_dept" value="<?php echo $gdn['cp_dept_main_name']; ?>" />
 
                             <?php endforeach; ?>
                         </div>
@@ -209,7 +214,7 @@ and open the template in the editor.
                     <?php  /*********************Check Related Dept*************************/
                     $ckd_result = 0;
                         foreach ($get_dept as $check_dept){
-                            if($check_dept['cp_dept_code'] !== $getuser['DeptCode']){
+                            if($check_dept['cp_dept_main_code'] !== $getuser['DeptCode']){
                                 continue;
                             }
                             $ckd_result = 1;
@@ -232,7 +237,7 @@ and open the template in the editor.
             <a href="<?php echo base_url("complaint/cancel_complaint/"); ?><?php echo $view_cp['cp_no']; ?>"><button onclick="javascript:return confirm('ท่านยืนยันที่จะยกเลิก Complaint ใช่ หรือ ไม่');" id="cancle_btn" class="btn btn-danger" style="margin-bottom: 5px;">Cancel Complaint</button></a>
 
             <footer>
-              <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+              <!-- <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> -->
             </footer>
 
 

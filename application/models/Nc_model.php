@@ -266,15 +266,15 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         $mail->Port = 587; // พอร์ท
 //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
-        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        $mail->Username = "complaint_system@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
-        $mail->Password = "Ae8686#"; // SMTP password
+        //        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Complaint*4321"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
-        $mail->From = "websystem@saleecolour.com";
-        $mail->FromName = "Salee Colour WEB System";
+        $mail->From = "complaint_system@saleecolour.com";
+        $mail->FromName = "Complaint System";
         foreach ($getEmail->result_array() as $fetch) {
             $mail->AddAddress($fetch['email']);
         }
@@ -412,7 +412,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
                      //****************************Email***Zone*********************************************//
   $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' && cp_mail_status='1' ");
 
-  $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_sd='1' ";
+  $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_external='1' || default_sd='1' ";
   $sqlget_query = $this->db->query($sqlget_ccemail);
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
@@ -504,15 +504,15 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         $mail->Port = 587; // พอร์ท
 //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
-        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        $mail->Username = "complaint_system@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
-        $mail->Password = "Ae8686#"; // SMTP password
+        //        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Complaint*4321"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
-        $mail->From = "websystem@saleecolour.com";
-        $mail->FromName = "Salee Colour WEB System";
+        $mail->From = "complaint_system@saleecolour.com";
+        $mail->FromName = "Complaint System";
         foreach ($getEmail->result_array() as $fetch) {
             $mail->AddAddress($fetch['email']);
         }
@@ -588,7 +588,7 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
   //****************************Email***Zone*********************************************//
   $getEmail = $this->db->query("SELECT maillist.deptcode, maillist.email, complaint_department.cp_dept_cp_no FROM complaint_department INNER JOIN maillist ON maillist.deptcode = complaint_department.cp_dept_code WHERE cp_dept_cp_no = '$cp_no' && cp_dept_code = '$nc_related_dept' && cp_mail_status='1' ");
 
-  $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_sd='1' ";
+  $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_external='1' || default_sd='1' ";
   $sqlget_query = $this->db->query($sqlget_ccemail);
 
     $get_owner_email = $this->getdata_main($cp_no,$nc_related_dept);
@@ -687,15 +687,15 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         $mail->Port = 587; // พอร์ท
 //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
-        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        $mail->Username = "complaint_system@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
-        $mail->Password = "Ae8686#"; // SMTP password
+        //        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Complaint*4321"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
-        $mail->From = "websystem@saleecolour.com";
-        $mail->FromName = "Salee Colour WEB System";
+        $mail->From = "complaint_system@saleecolour.com";
+        $mail->FromName = "Complaint System";
         foreach ($getEmail->result_array() as $fetch) {
             $mail->AddAddress($fetch['email']);
         }
@@ -888,15 +888,15 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         $mail->Port = 587; // พอร์ท
 //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
-        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        $mail->Username = "complaint_system@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
-        $mail->Password = "Ae8686#"; // SMTP password
+        //        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Complaint*4321"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
-        $mail->From = "websystem@saleecolour.com";
-        $mail->FromName = "Salee Colour WEB System";
+        $mail->From = "complaint_system@saleecolour.com";
+        $mail->FromName = "Complaint System";
         foreach ($getEmail->result_array() as $fetch) {
             $mail->AddAddress($fetch['email']);
         }
@@ -1085,15 +1085,15 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         $mail->Port = 587; // พอร์ท
 //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
-        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        $mail->Username = "complaint_system@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
-        $mail->Password = "Ae8686#"; // SMTP password
+        //        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Complaint*4321"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
-        $mail->From = "websystem@saleecolour.com";
-        $mail->FromName = "Salee Colour WEB System";
+        $mail->From = "complaint_system@saleecolour.com";
+        $mail->FromName = "Complaint System";
         foreach ($getEmail->result_array() as $fetch) {
             $mail->AddAddress($fetch['email']);
         }
@@ -1283,15 +1283,15 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
         $mail->Port = 587; // พอร์ท
 //        $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;     // turn on SMTP authentication
-        $mail->Username = "websystem@saleecolour.com";  // SMTP username
+        $mail->Username = "complaint_system@saleecolour.com";  // SMTP username
         //websystem@saleecolour.com
-//        $mail->Username = "chainarong039@gmail.com";
-        $mail->Password = "Ae8686#"; // SMTP password
+        //        $mail->Username = "chainarong039@gmail.com";
+        $mail->Password = "Complaint*4321"; // SMTP password
         //Ae8686#
-//        $mail->Password = "ShctBkk1";
+        //        $mail->Password = "ShctBkk1";
 
-        $mail->From = "websystem@saleecolour.com";
-        $mail->FromName = "Salee Colour WEB System";
+        $mail->From = "complaint_system@saleecolour.com";
+        $mail->FromName = "Complaint System";
         foreach ($getEmail->result_array() as $fetch) {
             $mail->AddAddress($fetch['email']);
         }
@@ -1418,15 +1418,15 @@ INNER JOIN complaint_status ON complaint_status.cp_status_id = nc_main.nc_status
             $mail->Port = 587; // พอร์ท
     //        $mail->SMTPSecure = 'tls';
             $mail->SMTPAuth = true;     // turn on SMTP authentication
-            $mail->Username = "websystem@saleecolour.com";  // SMTP username
+            $mail->Username = "complaint_system@saleecolour.com";  // SMTP username
             //websystem@saleecolour.com
-    //        $mail->Username = "chainarong039@gmail.com";
-            $mail->Password = "Ae8686#"; // SMTP password
+            //        $mail->Username = "chainarong039@gmail.com";
+            $mail->Password = "Complaint*4321"; // SMTP password
             //Ae8686#
-    //        $mail->Password = "ShctBkk1";
+            //        $mail->Password = "ShctBkk1";
 
-            $mail->From = "websystem@saleecolour.com";
-            $mail->FromName = "Salee Colour WEB System";
+            $mail->From = "complaint_system@saleecolour.com";
+            $mail->FromName = "Complaint System";
             foreach ($getEmail->result_array() as $fetch) {
                 $mail->AddAddress($fetch['email']);
             }

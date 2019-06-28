@@ -16,7 +16,7 @@ and open the template in the editor.
             <h1 class="head_text">LIST OF NC</h1><hr>
 
             <div class="form-inline">
-                <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
+                <a href="<?=base_url(); ?>"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
 <!--                <a href="<?php echo base_url(); ?>complaint/add/<?php echo $getuser['DeptCode']; ?>"><button class="btn btn-primary btn-sm btn_back">New Complaint</button></a>-->
 
 
@@ -31,6 +31,7 @@ and open the template in the editor.
                     <option value="searchby_wording">ค้นหาด้วยคำ</option>
 <!--                    <option value="searchby_status">Status</option>-->
                 </select>
+                
 
 <!--                <button style="float:right;" class="btn btn-success btn-sm">Export</button>-->
 
@@ -199,7 +200,7 @@ and open the template in the editor.
                     </tr>
                 </tfoot>
             </table>
-            <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+            <!-- <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> -->
             <script type="text/javascript" >
     $(document).ready(function () {
                 $('#view_nc').DataTable({

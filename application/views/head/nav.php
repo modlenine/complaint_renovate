@@ -15,6 +15,12 @@ $this->load->view("head/javascript");
 
     </head>
     <body>
+    <?php
+    $cutLname = substr($getuser['Lname'],0,1);
+    $convert_name = $getuser['Fname']."_".$cutLname;
+    ?>
+
+
 <nav class="navbar navbar-inverse navbar-fixed-left">
     <div class="container">
       <div class="navbar-header">
@@ -28,16 +34,16 @@ $this->load->view("head/javascript");
       </div>
       <div id="navbar" class="navbar-collapse collapse">
           <div>
-              <p><span style="padding-left: 10px;"><i class="fas fa-user"></i>&nbsp;Hi <?php echo $getuser['username']; ?></span></p>
+              <p><span style="padding-left: 10px;"><i class="fas fa-user"></i>&nbsp;Hi <?php echo $convert_name; ?></span></p>
               <p><span style="padding-left: 10px;" class="check_dept">Dept. <?php echo $getuser['Dept']; ?></span></p>
 
-              <input hidden="" type="text" name="check_user" id="check_user" value="<?php echo $getuser['username']; ?>" /><!--Check User-->
+              <input hidden="" type="text" name="check_user" id="check_user" value="<?php echo $convert_name; ?>" /><!--Check User-->
               <input hidden="" type="text" name="check_dept" id="check_dept" value="<?php echo $getuser['Dept']; ?>" /><!-- Check Dept -->
               <input hidden="" type="text" name="check_posi" id="check_posi" value="<?php echo $getuser['posi']; ?>" /><!-- Check Posi -->
               <input hidden type="text" name="check_tecnical" id="check_tecnical" value="<?php echo $getuser['memberemail']; ?>"><!-- Check Technical -->
 
 
-              <a href="<?php echo base_url('complaint/logout'); ?>" onclick="javascript:return confirm('คุณต้องการออกจากระบบหรือไม่');"><i class="fas fa-sign-out-alt fa-2x logout_btn"></i></a>
+              <a href="<?php echo base_url('complaint/logout'); ?>"><button style="margin:5px;" class="btn btn-danger btn-sm" type="button" name="button" onclick="javascript:return confirm('คุณต้องการออกจากระบบใช่หรือไม่')">Logout</button></a>
           </div>
 
         <ul class="nav navbar-nav">
@@ -87,10 +93,10 @@ $this->load->view("head/javascript");
           </li>-->
 
           <?php
-            if($getuser['posi'] == 15){
+            if($getuser['posi'] == 15 || $getuser['posi'] == 55 || $getuser['posi'] == 85 || $getuser['posi'] == 65 || $getuser['posi'] == 45 || $getuser['posi'] == 75){
                 $display = 'display:none;';
             }
-            if($getuser['posi'] == 75){
+            if($getuser['DeptCode'] == 1002){
                 $display = '';
             }
           ?>

@@ -18,7 +18,7 @@ class Login extends CI_Controller{
            $this->load->view("login/index"); 
            
         }else{
-            header("refresh:0; url=http://192.190.10.27/complaint/");
+            header("refresh:0; url=http://203.107.156.180/intsys/complaint/");
         }
         
         

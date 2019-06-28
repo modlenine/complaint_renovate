@@ -28,6 +28,11 @@ and open the template in the editor.
 
     </head>
     <body>
+
+    <?php
+    $cutLname = substr($getuser['Lname'],0,1);
+    $convert_name = $getuser['Fname']."_".$cutLname;
+    ?>
         <?php
         $this->load->view("head/nav");
         ?>
@@ -37,8 +42,10 @@ and open the template in the editor.
             <h4>Complaint : <?php echo $getdatamain->cp_no; ?>&nbsp;&nbsp;&nbsp;NC Status :&nbsp;<span class="fontfix"><?php echo $getdatamain->cp_status_name; ?></span></h4><hr>
 
             <div class="btn_back">
-                <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
+                <a href="<?= base_url('nc'); ?>"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
                 <button class="btn btn-success btn-sm btn_back" onclick="myFunction()"><i class="fas fa-print"></i>&nbsp;Print</button>
+                <a href="<?=base_url("asset/NC Form.pdf");?>" target="_blank"><button class="btn btn-warning btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Print Blank Form</button></a>
+                <span style="float:right;font-weight:600">MO-F-009-01-10/06/62</span>
             </div>
 
             <script>
@@ -121,7 +128,21 @@ function myFunction() {
                 <div class="panel-heading">3. สำหรับฝ่ายที่รับผิดชอบให้หาสาเหตุ. วิธีแก้ไขและป้องกันและกำหนดแผนการปฎิบัติการแก้ไข</div>
                 <div class="panel-body">
 
-                    <form name="sec1" method="post" action="<?php echo base_url("nc/save_sec3/"); ?><?php echo $getdatamain->nc_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data">
+                <script>
+                function check_datetime(){
+                    var date1 = $('input[name=datetime32]').val();
+                    var date2 = $('input[name=datetime33]').val();
+
+                    if(date1 == "" || date2 == ""){
+                        alert('กรุณาระบุวันที่ให้ครบถ้วนด้วยค่ะ');
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+                 </script>
+
+                    <form name="sec1" method="post" action="<?php echo base_url("nc/save_sec3/"); ?><?php echo $getdatamain->nc_no; ?>/<?php echo $getdatamain->nc_related_dept; ?>" enctype="multipart/form-data" onsubmit="return check_datetime()">
                         <span style="font-size: 18px;">Corrective</span><hr>
                         <div class="col-md-12" style="margin-bottom: 20px;">
 
@@ -226,7 +247,7 @@ function myFunction() {
 
                         </div>
                         </div>
-                        <input hidden="" type="text" name="nc_sec3owner" id="nc_sec3owner" value="<?php echo $getuser['username']; ?>" />
+                        <input hidden="" type="text" name="nc_sec3owner" id="nc_sec3owner" value="<?php echo $convert_name; ?>" />
                         <input hidden="" type="text" name="nc_sec3empid" id="nc_sec3empid" value="<?php echo $getuser['ecode']; ?>"/>
                         <input hidden="" type="text" name="nc_sec3dept" id="nc_sec3dept" value="<?php echo $getuser['Dept']; ?>"/>
                         <input hidden="" type="text" name="nc_sec3date" id="nc_sec3date" value="<?php echo date("Y-m-d"); ?>"/>
@@ -252,7 +273,7 @@ function myFunction() {
                             <input hidden="" type="text" name="his_nc_sec3file" id="his_nc_sec3file" value="<?php echo $getdatamain->nc_sec3file; ?>" />
 
                             <input hidden="" type="text" name="his_action" id="his_action" value="Start Edit NC Sec3" />
-                            <input hidden="" type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
+                            <input hidden="" type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $convert_name; ?>" />
                             <input hidden="" type="text" name="his_date_modify" id="his_date_modify" value="<?php echo date("Y/m/d H:i:s") ?>" />
                             <a href="<?php echo base_url("nc/nc_sec3edit/"); ?><?php echo $getdatamain->cp_no; ?>"><button class="btn btn-warning" name="btn_sec3edit" id="btn_sec3edit">Edit</button></a>
                         </form>
@@ -263,7 +284,7 @@ function myFunction() {
 
                 <div class="panel-footer">
                     <?php if ($getdatamain->nc_sec31 == "") { ?>
-                        <label>ผู้รับผิดชอบ : </label>&nbsp;<label><?php echo $getuser['username']; ?></label> | <label>รหัสพนักงาน : </label>&nbsp;<label><?php echo $getuser['ecode']; ?></label> | <label>แผนก : </label><label><?php echo $getuser['Dept']; ?></label> | <label>วันที่ : </label><label><?php echo date("d/m/Y"); ?></label>
+                        <label>ผู้รับผิดชอบ : </label>&nbsp;<label><?php echo $convert_name; ?></label> | <label>รหัสพนักงาน : </label>&nbsp;<label><?php echo $getuser['ecode']; ?></label> | <label>แผนก : </label><label><?php echo $getuser['Dept']; ?></label> | <label>วันที่ : </label><label><?php echo date("d/m/Y"); ?></label>
                     <?php } else { ?>
                         <label>ผู้รับผิดชอบ : </label>&nbsp;<label><?php echo $getdatamain->nc_sec3owner; ?></label> | <label>รหัสพนักงาน : </label>&nbsp;<label><?php echo $getdatamain->nc_sec3empid; ?></label> | <label>แผนก : </label><label><?php echo $getdatamain->nc_sec3dept; ?></label> | <label>วันที่ : </label><label>
                             <?php
@@ -301,7 +322,7 @@ function myFunction() {
 
 
             <!-- *********************************SECTION**4***AREA************************************ -->
-            <input  type="text" name="check_qmr_nc" id="check_qmr_nc" value="<?php echo $checkQmrResult; ?>" />
+            <input hidden type="text" name="check_qmr_nc" id="check_qmr_nc" value="<?php echo $checkQmrResult; ?>" />
             <div class="panel panel-primary"><!--SECTION 4-->
                 <div class="panel-heading">4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</div>
                 <div class="panel-body">
@@ -358,7 +379,15 @@ function myFunction() {
 
                             <label style="margin-top: 5px;">ลงชื่อผู้ติดตาม</label>
                             <div class="form-inline">
-                                <input readonly="" type="text" name="nc_sec4f1_signature" id="nc_sec4f1_signature" class="form-control" value="<?php echo $getuser['Fname']; ?>"/>
+    <?php
+    if($getdatamain->nc_sec4f1_signature == "")
+    {
+        $sec4f1_signature = $convert_name;
+    }else{
+        $sec4f1_signature = $getdatamain->nc_sec4f1_signature;
+    }
+    ?>
+                                <input readonly="" type="text" name="nc_sec4f1_signature" id="nc_sec4f1_signature" class="form-control" value="<?php echo $sec4f1_signature; ?>"/>
                             </div>
 
 
@@ -410,7 +439,15 @@ function myFunction() {
 
                             <label style="margin-top: 5px;">ลงชื่อผู้ติดตาม</label>
                             <div class="form-inline">
-                                <input readonly="" type="text" name="nc_sec4f2_signature" id="nc_sec4f2_signature" class="form-control" value="<?php echo $getuser['Fname']; ?>"/>
+                              <?php
+                              if($getdatamain->nc_sec4f2_signature == "")
+                              {
+                                  $sec4f2_signature = $convert_name;
+                              }else{
+                                  $sec4f2_signature = $getdatamain->nc_sec4f2_signature;
+                              }
+                              ?>
+                                <input readonly="" type="text" name="nc_sec4f2_signature" id="nc_sec4f2_signature" class="form-control" value="<?php echo $sec4f2_signature; ?>"/>
                             </div>
 
                             <label class="sec4label">สำหรับ qmr เท่านั้น</label>
@@ -438,7 +475,15 @@ function myFunction() {
 
                                 <label style="margin-top: 5px;">ลงชื่อผู้ติดตาม</label>
                                 <div class="form-inline">
-                                    <input readonly="" type="text" name="nc_sec4f3_signature" id="nc_sec4f3_signature" class="form-control" value="<?php echo $getuser['Fname']; ?>"/>
+                                  <?php
+                                  if($getdatamain->nc_sec4f3_signature == "")
+                                  {
+                                      $sec4f3_signature = $convert_name;
+                                  }else{
+                                      $sec4f3_signature = $getdatamain->nc_sec4f3_signature;
+                                  }
+                                  ?>
+                                    <input readonly="" type="text" name="nc_sec4f3_signature" id="nc_sec4f3_signature" class="form-control" value="<?php echo $sec4f3_signature; ?>"/>
                                 </div>
 
                                 <label class="sec4label">สำหรับ qmr เท่านั้น</label>
@@ -532,7 +577,7 @@ if ($getdatamain->nc_status_code == "nc10") {
                 </div>
 
             </div>
-            <input type="text" name="check_autoemail" id="check_autoemail" value="<?php echo $getdatamain->nc_autoemail; ?>">
+            <input hidden type="text" name="check_autoemail" id="check_autoemail" value="<?php echo $getdatamain->nc_autoemail; ?>">
 
             <!-- *********************************SECTION5****AREA**************************************-->
             <script>

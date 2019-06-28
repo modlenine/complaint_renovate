@@ -14,13 +14,19 @@ and open the template in the editor.
 </head>
 
 <body>
+<?php
+    $cutLname = substr($getuser['Lname'],0,1);
+    $convert_name = $getuser['Fname']."_".$cutLname;
+?>
+
     <?php $this->load->view("head/nav"); ?>
 
     <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
         <h1 class="h1_view">Investigate Complaint : <?php echo $view_cp['cp_no']; ?></h1>
-        <div class="form-inline btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
+        <div class="form-inline btn_back"><a href="<?=base_url('complaint')?>"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
             <a href="<?php echo base_url("report/main_report/");
                         echo $view_cp['cp_no']; ?>"><button class="btn btn-success btn-sm btn_back"><i class="fas fa-file-export"></i>&nbsp;Export</button></a>&nbsp;<button class="btn btn-success btn-sm btn_back" onclick="myFunction()"><i class="fas fa-print"></i>&nbsp;Print</button>
+                        <span style="float:right;font-weight:600">MO-F-014-01-10/06/62</span>
         </div>
 
         <script>
@@ -241,7 +247,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
                         </div>
 
                         <div class="form-inline col-md-8">
-                            <label><b>Signature : </b><?php echo $getuser['username']; ?></label>
+                            <label><b>Signature : </b><?php echo $convert_name; ?></label>
                             <label><b>Department : </b><?php echo $getuser['Dept']; ?></label>
                             <label><b>Date : </b><?php echo date("d/m/Y"); ?></label>
                         </div>
@@ -251,7 +257,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
                         <div class="col-md-3"><label><b>Department : </b><?php echo $getuser['Dept']; ?></label></div>
                         <div class="col-md-3"><label><b>Date : </b><?php echo date("d/m/Y"); ?></label></div>-->
 
-                            <input type="text" name="cp_detail_inves_signature" id="cp_detail_inves_signature" hidden="" value="<?php echo $getuser['username']; ?>" />
+                            <input type="text" name="cp_detail_inves_signature" id="cp_detail_inves_signature" hidden="" value="<?php echo $convert_name; ?>" />
                             <input type="text" name="cp_detail_inves_dept" id="cp_detail_inves_dept" hidden="" value="<?php echo $getuser['Dept']; ?>" />
                             <input type="text" name="cp_detail_inves_date" id="cp_detail_inves_date" hidden="" value="<?php echo date("Y-m-d"); ?>" />
                         </div>
@@ -414,7 +420,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
                         </div>
 
                         <div class="form-inline col-md-8">
-                            <label><b>Signature : </b><?php echo $getuser['username']; ?></label>
+                            <label><b>Signature : </b><?php echo $convert_name; ?></label>
                             <label><b>Department : </b><?php echo $getuser['Dept']; ?></label>
                             <label><b>Date : </b><?php echo date("d/m/Y"); ?></label>
                         </div>
@@ -424,7 +430,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
                         <div class="col-md-3"><label><b>Department : </b><?php echo $getuser['Dept']; ?></label></div>
                         <div class="col-md-3"><label><b>Date : </b><?php echo date("d/m/Y"); ?></label></div>-->
 
-                            <input type="text" name="cp_sum_inves_signature" id="cp_sum_inves_signature" hidden="" value="<?php echo $getuser['username']; ?>" />
+                            <input type="text" name="cp_sum_inves_signature" id="cp_sum_inves_signature" hidden="" value="<?php echo $convert_name; ?>" />
                             <input type="text" name="cp_sum_inves_dept" id="cp_sum_inves_dept" hidden="" value="<?php echo $getuser['Dept']; ?>" />
                             <input type="text" name="cp_sum_inves_date" id="cp_sum_inves_date" hidden="" value="<?php echo date("Y-m-d"); ?>" />
                         </div>
@@ -605,11 +611,11 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='QMR' ");
 
 
                         <div class="col-md-12 pri">
-                            <div class="col-md-3"><label><b>Signature : </b><?php echo $getuser['username']; ?></label></div>
+                            <div class="col-md-3"><label><b>Signature : </b><?php echo $convert_name; ?></label></div>
                             <div class="col-md-3"><label><b>Department : </b><?php echo $getuser['Dept']; ?></label></div>
                             <div class="col-md-3"><label><b>Date : </b><?php echo date("d/m/Y"); ?></label></div>
 
-                            <input type="text" name="cp_conclu_signature" id="cp_conclu_signature" hidden="" value="<?php echo $getuser['username']; ?>" />
+                            <input type="text" name="cp_conclu_signature" id="cp_conclu_signature" hidden="" value="<?php echo $convert_name; ?>" />
                             <input type="text" name="cp_conclu_dept" id="cp_conclu_dept" hidden="" value="<?php echo $getuser['Dept']; ?>" />
                             <input type="text" name="cp_conclu_date" id="cp_conclu_date" hidden="" value="<?php echo date("Y-m-d"); ?>" />
                         </div>
@@ -677,7 +683,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='QMR' ");
 
         <!--***********************************CONCLUSION OF COMPLAINT***************************************-->
 
-        <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+        <!-- <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> -->
 
 
 

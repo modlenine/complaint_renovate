@@ -15,7 +15,8 @@ and open the template in the editor.
         <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
 
             <h1 class="h1_add">Complaint Form</h1><hr>
-            <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+            <div class="btn_back"><a href="<?=base_url('complaint'); ?>"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>&nbsp;<a href="<?=base_url("asset/New Complaint Form.pdf");?>" target="_blank"><button class="btn btn-warning btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Print Blank Form</button></a>
+              <span style="float:right;font-weight:600">MO-F-014-01-10/06/62</span></div>
 
             <form name="frmMain" action="<?php echo base_url('complaint/saveData'); ?>" method="post" enctype="multipart/form-data">
                 <div class="panel panel-primary">
@@ -119,7 +120,10 @@ and open the template in the editor.
 
                     </div>
                 </div><!--************* Priority ******************-->
-
+<?php
+    $cutLname = substr($getuser['Lname'],0,1);
+    $convert_name = $getuser['Fname']."_".$cutLname;
+?>
 
                 <div class="panel panel-primary"><!--************* User Information ******************-->
                     <div class="panel-heading">User Information</div>
@@ -128,7 +132,7 @@ and open the template in the editor.
                         <div class="form-row">
                             <div class="col-md-3 pri">
                                 <label><b>Complaint Person</b></label>
-                                <input type="text" name="cp_user_name" id="cp_user_name" class="form-control form-control-sm form-width" readonly="" placeholder="Complaint Person" value="<?php echo $getuser['username']; ?>"/>
+                                <input type="text" name="cp_user_name" id="cp_user_name" class="form-control form-control-sm form-width" readonly="" placeholder="Complaint Person" value="<?php echo $convert_name; ?>"/>
                             </div>
 
                             <div class="col-md-3 pri">
@@ -223,7 +227,7 @@ and open the template in the editor.
                     </div>
                 </div>
                 <div><input class="btn btn-primary" type="submit" name="add_btn" id="add_btn" value="Submit" />&nbsp;<input class="btn btn-warning" type="reset" name="reset_btn" id="reset_btn" value="Reset"/></div><hr>
-                <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+                <!-- <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> -->
 
 
 

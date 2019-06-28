@@ -27,7 +27,7 @@ class Complaint extends CI_Controller{
 
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
 
-        $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
+        $data['get_dept'] = $this->complaint_model->get_dept_view($cp_no);
         $data['getuser'] = $this->login_model->getuser();
         $data['get_pri_use'] = $this->complaint_model->get_pri_view($cp_no);
 
@@ -252,6 +252,19 @@ class Complaint extends CI_Controller{
     public function edit_newcomplaint($cp_no)
     {
         $this->complaint_model->edit_newcomplaint($cp_no);
+    }
+
+
+    public function resend_email($get_cp_no)
+    {
+        $action_reset = $this->complaint_model->resend_email($get_cp_no);
+        if($action_reset)
+        {
+            echo "<script>alert('Resend Email Success.');</script>";
+            header("refresh:1; url=http://203.107.156.180/intsys/complaint");
+            die();
+        }
+
     }
 
 

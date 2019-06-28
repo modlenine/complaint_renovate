@@ -16,7 +16,7 @@ and open the template in the editor.
             <h1 class="head_list_cp">List of Complaint</h1>
 
                         <div class="form-inline">
-                <a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
+                <a href="<?=base_url(); ?>"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
                 <a href="<?php echo base_url(); ?>complaint/add/<?php echo $getuser['DeptCode']; ?>"><button class="btn btn-primary btn-sm btn_back"><i class="fas fa-plus-circle"></i>&nbsp;New Complaint</button></a>
 
 
@@ -193,11 +193,18 @@ and open the template in the editor.
                         <td style="text-align: left;">
                           <?php
                           $cp_no = $l_cp['cp_no'];
-                            $getdept = $this->db->query("SELECT complaint_department.cp_dept_id, complaint_department.cp_dept_code, complaint_department.cp_dept_cp_no, member.Dept FROM complaint_department INNER JOIN member ON member.DeptCode = complaint_department.cp_dept_code WHERE complaint_department.cp_dept_cp_no = '$cp_no' GROUP BY complaint_department.cp_dept_code DESC");
+                            $getdept = $this->db->query("SELECT
+complaint_department.cp_dept_id,
+complaint_department.cp_dept_code,
+complaint_department.cp_dept_cp_no,
+complaint_department_main.cp_dept_main_name
+FROM
+complaint_department
+INNER JOIN complaint_department_main ON complaint_department_main.cp_dept_main_code = complaint_department.cp_dept_code WHERE complaint_department.cp_dept_cp_no = '$cp_no' ");
                           ?>
 
                           <?php foreach ($getdept->result_array() as $gdn): ?>
-                              <?php echo $gdn['Dept'] . "&nbsp;,"; ?>
+                              <?php echo $gdn['cp_dept_main_name'] . "&nbsp;,"; ?>
                           <?php endforeach; ?>
                         </td>
 
@@ -239,7 +246,7 @@ and open the template in the editor.
                     </tr>
                 </tfoot>
             </table>
-            <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div>
+            <!-- <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> -->
             <script type="text/javascript" >
     $(document).ready(function () {
                 $('#view_cp').DataTable({

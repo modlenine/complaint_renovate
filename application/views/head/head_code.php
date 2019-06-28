@@ -190,10 +190,11 @@ display: none;
 
 /********************NAV************************/
 .logout_btn{
-    position: absolute;
+    /* position: absolute;
     right:20px;
-    top:50px;
-    color:#E6E6FA;
+    top:50px; */
+    padding-left:10px;
+    color:#CC0000;
 }
 .navbar-inverse .navbar-toggle{
     border-color: #E6E6FA;
@@ -251,29 +252,6 @@ display: none;
 .fontfix{
     color: #0033ff;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   </style>

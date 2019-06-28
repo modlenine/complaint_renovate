@@ -47,7 +47,7 @@ class login_model extends CI_Model {
                      header('location:'.$uri);
                 }
 
-                if($r['posi']==15){
+                if($r['posi']==15 || $r['posi']==55 || $r['posi']==85 || $r['posi']==65){
                     echo "<h3 style='color:green;text-align:center;'>" . "Welcome &nbsp;" . $r['Fname'] . "&nbsp;Permission : User" . "</h3>";
                     $uri =isset($_SESSION['RedirectKe']) ? $_SESSION['RedirectKe']: '/intsys/complaint/';
                     header('location:'.$uri);
