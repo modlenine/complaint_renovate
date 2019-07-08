@@ -367,7 +367,7 @@ function myFunction() {
                                     </span>
                                 </div> -->
 
-                                <input hidden type='datetime' name="datetime41count" id="datetime41count" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
+                                <input hidden type='datetime' name="datetime41count" id="datetime41count" value="<?php echo $getdatamain->nc_sec4f1_date; ?>"/>
                                 <div id="datetimepicker41" class="showdate41"></div>
                                 <input type="hidden" id="result" name="datetime41" value="">
                                 <!-- Input type datetime -->
@@ -428,7 +428,7 @@ function myFunction() {
                                     </span>
                                 </div> -->
 
-                                <input hidden type='datetime' name="datetime42count" id="datetime42count" value="<?php echo $getdatamain->nc_sec33date; ?>"/>
+                                <input hidden type='datetime' name="datetime42count" id="datetime42count" value="<?php echo $getdatamain->nc_sec4f2_date; ?>"/>
                                 <div id="datetimepicker42" class="showdate42"></div>
                                 <input type="hidden" id="result" name="datetime42" value="">
                                 <!-- Input type datetime -->

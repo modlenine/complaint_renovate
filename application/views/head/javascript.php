@@ -463,11 +463,11 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
 
         } else {
             $('#get_nc_sec4f1_file').hide();
-            // $('#nc_sec5').prop("readonly", true);
-            // $('#nc_sec5file').prop("readonly", true);
-            // $('#nc_sec5cost_detail').prop("readonly", true);
-            // $('#nc_sec5cost').prop("readonly", true);
-            // $('#btn_sec5').hide();
+            $('#nc_sec5').prop("readonly", true);
+            $('#nc_sec5file').prop("readonly", true);
+            $('#nc_sec5cost_detail').prop("readonly", true);
+            $('#nc_sec5cost').prop("readonly", true);
+            $('#btn_sec5').hide();
         }
 
         if ($('#nc_sec4f1_radiocheck').val() == "yes") {/******Check radio button***********/
@@ -484,14 +484,21 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
             $('#datetime41show').hide();
             $('#dateshow41').hide();
 
-            // $('#nc_sec5').removeProp("readonly");
-            // $('#nc_sec5file').removeProp("readonly");
-            // $('#nc_sec5cost').removeProp("readonly");
-            // $('#btn_sec5').show();
+            $('#nc_sec5').removeProp("readonly");
+            $('#nc_sec5file').removeProp("readonly");
+            $('#nc_sec5cost').removeProp("readonly");
+            $('#nc_sec5cost_detail').removeProp("readonly");
+            $('#btn_sec5').show();
 
         }
         if ($('#nc_sec4f1_radiocheck').val() == "no") {/******Check radio button***********/
             $('#nc_sec4f1_status_no').prop("checked", true);
+
+            $('#nc_sec5').prop("readonly", true);
+            $('#nc_sec5file').prop("readonly", true);
+            $('#nc_sec5cost_detail').prop("readonly", true);
+            $('#nc_sec5cost').prop("readonly", true);
+            $('#btn_sec5').hide();
         }
         /**************F1*********************/
 
@@ -533,9 +540,21 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
             $('#nc_sec4f3').prop("readonly", true);
             $('#btn_sec4f3').hide();
 
+            $('#nc_sec5').removeProp("readonly");
+            $('#nc_sec5file').removeProp("readonly");
+            $('#nc_sec5cost').removeProp("readonly");
+            $('#nc_sec5cost_detail').removeProp("readonly");
+            $('#btn_sec5').show();
+
         }
         if ($('#nc_sec4f2_radiocheck').val() == "no") {/******Check radio button***********/
             $('#nc_sec4f2_status_no').prop("checked", true);
+
+            $('#nc_sec5').prop("readonly", true);
+            $('#nc_sec5file').prop("readonly", true);
+            $('#nc_sec5cost_detail').prop("readonly", true);
+            $('#nc_sec5cost').prop("readonly", true);
+            $('#btn_sec5').hide();
         }
         /**************F2*********************/
 
@@ -548,27 +567,33 @@ $('input#nc_sec5cost').keyup(function (event) {/*****Comma function*******/
             $('#nc_sec4f3').prop("readonly", true);
             $('#btn_sec4f3').hide();
 
-            // $('#nc_sec5').prop("readonly", false);
-            // $('#nc_sec5file').prop("readonly", false);
-            // $('#nc_sec5cost_detail').prop("readonly", false);
-            // $('#nc_sec5cost').prop("readonly", false);
-            // $('#btn_sec5').show();
-
         } else {
             $('#get_nc_sec4f3_file').hide();
 
-            $('#nc_sec5').prop("readonly", true);
-            $('#nc_sec5file').prop("readonly", true);
-            $('#nc_sec5cost_detail').prop("readonly", true);
-            $('#nc_sec5cost').prop("readonly", true);
-            $('#btn_sec5').hide();
+            // $('#nc_sec5').prop("readonly", true);
+            // $('#nc_sec5file').prop("readonly", true);
+            // $('#nc_sec5cost_detail').prop("readonly", true);
+            // $('#nc_sec5cost').prop("readonly", true);
+            // $('#btn_sec5').hide();
         }
 
         if ($('#nc_sec4f3_radiocheck').val() == "yes") {/******Check radio button***********/
             $('#nc_sec4f3_status_yes').prop("checked", true);
+
+            $('#nc_sec5').removeProp("readonly");
+            $('#nc_sec5file').removeProp("readonly");
+            $('#nc_sec5cost').removeProp("readonly");
+            $('#nc_sec5cost_detail').removeProp("readonly");
+            $('#btn_sec5').show();
         }
         if ($('#nc_sec4f3_radiocheck').val() == "no") {/******Check radio button***********/
             $('#nc_sec4f3_status_no').prop("checked", true);
+
+            $('#nc_sec5').removeProp("readonly");
+            $('#nc_sec5file').removeProp("readonly");
+            $('#nc_sec5cost').removeProp("readonly");
+            $('#nc_sec5cost_detail').removeProp("readonly");
+            $('#btn_sec5').show();
         }
 
 
