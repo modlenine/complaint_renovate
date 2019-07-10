@@ -49,22 +49,6 @@ class login_model extends CI_Model {
                 }
 
 
-                // check timeout
-                                $result = $this->db->query("select * from complaint_login_detail");
-                                foreach ($result->result_array() as $re) {
-                                    $cktime = time() - $re['cp_login_session'];
-                                    if ($cktime > 14400) {
-                                        $timeout = $re['cp_login_ecode'];
-                                        $ar_timeout = array(
-                                            "cp_login_lastactivity2" => date("Y-m-d H:m:s"),
-                                            "cp_login_status2" => "logout"
-                                        );
-                                        $this->db->where("cp_login_ecode", $timeout);
-                                        $this->db->where("cp_login_status2", "null");
-                                        $this->db->update("complaint_login_detail", $ar_timeout);
-                                    }
-                                }
-
 
 
               $times = time();

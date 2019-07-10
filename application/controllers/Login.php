@@ -43,6 +43,36 @@ class Login extends CI_Controller{
 
             }
             if ($_POST["action"] == "fetch_data") {
+
+
+              //check User online & offonline when user close browser
+$ecode_check = $_SESSION['ecode'];
+$result = $this->db->query("select * from complaint_login_detail where cp_login_status2='null' ");
+foreach ($result->result_array() as $re) {
+    $cktime = time() - $re['cp_login_session'];
+    if ($cktime >= 7200) {
+        $timeout = $re['cp_login_session'];
+        $ar_timeout = array(
+            "cp_login_lastactivity2" => date("Y-m-d H:m:s"),
+            "cp_login_status2" => "logout"
+        );
+        $this->db->where("cp_login_session", $timeout);
+        $this->db->update("complaint_login_detail", $ar_timeout);
+
+
+    }
+}
+$checkonline = $this->db->query("select * from complaint_login_detail where cp_login_ecode='$ecode_check' order by cp_login_session desc limit 1 ");
+$resultonline = $checkonline->row();
+if($resultonline->cp_login_status2 == 'logout')
+{
+    session_destroy();
+    echo "<script>location.reload();</script>";
+}
+//check User online & offonline when user close browser
+
+
+
                 $output = '';
 
                 $datenow = date("Y-m-d H:m:s");

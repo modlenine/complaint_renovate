@@ -1232,7 +1232,7 @@ else
 fetch_user_login_data();
 setInterval(function(){
  fetch_user_login_data();
-}, 3000);
+}, 1000);
 function fetch_user_login_data()
 {
  var action = "fetch_data";
