@@ -93,7 +93,7 @@ $this->load->view("head/javascript");
           </li>-->
 
           <?php
-            if($getuser['posi'] == 15 || $getuser['posi'] == 55 || $getuser['posi'] == 85 || $getuser['posi'] == 65 || $getuser['posi'] == 45 || $getuser['posi'] == 75){
+            if($getuser['posi'] == 15 || $getuser['posi'] == 55 || $getuser['posi'] == 85 || $getuser['posi'] == 65 || $getuser['posi'] == 45 || $getuser['posi'] == 75 || $getuser['posi'] == 35){
                 $display = 'display:none;';
             }
             if($getuser['DeptCode'] == 1002){

@@ -151,7 +151,9 @@ INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
 
 
     public function graph_cp_day($graph_month){
-$cutdate = substr($graph_month,0,2);
+        $cut1 = substr($graph_month,3);
+        $cut2 = substr($graph_month,0,2);
+$cutdate0 = $cut1."-".$cut2;
 
       $result = $this->db->query("SELECT
 complaint_main.cp_id,
@@ -162,7 +164,7 @@ COUNT(complaint_topic_catagory.topic_cat_name) AS sum
 FROM
 complaint_main
 INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
-WHERE complaint_main.cp_date LIKE '%$cutdate%'
+WHERE complaint_main.cp_date LIKE '%$cutdate0%'
 GROUP BY complaint_topic_catagory.topic_cat_name");
 
     return $result;

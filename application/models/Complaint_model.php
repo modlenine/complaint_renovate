@@ -2448,8 +2448,6 @@ WHERE cp_no='$get_cp_no' ");
     /*     * ***************CHECK ZONE******************** */
 
 
-    /*สร้าง Select box 2 ชั้น */
-
     public function fetch_topic_category(){
         $this->db->order_by("topic_cat_name","ASC");
         $query = $this->db->get("complaint_topic_catagory");
@@ -2562,45 +2560,45 @@ WHERE cp_no='$get_cp_no' ");
                 $this->db->update("maillist",$ar);
 
             }
-          
-          
+
+
                   /*  -------------------------SEND--EMAIL------------------------------------------   */
-          
-          
-          
+
+
+
                   $sqlEmail = "SELECT email FROM maillist WHERE cp_mail_active = 1 AND cp_mail_status != 0 "; //1=it , 2=sales , 3=cs
                   $query = $this->db->query($sqlEmail);
-          
+
                   $date = date_create($getdata_email->cp_date);
                    $condate = date_format($date, "d/m/Y");
-          
+
                   if ($getdata_email->cp_topic_cat == "3" || $getdata_email->cp_topic_cat == "4" || $getdata_email->cp_topic_cat == "5") {
                       $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_internal='1' || default_sd='1' ";
                       $sqlget_query = $this->db->query($sqlget_ccemail);
-          
+
                       $subject = "New Complaint";
                       $body = "<h3>New Complaint for Validation.</h3>";
                       $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $getdata_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
                       $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $getdata_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $getdata_email->topic_cat_name . "<br>";
                       $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $getdata_email->cp_status_name . "<br><br>";
-          
+
                       $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
                       foreach ($this->get_pri_view($get_cp_no) as $getpv) {
                           $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                       }
                       $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . "<br>";
                       $body .= "<br>";
-          
+
                       $body .= "<strong style='font-size:18px;font-weight:600;'>User Information</strong><br>";
                       $body .= "<strong>Complaint Person :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_dept . "<br><br>";
-          
+
                       $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
                       $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $getdata_email->cp_detail . "<br>";
                       $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
                       $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
-          
-          
-          
+
+
+
                       $mail = new PHPMailer();
                       $mail->IsSMTP();
                       $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้
@@ -2616,13 +2614,13 @@ WHERE cp_no='$get_cp_no' ");
                       $mail->Password = "Complaint*4321"; // SMTP password
                       //Ae8686#
                       //        $mail->Password = "ShctBkk1";
-          
+
                       $mail->From = "complaint_system@saleecolour.com";
                       $mail->FromName = "Complaint System";
                       foreach ($query->result_array() as $fetch) {
                           $mail->AddAddress($fetch['email']);
                       }
-          
+
                       $mail->AddCC($getdata_email->cp_user_email);
                       foreach ($sqlget_query->result_array() as $sqlget_querys){
                         $mail->AddCC($sqlget_querys['cp_email_user']);
@@ -2636,39 +2634,39 @@ WHERE cp_no='$get_cp_no' ");
                       $mail->Body = $body;
                       $mail->send();
                       //************************************ZONE***SEND****EMAIL*************************************//
-          
-          
+
+
                   }else if($getdata_email->cp_topic_cat == "1"){
                     $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_tecnical='1' || default_cp_external='1' || default_sd='1' ";
                     $sqlget_query = $this->db->query($sqlget_ccemail);
-          
-          
+
+
                     $subject = "New Complaint";
                     $body = "<h3>New Complaint for Validation.</h3>";
                     $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $getdata_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
                     $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $getdata_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $getdata_email->topic_cat_name . "<br>";
                     $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $getdata_email->cp_status_name . "<br><br>";
-          
+
                     $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
                     foreach ($this->get_pri_view($get_cp_no) as $getpv) {
                         $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                     }
                     $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . "<br>";
                     $body .= "<br>";
-          
+
                     $body .= "<strong style='font-size:18px;font-weight:600;'>User Information</strong><br>";
                     $body .= "<strong>Complaint Person :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_dept . "<br><br>";
-          
+
                     $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
                     $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $getdata_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $getdata_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $getdata_email->cp_invoice_no . "<br>";
                     $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_qty . "<br>";
                     $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $getdata_email->cp_detail . "<br>";
-          
+
                     $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
-          
+
                     $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
-          
-          
+
+
                     $mail = new PHPMailer();
                       $mail->IsSMTP();
                       $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้
@@ -2684,13 +2682,13 @@ WHERE cp_no='$get_cp_no' ");
                       $mail->Password = "Complaint*4321"; // SMTP password
                       //Ae8686#
                       //        $mail->Password = "ShctBkk1";
-          
+
                       $mail->From = "complaint_system@saleecolour.com";
                       $mail->FromName = "Complaint System";
                       foreach ($query->result_array() as $fetch) {
                           $mail->AddAddress($fetch['email']);
                       }
-          
+
                       $mail->AddCC($getdata_email->cp_user_email);
                       foreach ($sqlget_query->result_array() as $sqlget_querys){
                         $mail->AddCC($sqlget_querys['cp_email_user']);
@@ -2704,37 +2702,37 @@ WHERE cp_no='$get_cp_no' ");
                       $mail->Body = $body;
                       $mail->send();
                     //************************************ZONE***SEND****EMAIL*************************************//
-          
+
                   }else{
                     $sqlget_ccemail = "SELECT cp_email_user FROM complaint_email WHERE default_cp_external='1' || default_sd='1' ";
                     $sqlget_query = $this->db->query($sqlget_ccemail);
-          
+
                       $subject = "New Complaint";
                       $body = "<h3>New Complaint for Validation.</h3>";
                       $body .= "<strong>Complaint No. : </strong>&nbsp;&nbsp;" . $getdata_email->cp_no . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate. "<br>";
                       $body .= "<strong>Topic : </strong>&nbsp;&nbsp;" . $getdata_email->topic_name . "&nbsp;&nbsp;<strong>Category : </strong>&nbsp;&nbsp;" . $getdata_email->topic_cat_name . "<br>";
                       $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $getdata_email->cp_status_name . "<br><br>";
-          
+
                       $body .= "<strong style='font-size:18px;font-weight:600;'>Priority</strong><br>";
                       foreach ($this->get_pri_view($get_cp_no) as $getpv) {
                           $body .= "<strong>" . $getpv['pricat_name'] . ": </strong>&nbsp;&nbsp;" . $getpv['pri_name'] . "<br>";
                       }
                       $body .= "<strong> Priority Level : </strong>&nbsp;&nbsp;" . "<br>";
                       $body .= "<br>";
-          
+
                       $body .= "<strong style='font-size:18px;font-weight:600;'>User Information</strong><br>";
                       $body .= "<strong>Complaint Person :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_dept . "<br><br>";
-          
+
                       $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
                       $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $getdata_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $getdata_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $getdata_email->cp_invoice_no . "<br>";
                       $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_qty . "<br>";
                       $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $getdata_email->cp_detail . "<br>";
-          
+
                       $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
-          
+
                       $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://203.107.156.180/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
-          
-          
+
+
                       $mail = new PHPMailer();
                       $mail->IsSMTP();
                       $mail->CharSet = "utf-8";  // ในส่วนนี้ ถ้าระบบเราใช้ tis-620 หรือ windows-874 สามารถแก้ไขเปลี่ยนได้
@@ -2750,13 +2748,13 @@ WHERE cp_no='$get_cp_no' ");
                       $mail->Password = "Complaint*4321"; // SMTP password
                       //Ae8686#
                       //        $mail->Password = "ShctBkk1";
-          
+
                       $mail->From = "complaint_system@saleecolour.com";
                       $mail->FromName = "Complaint System";
                       foreach ($query->result_array() as $fetch) {
                           $mail->AddAddress($fetch['email']);
                       }
-          
+
                       $mail->AddCC($getdata_email->cp_user_email);
                       foreach ($sqlget_query->result_array() as $sqlget_querys){
                         $mail->AddCC($sqlget_querys['cp_email_user']);
@@ -2776,15 +2774,15 @@ WHERE cp_no='$get_cp_no' ");
                     $ar= array(
                         "cp_mail_active" => "0"
                     );
-    
+
                     $calldept = $get_check_email['cp_dept_main_code'];
                     $this->db->where("deptcode",$calldept);
                     $this->db->update("maillist",$ar);
-    
+
                 }
 
 
-          
+
     }
 
 
