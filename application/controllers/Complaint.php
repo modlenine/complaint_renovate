@@ -9,8 +9,6 @@ class Complaint extends CI_Controller{
     }
 
     public function index(){/***************List Page***************/
-        $this->login_model->call_login();
-
         $data['list_cp'] = $this->complaint_model->list_cp();
         $data['getuser'] = $this->login_model->getuser();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -22,7 +20,6 @@ class Complaint extends CI_Controller{
     }
 
     public function view($cp_no){/***************View Page***************/
-        $this->login_model->call_login();
         $this->complaint_model->check_status_page($cp_no);
 
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
@@ -37,7 +34,6 @@ class Complaint extends CI_Controller{
     }
 
     public function view_fail($cp_no){/***************View Page***************/
-        $this->login_model->call_login();
         $this->complaint_model->check_status_page($cp_no);
 
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
@@ -55,19 +51,17 @@ class Complaint extends CI_Controller{
     public function inves_starting($cp_no){/*******Change New Complaint to Complaint Analyzed**********/
         $this->complaint_model->change_status_to1($cp_no);
 
-        header("refresh:0; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
+        header("refresh:0; url=".base_url('complaint/investigate/').$cp_no);
     }
 
     public function inves_starting_fail($cp_no){/*******Change New Complaint to Complaint Analyzed**********/
         $this->complaint_model->change_status_to1($cp_no);
 
-        header("refresh:0; url=http://203.107.156.180/intsys/complaint/complaint/investigate_fail/$cp_no");
+        header("refresh:0; url=".base_url('complaint/investigate_fail/').$cp_no);
     }
 
 
-    public function add($dept_code){/***************Add Page***************/
-        $this->login_model->call_login();
-
+    public function add($dept_code , $raoFormno = ''){/***************Add Page***************/
         $data['topic_category'] = $this->complaint_model->fetch_topic_category();
 
 
@@ -76,6 +70,8 @@ class Complaint extends CI_Controller{
         $data['getuser'] = $this->login_model->getuser();
         $data['get_dept_respons'] = $this->complaint_model->get_dept_respons($dept_code);
         $data['get_pri_topic'] = $this->complaint_model->get_pri_topic();
+
+        $data['raoformno'] = $raoFormno;
 
 
         $this->load->view("head/head_code");
@@ -92,8 +88,6 @@ class Complaint extends CI_Controller{
 
 
     public function edit($cp_no){/************Edit data Page**************/
-        $this->login_model->call_login();
-
         $data['get_pri_use'] = $this->complaint_model->get_pri_view($cp_no);
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
         $data['topic_category'] = $this->complaint_model->fetch_topic_category();
@@ -113,9 +107,7 @@ class Complaint extends CI_Controller{
 
         $this->complaint_model->savedata_edit($cp_no);
         $this->history_model->saveedit_history();
-
-
-        header("refresh:1; url=http://203.107.156.180/intsys/complaint/complaint/view/$cp_no");
+        header("refresh:1; url=".base_url('complaint/view/').$cp_no);
     }
 
 
@@ -125,7 +117,6 @@ class Complaint extends CI_Controller{
     }
 
     public function investigate($cp_no){
-        $this->login_model->call_login();
         $this->complaint_model->check_status_page2($cp_no);
 
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
@@ -140,7 +131,6 @@ class Complaint extends CI_Controller{
     }
 
     public function investigate_fail($cp_no){
-        $this->login_model->call_login();
         $this->complaint_model->check_status_page2($cp_no);
 
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
@@ -155,8 +145,6 @@ class Complaint extends CI_Controller{
 
 
     public function edit_investigate($cp_no){
-        $this->login_model->call_login();
-
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
         $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
         $data['getuser'] = $this->login_model->getuser();
@@ -170,28 +158,25 @@ class Complaint extends CI_Controller{
         $this->history_model->saveedit_inves_history();
         $this->complaint_model->save_edit_inves($cp_no);
         redirect('/complaint/investigate/'.$cp_no);
-       header("refresh:1; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
+       header("refresh:1; url=".base_url('complaint/investigate/').$cp_no);
     }
 
 
     public function add_detail_inves($cp_no){
-        $this->login_model->call_login();
-
         $this->complaint_model->add_detail_inves($cp_no);
-
-        header("refresh:1; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
+        header("refresh:1; url=".base_url('complaint/investigate/').$cp_no);
     }
 
 
     public function add_sum_inves($cp_no){
         $this->complaint_model->add_sum_inves($cp_no);
-        header("refresh:1; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
+        header("refresh:1; url=".base_url('complaint/investigate/').$cp_no);
     }
 
 
     public function add_conclusion($cp_no){
         $this->complaint_model->add_conclusion($cp_no);
-        header("refresh:1; url=http://203.107.156.180/intsys/complaint/complaint/investigate/$cp_no");
+        header("refresh:1; url=".base_url('complaint/investigate/').$cp_no);
     }
 
 
@@ -203,12 +188,10 @@ class Complaint extends CI_Controller{
         $this->complaint_model->save_newcomplaint();
         $this->complaint_model->deactive_email();
 
-        header("refresh:1; url=http://203.107.156.180/intsys/complaint");
+        header("refresh:1; url=".base_url());
     }
 
     public function add_failed($cp_no,$nc_related_dept){
-        $this->login_model->call_login();
-
         $data['view_cp'] = $this->complaint_model->view_cp($cp_no);
 //        $data['get_toppic'] = $this->complaint_model->get_toppic();
         $data['get_dept_respons'] = $this->complaint_model->get_dept_respons($nc_related_dept);
@@ -245,7 +228,7 @@ class Complaint extends CI_Controller{
 
     public function cancel_complaint($cp_no){
         $this->complaint_model->cancel_complaint($cp_no);
-        header("refresh:1; url=http://203.107.156.180/intsys/complaint");
+        header("refresh:1; url=".base_url());
     }
 
 
@@ -261,10 +244,18 @@ class Complaint extends CI_Controller{
         if($action_reset)
         {
             echo "<script>alert('Resend Email Success.');</script>";
-            header("refresh:1; url=http://203.107.156.180/intsys/complaint");
+            header("refresh:1; url=".base_url());
             die();
         }
 
+    }
+
+    public function testemail()
+    {
+        $email = "chainarong_k@saleecolour.com";
+        $subject = "ทดสอบ Email";
+        $body = "ทดสอบ Email Body";
+        $this->complaint_model->smtpmail_test($email, $subject, $body);
     }
 
 

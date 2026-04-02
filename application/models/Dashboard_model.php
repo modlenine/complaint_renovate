@@ -140,7 +140,18 @@ INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
 
 
     public function graph1CP(){
-        $result = $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_date, count(complaint_main.cp_date) as total, complaint_main.cp_status_code , substr(cp_date,6,2) AS months FROM complaint_main WHERE cp_status_code in ('cp01','cp02','cp03','cp04' ,'cp05','cp06','cp07','cp08') GROUP BY months");
+        $result = $this->db->query("SELECT 
+            complaint_main.cp_id, 
+            complaint_main.cp_date, 
+            count(complaint_main.cp_date) as total, 
+            complaint_main.cp_status_code , 
+            substr(cp_date,6,2) AS months ,
+            substr(cp_date,1,4) AS years ,
+            complaint_main.cp_month ,
+            complaint_main.cp_year
+            FROM complaint_main 
+            WHERE cp_status_code in ('cp01','cp02','cp03','cp04' ,'cp05','cp06','cp07','cp08') 
+            GROUP BY months , years ");
         return $result->result_array();
     }
 
@@ -150,7 +161,7 @@ INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic
     }
 
 
-    public function graph_cp_day($graph_month){
+    public function graph_cp_day($graph_month,$graph_year){
         $cut1 = substr($graph_month,3);
         $cut2 = substr($graph_month,0,2);
 $cutdate0 = $cut1."-".$cut2;
@@ -160,24 +171,74 @@ complaint_main.cp_id,
 complaint_main.cp_no,
 complaint_main.cp_date,
 complaint_topic_catagory.topic_cat_name,
-COUNT(complaint_topic_catagory.topic_cat_name) AS sum
+COUNT(complaint_topic_catagory.topic_cat_name) AS sum ,
+complaint_main.cp_month,
+complaint_main.cp_year
 FROM
 complaint_main
 INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
-WHERE complaint_main.cp_date LIKE '%$cutdate0%'
+WHERE complaint_main.cp_month = '$graph_month' and complaint_main.cp_year = '$graph_year'
 GROUP BY complaint_topic_catagory.topic_cat_name");
 
     return $result;
     }
 
 
-    public function viewgraph_topic_cat($topiccat,$graph_month){
+
+
+    public function viewgraph_topic_cat($topiccat,$graph_month,$graph_year){
 
       $cutdate = substr($graph_month,0,2);
 
-        $result = $this->db->query("SELECT complaint_main.cp_id, complaint_main.cp_no, complaint_main.cp_date, complaint_main.cp_cus_name, complaint_main.cp_priority, complaint_main.cp_user_dept, complaint_main.cp_topic, complaint_main.cp_topic_cat, complaint_topic_catagory.topic_cat_name, complaint_topic.topic_name, complaint_main.cp_user_name, complaint_status.cp_status_name, complaint_main.cp_status_code FROM complaint_main INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code WHERE topic_cat_name ='$topiccat' && cp_date LIKE '%$cutdate%' ");
+        $result = $this->db->query("SELECT 
+            complaint_main.cp_id, 
+            complaint_main.cp_no, 
+            complaint_main.cp_date, 
+            complaint_main.cp_cus_name, 
+            complaint_main.cp_priority, 
+            complaint_main.cp_user_dept, 
+            complaint_main.cp_topic, 
+            complaint_main.cp_topic_cat, 
+            complaint_topic_catagory.topic_cat_name, 
+            complaint_topic.topic_name, 
+            complaint_main.cp_user_name, 
+            complaint_status.cp_status_name, 
+            complaint_main.cp_status_code 
+            FROM complaint_main 
+            INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat 
+            INNER JOIN complaint_topic ON complaint_topic.topic_id = complaint_main.cp_topic 
+            INNER JOIN complaint_status ON complaint_status.cp_status_id = complaint_main.cp_status_code 
+            WHERE topic_cat_name ='$topiccat' && cp_month = '$graph_month' && cp_year = '$graph_year' ");
         return $result->result_array();
     }
+
+
+
+
+    public function graph_pine_total()
+{
+$result = $this->db->query("SELECT
+complaint_main.cp_id,
+complaint_main.cp_no,
+complaint_main.cp_date,
+complaint_topic_catagory.topic_cat_name,
+COUNT(complaint_topic_catagory.topic_cat_name) AS sum ,
+complaint_main.cp_month,
+complaint_main.cp_year
+FROM
+complaint_main
+INNER JOIN complaint_topic_catagory ON complaint_topic_catagory.topic_cat_id = complaint_main.cp_topic_cat
+GROUP BY complaint_topic_catagory.topic_cat_name");
+
+return $result->result_array();
+}
+
+
+
+
+
+
+    
 
 
 

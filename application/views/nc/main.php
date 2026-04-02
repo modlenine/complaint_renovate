@@ -66,9 +66,9 @@ function myFunction() {
                     <!-- Check topic category  -->
                     <input hidden type="text" name="check_tecnical" id="check_tecnical" value="<?php echo $getdatamain->topic_cat_name; ?>">
 
-                    <p><label class="ncmain_s1_label">Detail of Complaint / Damage</label>&nbsp;<label><?php echo $getdatamain->cp_detail; ?></label></p>
-                    <p><label class="ncmain_s1_label">Detail of Investigate</label>&nbsp;<label><?php echo $getdatamain->cp_detail_inves; ?></label></p>
-                    <p><label class="ncmain_s1_label">Summary of Investigate</label>&nbsp;<label><?php echo $getdatamain->cp_sum_inves; ?></label></p>
+                    <p><label class="ncmain_s1_label">Detail of Complaint / Damage</label>&nbsp;<textarea readonly="" cols="50" rows="5" class="form-control"><?php echo $getdatamain->cp_detail; ?></textarea></p>
+                    <p><label class="ncmain_s1_label">Detail of Investigate</label>&nbsp;<textarea readonly="" cols="50" rows="5" class="form-control"><?php echo $getdatamain->cp_detail_inves; ?></textarea></p>
+                    <p><label class="ncmain_s1_label">Summary of Investigate</label>&nbsp;<textarea readonly="" cols="50" rows="5" class="form-control"><?php echo $getdatamain->cp_sum_inves; ?></textarea></p>
                     <p><label class="ncmain_s1_label">Priority Level</label>&nbsp;<label><?php echo $this->complaint_model->conpriority($getdatamain->cp_priority); ?></label></p>
 
 
@@ -102,6 +102,11 @@ function myFunction() {
 
                         if ($getdatamain->nc_related_dept == $getuser['DeptCode']) {
                           $ckd_result = 1;
+                        }
+                        if($getdatamain->nc_related_dept == 1004 && $getuser['DeptCode'] == 1012){
+                            $ckd_result = 1;
+                        }else if($getdatamain->nc_related_dept == 1012 && $getuser['DeptCode'] == 1004){
+                            $ckd_result = 1;
                         }
 
 
@@ -369,7 +374,7 @@ function myFunction() {
 
                                 <input hidden type='datetime' name="datetime41count" id="datetime41count" value="<?php echo $getdatamain->nc_sec4f1_date; ?>"/>
                                 <div id="datetimepicker41" class="showdate41"></div>
-                                <input type="hidden" id="result" name="datetime41" value="">
+                                <input required type="hidden" id="result" name="datetime41" value="" class="form-control">
                                 <!-- Input type datetime -->
 
 

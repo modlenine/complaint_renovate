@@ -8,13 +8,25 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Create new complaint page</title>
+        <style>
+            .imageShow{
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 15px !important;
+            }
+        </style>
     </head>
     <body>
         <?php $this->load->view("head/nav"); ?>
 
         <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
-
-            <h1 class="h1_add">Complaint Form</h1><hr>
+<?php
+$data = "/intsys/rao/rao_backend/api/api_forcomplaint/".$raoformno;
+?>
+            <h1 class="h1_add">Complaint Form</h1>
+            <!-- <h4> RAO Formno : <?=$data?></h4> -->
+            <hr>
             <div class="btn_back"><a href="<?=base_url('complaint'); ?>"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>&nbsp;<a href="<?=base_url("asset/New Complaint Form.pdf");?>" target="_blank"><button class="btn btn-warning btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Print Blank Form</button></a>
               <span style="float:right;font-weight:600">MO-F-014-01-10/06/62</span></div>
 
@@ -207,6 +219,11 @@ and open the template in the editor.
 
                         </div>
 
+                        <!-- For RAO Program -->
+                        <div class="row">
+                            <div id="raoFile_html" class="col-md-12"></div>
+                        </div>
+
                     </div>
                 </div><!-- Details of Complaint / Damages -->
 
@@ -229,9 +246,127 @@ and open the template in the editor.
                 <div><input class="btn btn-primary" type="submit" name="add_btn" id="add_btn" value="Submit" />&nbsp;<input class="btn btn-warning" type="reset" name="reset_btn" id="reset_btn" value="Reset"/></div><hr>
                 <!-- <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> -->
 
+                <input hidden type="text" name="rao_formno" id="rao_formno">
+
 
 
             </form>
         </div>
     </body>
 </html>
+<!-- Moment -->
+<script src="<?=base_url('assets/moment/moment.min.js')?>"></script>
+<script>
+    $(document).ready(function(){
+        getData_api();
+
+        function getData_api()
+        {
+            $.ajax({
+                url:"<?php echo $data ?>",
+                method:"POST",
+                data:{},
+                beforeSend:function(){},
+                success:function(res){
+                    console.log(JSON.parse(res));
+                    if(JSON.parse(res).status == "Select Data Success"){
+                        let result = JSON.parse(res).result;
+                        let fileData = JSON.parse(res).result_file;
+
+                        $('#cp_category').val(5);
+                        $('#h_username').hide();
+                        $('#cp_cus_name').val("Saleecolour");
+                        $('#h_cusref').hide();
+                        $('#h_inv').hide();
+                        $('#h_procode').hide();
+                        $('#h_lotno').hide();
+                        $('#h_qty').hide();
+
+                        $('#rao_formno').val(result.m_formno);
+
+                        // fixnull
+                        if(result.m_acci_dept === null){
+                            result.m_acci_dept = "";
+                        }
+                        if(result.m_acci_ecode === null){
+                            result.m_acci_ecode = "";
+                        }
+                        if(result.m_acci_location === null){
+                            result.m_acci_location = "";
+                        }
+                        if(result.m_acci_name === null){
+                            result.m_acci_name = "";
+                        }
+                        if(result.m_acci_res === null){
+                            result.m_acci_res = "";
+                        }
+                        
+
+                        let topicNum = '';
+                        if(result.m_type2 == "asset"){
+                            topicNum = 52;
+                        }else if(result.m_type2 == "man"){
+                            topicNum = 51;
+                        }
+                        
+                        $.ajax({
+                            url:"<?php echo base_url(); ?>complaint/fetch_topic",
+                            method:"POST",
+                            data:{topic_cat_id:5},
+                            success:function(data)
+                            {
+                                $('#cp_topic').html(data);
+                                $('#cp_topic').val(topicNum);
+                            }
+                        });
+                        let condate = moment(result.m_acci_datetime).format('DD/MM/Y HH:mm:ss');
+                        let dataDetail = ``;
+
+                        dataDetail +=`วันที่เกิดเหตุ : `+condate+`
+สถานที่เกิดเหตุ : `+result.m_acci_location+`
+การเกิดขึ้นของอุบัติเหตุ เกิดจาก : `+result.m_type1+`
+ประเภทของอุบัติเหตุ : `+result.m_type3+`
+ชื่อผู้ประสบเหตุ / ผู้ที่เกี่ยวข้อง : `+result.m_acci_name+`
+รหัสพนักงาน : `+result.m_acci_ecode+`
+แผนก : `+result.m_acci_dept+`
+ตำแหน่ง / หน้าที่ความรับผิดชอบ : `+result.m_acci_res+`
+รายละเอียด : `+result.m_acci_detail;
+
+                        $('#message').html(dataDetail);
+
+
+                    // check Image
+                    if(fileData.length != 0){
+                        let html = ``;
+                        for(let i = 0 ; i < fileData.length ; i++){
+                            let fileExt = fileData[i].file_name.split('.').pop().toLowerCase();
+                            console.log(fileData[i].file_name.split('.').pop().toLowerCase());
+                            if(fileExt == "jpg" || fileExt == "png" || fileExt == "jpeg"){
+                                html += `
+                                <div class="col-md-4 col-lg-2 col-6 div-imageShow form-group">
+                                    <a class="a-imageShow" href="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" target="_blank">
+                                        <img class="imageShow" src="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`">
+                                    </a>
+                                    <a class="a-imageShow" href="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" target="_blank"><b>`+fileData[i].file_name+`</b></a>
+                                </div>
+                                `;
+                            }else{
+                                html += `
+                                <div class="col-md-4 col-lg-2 col-6 div-imageShow form-group">
+                                        <iframe src="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" height="200" width="300"></iframe>
+                                        <a class="a-imageShow" href="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" target="_blank"><b>`+fileData[i].file_name+`</b></a>
+                                </div>
+                                `;
+                            }
+                        }
+
+                        $('#raoFile_html').html(html);
+                    }
+                        
+
+                    }
+                }
+            })
+        }
+    });
+</script>

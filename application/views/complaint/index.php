@@ -147,7 +147,7 @@ and open the template in the editor.
                             }
 
                             if($l_cp['cp_status_code']=="cp01"){
-                                $newgif = '&nbsp;<img src="http://203.107.156.180/intsys/complaint/asset/new.gif" alt=""/>';
+                                $newgif = '&nbsp;<img src="https://intranet.saleecolour.com/intsys/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
                     <tr>
@@ -232,7 +232,7 @@ INNER JOIN complaint_department_main ON complaint_department_main.cp_dept_main_c
                     </tr>
 <?php endforeach; ?>
                 </tbody>
-                <tfoot>
+                <!-- <tfoot>
                     <tr>
                         <th style="text-align: center;">ID</th>
                         <th style="text-align: center;">DATE</th>
@@ -244,7 +244,7 @@ INNER JOIN complaint_department_main ON complaint_department_main.cp_dept_main_c
                         <th style="text-align: center;">STATUS</th>
                         <th style="text-align: center;">PRIORITY</th>
                     </tr>
-                </tfoot>
+                </tfoot> -->
             </table>
             <!-- <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> -->
             <script type="text/javascript" >

@@ -46,7 +46,7 @@ and open the template in the editor.
                     <tr>
                         <?php
                             if($l_nc['nc_status_code']=="nc01"){
-                                $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
+                                $newgif = '&nbsp;<img src="http://intranet.saleecolour.com/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
 

@@ -52,7 +52,7 @@ and open the template in the editor.
                             }
 
                             if($l_nc['cp_status_code']=="cp01"){
-                                $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
+                                $newgif = '&nbsp;<img src="http://intranet.saleecolour.com/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
 
@@ -60,14 +60,14 @@ and open the template in the editor.
                         /**************Check status for redirect page*******************************/
                         $redirect ="";
                         if($l_nc['cp_status_code']=="cp05"){
-                            $redirect = base_url("nc/main/").$l_nc['cp_no'];
+                            $redirect = base_url("complaint/view/").$l_nc['cp_no'];
                         }else{
                             $redirect = base_url("complaint/view/").$l_nc['cp_no'];
                         }
 
 
                         ?>
-                        <td style="text-align: left;"><a href="<?php echo $redirect;?>"><?php echo $l_nc['cp_no']; ?></a><?php echo $newgif; ?></td>
+                        <td style="text-align: left;"><a href="<?php echo $redirect;?>"><?php echo $l_nc['cp_no'] ?></a><?php echo $newgif; ?></td>
                         <td style="text-align: left;">
                             <?php
                             $date = date_create($l_nc['cp_date']);

@@ -10,7 +10,27 @@ and open the template in the editor.
 <head>
     <meta charset="UTF-8">
     <title>Investigate</title>
-
+    <style>
+        .imageShow{
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px !important;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printSection, #printSection * {
+                visibility: visible;
+            }
+            #printSection {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -23,9 +43,17 @@ and open the template in the editor.
 
     <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
         <h1 class="h1_view">Investigate Complaint : <?php echo $view_cp['cp_no']; ?></h1>
-        <div class="form-inline btn_back"><a href="<?=base_url('complaint')?>"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
-            <a href="<?php echo base_url("report/main_report/");
-                        echo $view_cp['cp_no']; ?>"><button class="btn btn-success btn-sm btn_back"><i class="fas fa-file-export"></i>&nbsp;Export</button></a>&nbsp;<button class="btn btn-success btn-sm btn_back" onclick="myFunction()"><i class="fas fa-print"></i>&nbsp;Print</button>
+        <?php
+            if($view_cp['rao_formno'] !== ""){
+                echo '<h3 class="h1_view">Rao No. : <a href="/intsys/rao/viewdata/'.$view_cp['rao_formno'].'" target="_blank">'.$view_cp['rao_formno'].'</a></h3>';
+            }
+        ?>
+        <section id="printSection">
+        <div id="notprint" class="form-inline btn_back">
+            <a href="<?=base_url('complaint')?>"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>
+            <a href="<?=base_url("report/main_report/").$view_cp['cp_no'];?>">
+                <button class="btn btn-success btn-sm btn_back"><i class="fas fa-file-export"></i>&nbsp;Export</button>
+            </a>&nbsp;<button class="btn btn-success btn-sm btn_back" onclick="myFunction()"><i class="fas fa-print"></i>&nbsp;Print</button>
                         <span style="float:right;font-weight:600">MO-F-014-01-10/06/62</span>
         </div>
 
@@ -201,7 +229,10 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
                         <label><b>Detail of complaint :</b></label>
                         <textarea readonly="" class="form-control" rows="5" name="detail_of_complaint" id="detail_of_compltint"><?php echo $view_cp['cp_detail']; ?></textarea>
                     </div>
-                    <div class="col-md-12">
+
+                    <div id="raoFile_investigate_html" class="col-md-12 form-group"></div>
+
+                    <div class="col-md-12 form-group">
                         <label><b>Attached file :</b></label>
                         <label><a href="<?php echo base_url("asset/add/"); ?><?php echo $view_cp['cp_file']; ?>" target="_blank"><?php echo $view_cp['cp_file']; ?></a></label><br>
 
@@ -220,12 +251,8 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
 
 
         <!--********************************************************INVESTIGATION SECTION******************************************************************************-->
-
         <div class="panel panel-warning">
             <div class="panel-heading"><i class="fas fa-caret-right"></i>&nbsp;Investigation &nbsp;</div>
-
-
-
             <div class="panel-body">
 
                 <form name="invesform" method="post" action="<?php echo base_url(); ?>complaint/add_detail_inves/<?php echo $view_cp['cp_no']; ?>" enctype="multipart/form-data">
@@ -350,29 +377,10 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
 
                             <input class="btn btn-info" type="submit" name="btn_save_history" id="btn_save_history" value="Edit" />
                         </div>
-
-
                     </form>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
-
-
-
-
-
         <!--***************************************INVESTIGATION SECTION*******************************************-->
 
 
@@ -384,7 +392,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
         <div class="panel panel-warning">
             <div class="panel-heading form-inline"><i class="fas fa-caret-right"></i>&nbsp;Summary of Investigation
 
-                <div class="btn_gotonc">&nbsp;<a href="<?php echo base_url("nc/"); ?>"><button name="gotonc" id="gotonc" class="btn btn-info btn-sm"><i class="fas fa-book-open"></i>&nbsp;ไปที่ NC</button></a></div>
+                <div class="btn_gotonc">&nbsp;<a href="<?php echo base_url("nc/goto_nc/").$view_cp['cp_no']; ?>"><button name="gotonc" id="gotonc" class="btn btn-info btn-sm"><i class="fas fa-book-open"></i>&nbsp;ไปที่ NC</button></a></div>
 
             </div>
             <div class="panel-body">
@@ -540,10 +548,10 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='Technical' ");
                     <?php
 
                     $getCheckQmr = $this->db->query("SELECT
-complaint_email.cp_email_user,
-complaint_email.remark
-FROM
-complaint_email WHERE cp_email_user='$cpemailcheck' && remark='QMR' ");
+                    complaint_email.cp_email_user,
+                    complaint_email.remark
+                    FROM complaint_email 
+                    WHERE cp_email_user='$cpemailcheck' && remark='QMR' ");
 
                     $checkQmrResult = $getCheckQmr->num_rows();
 
@@ -551,7 +559,7 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='QMR' ");
 
                     <div class="col-md-12 pri">
                         <span class="sum_text">For QMR only.</span>
-                        <input type="text" name="check_qmr" id="check_qmr" value="<?php echo $checkQmrResult; ?>" hidden />
+                        <input hidden type="text" name="check_qmr" id="check_qmr" value="<?php echo $checkQmrResult; ?>" />
                     </div>
 
                     <div class="col-md-3 result_pms_sum_inves"><input type="submit" name="btn_sum" id="btn_sum" value="Submit" class="btn btn-primary btn-block" onclick="javascript:return confirm('ยืนยันการบันทึกข้อมูล');" /></div>
@@ -687,9 +695,73 @@ complaint_email WHERE cp_email_user='$cpemailcheck' && remark='QMR' ");
 
 
 
-
+    </section>
     </div><!-- Main content page -->
 
 </body>
 
 </html>
+
+<?php 
+    if($view_cp['rao_formno'] !== ""){
+        $data = "/intsys/rao/rao_backend/api/api_forcomplaint/".$view_cp['rao_formno'];
+    }else{
+        $data = "";
+    }
+?>
+
+<script>
+    $(document).ready(function(){
+        const data = "<?php echo $data; ?>";
+        getData_api();
+
+        function getData_api()
+        {
+            if(data !== ""){
+                $.ajax({
+                    url:data,
+                    method:"POST",
+                    data:{},
+                    beforeSend:function(){},
+                    success:function(res){
+                        console.log(JSON.parse(res));
+                        if(JSON.parse(res).status == "Select Data Success"){
+                            let result = JSON.parse(res).result;
+                            let fileData = JSON.parse(res).result_file;
+
+                        // check Image
+                        if(fileData.length != 0){
+                            let html = ``;
+                            for(let i = 0 ; i < fileData.length ; i++){
+                                let fileExt = fileData[i].file_name.split('.').pop().toLowerCase();
+                                console.log(fileData[i].file_name.split('.').pop().toLowerCase());
+                                if(fileExt == "jpg" || fileExt == "png" || fileExt == "jpeg"){
+                                    html += `
+                                    <div class="col-md-4 col-lg-2 col-6 div-imageShow form-group">
+                                        <a class="a-imageShow" href="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" target="_blank">
+                                            <img class="imageShow" src="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`">
+                                        </a>
+                                        <a class="a-imageShow" href="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" target="_blank"><b>`+fileData[i].file_name+`</b></a>
+                                    </div>
+                                    `;
+                                }else{
+                                    html += `
+                                    <div class="col-md-4 col-lg-2 col-6 div-imageShow form-group">
+                                            <iframe src="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" height="200" width="300"></iframe>
+                                            <a class="a-imageShow" href="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" target="_blank"><b>`+fileData[i].file_name+`</b></a>
+                                    </div>
+                                    `;
+                                }
+                            }
+
+                            $('#raoFile_investigate_html').html(html);
+                        }
+                            
+
+                        }
+                    }
+                });
+            }
+        }
+    });
+</script>

@@ -11,7 +11,6 @@ class Setting extends CI_Controller{
     }
     
     public function topic_setting(){
-        $this->login_model->call_login();
         
         $data['getuser'] = $this->login_model->getuser();
         $data['get_topiccat'] = $this->setting_model->get_topiccat();
@@ -22,7 +21,6 @@ class Setting extends CI_Controller{
     }
     
     public function topic_edit($topicid){
-        $this->login_model->call_login();
         $data['getedit_topic'] = $this->setting_model->getedit_topic($topicid);
         $data['get_topiccat'] = $this->setting_model->get_topiccat();
         
@@ -47,7 +45,6 @@ class Setting extends CI_Controller{
     }
     
     public function category_edit($catid){
-        $this->login_model->call_login();
         $data['get_category'] = $this->setting_model->get_category($catid);
         
         $this->load->view("head/head_code");
@@ -75,7 +72,6 @@ class Setting extends CI_Controller{
     }
     
     public function dept_setting(){
-        $this->login_model->call_login();
         $data['getuser'] = $this->login_model->getuser();
         $data['get_dept_setting'] = $this->setting_model->get_dept_setting();
         
@@ -85,7 +81,6 @@ class Setting extends CI_Controller{
     }
     
     public function dept_edit_setting($deptid){
-        $this->login_model->call_login();
         $data['get_dept_edit'] = $this->setting_model->get_dept_edit($deptid);
         
         $this->load->view("head/head_code");
@@ -114,7 +109,6 @@ class Setting extends CI_Controller{
     
     
     public function priority_setting(){
-        $this->login_model->call_login();
         
         $data['getuser'] = $this->login_model->getuser();
         $data['get_pri_cat'] = $this->setting_model->get_pri_cat();
@@ -147,7 +141,6 @@ class Setting extends CI_Controller{
     
     public function selectby_cat($by_catid){
         
-        $this->login_model->call_login();
     
         $data['getuser'] = $this->login_model->getuser();
         $data['get_pri_cat'] = $this->setting_model->get_pri_cat();
@@ -161,7 +154,6 @@ class Setting extends CI_Controller{
     
     
     public function select_toppicby_cat($toppic_cat_id){
-        $this->login_model->call_login();
         $data['view_topic'] = $this->setting_model->view_topic($toppic_cat_id);
         $data['getuser'] = $this->login_model->getuser();
         $data['get_topiccat'] = $this->setting_model->get_topiccat();

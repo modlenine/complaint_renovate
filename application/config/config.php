@@ -23,7 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://203.107.156.180/intsys/complaint/';
+$url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'];
+$config['base_url'] = "$url/intsys/complaint";
 
 /*
 |--------------------------------------------------------------------------
@@ -100,7 +101,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -377,10 +378,10 @@ $config['encryption_key'] = '12345678';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-$config['sess_driver'] = 'files';
+$config['sess_driver'] = 'database';  // ใช้ database session เพื่อ share กับ Intranet
 $config['sess_cookie_name'] = 'ci_session';
-$config['sess_expiration'] = 0;
-$config['sess_save_path'] = NULL;
+$config['sess_expiration'] = 14400;  // 4 hours
+$config['sess_save_path'] = 'intranet.ci_sessions';  // cross-database table reference
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;

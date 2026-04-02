@@ -52,7 +52,7 @@ and open the template in the editor.
                             }
 
                             if($l_nc['cp_status_code']=="cp01"){
-                                $newgif = '&nbsp;<img src="http://192.190.10.27/complaint/asset/new.gif" alt=""/>';
+                                $newgif = '&nbsp;<img src="http://intranet.saleecolour.com/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
 

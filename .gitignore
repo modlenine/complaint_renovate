@@ -10,6 +10,17 @@ application/logs/*
 
 composer.lock
 
+# Upload folders
+#-------------------------
+/asset/add/*
+!/asset/add/.gitkeep
+/asset/investigate/*
+!/asset/investigate/.gitkeep
+/asset/nc/*
+!/asset/nc/.gitkeep
+/assets/files/*
+!/assets/files/.gitkeep
+
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*

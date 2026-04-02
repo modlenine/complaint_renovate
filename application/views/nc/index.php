@@ -118,11 +118,11 @@ and open the template in the editor.
                     </tr>
                 </thead>
                 <tbody>
-<?php foreach ($list_nc->result_array() as $l_nc): ?>
+                    <?php foreach ($list_nc->result_array() as $l_nc): ?>
                     <tr>
                         <?php
                             if($l_nc['nc_status_code']=="nc01"){
-                                $newgif = '&nbsp;<img src="http://203.107.156.180/intsys/complaint/asset/new.gif" alt=""/>';
+                                $newgif = '&nbsp;<img src="http://intranet.saleecolour.com/intsys/complaint/asset/new.gif" alt=""/>';
                             }else{$newgif="";}
                         ?>
 
@@ -186,7 +186,7 @@ and open the template in the editor.
                     </tr>
 <?php endforeach; ?>
                 </tbody>
-                <tfoot>
+                <!-- <tfoot>
                     <tr>
                         <th style="text-align: center;">ID</th>
                         <th style="text-align: center;">DATE</th>
@@ -198,7 +198,7 @@ and open the template in the editor.
                         <th style="text-align: center;">STATUS</th>
                         <th style="text-align: center;">PRIORITY</th>
                     </tr>
-                </tfoot>
+                </tfoot> -->
             </table>
             <!-- <div class="btn_back"><a href="javascript: history.back()"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a></div> -->
             <script type="text/javascript" >

@@ -21,9 +21,13 @@ and open the template in the editor.
           </div>
 
 
-          <?php $this->load->view("dashboard/dashboard_sec1"); ?>
+          <?php 
+          // $this->load->view("dashboard/dashboard_sec1"); 
+          ?>
 <hr>
-          <?php $this->load->view("dashboard/graph_cp_year"); ?>
+          <?php 
+          // $this->load->view("dashboard/graph_cp_year"); 
+          ?>
 
           <?php $this->load->view("dashboard/graph_cp_days"); ?>
 

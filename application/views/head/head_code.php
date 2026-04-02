@@ -10,39 +10,39 @@ and open the template in the editor.
 	<meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-
+<link rel="icon" type="image/png" href="<?=base_url('asset/')?>slc.ico"/>
                 <!-- Latest compiled and minified CSS -->
 <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
 <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+  <link rel="stylesheet" href="<?=base_url('assets/assetold/')?>bootstrap.min.css">
+  <link rel="stylesheet" href="<?=base_url('assets/assetold/')?>dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="<?=base_url('assets/assetold/')?>responsive.bootstrap.min.css">
+  <script src="<?=base_url('assets/js/jquery.min.js?v='.filemtime('./assets/js/jquery.min.js'))?>"></script>
+  <script src="<?=base_url('assets/assetold/')?>jquery.dataTables.min.js"></script>
+  <script src="<?=base_url('assets/assetold/')?>dataTables.bootstrap.min.js"></script>
+  <script src="<?=base_url('assets/assetold/')?>dataTables.responsive.min.js"></script>
+  <script src="<?=base_url('assets/assetold/')?>responsive.bootstrap.min.js"></script>
 
 
 <!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" />-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="https://cdn.rawgit.com/mladenplavsic/bootstrap-navbar-sidebar/3bd282bd/docs/navbar-fixed-right.min.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/mladenplavsic/bootstrap-navbar-sidebar/3bd282bd/docs/navbar-fixed-left.min.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/mladenplavsic/bootstrap-navbar-sidebar/3bd282bd/docs/docs.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://cdn.rawgit.com/mladenplavsic/bootstrap-navbar-sidebar/3bd282bd/docs/docs.js"></script>
+  <link rel="stylesheet" href="<?=base_url('assets/assetold/')?>navbar-fixed-right.min.css">
+  <link rel="stylesheet" href="<?=base_url('assets/assetold/')?>navbar-fixed-left.min.css">
+  <link rel="stylesheet" href="<?=base_url('assets/assetold/')?>docs.css">
+  <script src="<?=base_url('assets/assetold/')?>bootstrap.min.js"></script>
+  <script src="<?=base_url('assets/assetold/')?>docs.js"></script>
 
 
 
-  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <!-- <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 
   <script src="https://code.highcharts.com/modules/data.js"></script>
-  <script src="https://code.highcharts.com/modules/sonification.js"></script>
+  <script src="https://code.highcharts.com/modules/sonification.js"></script> -->
 
 
 
@@ -254,8 +254,25 @@ display: none;
 }
 
 
+#overlay {   
+    position: absolute;  
+    top: 0px;   
+    left: 0px;  
+    background: #333333;   
+    width: 100%;   
+    height: 100%;   
+    opacity: .95;   
+    filter: alpha(opacity=95);   
+    -moz-opacity: .95;  
+    z-index: 999;  
+    background: #fff url(http://intranet.saleecolour.com/intsys/doc_library/asset/KUJoe.gif) 50% 50% no-repeat;
+}
+
+
   </style>
   <?php  date_default_timezone_set('Asia/Bangkok'); ?>
 </head>
-
+<body>
+<div id="overlay"></div>
+</body>
 </html>

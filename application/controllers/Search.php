@@ -12,8 +12,6 @@ class Search extends CI_Controller{
 
 
     public function searchby_date(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_date();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -28,8 +26,6 @@ class Search extends CI_Controller{
 
 
     public function searchby_docnum(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_docnum();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -42,8 +38,6 @@ class Search extends CI_Controller{
 
 
     public function searchby_userinform(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_userinform();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -56,8 +50,6 @@ class Search extends CI_Controller{
 
 
     public function searchby_topic(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_topic();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -69,8 +61,6 @@ class Search extends CI_Controller{
     }
 
     public function searchby_wording(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_wording();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -82,8 +72,6 @@ class Search extends CI_Controller{
     }
 
     public function searchby_related_dept(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_related_dept();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -96,8 +84,6 @@ class Search extends CI_Controller{
 
 
     public function searchby_other(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_cp'] = $this->search_model->searchby_other();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -137,8 +123,6 @@ class Search extends CI_Controller{
 
 
     public function searchby_date_nc(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_date_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -152,8 +136,6 @@ class Search extends CI_Controller{
     }
 
     public function searchby_docnum_nc(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_docnum_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -165,8 +147,6 @@ class Search extends CI_Controller{
     }
 
     public function searchby_userinform_nc(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_userinform_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -179,8 +159,6 @@ class Search extends CI_Controller{
 
 
     public function searchby_topic_nc(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_topic_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -193,8 +171,6 @@ class Search extends CI_Controller{
 
 
     public function searchby_wording_nc(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_wording_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -207,8 +183,6 @@ class Search extends CI_Controller{
 
 
     public function searchby_related_dept_nc(){
-        $this->login_model->call_login();
-
         $data['getuser'] = $this->login_model->getuser();
         $data['list_nc'] = $this->search_model->searchby_related_dept_nc();
         $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -218,6 +192,7 @@ class Search extends CI_Controller{
         $this->load->view("head/javascript");
         $this->load->view("nc/index",$data);
     }
+
 
 
 

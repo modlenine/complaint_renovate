@@ -8,6 +8,15 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>View Complaint</title>
+
+        <style>
+            .imageShow{
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 15px !important;
+            }
+        </style>
     </head>
     <body>
         <?php $this->load->view("head/nav"); ?>
@@ -15,6 +24,12 @@ and open the template in the editor.
         <div class="container-fulid" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding: 30px;">
 
             <h1 class="h1_view">View Complaint : <?php echo $view_cp['cp_no']; ?></h1>
+            <?php
+                if($view_cp['rao_formno'] !== ""){
+                    echo '<h3 class="h1_view">Rao No. : <a href="/intsys/rao/viewdata/'.$view_cp['rao_formno'].'" target="_blank">'.$view_cp['rao_formno'].'</a></h3>';
+                }
+            
+            ?>
             <a href="<?=base_url('complaint') ?>"><button class="btn btn-second btn-sm btn_back"><i class="fas fa-caret-left"></i>&nbsp;Back</button></a>&nbsp;
             <a href="<?=base_url('complaint/resend_email/');?><?=$view_cp['cp_no'];?>"><button id="btnResendEmail" class="btn btn-primary btn-sm btn_back"><i class="fas fa-envelope-open-text"></i>&nbsp;Re Send Email</button></a>
             <span style="float:right;font-weight:600">MO-F-014-01-10/06/62</span>
@@ -195,6 +210,12 @@ and open the template in the editor.
                         </div>
                     </div>
 
+                    <!-- For rao system -->
+                    <div class="row form-group">
+                        <div id="raoFile_view_html" class="col-md-12"></div>
+                    </div>
+
+
                     <div class="row">
                         <div class="col-md-6">
                                 <label><b>Attached file :</b></label>
@@ -212,16 +233,29 @@ and open the template in the editor.
                     </div>
 
                     <?php  /*********************Check Related Dept*************************/
-                    $ckd_result = 0;
-                        foreach ($get_dept as $check_dept){
-                            if($check_dept['cp_dept_main_code'] !== $getuser['DeptCode']){
-                                continue;
+                        $ckd_result = 0;
+
+                        //Export M0245 = varathip , M1905 = niracha
+                        $allowedEcodesExport = ['M1905' , 'M0245' , 'M0209'];
+                        $hasPrivExport = in_array($getuser['ecode'], $allowedEcodesExport, true);
+                        //Export M0245 = varathip , M1905 = niracha
+
+                        foreach ($get_dept as $check_dept) {
+                            if ($check_dept['cp_dept_main_code'] == $getuser['DeptCode']) {
+                                $ckd_result = 1;
+                                break;
+                            }else{
+                                if($check_dept['cp_dept_main_code'] == "1012"){
+                                    if($hasPrivExport && $view_cp['cp_user_empid'] != $getuser['ecode']){
+                                        $ckd_result = 1;
+                                        break;
+                                    }
+                                }
                             }
-                            $ckd_result = 1;
                         }
                     ?>
 
-                    <input hidden="" type="text" name="check_dept_view" id="check_dept_view" value="<?php echo $ckd_result;?>" />
+                    <input hidden  type="text" name="check_dept_view" id="check_dept_view" value="<?php echo $ckd_result;?>" />
 
                     <!-- user zone -->
                     <input hidden="" type="text" name="his_user_modify" id="his_user_modify" value="<?php echo $getuser['username']; ?>" />
@@ -248,3 +282,67 @@ and open the template in the editor.
 
     </body>
 </html>
+
+<?php 
+    if($view_cp['rao_formno'] !== ""){
+        $data = "/intsys/rao/rao_backend/api/api_forcomplaint/".$view_cp['rao_formno'];
+    }else{
+        $data = "";
+    }
+?>
+
+<script>
+    $(document).ready(function(){
+        const data = "<?php echo $data; ?>";
+        getData_api();
+
+        function getData_api()
+        {
+            if(data !== ""){
+                $.ajax({
+                url:data,
+                method:"POST",
+                data:{},
+                beforeSend:function(){},
+                success:function(res){
+                    console.log(JSON.parse(res));
+                    if(JSON.parse(res).status == "Select Data Success"){
+                        let result = JSON.parse(res).result;
+                        let fileData = JSON.parse(res).result_file;
+
+                    // check Image
+                    if(fileData.length != 0){
+                        let html = ``;
+                        for(let i = 0 ; i < fileData.length ; i++){
+                            let fileExt = fileData[i].file_name.split('.').pop().toLowerCase();
+                            console.log(fileData[i].file_name.split('.').pop().toLowerCase());
+                            if(fileExt == "jpg" || fileExt == "png" || fileExt == "jpeg"){
+                                html += `
+                                <div class="col-md-4 col-lg-2 col-6 div-imageShow form-group">
+                                    <a class="a-imageShow" href="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" target="_blank">
+                                        <img class="imageShow" src="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`">
+                                    </a>
+                                    <a class="a-imageShow" href="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" target="_blank"><b>`+fileData[i].file_name+`</b></a>
+                                </div>
+                                `;
+                            }else{
+                                html += `
+                                <div class="col-md-4 col-lg-2 col-6 div-imageShow form-group">
+                                        <iframe src="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" height="200" width="300"></iframe>
+                                        <a class="a-imageShow" href="/intsys/rao/rao_backend/`+fileData[i].file_path+fileData[i].file_name+`" target="_blank"><b>`+fileData[i].file_name+`</b></a>
+                                </div>
+                                `;
+                            }
+                        }
+
+                        $('#raoFile_view_html').html(html);
+                    }
+                        
+
+                    }
+                }
+                });
+            }
+        }
+    });
+</script>

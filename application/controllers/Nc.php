@@ -11,7 +11,6 @@ class Nc extends CI_Controller {
     }
 
     public function index(){
-       $this->login_model->call_login();
        $data['getuser'] = $this->login_model->getuser();
        $data['list_nc'] = $this->nc_model->list_nc();
        $data['get_topic_search'] = $this->complaint_model->get_topic_search();
@@ -23,8 +22,19 @@ class Nc extends CI_Controller {
         $this->load->view("nc/index",$data);
     }
 
+    public function goto_nc($cpformno)
+    {
+        $data['getuser'] = $this->login_model->getuser();
+        $data['list_nc'] = $this->nc_model->list_nc_from_cp($cpformno);
+        $data['get_topic_search'] = $this->complaint_model->get_topic_search();
+        $data['get_relateddept_search'] = $this->complaint_model->get_relateddept_search_nc();
+
+        $this->load->view("head/head_code");
+        $this->load->view("head/javascript");
+        $this->load->view("nc/index",$data);
+    }
+
     public function main($cp_no,$nc_related_dept){
-        $this->login_model->call_login();
         $data['getuser'] = $this->login_model->getuser();
         $data['getdatamain'] = $this->nc_model->getdata_main($cp_no,$nc_related_dept);
         $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
@@ -41,12 +51,11 @@ class Nc extends CI_Controller {
 
     public function save_sec3($cp_no,$nc_related_dept){
         $this->nc_model->save_ncsec3($cp_no,$nc_related_dept);
-        header("refresh:1; url=http://203.107.156.180/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
+        header("refresh:1; url=".base_url('nc/main/').$cp_no.'/'.$nc_related_dept);
     }
 
 
     public function nc_sec3edit($cp_no,$nc_related_dept){
-        $this->login_model->call_login();
         $data['getuser'] = $this->login_model->getuser();
         $data['getdatamain'] = $this->nc_model->getdata_main($cp_no,$nc_related_dept);
         $data['get_dept'] = $this->complaint_model->get_dept($cp_no);
