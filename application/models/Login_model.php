@@ -181,16 +181,18 @@ class login_model extends CI_Model {
 
               $this->db->query("UPDATE complaint_login_detail SET cp_login_lastactivity2='$datenow' , cp_login_status2='logout' WHERE cp_login_id='$loginid' ");
 
-        session_destroy();
-        $this->session->unset_userdata('referrer_url');
-
-        // if($_SERVER['HTTP_HOST'] == "localhost"){
-        //     $mysqlServer = "192.168.20.22";
-        // }else{
-        //     $mysqlServer = "localhost";
-        // }
-        
-	    header("refresh:0; url=".base_url('login'));
+      session_destroy();
+      // $this->session->unset_userdata('referrer_url');
+      // เก็บ URL ปัจจุบันเพื่อกลับมาหลัง login
+      $current_url = $_SERVER['REQUEST_URI'];
+      $return_url = urlencode($current_url);
+      
+      // Intranet login URL (same domain)
+      $url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'];
+      $intranet_login = "$url/intranet/login?return_url=$return_url";
+      
+      header("Location: " . $intranet_login);
+      exit();
 
     }
 
