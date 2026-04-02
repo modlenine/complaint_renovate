@@ -112,8 +112,11 @@ function emailSaveData($subject , $body ,$to = "", $cc = "" , $cc2 = "")
         </style>
     '.$body;
     
+    // เช็คว่าทำงานบน local development
+    $host = explode(':', $_SERVER['HTTP_HOST'] ?? '')[0];
+    $is_local = in_array($host, ['localhost', '127.0.0.1', '::1']);
 
-    if($_SERVER['HTTP_HOST'] != "localhost"){
+    if(!$is_local){
         $mail->send();
     }
 
