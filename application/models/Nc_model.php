@@ -217,17 +217,17 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong>Details of Complaint / Damages</strong>";
         $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
         $body .= "<strong>Investigation</strong><br>";
         $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
 
         $body .= "<strong>Summary of Investigation</strong><br>";
         $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
         $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
 
@@ -259,7 +259,7 @@ class Nc_model extends CI_Model{
         $body .= "<strong>กำหนดเสร็จ :</strong>&nbsp;&nbsp;".$result_date2."<br>";
         $body .= "<strong>ผู้รับผิดชอบ :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3owner."&nbsp;&nbsp;<strong>รหัสพนักงาน :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3empid."&nbsp;&nbsp;<strong>แผนก :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3dept."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$result_sec3date."<br>";
 
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://intranet.saleecolour.com/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
         $to = "";
@@ -341,7 +341,7 @@ class Nc_model extends CI_Model{
         $this->db->update("nc_main",$data);
 
 
-        header("refresh:0; url=http://intranet.saleecolour.com/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
+        header("refresh:0; url=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
     }
 
 
@@ -420,16 +420,16 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong>Details of Complaint / Damages</strong>";
         $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
         $body .= "<strong>Investigation</strong><br>";
         $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
         $body .= "<strong>Summary of Investigation</strong><br>";
         $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
         $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
         $body .= "<strong style='font-size:18px;font-weight:600;'>2. สำหรับฝ่ายบริหาร (พิจารณาและกำหนดฝ่ายที่รับผิดชอบ แล้วส่งให้ MR. ดำเนินการ)</strong><br>";
@@ -461,7 +461,7 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong style='font-size:18px;font-weight:600;'>4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</strong><br>";
         $body .= "<strong>ผลการติดตามครั้งที่ 1 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f1_status == "no"){
             $f1status = "ไม่ปิดสรุป";
@@ -472,7 +472,7 @@ class Nc_model extends CI_Model{
         $body .= "<strong>สถานะ :</strong>&nbsp;&nbsp;".$f1status."<br>";
         $body .= "<strong>กำหนดการติดตามผลครั้งที่ 2</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1_date."<br>";
 
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://intranet.saleecolour.com/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
         $to = "";
@@ -492,7 +492,7 @@ class Nc_model extends CI_Model{
         $cc2 = $get_owner_email->cp_user_email;
         emailSaveData($subject , $body ,$to , $cc , $cc2);
 
-        header("refresh:0; url=http://intranet.saleecolour.com/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
+        header("refresh:0; url=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
 
 
         //************************Email***Zone***********************************//
@@ -575,17 +575,17 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong>Details of Complaint / Damages</strong>";
         $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
         $body .= "<strong>Investigation</strong><br>";
         $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
 
         $body .= "<strong>Summary of Investigation</strong><br>";
         $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
         $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
 
@@ -619,7 +619,7 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong style='font-size:18px;font-weight:600;'>4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</strong><br>";
         $body .= "<strong>ผลการติดตามครั้งที่ 1 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
 
             if($get_owner_email->nc_sec4f1_status == "no"){
                 $f1status = "ไม่ปิดสรุป";
@@ -628,7 +628,7 @@ class Nc_model extends CI_Model{
             }
         $body .= "<strong>สถานะ :</strong>&nbsp;&nbsp;".$f1status."<br><br>";
         $body .= "<strong>ผลการติดตามครั้งที่ 2 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f2."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f2_status == "no"){
             $f2status = "ไม่ปิดสรุป";
@@ -637,7 +637,7 @@ class Nc_model extends CI_Model{
         }
         $body .= "<strong>สถานะ :</strong>&nbsp;&nbsp;".$f2status."<br>";
 
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://intranet.saleecolour.com/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
         $to = "";
@@ -656,7 +656,7 @@ class Nc_model extends CI_Model{
 
         $cc2 = $get_owner_email->cp_user_email;
         emailSaveData($subject , $body ,$to , $cc , $cc2);
-        header("refresh:0; url=http://intranet.saleecolour.com/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
+        header("refresh:0; url=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
         //************************Email***Zone***********************************//
 
     }
@@ -728,17 +728,17 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong>Details of Complaint / Damages</strong>";
         $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
         $body .= "<strong>Investigation</strong><br>";
         $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
 
         $body .= "<strong>Summary of Investigation</strong><br>";
         $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
         $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
 
@@ -772,7 +772,7 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong style='font-size:18px;font-weight:600;'>4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</strong><br>";
         $body .= "<strong>ผลการติดตามครั้งที่ 1 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f1_status == "no"){
             $f1status = "ไม่ปิดสรุป";
@@ -784,7 +784,7 @@ class Nc_model extends CI_Model{
 
 
         $body .= "<strong>ผลการติดตามครั้งที่ 2 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f2."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f2_status == "no"){
             $f2status = "ไม่ปิดสรุป";
@@ -796,7 +796,7 @@ class Nc_model extends CI_Model{
 
 
         $body .= "<strong>ผลการติดตามครั้งที่ 3 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f3."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f3/$get_owner_email->nc_sec4f3_file'>".$get_owner_email->nc_sec4f3_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f3/$get_owner_email->nc_sec4f3_file'>".$get_owner_email->nc_sec4f3_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f3_status == "no"){
             $f3status = "ไม่ปิดสรุป";
@@ -804,7 +804,7 @@ class Nc_model extends CI_Model{
             $f3status = "ปิดสรุป";
         }
         $body .= "<strong>สถานะ :</strong>&nbsp;&nbsp;".$f3status."<br>";
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://intranet.saleecolour.com/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
         $to = "";
@@ -824,7 +824,7 @@ class Nc_model extends CI_Model{
         $cc2 = $get_owner_email->cp_user_email;
         emailSaveData($subject , $body ,$to , $cc , $cc2);
 
-        header("refresh:0; url=http://intranet.saleecolour.com/intsys/complaint/$linkurl");
+        header("refresh:0; url=https://ofintranet.saleecolour.net/intsys/complaint/$linkurl");
 
         //************************Email***Zone***********************************//
 
@@ -885,15 +885,15 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong>Details of Complaint / Damages</strong>";
         $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
         $body .= "<strong>Investigation</strong><br>";
         $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
         $body .= "<strong>Summary of Investigation</strong><br>";
         $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
         $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
         $body .= "<strong style='font-size:18px;font-weight:600;'>2. สำหรับฝ่ายบริหาร (พิจารณาและกำหนดฝ่ายที่รับผิดชอบ แล้วส่งให้ MR. ดำเนินการ)</strong><br>";
@@ -926,7 +926,7 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong style='font-size:18px;font-weight:600;'>4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</strong><br>";
         $body .= "<strong>ผลการติดตามครั้งที่ 1 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f1_status == "no"){
             $f1status = "ไม่ปิดสรุป";
@@ -938,7 +938,7 @@ class Nc_model extends CI_Model{
 
 
         $body .= "<strong>ผลการติดตามครั้งที่ 2 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f2."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f2_status == "no"){
             $f2status = "ไม่ปิดสรุป";
@@ -950,7 +950,7 @@ class Nc_model extends CI_Model{
 
 
         $body .= "<strong>ผลการติดตามครั้งที่ 3 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f3."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f3/$get_owner_email->nc_sec4f3_file'>".$get_owner_email->nc_sec4f3_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f3/$get_owner_email->nc_sec4f3_file'>".$get_owner_email->nc_sec4f3_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f3_status == "no"){
             $f3status = "ไม่ปิดสรุป";
@@ -962,11 +962,11 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong style='font-size:18px;font-weight:600;'>5. Conclusion Of NC</strong><br>";
         $body .= "<strong>Conclusion Of NC : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec5/$get_owner_email->nc_sec5_file'>".$get_owner_email->nc_sec5_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec5/$get_owner_email->nc_sec5_file'>".$get_owner_email->nc_sec5_file . "</a>"."<br>";
         $body .= "<strong>รายละเอียดค่าใช้จ่ายที่เกิดขึ้น :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5cost_detail."<br>";
         $body .= "<strong>ค่าใช้จ่ายที่เกิดขึ้น โดยประมาณ :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5cost."<br>";
 
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://intranet.saleecolour.com/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
         $to = "";
@@ -986,7 +986,7 @@ class Nc_model extends CI_Model{
         $cc2 = $get_owner_email->cp_user_email;
         emailSaveData($subject , $body ,$to , $cc , $cc2);
 
-        header("refresh:0; url=http://intranet.saleecolour.com/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
+        header("refresh:0; url=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
 
         //************************Email***Zone***********************************//
     }
@@ -1046,17 +1046,17 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong>Details of Complaint / Damages</strong>";
         $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
         $body .= "<strong>Investigation</strong><br>";
         $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
 
         $body .= "<strong>Summary of Investigation</strong><br>";
         $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
         $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
 
@@ -1090,7 +1090,7 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong style='font-size:18px;font-weight:600;'>4. สำหรับฝ่ายที่เกี่ยวข้อง (เพื่อติดตามและปิดสรุป)</strong><br>";
         $body .= "<strong>ผลการติดตามครั้งที่ 1 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f1."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f1/$get_owner_email->nc_sec4f1_file'>".$get_owner_email->nc_sec4f1_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f1_status == "no"){
             $f1status = "ไม่ปิดสรุป";
@@ -1102,7 +1102,7 @@ class Nc_model extends CI_Model{
 
 
         $body .= "<strong>ผลการติดตามครั้งที่ 2 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f2."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f2/$get_owner_email->nc_sec4f2_file'>".$get_owner_email->nc_sec4f2_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f2_status == "no"){
             $f2status = "ไม่ปิดสรุป";
@@ -1114,7 +1114,7 @@ class Nc_model extends CI_Model{
 
 
         $body .= "<strong>ผลการติดตามครั้งที่ 3 : </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec4f3."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec4/f3/$get_owner_email->nc_sec4f3_file'>".$get_owner_email->nc_sec4f3_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec4/f3/$get_owner_email->nc_sec4f3_file'>".$get_owner_email->nc_sec4f3_file . "</a>"."<br>";
 
         if($get_owner_email->nc_sec4f3_status == "no"){
             $f3status = "ไม่ปิดสรุป";
@@ -1125,11 +1125,11 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong style='font-size:18px;font-weight:600;'>5. Conclusion Of NC</strong><br>";
         $body .= "<strong>Conclusion Of NC (Failed): </strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5."<br>";
-        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='http://intranet.saleecolour.com/intsys/complaint/asset/nc/sec5/$get_owner_email->nc_sec5_file'>".$get_owner_email->nc_sec5_file . "</a>"."<br>";
+        $body .= "<strong>เอกสารประกอบ : </strong>&nbsp;&nbsp;<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/nc/sec5/$get_owner_email->nc_sec5_file'>".$get_owner_email->nc_sec5_file . "</a>"."<br>";
         $body .= "<strong>รายละเอียดค่าใช้จ่ายที่เกิดขึ้น :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5cost_detail."<br>";
         $body .= "<strong>ค่าใช้จ่ายที่เกิดขึ้น โดยประมาณ :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec5cost."<br>";
 
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://intranet.saleecolour.com/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
         $to = "";
@@ -1149,7 +1149,7 @@ class Nc_model extends CI_Model{
         $cc2 = $get_owner_email->cp_user_email;
         emailSaveData($subject , $body ,$to , $cc , $cc2);
 
-        header("refresh:1; url=http://intranet.saleecolour.com/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
+        header("refresh:1; url=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/$cp_no/$nc_related_dept");
         //************************Email***Zone***********************************//
 
     }
@@ -1157,7 +1157,7 @@ class Nc_model extends CI_Model{
 
     public function create_cpfailed($cp_no,$nc_related_dept){
         $dept_code = $this->input->post("getdeptcode");
-        header("refresh:0; url=http://intranet.saleecolour.com/intsys/complaint/complaint/add_failed/$cp_no/$nc_related_dept");
+        header("refresh:0; url=https://ofintranet.saleecolour.net/intsys/complaint/complaint/add_failed/$cp_no/$nc_related_dept");
     }
 
 
@@ -1190,17 +1190,17 @@ class Nc_model extends CI_Model{
 
         $body .= "<strong>Details of Complaint / Damages</strong>";
         $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" .$get_owner_email->cp_file. "</a>" . "<br><br>";
 
 
         $body .= "<strong>Investigation</strong><br>";
         $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves ."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>".$get_owner_email->cp_detail_inves_file . "</a><br><br>";
 
 
         $body .= "<strong>Summary of Investigation</strong><br>";
         $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves."<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>".$get_owner_email->cp_sum_inves_file . "</a><br>";
         $body .= "<strong>ผู้แจ้ง :</strong>&nbsp;&nbsp;".$get_owner_email->cp_user_name."&nbsp;&nbsp;<strong>วันที่แจ้ง : </strong>&nbsp;&nbsp;".$condate."&nbsp;&nbsp;<strong>ผู้อนุมัติ : </strong>&nbsp;&nbsp;".$get_owner_email->cp_sum_inves_signature."&nbsp;&nbsp;<strong>วันที่อนุมัติ : </strong>&nbsp;&nbsp;".$condate2."<br><br>";
 
 
@@ -1233,7 +1233,7 @@ class Nc_model extends CI_Model{
         $body .= "<strong>กำหนดเสร็จ :</strong>&nbsp;&nbsp;".$result_date2."<br>";
         $body .= "<strong>ผู้รับผิดชอบ :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3owner."&nbsp;&nbsp;<strong>รหัสพนักงาน :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3empid."&nbsp;&nbsp;<strong>แผนก :</strong>&nbsp;&nbsp;".$get_owner_email->nc_sec3dept."&nbsp;&nbsp;<strong>วันที่ : </strong>&nbsp;&nbsp;".$result_sec3date."<br>";
 
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://intranet.saleecolour.com/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/main/".$cp_no."/".$nc_related_dept.">" . "Go to Page</a>";
 
 
         $to = "";

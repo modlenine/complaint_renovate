@@ -625,9 +625,9 @@ class Complaint_model extends CI_Model
 
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $getdata_email->cp_detail . "<br>";
 
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
 
-            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
             $to = "";
@@ -679,11 +679,11 @@ class Complaint_model extends CI_Model
 
 
 
-          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
+          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
 
 
 
-          $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
+          $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
           $to = "";
@@ -732,9 +732,9 @@ class Complaint_model extends CI_Model
 
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $getdata_email->cp_detail . "<br>";
 
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
 
-            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
             $to = "";
@@ -905,7 +905,7 @@ class Complaint_model extends CI_Model
 
         $body .= "<strong>Status : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_status_name . "<br>";
 
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net//intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
         $cc2 = $get_owner_email->cp_user_email;
@@ -1032,13 +1032,13 @@ class Complaint_model extends CI_Model
             $body .= "<strong>Complaint Person :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_user_dept . "<br><br>";
             $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
             $body .= "<br>";
             $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
             $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
-            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
             $cc = "";
@@ -1078,14 +1078,14 @@ class Complaint_model extends CI_Model
           $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
           $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
           $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
           $body .= "<br>";
           $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
           $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+          $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
           $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
 
-          $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+          $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
           $cc = "";
           $cc2 = "";
@@ -1121,13 +1121,13 @@ class Complaint_model extends CI_Model
             $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
             $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
             $body .= "<br>";
             $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
             $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
             $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
-            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
             $cc = "";
@@ -1165,7 +1165,7 @@ class Complaint_model extends CI_Model
             echo '<script language="javascript">';
             echo 'alert("Please choose choice!")';
             echo '</script>';
-            header("refresh:0; url=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/$cp_no");
+            header("refresh:0; url=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/$cp_no");
             //                redirect('/complaint/investigate/'.$cp_no);
             exit();
         }
@@ -1276,19 +1276,19 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Complaint Person :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_user_dept . "<br><br>";
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
                 $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
                 $body .= "<br>";
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
                 $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>ไม่เป็นข้อบกพร่องของบริษัท</strong><br>";
                 $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
-                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
                 $to = "";
@@ -1332,19 +1332,19 @@ class Complaint_model extends CI_Model
               $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
               $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
               $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
               $body .= "<br>";
               $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
               $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
               $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
               $body .= "<br>";
               $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
               $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-              $body .= "<strong>Link Attached File : </strong>" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+              $body .= "<strong>Link Attached File : </strong>" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
               $body .= "<strong>ไม่เป็นข้อบกพร่องของบริษัท</strong><br>";
               $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
-              $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+              $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
 
@@ -1389,19 +1389,19 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
                 $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
                 $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
                 $body .= "<br>";
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
                 $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>ไม่เป็นข้อบกพร่องของบริษัท</strong><br>";
                 $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
-                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
 
@@ -1450,19 +1450,19 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Complaint Person :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_user_dept . "<br><br>";
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
                 $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
                 $body .= "<br>";
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
                 $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>เป็นข้อบกพร่องของบริษัท</strong><br>";
                 $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
-                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/nc/>" . "Go to Page</a>";
+                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/>" . "Go to Page</a>";
 
 
                 $to = "";
@@ -1505,19 +1505,19 @@ class Complaint_model extends CI_Model
               $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
               $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
               $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
               $body .= "<br>";
               $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
               $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+              $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
               $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
               $body .= "<br>";
               $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
               $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-              $body .= "<strong>Link Attached File : </strong>" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+              $body .= "<strong>Link Attached File : </strong>" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
               $body .= "<strong>เป็นข้อบกพร่องของบริษัท</strong><br>";
               $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
-              $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/nc/>" . "Go to Page</a>";
+              $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/>" . "Go to Page</a>";
 
 
               $to = "";
@@ -1561,19 +1561,19 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_invoice_no . "<br>";
                 $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_pro_qty . "<br>";
                 $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
                 $body .= "<br>";
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Investigation</strong><br>";
                 $body .= "<strong>Detail of Investigate : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
                 $body .= "<strong>Signature : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>&nbsp;&nbsp;" .$condate2. "<br>";
                 $body .= "<br>";
                 $body .= "<strong style='font-size:18px;font-weight:600;'>Summary of Investigation</strong><br>";
                 $body .= "<strong>Detail Summary of Investigation : </strong>&nbsp;&nbsp;" . $get_owner_email->cp_sum_inves . "<br>";
-                $body .= "<strong>Link Attached File : </strong>" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+                $body .= "<strong>Link Attached File : </strong>" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
                 $body .= "<strong>เป็นข้อบกพร่องของบริษัท</strong><br>";
                 $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" .$condate3. "<br>";
-                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/nc/>" . "Go to Page</a>";
+                $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/>" . "Go to Page</a>";
 
 
                 $to = "";
@@ -1671,21 +1671,21 @@ class Complaint_model extends CI_Model
         $body .= "<strong>Complaint Person :</strong>" . $get_owner_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>" . $get_owner_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>" . $get_owner_email->cp_user_dept;
         $body .= "<h2>Details of Complaint / Damages</h2>";
         $body .= "<strong>Complaint Detail : </strong>" . $get_owner_email->cp_detail . "<br>";
-        $body .= "<strong>Link Attached File : </strong>" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
+        $body .= "<strong>Link Attached File : </strong>" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$get_owner_email->cp_file>" . $get_owner_email->cp_file . "</a>" . "<br>";
         $body .= "<h2>Investigation</h2>";
         $body .= "<strong>Detail of Investigate : </strong>" . $get_owner_email->cp_detail_inves . "<br>";
-        $body .= "<strong>Link Attached File : </strong>" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/detail_inves/$get_owner_email->cp_detail_inves_file'>" . $get_owner_email->cp_detail_inves_file . "</a><br>";
         $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_detail_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_detail_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_detail_inves_date . "<br>";
         $body .= "<h2>Summary of Investigation</h2>";
         $body .= "<strong>Detail Summary of Investigation : </strong>" . $get_owner_email->cp_sum_inves . "<br>";
-        $body .= "<strong>Link Attached File : </strong>" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/sum_inves/$get_owner_email->cp_sum_inves_file'>" . $get_owner_email->cp_sum_inves_file . "</a><br>";
         $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_sum_inves_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_sum_inves_dept . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_sum_inves_date . "<br>";
         $body .= "<h2>Conclusion of Complaint</h2>";
         $body .= "<strong>Detail Conclusion of Complaint : </strong>" . $get_owner_email->cp_conclu_detail . "<br>";
         $body .= "<strong>Detail of Cost : </strong>" . $get_owner_email->cp_conclu_costdetail . "&nbsp;&nbsp;<strong>Cost : </strong>" . $get_owner_email->cp_conclu_cost . "<br>";
-        $body .= "<strong>Link Attached File : </strong>" . "<a href='http://intranet.saleecolour.com/intsys/complaint/asset/investigate/conclusion_inves/$get_owner_email->cp_conclu_file'>" . $get_owner_email->cp_conclu_file . "</a><br>";
+        $body .= "<strong>Link Attached File : </strong>" . "<a href='https://ofintranet.saleecolour.net/intsys/complaint/asset/investigate/conclusion_inves/$get_owner_email->cp_conclu_file'>" . $get_owner_email->cp_conclu_file . "</a><br>";
         $body .= "<strong>Signature : </strong>" . $get_owner_email->cp_conclu_signature . "&nbsp;&nbsp;<strong>Department : </strong>" . $get_owner_email->cp_conclu_dept . "&nbsp;&nbsp;<strong>Date : </strong>" . $get_owner_email->cp_conclu_date . "<br>";
-        $body .= "<strong>Link Program : </strong>" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
+        $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
         $to = "";
@@ -2130,8 +2130,8 @@ class Complaint_model extends CI_Model
             $body .= "<strong>Complaint Person :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_name . "&nbsp;&nbsp;<strong>Employee ID :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_empid . "&nbsp;&nbsp;<strong>Department :</strong>&nbsp;&nbsp;" . $getdata_email->cp_user_dept . "<br><br>";
             $body .= "<strong style='font-size:18px;font-weight:600;'>Details of Complaint / Damages</strong><br>";
             $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $getdata_email->cp_detail . "<br>";
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
-            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
+            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
             $to = "";
@@ -2180,8 +2180,8 @@ class Complaint_model extends CI_Model
         $body .= "<strong>Customer Name :</strong>&nbsp;&nbsp;" . $getdata_email->cp_cus_name . "&nbsp;&nbsp;<strong>Customer Ref : </strong>&nbsp;&nbsp;" . $getdata_email->cp_cus_ref . "&nbsp;&nbsp;<strong>Invoice Number : </strong>&nbsp;&nbsp;" . $getdata_email->cp_invoice_no . "<br>";
         $body .= "<strong>Product Code :</strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_code . "&nbsp;&nbsp;<strong>Lot No : </strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_lotno . "&nbsp;&nbsp;<strong>Quantity : </strong>&nbsp;&nbsp;" . $getdata_email->cp_pro_qty . "<br>";
         $body .= "<strong>Complaint Detail : </strong>&nbsp;&nbsp;" . $getdata_email->cp_detail . "<br>";
-        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
-        $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
+        $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
+        $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
         $to = "";
@@ -2252,11 +2252,11 @@ class Complaint_model extends CI_Model
 
 
 
-            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
+            $body .= "<strong>Link Attached File : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/asset/add/$getdata_email->cp_file>" . $getdata_email->cp_file . "</a>" . "<br>";
 
 
 
-            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=http://intranet.saleecolour.com/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
+            $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
 
