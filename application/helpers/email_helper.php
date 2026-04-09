@@ -51,22 +51,32 @@ function emailSaveData($subject , $body ,$to = "", $cc = "" , $cc2 = "")
     $mail->FromName = "Complaint System";
 
 
-    if($to != ""){
-        foreach($to as $email){
-            $mail->AddAddress($email);
+    if(!empty($to)){
+        if(is_array($to)){
+            foreach($to as $email){
+                if(is_string($email) && !empty($email)){
+                    $mail->AddAddress($email);
+                }
+            }
         }
     }
 
 
 
-    if($cc != ""){
-        foreach($cc as $email){
-            $mail->AddCC($email);
+    if(!empty($cc)){
+        if(is_array($cc)){
+            foreach($cc as $email){
+                if(is_string($email) && !empty($email)){
+                    $mail->AddCC($email);
+                }
+            }
         }
     }
 
-    if($cc2 != ""){
-        $mail->AddCC($cc2);
+    if(!empty($cc2)){
+        if(is_string($cc2)){
+            $mail->AddCC($cc2);
+        }
     }
 
 

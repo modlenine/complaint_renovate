@@ -19,6 +19,7 @@ class Complaint extends CI_Controller{
         $this->load->view("complaint/index",$data);
     }
 
+
     public function view($cp_no){/***************View Page***************/
         $this->complaint_model->check_status_page($cp_no);
 
@@ -250,13 +251,19 @@ class Complaint extends CI_Controller{
 
     }
 
-    public function testemail()
-    {
-        $email = "chainarong_k@saleecolour.com";
-        $subject = "ทดสอบ Email";
-        $body = "ทดสอบ Email Body";
-        $this->complaint_model->smtpmail_test($email, $subject, $body);
-    }
+    // public function testemail()
+    // {
+    //     $subject = "Test Email";
+    //     $body = "This is a test email.";
+    //     $to = ["chainarong_k@saleecolour.com"];
+    //     $cc = [];
+        
+    //     $result = emailSaveData($subject, $body, $to, $cc);
+        
+    //     // ส่ง response กลับเป็น JSON
+    //     header('Content-Type: application/json');
+    //     echo json_encode($result, JSON_UNESCAPED_UNICODE);
+    // }
 
 
 

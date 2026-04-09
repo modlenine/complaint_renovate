@@ -630,23 +630,27 @@ class Complaint_model extends CI_Model
             $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
-            $to = "";
-            $cc = "";
+            $to = [];
+            $cc = [];
             $cc2 = "";
 
-            $cc = array();
             foreach($sqlget_query->result_array() as $rsCC){
-                $cc[] = $rsCC['cp_email_user'];
+                if(!empty($rsCC['cp_email_user'])){
+                    $cc[] = $rsCC['cp_email_user'];
+                }
             }
 
-            $to = array();
             foreach ($query->result_array() as $result) {
-                $to[] = $result['memberemail'];
-             }
+                if(!empty($result['memberemail'])){
+                    $to[] = $result['memberemail'];
+                }
+            }
 
-            $cc2 = $getdata_email->cp_user_email;
+            $cc2 = $getdata_email->cp_user_email ?? "";
 
-            emailSaveData($subject , $body ,$to , $cc , $cc2);
+            if(!empty($to) || !empty($cc) || !empty($cc2)){
+                emailSaveData($subject , $body ,$to , $cc , $cc2);
+            }
 
         }else if($getdata_email->cp_topic_cat == "1"){
 
@@ -686,22 +690,27 @@ class Complaint_model extends CI_Model
           $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
-          $to = "";
-          $cc = "";
+          $to = [];
+          $cc = [];
           $cc2 = "";
 
-        $to = array();
           foreach ($query->result_array() as $result) {
-              $to[] = $result['memberemail'];
-           }
+              if(!empty($result['memberemail'])){
+                  $to[] = $result['memberemail'];
+              }
+          }
 
-        $cc = array();
           foreach ($sqlget_query->result_array() as $result) {
-              $cc[] = $result['cp_email_user'];
-           }
+              if(!empty($result['cp_email_user'])){
+                  $cc[] = $result['cp_email_user'];
+              }
+          }
 
-        $cc2 = $getdata_email->cp_user_email;
-          emailSaveData($subject , $body ,$to , $cc , $cc2);
+          $cc2 = $getdata_email->cp_user_email ?? "";
+
+          if(!empty($to) || !empty($cc) || !empty($cc2)){
+              emailSaveData($subject , $body ,$to , $cc , $cc2);
+          }
 
         }else{
 
@@ -737,23 +746,27 @@ class Complaint_model extends CI_Model
             $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
-            $to = "";
-            $cc = "";
+            $to = [];
+            $cc = [];
             $cc2 = "";
     
-            $to = array();
-              foreach ($query->result_array() as $result) {
-                  $to[] = $result['memberemail'];
-               }
+            foreach ($query->result_array() as $result) {
+                if(!empty($result['memberemail'])){
+                    $to[] = $result['memberemail'];
+                }
+            }
     
-            $cc = array();
-              foreach ($sqlget_query->result_array() as $result) {
-                  $cc[] = $result['cp_email_user'];
-               }
+            foreach ($sqlget_query->result_array() as $result) {
+                if(!empty($result['cp_email_user'])){
+                    $cc[] = $result['cp_email_user'];
+                }
+            }
 
-            $cc2 = $getdata_email->cp_user_email;
+            $cc2 = $getdata_email->cp_user_email ?? "";
 
-            emailSaveData($subject , $body ,$to , $cc , $cc2);
+            if(!empty($to) || !empty($cc) || !empty($cc2)){
+                emailSaveData($subject , $body ,$to , $cc , $cc2);
+            }
 
         }
 
@@ -864,7 +877,7 @@ class Complaint_model extends CI_Model
         }
 
         $to = [];
-        $cc = "";
+        $cc = [];
         $cc2 = "";
 
         if (!empty($dept_code_list)) {
@@ -879,7 +892,9 @@ class Complaint_model extends CI_Model
             $query = $this->db->query($sqlEmail , $dept_code_list);
 
             foreach ($query->result_array() as $result) {
-                $to[] = $result['memberemail'];
+                if(!empty($result['memberemail'])){
+                    $to[] = $result['memberemail'];
+                }
             }
         }
 
@@ -908,8 +923,11 @@ class Complaint_model extends CI_Model
         $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net//intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
-        $cc2 = $get_owner_email->cp_user_email;
-        emailSaveData($subject , $body ,$to , $cc , $cc2);
+        $cc2 = $get_owner_email->cp_user_email ?? "";
+
+        if(!empty($to) || !empty($cc) || !empty($cc2)){
+            emailSaveData($subject , $body ,$to , $cc , $cc2);
+        }
 
     }
 
@@ -1041,17 +1059,21 @@ class Complaint_model extends CI_Model
             $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
-            $cc = "";
+            $cc = [];
             $cc2 = "";
     
     
-            $cc = array();
             foreach ($sqlget_query->result_array() as $result) {
-                $cc[] = $result['cp_email_user'];
+                if(!empty($result['cp_email_user'])){
+                    $cc[] = $result['cp_email_user'];
+                }
             }
 
-            $cc2 = $get_owner_email->cp_user_email;
-            emailSaveData($subject , $body ,$to , $cc , $cc2);
+            $cc2 = $get_owner_email->cp_user_email ?? "";
+
+            if(!empty($to) || !empty($cc) || !empty($cc2)){
+                emailSaveData($subject , $body ,$to , $cc , $cc2);
+            }
 
         }else if($get_owner_email->cp_topic_cat == "1"){
 
@@ -1087,15 +1109,20 @@ class Complaint_model extends CI_Model
 
           $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
-          $cc = "";
+          $cc = [];
           $cc2 = "";
   
-          $cc = array();
           foreach ($sqlget_query->result_array() as $result) {
-              $cc[] = $result['cp_email_user'];
+              if(!empty($result['cp_email_user'])){
+                  $cc[] = $result['cp_email_user'];
+              }
           }
-          $cc2 = $get_owner_email->cp_user_email;
-          emailSaveData($subject , $body ,$to , $cc , $cc2);
+
+          $cc2 = $get_owner_email->cp_user_email ?? "";
+
+          if(!empty($to) || !empty($cc) || !empty($cc2)){
+              emailSaveData($subject , $body ,$to , $cc , $cc2);
+          }
 
         }else{
 
@@ -1291,21 +1318,27 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
-                $to = "";
-                $cc = "";
+                $to = [];
+                $cc = [];
                 $cc2 = "";
         
-                $to = array();
                 foreach ($getEmail->result_array() as $result) {
-                    $to[] = $result['email'];
+                    if(!empty($result['email'])){
+                        $to[] = $result['email'];
+                    }
                 }
         
-                $cc = array();
                 foreach ($sqlget_query->result_array() as $result) {
-                    $cc[] = $result['cp_email_user'];
+                    if(!empty($result['cp_email_user'])){
+                        $cc[] = $result['cp_email_user'];
+                    }
                 }
-                $cc2 = $get_owner_email->cp_user_email;
-                emailSaveData($subject , $body ,$to , $cc , $cc2);
+
+                $cc2 = $get_owner_email->cp_user_email ?? "";
+
+                if(!empty($to) || !empty($cc) || !empty($cc2)){
+                    emailSaveData($subject , $body ,$to , $cc , $cc2);
+                }
 
             }else if($get_owner_email->cp_topic_cat == "1") {
 
@@ -1348,21 +1381,27 @@ class Complaint_model extends CI_Model
 
 
 
-              $to = "";
-              $cc = "";
+              $to = [];
+              $cc = [];
               $cc2 = "";
       
-              $to = array();
               foreach ($getEmail->result_array() as $result) {
-                  $to[] = $result['email'];
+                  if(!empty($result['email'])){
+                      $to[] = $result['email'];
+                  }
               }
       
-              $cc = array();
               foreach ($sqlget_query->result_array() as $result) {
-                  $cc[] = $result['cp_email_user'];
+                  if(!empty($result['cp_email_user'])){
+                      $cc[] = $result['cp_email_user'];
+                  }
               }
-              $cc2 = $get_owner_email->cp_user_email;
-              emailSaveData($subject , $body ,$to , $cc , $cc2);
+
+              $cc2 = $get_owner_email->cp_user_email ?? "";
+
+              if(!empty($to) || !empty($cc) || !empty($cc2)){
+                  emailSaveData($subject , $body ,$to , $cc , $cc2);
+              }
 
 
             }else {
@@ -1405,21 +1444,27 @@ class Complaint_model extends CI_Model
 
 
 
-                $to = "";
-                $cc = "";
+                $to = [];
+                $cc = [];
                 $cc2 = "";
         
-                $to = array();
                 foreach ($getEmail->result_array() as $result) {
-                    $to[] = $result['email'];
+                    if(!empty($result['email'])){
+                        $to[] = $result['email'];
+                    }
                 }
         
-                $cc = array();
                 foreach ($sqlget_query->result_array() as $result) {
-                    $cc[] = $result['cp_email_user'];
+                    if(!empty($result['cp_email_user'])){
+                        $cc[] = $result['cp_email_user'];
+                    }
                 }
-                $cc2 = $get_owner_email->cp_user_email;
-                emailSaveData($subject , $body ,$to , $cc , $cc2);
+
+                $cc2 = $get_owner_email->cp_user_email ?? "";
+
+                if(!empty($to) || !empty($cc) || !empty($cc2)){
+                    emailSaveData($subject , $body ,$to , $cc , $cc2);
+                }
 
             }
 
@@ -1465,21 +1510,27 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/>" . "Go to Page</a>";
 
 
-                $to = "";
-                $cc = "";
+                $to = [];
+                $cc = [];
                 $cc2 = "";
         
-                $to = array();
                 foreach ($getEmail->result_array() as $result) {
-                    $to[] = $result['email'];
+                    if(!empty($result['email'])){
+                        $to[] = $result['email'];
+                    }
                 }
         
-                $cc = array();
                 foreach ($sqlget_query->result_array() as $result) {
-                    $cc[] = $result['cp_email_user'];
+                    if(!empty($result['cp_email_user'])){
+                        $cc[] = $result['cp_email_user'];
+                    }
                 }
-                $cc2 = $get_owner_email->cp_user_email;
-                emailSaveData($subject , $body ,$to , $cc , $cc2);
+
+                $cc2 = $get_owner_email->cp_user_email ?? "";
+
+                if(!empty($to) || !empty($cc) || !empty($cc2)){
+                    emailSaveData($subject , $body ,$to , $cc , $cc2);
+                }
 
 
             } else if($get_owner_email->cp_topic_cat == "1"){
@@ -1520,21 +1571,27 @@ class Complaint_model extends CI_Model
               $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/>" . "Go to Page</a>";
 
 
-              $to = "";
-              $cc = "";
+              $to = [];
+              $cc = [];
               $cc2 = "";
       
-              $to = array();
               foreach ($getEmail->result_array() as $result) {
-                  $to[] = $result['email'];
+                  if(!empty($result['email'])){
+                      $to[] = $result['email'];
+                  }
               }
       
-              $cc = array();
               foreach ($sqlget_query->result_array() as $result) {
-                  $cc[] = $result['cp_email_user'];
+                  if(!empty($result['cp_email_user'])){
+                      $cc[] = $result['cp_email_user'];
+                  }
               }
-              $cc2 = $get_owner_email->cp_user_email;
-              emailSaveData($subject , $body ,$to , $cc , $cc2);
+
+              $cc2 = $get_owner_email->cp_user_email ?? "";
+
+              if(!empty($to) || !empty($cc) || !empty($cc2)){
+                  emailSaveData($subject , $body ,$to , $cc , $cc2);
+              }
 
             }else{
 
@@ -1576,21 +1633,27 @@ class Complaint_model extends CI_Model
                 $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/nc/>" . "Go to Page</a>";
 
 
-                $to = "";
-                $cc = "";
+                $to = [];
+                $cc = [];
                 $cc2 = "";
         
-                $to = array();
                 foreach ($getEmail->result_array() as $result) {
-                    $to[] = $result['email'];
+                    if(!empty($result['email'])){
+                        $to[] = $result['email'];
+                    }
                 }
         
-                $cc = array();
                 foreach ($sqlget_query->result_array() as $result) {
-                    $cc[] = $result['cp_email_user'];
+                    if(!empty($result['cp_email_user'])){
+                        $cc[] = $result['cp_email_user'];
+                    }
                 }
-                $cc2 = $get_owner_email->cp_user_email;
-                emailSaveData($subject , $body ,$to , $cc , $cc2);
+
+                $cc2 = $get_owner_email->cp_user_email ?? "";
+
+                if(!empty($to) || !empty($cc) || !empty($cc2)){
+                    emailSaveData($subject , $body ,$to , $cc , $cc2);
+                }
 
             }
             //Section ส่ง Email แจ้งเรื่อง New NC ให้แก่ผู้ที่เกี่ยวข้องรับทราบ
@@ -1688,21 +1751,27 @@ class Complaint_model extends CI_Model
         $body .= "<strong>Link Program : </strong>" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $cp_no . ">" . "Go to Page</a>";
 
 
-        $to = "";
-        $cc = "";
+        $to = [];
+        $cc = [];
         $cc2 = "";
 
-        $to = array();
         foreach ($getEmail->result_array() as $result) {
-            $to[] = $result['email'];
+            if(!empty($result['email'])){
+                $to[] = $result['email'];
+            }
         }
 
-        $cc = array();
         foreach ($sqlget_query->result_array() as $result) {
-            $cc[] = $result['cp_email_user'];
+            if(!empty($result['cp_email_user'])){
+                $cc[] = $result['cp_email_user'];
+            }
         }
-        $cc2 = $get_owner_email->cp_user_email;
-        emailSaveData($subject , $body ,$to , $cc , $cc2);
+
+        $cc2 = $get_owner_email->cp_user_email ?? "";
+
+        if(!empty($to) || !empty($cc) || !empty($cc2)){
+            emailSaveData($subject , $body ,$to , $cc , $cc2);
+        }
 
         //************************Email***Zone***********************************//
 
@@ -2134,21 +2203,27 @@ class Complaint_model extends CI_Model
             $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
-            $to = "";
-            $cc = "";
+            $to = [];
+            $cc = [];
             $cc2 = "";
     
-            $to = array();
             foreach ($query->result_array() as $result) {
-                $to[] = $result['email'];
+                if(!empty($result['email'])){
+                    $to[] = $result['email'];
+                }
             }
     
-            $cc = array();
             foreach ($sqlget_query->result_array() as $result) {
-                $cc[] = $result['cp_email_user'];
+                if(!empty($result['cp_email_user'])){
+                    $cc[] = $result['cp_email_user'];
+                }
             }
-            $cc2 = $getdata_email->cp_user_email;
-            emailSaveData($subject , $body ,$to , $cc , $cc2);
+
+            $cc2 = $getdata_email->cp_user_email ?? "";
+
+            if(!empty($to) || !empty($cc) || !empty($cc2)){
+                emailSaveData($subject , $body ,$to , $cc , $cc2);
+            }
 
             //************************************ZONE***SEND****EMAIL*************************************//
 
@@ -2184,21 +2259,27 @@ class Complaint_model extends CI_Model
         $body .= "<strong>Link Program : </strong>&nbsp;&nbsp;" . "<a href=https://ofintranet.saleecolour.net/intsys/complaint/complaint/investigate/" . $get_cp_no . ">" . "Go to Page</a>";
 
 
-        $to = "";
-        $cc = "";
+        $to = [];
+        $cc = [];
         $cc2 = "";
 
-        $to = array();
         foreach ($query->result_array() as $result) {
-            $to[] = $result['email'];
+            if(!empty($result['email'])){
+                $to[] = $result['email'];
+            }
         }
 
-        $cc = array();
         foreach ($sqlget_query->result_array() as $result) {
-            $cc[] = $result['cp_email_user'];
+            if(!empty($result['cp_email_user'])){
+                $cc[] = $result['cp_email_user'];
+            }
         }
-        $cc2 = $getdata_email->cp_user_email;
-        emailSaveData($subject , $body ,$to , $cc , $cc2);
+
+        $cc2 = $getdata_email->cp_user_email ?? "";
+
+        if(!empty($to) || !empty($cc) || !empty($cc2)){
+            emailSaveData($subject , $body ,$to , $cc , $cc2);
+        }
 
         //************************************ZONE***SEND****EMAIL*************************************//
 
